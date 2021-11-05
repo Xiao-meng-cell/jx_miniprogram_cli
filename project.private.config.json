@@ -51,13 +51,19 @@
         {
           "name": "叠叠乐",
           "pathName": "pages/diedeile/diediele",
-          "query": "eventCode=2035727210760103452&shareUserId=15405",
+          "query": "eventCode=2045927196285107649&shareUserId=15405",
           "scene": null
         },
         {
           "name": "www",
           "pathName": "/pages/tabBar_index/business_detail/business_detail",
           "query": "code=2035727210760103452",
+          "scene": null
+        },
+        {
+          "name": "pages/web_view_html/web_view_html",
+          "pathName": "pages/web_view_html/web_view_html",
+          "query": "webUrl=http://h5.vicpalm.com/weclubbing/cardsIndex?batchId=203171635755000107433",
           "scene": null
         }
       ]

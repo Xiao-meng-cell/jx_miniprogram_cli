@@ -8,7 +8,9 @@ Page({
    */
   data: {
     web_url: "",
-    title: ""
+    title: "",
+    shareUserId:'',//叠叠乐活动参数
+    eventCode:''//叠叠乐活动参数
   },
 
   /**
@@ -16,6 +18,12 @@ Page({
    */
   onLoad: function (options) {
     let op = decodeURIComponent(options.webUrl); //解码
+    if(options.shareUserId){
+      this.setData({ shareUserId:options.shareUserId })
+    }
+    if(options.eventCode){
+      this.setData({ eventCode:options.eventCode })
+    }
     console.log(op);
     this.setData({
       web_url: op,
@@ -31,7 +39,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+if(!this.data.shareUserId){
+  wx.hideShareMenu();
+}
   },
 
   /**
@@ -72,7 +82,24 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage: function () {
-
-  // }
+  onShareAppMessage: function () {
+     if(this.data.shareUserId){
+      return {
+        title: '叠叠乐活动',
+        path: "pages/diedeile/diediele?shareUserId=" + wx.getStorageSync('user').id + "&eventCode="+ this.data.eventCode,
+        success: res => {
+            wx.showToast({
+                title: '转发成功',
+                icon: "none"
+            })
+        },
+        fail: res => {
+            wx.showToast({
+                title: '转发失败',
+                icon: "none"
+            })
+        }
+    }
+     }
+  }
 })

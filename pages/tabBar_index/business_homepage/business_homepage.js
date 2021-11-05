@@ -501,7 +501,7 @@ Page({
       capsuleTop: app.globalData.capsuleTop,
       capsuleHeight: app.globalData.capsuleHeight,
     });
-    wx.hideShareMenu();
+   
   },
 
   /**

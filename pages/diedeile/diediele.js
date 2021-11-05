@@ -76,7 +76,7 @@ Page({
         console.log('baseUrl: ',baseUrl)
         let webUrl = encodeURIComponent(baseUrl); //编码
         wx.redirectTo({
-          url: "/pages/web_view_html/web_view_html?webUrl=" + webUrl
+          url: "/pages/web_view_html/web_view_html?webUrl=" + webUrl +'&shareUserId=' + shareUserId +'&eventCode='+ eventCode
         })
         // utils.router('webView', 'webUrl=' + webUrl , {
         //   type: 'redirect',
