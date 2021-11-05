@@ -1,0 +1,59 @@
+<!--expandPackage/pages/hotPartnerList/hotpartnerList.wxml-->
+<view class="hotPatner">
+<view wx:if="{{merchant_Code}}">
+<business_news id="business_news" merchantCode="{{merchant_Code}}" includePlatform="{{includePlatform}}"  clerkMark="{{clerkMark}}"></business_news>
+</view>
+	<view id="goods_list" class="goodsList" wx:if="{{business_activity_list[0].length > 0 && switch_index == 1}}">
+		<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+			<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+				<view class="goodsItem" data-clerk_code="{{clerk_code}}" catchtap="jumpBusinessActivityDetail" data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+					<image src="{{item.illustration+utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+					<view class="{{item.product.typeCode == 'estate' ? 'estateInfo' : ''}}">
+						<text class="aline2">{{item.title}}</text>
+						<view class="priceDesc priceFont" style="height:56rpx;margin-top:0;margin-left:0;">
+							<text style="font-size:24rpx;">￥</text>
+							<text style="font-size:32rpx;font-weight:bold;flex:1;">{{item.minPrice}}</text>
+						</view>
+						<view class="goodstag">
+							<view wx:if="{{item.product.typeCode=='logistics'&& item.addressType!='merchant'}}">
+								<view class="goodstag_icon goodstag_text_red">
+									<text>邮</text>
+								</view>
+								<text class="goodstag_wl_color">物流商品</text>
+							</view>
+							<view wx:elif="{{item.product.typeCode=='virtual'}}">
+								<view class="goodstag_icon goodstag_text_yellow">
+									<text>虚</text>
+								</view>
+								<text class="goodstag_visual_color">店内服务</text>
+							</view>
+							<view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}">
+								<view class="goodstag_icon goodstag_text_yellow">
+									<text>定</text>
+								</view>
+								<text class="goodstag_visual_color">定金商品</text>
+							</view>
+							<view wx:else>
+								<view class="goodstag_icon goodstag_text_blue">
+									<text>自</text>
+								</view>
+								<text class="goodstag_dd_color">到店自提</text>
+							</view>
+							<text class="{{item.typeCodeName == '原价' ? 'goodstag_activity_yj' : 'goodstag_activity'}}">{{item.typeCodeName == "原价" ? "原价商品" : item.typeCodeName}}</text>
+						</view>
+						<view class="goods_item_bottom">
+							<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_fire%402x.png"></image>
+							<text style="line-height:20rpx;">{{item.total}}</text>
+							<view style="flex:1;"></view>
+							<view class="join_cart" data-item="{{item}}" catchtap="clickAddCart">
+								<text>加入购物车</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</block>
+		<view style="height:120rpx;width:100%"></view>
+	</view>
+</view>
+<!--expandPackage/pages/hotPartnerList/hotpartnerList.wxml-->

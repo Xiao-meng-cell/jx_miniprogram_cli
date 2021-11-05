@@ -1,0 +1,62 @@
+<!--miniprogram/pages/tabBar_activity/search_page/search_page.wxml-->
+<view class='first_view_serch'>
+  <view class='search_view'>
+    <icon size='15' type='search'></icon>
+    <input class='search_view_input' focus='true' placeholder='搜索' placeholder-class='' confirm-type='search' bindconfirm='jumpSearchResults' bindinput="changeSearchText"></input>
+  </view>
+  <view class='search_view_text' bindtap='jumpSearchResults'>
+    <text>搜索</text>
+  </view>
+</view>
+
+<view class="cut_line"></view>
+
+
+<!--热门服务-->
+<!-- <view class='hot_service'>
+    <view>
+          <text  class='label_title'>热门推荐</text>
+    </view>
+    <view class='label_block'>
+      <block wx:for="{{hotLabel}}"  wx:key="index" wx:item="item"> 
+          <view class='label_item' data-keyword='{{item.keyword}}' catchtap='jumpSearchResult'>
+              <text class='label_item_hot'>{{item.keyword}}</text>
+          </view>
+          
+      </block>
+    </view>
+</view> -->
+<!--热门服务end-->
+
+
+
+
+<view class="cut_line" style='height:20rpx;'></view>
+
+
+<!--历史记录-->
+<view class='history_view'>
+  <view >
+    <text class='label_title'>历史记录</text>
+    <text class='history_delete' bindtap='clearHistory'>清空</text>
+  </view>
+
+  <view class='label_block'>
+    <scroll-view scroll-y class='history_view_scroll'>
+      <!-- <block wx:for="{{historyLabel}}"  wx:key="index" wx:item="item">
+              <view class='label_item ' data-keyword='{{item.keyword}}' catchtap='jumpSearchResult'>
+                  <text class='label_item_text aline1'>{{item.keyword}}</text>
+              </view>             
+          </block> -->
+      <view class="history_view_noscroll ">
+        <block wx:for="{{historyLabel}}" wx:key="index" wx:item="item">
+          <view class='label_item ' data-keyword='{{item.keyword}}' catchtap='jumpSearchResult'>
+            <text class='label_item_text aline1'>{{item.keyword}}</text>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
+</view>
+<!--历史记录 end-->

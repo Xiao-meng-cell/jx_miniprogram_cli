@@ -1,0 +1,7 @@
+<!--widget/cart/cart.wxml-->
+<!-- 购物车 start -->
+<image class="cart" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/cart_enter.png" catchtap="goToCart"></image>
+<view class="cartNum" catchtap="goToCart" wx:if="{{cartNum && cartNum!=0}}">
+	<text>{{cartNum}}</text>
+</view>
+<!-- 购物车 end -->

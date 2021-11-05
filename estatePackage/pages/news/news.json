@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "news": "/widget/business-news/business-news"
+  }
+}

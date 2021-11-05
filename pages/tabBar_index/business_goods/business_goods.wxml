@@ -1,0 +1,155 @@
+<!--pages/tabBar_index/business_goods/business_goods.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<topBar title="分类"></topBar>
+<!-- 商品列表 start -->
+<view id="simplify_goods_list" class="simplify_goods_list {{goodsTagList.length > 1 ? 'simplify_goods_list_type' : ''}}" wx:if="{{business_activity_list[0].length > 0 || goodsTagList.length > 1}}">
+	<!-- 商品分类 start  -->
+	<view class="simplify_goods_list_category" wx:if="{{goodsTagList.length > 1}}" style="{{capsuleTop==0?136:capsuleTop + 80}}rpx;">
+		<block wx:for="{{goodsTagList}}" wx:key="idx">
+			<view class="{{goodsTagSelectedIndex == index ? 'goodsTagItem_selected' : 'goodsTagItem_unselected'}}" data-item="{{item}}" data-index="{{index}}" catchtap="clickGoodsTag">
+				<text>{{item.name}}</text>
+			</view>
+		</block>
+	</view>
+	<!-- 商品分类 end  -->
+	<!-- 商品排序栏 start -->
+	<view class="goodsType_simply" style="top:{{capsuleTop==0?68:capsuleTop + 40}}px;">
+			<view data-index="1" catchtap="changeGoodsSort">
+				<text class="{{goodsSortSelectedIndex == 1 ? 'goodsType_selected' : 'goodsType_unselected'}}">综合</text>
+			</view>
+			<view data-index="4" catchtap="changeGoodsSort">
+				<text class="{{goodsSortSelectedIndex == 4 ? 'goodsType_selected' : 'goodsType_unselected'}}">上新</text>
+			</view>
+			<view data-index="2" catchtap="changeGoodsSort">
+				<text class="{{goodsSortSelectedIndex == 2 ? 'goodsType_selected' : 'goodsType_unselected'}}">销量</text>
+				<view>
+					<view id="triangle-up" class="{{goodsSortSelectedIndex  == 2 && hotSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}"></view>
+					<view id="triangle-down" style="margin-top:4rpx;" class="{{goodsSortSelectedIndex  == 2 && !hotSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}"></view>
+				</view>
+			</view>
+			<view data-index="3" catchtap="changeGoodsSort">
+				<text class="{{goodsSortSelectedIndex  == 3? 'goodsType_selected' : 'goodsType_unselected'}}">价格</text>
+				<view>
+					<view id="triangle-up" class="{{goodsSortSelectedIndex  == 3 && priceSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}"></view>
+					<view id="triangle-down" style="margin-top:4rpx;" class="{{goodsSortSelectedIndex  == 3 && !priceSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}"></view>
+				</view>
+			</view>
+		</view>
+		<!-- 商品排序栏 end -->
+	<!-- 列表主体 start -->
+	<view class="simplify_goods_list_main {{goodsTagList.length > 1 ? 'simplify_goods_list_main_type' : 'simplify_goods_list_main_notype'}}">
+		<!-- 商品列表 start -->
+		<view class="goodsList_simply">
+			<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+				<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+					<view class="goodsList_simply_item global_page_indent {{goodsTagList.length > 1 ? 'goodsList_simply_item_type' : 'goodsList_simply_item_notype'}}" data-item="{{item}}" catchtap="jumpBusinessActivityDetail">
+						<image src="{{item.illustration + utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+						<view>
+							<text class="aline2">{{item.title}}</text>
+							<view style="flex:1;"></view>
+							<view class="priceFont">
+								<text>￥</text>
+								<text>{{item.minPrice}}</text>
+							</view>
+							<view class="goods_tags">
+								<view class="goods_tags_wl" wx:if="{{item.product.typeCode=='logistics'&&item.addressType!='merchant'}}">
+									<text>物流商品</text>
+								</view>
+								<view class="goods_tags_visual" wx:elif="{{item.product.typeCode=='virtual'}}">
+									<text>店内服务</text>
+								</view>
+								<view class="goods_tags_visual" wx:elif="{{item.product.typeCode=='deposit'}}">
+									<text>定金商品</text>
+								</view>
+								<view class="goods_tags_dd" wx:else>
+									<text >到店自提</text>
+								</view>
+								<view class="goods_tags_wl">
+									<text>{{item.typeCodeName}}</text>
+								</view>
+								<view style="flex:1;"></view>
+								<!-- <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_add_fill%402x.png" data-item="{{item}}"></image> -->
+							</view>
+						</view>
+					</view>
+				</block>
+			</block>
+			<view class="loadAll" hidden="{{!loadAll}}">
+				<text>已加载全部</text>
+			</view>
+		</view>
+		<!-- 商品列表 end -->
+	</view>
+	<!-- 列表主体 end -->
+</view>
+<view class="emptyView" wx:else>
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png" style="margin-top:0rpx;"></image>
+	<text>暂无商品</text>
+</view>
+<!-- 商品列表 end -->
+
+<!-- 加入购物车选取 start -->
+<view class="cartBG" wx:if="{{cartDisplay}}" catchtouchmove="catchMouseOperate" catchtap="showCart">
+	<view class="cartBoby" catchtap="catchMouseOperate">
+		<image src="{{sku_url?sku_url:goodsDefaultImg}}?x-oss-process=image/resize,p_80" mode='aspectFill'></image>
+		<view class="priceRelate priceFont">
+			<text style="font-size:32rpx;line-height:48rpx;">￥{{sku_priceYuan == null || sku_priceYuan == "" ? "" : sku_priceYuan}}</text>
+		</view>
+		<view class="stockRelate">
+			<text>库存 {{sku_stock==null||sku_stock==""?"":sku_stock}}</text>
+		</view>
+		<text class="selected">{{selected_text?selected_text:"暂无"}}</text>
+		<scroll-view class="scroll-view_cart" scroll-y>
+			<block wx:for="{{specList}}" wx:key="specItemId" wx:for-index="specItemIdx">
+				<view class="specItem">
+					<text class="skuName">{{item.name}}</text>
+					<view class="specDetailList">
+						<block wx:for="{{item.productSpecs}}" wx:key="specId" wx:for-item="specItem" wx:for-index="specIdx">
+							<view class="specDetailItem {{specItem.lock == 1 ? 'specDetailItemSelected' : ''}}" data-lock="{{specItem.lock}}" data-speccode="{{specItem.specCode}}" data-key="{{specItem.key}}" data-id="{{specItem.id}}" data-value="{{specItem.value}}" catchtap="chooseSkus">{{specItem.value}}</view>
+						</block>
+					</view>
+				</view>
+			</block>
+			<!--购买数量 start-->
+			<view class="fgx" style="margin-top:0rpx;"></view>
+			<view class='bottom_border_item_cart buy_num'>
+				<text class="sub_title">购买数量</text>
+				<view>
+					<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del.png" catchtap='delQuantity' wx:if="{{quantity > 1}}"></image>
+					<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del_unable.png" wx:else></image>
+					<input style="border:1px #a0a0a0 solid;width:10vw;text-align:center;" type="number" value="{{quantity}}" bindinput="numInput" bindblur="cancelEdit" wx:if="{{isEdit}}" focus="{{isEdit}}"></input>
+					<text wx:else>{{quantity}}</text>
+					<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add.png" catchtap='addQuantity'></image>
+				</view>
+			</view>
+			<!--购买数量 end-->
+			<view class="fgx" style="margin-top:0rpx;" hidden="{{freePostageNum == 0 && !shareDiscount}}"></view>
+			<view class="discount_info" wx:if="{{shareDiscount}}">
+				<view>
+					<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/shareDiscount.png"></image>
+					<text>购买前先分享，购买享受￥{{shareDiscountPrice}}优惠</text>
+					<view style="flex:1;"></view>
+					<view>
+						<button class="share_button" style="{{isShare ? 'color:#D8D8D8;' : 'color:#FF3B30;'}}" open-type="share">
+							<text>{{isShare ? "已分享" : "分享"}}</text>
+						</button>
+					</view>
+				</view>
+			</view>
+			<view class="priceItem_logistics_free horizontal-vcenter" hidden="{{freePostageNum == 0}}">
+				<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge%402x.png" class="logistics_info_img_free"></image>
+				<text>商品设置单次购买满{{freePostageNum}}{{logisticsChargeType == 1 ? "公斤" : "件"}}包邮</text>
+			</view>
+		</scroll-view>
+		<view class="buy cartBtn" catchtap="joinCart">
+			<text>加入购物车</text>
+		</view>
+	</view>
+</view>
+<!-- 加入购物车选取 end -->
+
+	<!--网络状态监听-->
+	<noneLine wx:if="{{!networkType}}"></noneLine>
+
+<!--底部tabbar-->
+<tabbar tabbarData="{{tabbar.list}}" active="{{tabBarActive}}" bgcolor="{{tabbar.bgcolor}}" color="{{tabbar.color}}" selectedColor="{{tabbar.selectedColor}}" showborder="{{tabbar.showborder}}" iPhoneX="{{iPhone_X}}" bind:tapChange="tabbarChange" />

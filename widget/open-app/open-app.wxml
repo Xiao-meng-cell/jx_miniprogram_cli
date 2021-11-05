@@ -1,0 +1,3 @@
+<!--widget/open-app/open-app.wxml-->
+<button class='open_app' open-type="launchApp" app-parameter="{{app_parameter}}"  binderror="launchAppError">掌创人生app
+</button>

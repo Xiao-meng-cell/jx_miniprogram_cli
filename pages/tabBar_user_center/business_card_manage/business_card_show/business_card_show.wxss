@@ -1,0 +1,3 @@
+/* miniprogram/pages/tabBar_user_center/business_card_manage/business_card_show/business_card_show.wxss */
+@import "/pages/clerk/show/show.wxss";
+

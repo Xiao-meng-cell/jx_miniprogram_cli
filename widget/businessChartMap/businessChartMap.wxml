@@ -1,0 +1,49 @@
+<!--widget/businessChartMap/businessChartMap.wxml-->
+<view class="chart" wx:if="{{provinceNum > 0 || (businessScope && businessScope.length > 0)}}">
+  <view class="chartTile" catchtap="goToMap" wx:if="{{provinceNum > 0}}">
+    <text>覆盖全国</text>
+    <text style="line-height: 18px;font-size: 18px;font-weight: bold;color: #2F95FB;">{{provinceNum}}</text>
+    <text>个省</text>
+    <text style="line-height: 18px;font-size: 18px;font-weight: bold;color: #2F95FB;">{{cityNum}}</text>
+    <text>个市，遍布</text>
+    <text style="line-height: 18px;font-size: 18px;font-weight: bold;color: #2F95FB;">{{storeNum}}</text>
+    <text>个经营点</text>
+  </view>
+  <view class="chartMap" catchtap="goToMap" wx:if="{{provinceNum > 0}}">
+    <image
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/chartMap.png"
+      mode="widthFix"></image>
+    <view>
+      <text>查看更多经营点</text>
+    </view>
+  </view>
+  <view class="chartScope" wx:if="{{businessScope && businessScope.length > 0}}">
+    <view class="scopeTitle">
+      <view></view>
+      <view>
+        <text>{{businessScope.length}}</text>
+        <text>大经营范围</text>
+      </view>
+      <view></view>
+    </view>
+    <view class="scopeImg">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/chartScope.png">
+      </image>
+      <view>
+        <text>{{businessScope[0].value}}%</text>
+        <text>{{businessScope[0].name}}</text>
+      </view>
+    </view>
+    <view class="scopeList">
+      <block wx:for="{{businessScope}}" wx:key="item">
+        <view>
+          <view style="background:{{item.color}};"></view>
+          <text>{{item.name}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+<!-- <image class="chartMap2" src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/chartMap.png"
+  mode="widthFix" catchtap="goToMap"></image> -->

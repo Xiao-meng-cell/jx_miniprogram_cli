@@ -1,0 +1,2 @@
+<!--miniprogram/pages/navigate/navigate.wxml-->
+<view class="btn_box" catchtap="getNavigateUrl">点击跳转外部小程序</view>

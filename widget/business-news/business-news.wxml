@@ -1,0 +1,480 @@
+<!--widget/business-news/business-news.wxml-->
+<wxs src="../../utils/utils.wxs" module="utils" />
+<wxs src="../../utils/timeUtil.wxs" module="timeUtil" />
+<view class="infoTitle" wx:if="{{showTitle}}">
+	<text>动态</text>
+</view>
+
+<!-- 动态列表 start  -->
+<view class="allList" wx:if="{{allList.length > 0}}">
+	<block wx:for="{{allList}}" wx:for-item="item_key" wx:key="idx" wx:for-index="pindex">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index" wx:for-index="index">
+			<!-- 最新合伙人 start  -->
+			<view class="newsItem partner" data-item="{{item}}" bindtap="goToNewsDetail"
+				wx:if="{{item.action == 'clerkNew'}}">
+				<view>
+					<text>新的合伙人</text>
+					<view style="flex:1;"></view>
+					<text>{{item.createdTimeDisplay}}</text>
+				</view>
+				<view style="align-items: center;">
+					<view class="partner_info">
+						<image src="{{item.params.headimg}}"></image>
+						<view>
+							<text>{{item.params.name}}</text>
+							<text>{{item.params.roleName}}</text>
+						</view>
+					</view>
+					<view class="new_partner">
+						<text>今日新增{{item.params.count}}人</text>
+					</view>
+				</view>
+			</view>
+			<!-- 最新合伙人 end  -->
+			<!-- 最热合伙人 start  -->
+			<view class="newsItem partner" data-item="{{item}}" bindtap="goToNewsDetail"
+				wx:elif="{{item.action == 'clerkHot'}}">
+				<view>
+					<text>每日最热合伙人</text>
+					<view style="flex:1;"></view>
+					<text>{{item.createdTimeDisplay}}</text>
+				</view>
+				<view style="align-items: flex-end;">
+					<view class="partner_info">
+						<image src="{{item.params.headimg}}"></image>
+						<view>
+							<text>{{item.params.name}}</text>
+							<text>{{item.params.roleName}}</text>
+						</view>
+					</view>
+					<view class="hot_partner">
+						<text>浏览次数<text style="color:#2F95FB;font-size:16px;">{{item.params.count}}</text>次</text>
+					</view>
+				</view>
+			</view>
+			<!-- 最热合伙人 end  -->
+			<!-- 商品 strat  -->
+			<view class="newsItem event" data-item="{{item}}" bindtap="goToNewsDetail" wx:elif="{{item.action == 'event'}}">
+				<!-- 商家信息 发布时间 动态类型 start  -->
+				<view class="newsItem_top">
+					<image src="{{item.merchant.displayHeadImg}}"></image>
+					<view class="newsItem_top_info">
+						<view class="newsItem_top_info_row1">
+							<view>
+								<text>{{item.merchant.name ? item.merchant.name : "--"}}</text>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_zk.png"
+									wx:if="{{item.merchant.merchantType == 'mainStore' || item.merchant.merchantType == 'branchStore'}}">
+								</image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+									wx:elif="{{item.merchant.ultimate == 1}}"></image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_channel.png"
+									wx:elif="{{item.merchant.channel == 1}}"></image>
+							</view>
+							<view wx:if="{{item.newsTypeLabel != ''}}">
+								<text class="{{item.newsTypeLabel=='商品上新'?'goodsNewTag':'natureTag'}}">{{item.newsTypeLabel}}</text>
+							</view>
+						</view>
+						<text>{{item.createdTimeDisplay}}</text>
+					</view>
+				</view>
+				<!-- 商家信息 发布时间 动态类型 end  -->
+				<text class="newsItem_desc" wx:if="{{item.description != null}}">{{item.description}}</text>
+				<view class="newsItem_content single" wx:if="{{item.jsonFileList.length == 1}}">
+					<image src="{{item.jsonFileList[0].image}}" mode="widthFix" wx:if="{{item.jsonFileList[0].type == 'video'}}">
+					</image>
+					<image src="{{item.jsonFileList[0].value + utils.resizeImgSurvey(60)}}" mode="widthFix"
+						data-src="{{item.jsonFileList[0].value}}" data-list="{{item.jsonImgList}}" catchtap="imgYu"
+						wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+					<view class="videoMask" data-item="{{item}}" catchtap="goToNewsDetail"
+						wx:if="{{item.jsonFileList[0].type == 'video'}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+						</image>
+					</view>
+				</view>
+				<view class="newsItem_content" wx:elif="{{item.jsonFileList.length > 1}}">
+					<view class="four" wx:if="{{item.jsonFileList.length == 4}}">
+						<block wx:for="{{item.jsonFileList}}" wx:for-item="src" wx:key="index">
+							<view>
+								<image src="{{src.value}}?x-oss-process=video/snapshot,t_1000" wx:if="{{src.type == 'video'}}"></image>
+								<image src="{{src.value + utils.resizeImgSurvey(60)}}" mode="aspectFill" data-src="{{src.value}}"
+									data-list="{{item.jsonImgList}}" catchtap="imgYu" wx:elif="{{item.jsonFileList[0].type == 'image'}}">
+								</image>
+								<view class="moreMedia" wx:if="{{src.type == 'video'}}">
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+									</image>
+								</view>
+							</view>
+						</block>
+					</view>
+					<view class="multi" wx:else>
+						<block wx:for="{{item.jsonFileList}}" wx:for-item="src" wx:key="index" wx:if="{{index < 9}}">
+							<view>
+								<image src="{{src.value}}?x-oss-process=video/snapshot,t_1000" wx:if="{{src.type == 'video'}}"></image>
+								<image src="{{src.value + utils.resizeImgSurvey(60)}}" mode="aspectFill" data-src="{{src.value}}"
+									data-list="{{item.jsonImgList}}" catchtap="imgYu" wx:elif="{{item.jsonFileList[0].type == 'image'}}">
+								</image>
+								<view class="moreMedia {{(item.jsonFileList.length > 9 && index == 8) ? 'moreMediaImg' : ''}}"
+									wx:if="{{(item.jsonFileList.length > 9 && index == 8) || src.type == 'video'}}">
+									<text wx:if="{{index == 8}}">+9</text>
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png"
+										wx:if="{{src.type == 'video' && index != 8}}"></image>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+				<view class="newsItem_goodsTag" wx:if="{{item.eventList.length > 0}}">
+
+				</view>
+				<view class="newsItem_operate" catchtap="catchMouseOperate">
+					<view data-pindex="{{pindex}}" data-index="{{index}}" data-item="{{item}}" catchtap="like">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan_light.png"
+							wx:if="{{item.isLike}}" mode="widthFix"></image>
+						<image wx:else
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan.png"
+							mode="widthFix"></image>
+						<text>{{item.likeCount}}</text>
+					</view>
+					<view wx:if="{{item.shares > 0}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_share_feeds.png"
+							mode="widthFix"></image>
+						<text>{{item.shares}}</text>
+					</view>
+					<view style="flex:1;"></view>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_more_point.png"
+						data-pindex="{{pindex}}" data-index="{{index}}" catchtap="moreOperate" wx:if="{{landerUserId==userId}}">
+					</image>
+				</view>
+				<view class="moreOperateBG" catchtap="hanlerMoreOperate" wx:if="{{item.moreOperate}}" />
+				<view class="moreOperate" wx:if="{{item.moreOperate}}">
+					<view style="{{merchantInfo.isFavorites!= 1 ? '' : 'color:#2F95FB;'}}" data-item="{{item}}" catchtap="newsFavorites">
+						<text>{{merchantInfo.isFavorites!= 1 ? "收藏企业" : "已收藏"}}</text>
+					</view>
+					<view catchtap="goToComplaint">
+						<text>投诉</text>
+					</view>
+				</view>
+			</view>
+			<!-- 商品 end  -->
+			<!-- 网页 strat  -->
+			<view class="newsItem h5" data-item="{{item}}" bindtap="goToNewsDetail" wx:elif="{{item.action == 'h5'}}">
+				<text class="newsItem_desc" wx:if="{{item.description != null}}">{{item.description}}</text>
+				<video src="{{item.jsonFileList[0].value}}" wx:if="{{item.jsonFileList[0].type == 'video'}}"></video>
+				<image src="{{item.jsonFileList[0].value + utils.resizeImgSurvey(60)}}" mode="widthFix"
+					data-src="{{item.jsonFileList[0].value}}" data-list="{{item.jsonImgList}}" catchtap="imgYu"
+					wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+				<view class="newsItem_operate" catchtap="catchMouseOperate">
+					<view data-pindex="{{pindex}}" data-index="{{index}}" data-item="{{item}}" catchtap="like">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan_light.png"
+							wx:if="{{item.isLike}}"></image>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan.png"
+							wx:else></image>
+						<text>{{item.likeCount}}</text>
+					</view>
+					<view wx:if="{{item.shares > 0}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_share_feeds.png">
+						</image>
+						<text>{{item.shares}}</text>
+					</view>
+					<view style="flex:1;"></view>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_more_point.png"
+						data-pindex="{{pindex}}" data-index="{{index}}" catchtap="moreOperate"></image>
+				</view>
+				<view class="moreOperateBG" catchtap="hanlerMoreOperate" wx:if="{{item.moreOperate}}" />
+				<view class="moreOperate" wx:if="{{item.moreOperate}}">
+					<view style="{{merchantInfo.isFavorites!= 1 ? '' : 'color:#2F95FB;'}}" data-item="{{item}}" catchtap="newsFavorites">
+						<text>{{merchantInfo.isFavorites!= 1 ? "收藏企业" : "已收藏"}}</text>
+					</view>
+					<view catchtap="goToComplaint">
+						<text>投诉</text>
+					</view>
+				</view>
+			</view>
+			<!-- 网页 end  -->
+			<!-- 商家 strat  -->
+			<view class="newsItem merchant" data-item="{{item}}" bindtap="goToNewsDetail"
+				wx:elif="{{item.action == 'merchant'}}">
+				<!-- 商家信息 发布时间 动态类型 start  -->
+				<view class="newsItem_top">
+					<image src="{{item.merchant.displayHeadImg}}"></image>
+					<view class="newsItem_top_info">
+						<view class="newsItem_top_info_row1">
+							<view>
+								<text>{{item.merchant.name ? item.merchant.name : "--"}}</text>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_zk.png"
+									wx:if="{{item.merchant.merchantType == 'mainStore' || item.merchant.merchantType == 'branchStore'}}">
+								</image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+									wx:elif="{{item.merchant.ultimate == 1}}"></image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_channel.png"
+									wx:elif="{{item.merchant.channel == 1}}"></image>
+							</view>
+							<view wx:if="{{item.newsTypeLabel != ''}}">
+								<text class="{{item.newsTypeLabel=='商品上新'?'goodsNewTag':'natureTag'}}">{{item.newsTypeLabel}}</text>
+							</view>
+						</view>
+						<text>{{item.createdTimeDisplay}}</text>
+					</view>
+				</view>
+				<!-- 商家信息 发布时间 动态类型 end  -->
+				<text class="newsItem_desc" wx:if="{{item.description != null}}">{{item.description}}</text>
+				<video src="{{item.jsonFileList[0].value}}" wx:if="{{item.jsonFileList[0].type == 'video'}}"></video>
+				<image src="{{item.jsonFileList[0].value + utils.resizeImgSurvey(60)}}" mode="widthFix"
+					data-src="{{item.jsonFileList[0].value}}" data-list="{{item.jsonImgList}}" catchtap="imgYu"
+					wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+				<view class="newsItem_operate" catchtap="catchMouseOperate">
+					<view data-pindex="{{pindex}}" data-index="{{index}}" data-item="{{item}}" catchtap="like">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan_light.png"
+							wx:if="{{item.isLike}}"></image>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan.png"
+							wx:else></image>
+						<text>{{item.likeCount}}</text>
+					</view>
+					<view wx:if="{{item.shares > 0}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_share_feeds.png">
+						</image>
+						<text>{{item.shares}}</text>
+					</view>
+					<view style="flex:1;"></view>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_more_point.png"
+						data-pindex="{{pindex}}" data-index="{{index}}" catchtap="moreOperate" wx:if="{{more_operate==false}}">
+					</image>
+				</view>
+				<view class="moreOperateBG" catchtap="hanlerMoreOperate" wx:if="{{item.moreOperate}}" />
+				<view class="moreOperate" wx:if="{{item.moreOperate}}">
+					<view style="{{merchantInfo.isFavorites!= 1 ? '' : 'color:#2F95FB;'}}" data-item="{{item}}" catchtap="newsFavorites">
+						<text>{{merchantInfo.isFavorites!= 1 ? "收藏企业" : "已收藏"}}</text>
+					</view>
+					<view catchtap="goToComplaint">
+						<text>投诉</text>
+					</view>
+				</view>
+			</view>
+			<!-- 商家 end  -->
+			<!-- 直播 start -->
+			<!-- <view class="live" data-item="{{item}}" bindtap="goToNewsDetail" wx:elif="{{item.action == 'live'}}">
+				<block wx:if="{{item.liveStstus && item.liveStstus=='1'}}">
+					<view class="liveIconImg">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_collect%402x.png">
+						</image>
+						<image src="{{item.params.images.length > 0 ? item.params.images[0] : ''}}"></image>
+					</view>
+					<view class="liveInfo">
+						<view>
+							<text class="text_">{{item.params.merchantName ? item.params.merchantName : "--"}}</text>
+							<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_zk.png"
+								wx:if="{{item.params.merchantType == 'mainStore' || item.params.merchantType == 'branchStore'}}">
+							</image>
+							<image
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+								wx:elif="{{item.params.ultimate == 1}}">
+							</image>
+							<image
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/channel_tag.png"
+								wx:elif="{{item.params.channel == 1}}">
+							</image>
+							<view style="flex:1;"></view>
+							<view class="liveTag">
+								<text>直播中</text>
+							</view>
+						</view>
+						<view>
+							<text>正在直播，快来看看 · {{timeUtil.diaplayTime(item.liveOpenTime)}}</text>
+							<image
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon-live-GIF.gif">
+							</image>
+						</view>
+					</view>
+				</block>
+			</view> -->
+			<!-- 直播 end -->
+			<!-- 普通动态 start  -->
+			<view class="newsItem" data-item="{{item}}" bindtap="goToNewsDetail" wx:else>
+				<!-- 商家信息 发布时间 动态类型 start  -->
+				<view class="newsItem_top">
+					<image src="{{item.merchant.displayHeadImg}}"></image>
+					<view class="newsItem_top_info">
+						<view class="newsItem_top_info_row1">
+							<view>
+								<text>{{item.merchant.name ? item.merchant.name : "--"}}</text>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_zk.png"
+									wx:if="{{item.merchant.merchantType == 'mainStore' || item.merchant.merchantType == 'branchStore'}}">
+								</image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+									wx:elif="{{item.merchant.ultimate == 1}}"></image>
+								<image
+									src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_channel.png"
+									wx:elif="{{item.merchant.channel == 1}}"></image>
+							</view>
+							<view wx:if="{{item.newsTypeLabel != ''}}">
+								<text class="{{item.newsTypeLabel=='商品上新'?'goodsNewTag':'natureTag'}}">{{item.newsTypeLabel}}</text>
+							</view>
+						</view>
+						<text>{{item.createdTimeDisplay}}</text>
+					</view>
+				</view>
+				<!-- 商家信息 发布时间 动态类型 end  -->
+				<view wx:if="{{item.description != null}}">
+					<text class="newsItem_desc">{{item.description}}</text>
+				</view>
+				<view class="newsItem_content single" wx:if="{{item.jsonFileList.length == 1}}">
+					<image src="{{item.jsonFileList[0].image}}" mode="widthFix" wx:if="{{item.jsonFileList[0].type == 'video'}}">
+					</image>
+					<image src="{{item.jsonFileList[0].value + utils.resizeImgSurvey(60)}}" mode="widthFix"
+						data-src="{{item.fileUrls[0].value}}" data-list="{{item.jsonImgList}}"
+						wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+					<view class="flag3D" data-item="{{item.jsonFileList[0]}}" catchtap="goTo3D"
+						wx:if="{{item.jsonFileList[0].is3D}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png">
+						</image>
+					</view>
+					<view class="videoMask" data-item="{{item}}" catchtap="goToNewsDetail"
+						wx:if="{{item.jsonFileList[0].type == 'video'}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+						</image>
+					</view>
+				</view>
+				<view class="newsItem_content" wx:elif="{{item.jsonFileList.length > 1}}">
+					<view class="four" wx:if="{{item.jsonFileList.length == 4}}">
+						<block wx:for="{{item.jsonFileList}}" wx:for-item="src" wx:key="index">
+							<view>
+								<image src="{{src.value}}?x-oss-process=video/snapshot,t_1000" wx:if="{{src.type == 'video'}}"></image>
+								<image src="{{src.value + utils.resizeImgSurvey(60)}}" mode="aspectFill" data-src="{{src.value}}"
+									data-list="{{item.jsonImgList}}" wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+								<view class="moreMedia" wx:if="{{src.type == 'video' || src.is3D}}">
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+									</image>
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png"
+										wx:if="{{src.is3D}}"></image>
+								</view>
+							</view>
+						</block>
+					</view>
+					<view class="multi" wx:else>
+						<block wx:for="{{item.jsonFileList}}" wx:for-item="src" wx:key="index" wx:if="{{index < 9}}">
+							<view>
+								<image src="{{src.value}}?x-oss-process=video/snapshot,t_1000" wx:if="{{src.type == 'video'}}"></image>
+								<image src="{{src.value + utils.resizeImgSurvey(60)}}" mode="aspectFill" data-src="{{src.value}}"
+									data-list="{{item.jsonImgList}}" wx:elif="{{item.jsonFileList[0].type == 'image'}}"></image>
+								<view class="moreMedia {{(item.jsonFileList.length > 9 && index == 8) ? 'moreMediaImg' : ''}}"
+									wx:if="{{(item.jsonFileList.length > 9 && index == 8) || src.type == 'video' || src.is3D}}">
+									<text wx:if="{{index == 8}}">+9</text>
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png"
+										wx:if="{{src.type == 'video' && index != 8}}"></image>
+									<image
+										src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png"
+										wx:if="{{src.is3D}}"></image>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+				<view class="newsItem_goods" data-item="{{item.eventList[0]}}" catchtap="goToGoodsDetail"
+					hidden="{{item.eventList.length > 0 ? false : true}}">
+					<image src="{{item.eventList[0].illustration[0] + utils.resizeImgSurvey(60)}}"></image>
+					<view class="newsItem_goods_info">
+						<text class="aline1">{{item.eventList[0].title}}</text>
+						<view style="flex:1;"></view>
+						<text>￥{{item.eventList[0].minPriceYuan}}</text>
+					</view>
+					<view class="newsItem_goods_buy">
+						<text>立即购买</text>
+					</view>
+				</view>
+				<view class="newsItem_operate" catchtap="catchMouseOperate">
+					<view data-pindex="{{pindex}}" data-index="{{index}}" data-item="{{item}}" catchtap="like">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan_light.png"
+							wx:if="{{item.isLike}}"></image>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_zan.png"
+							wx:else></image>
+						<text>{{item.likeCount}}</text>
+					</view>
+					<view wx:if="{{item.shares > 0}}">
+						<image
+							src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_share_feeds.png">
+						</image>
+						<text>{{item.shares}}</text>
+					</view>
+					<view style="flex:1;"></view>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_more_point.png"
+						data-pindex="{{pindex}}" data-index="{{index}}" catchtap="moreOperate" wx:if="{{more_operate}}"
+						data-moreOperate="1"></image>
+				</view>
+				<view class="moreOperateBG" catchtap="hanlerMoreOperate" wx:if="{{item.moreOperate}}" />
+				<view class="moreOperate" wx:if="{{item.moreOperate}}">
+					<view style="{{merchantInfo.isFavorites!= 1 ? '' : 'color:#2F95FB;'}}" data-item="{{item}}" catchtap="newsFavorites">
+						<text>{{merchantInfo.isFavorites!= 1 ? "收藏企业" : "已收藏"}}</text>
+					</view>
+					<view catchtap="goToComplaint">
+						<text>投诉</text>
+					</view>
+				</view>
+			</view>
+			<!-- 普通动态 end  -->
+		</block>
+	</block>
+	<view class="loadAll" hidden="{{!loadAll}}">
+		<text>已加载全部</text>
+	</view>
+</view>
+<view class="emptyView" wx:if="{{allList.length < 1}}">
+	<image
+		src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+	</image>
+	<text>暂无动态资讯</text>
+</view>
+<!-- 动态列表 end  -->
+
+<!-- 合伙人 start -->
+<view class="clerk" catchtap="clerkDisplay" wx:if="{{clerkDisplay}}">
+	<view catchtap="catchMouseOperate">
+		<view>
+			<text>{{clerk.action == "clerkHot" ? "最热合伙人" : "最新合伙人"}}</text>
+			<image class="clerkClose"
+				src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_close%402x.png"
+				catchtap="clerkDisplay"></image>
+		</view>
+		<text>{{clerk.createdTimeDisplay}}</text>
+		<view class="clerkContent">
+			<image src="{{clerk.params.headimg}}"></image>
+			<view>
+				<text class="aline1">{{clerk.params.name}}</text>
+				<text class="aline1">{{clerk.params.roleName}}</text>
+				<text class="aline1">{{clerk.merchant.name}}</text>
+			</view>
+		</view>
+		<view class="clerkParam">
+			<text>浏览次数·{{clerk.params.count}}</text>
+			<text>分享次数·{{clerk.params.shares}}</text>
+		</view>
+	</view>
+</view>
+<!-- 合伙人 end -->

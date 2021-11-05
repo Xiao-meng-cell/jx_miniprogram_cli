@@ -1,0 +1,2 @@
+<!--pages/tabBar_user_center/menu_help/protocol_use.wxml-->
+<web-view src="https://oss.vicpalm.com/static/weclubbing/protocol-zcrs/user_agreement.html?id=allShow"></web-view>

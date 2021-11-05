@@ -1,0 +1,7 @@
+<!--widget/open-network/open-network.wxml-->
+<view class='network_view'>
+<view class='network_not_open'>
+  <image src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/network_not_open.png'></image>
+  <view catchtap='reLaunchPage'>重新加载</view>
+</view>
+</view>

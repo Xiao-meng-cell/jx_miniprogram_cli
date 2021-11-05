@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "noneLine": "/widget/none-line/none-line"
+  },
+  "navigationBarTitleText": "提现记录"
+}

@@ -1,0 +1,39 @@
+<!--pages/tabBar_activity/goods_category/goods_category.wxml-->
+<view class="categoryType" hidden="{{!isLogin || !isCheckIn}}" wx:if="{{!inreward && !tagBarHidden}}">
+	<view data-index="0" catchtap="changeCategoryType">
+		<text class="{{categoryTypeIndex == 0 ? 'categoryType_selected_flag categoryType_selected' : 'categoryType_unselected'}}">商品分类</text>
+	</view>
+	<view data-index="1" catchtap="changeCategoryType">
+		<text class="{{categoryTypeIndex == 1 ? 'categoryType_selected_flag categoryType_selected' : 'categoryType_unselected'}}" >仓货分类</text>
+	</view>
+</view>
+<swiper class="swiper" style="{{inreward || !isCheckIn || !isLogin ? 'height:100vh;' : ''}}" current="{{categoryTypeIndex}}" bindchange="bindchange">
+	<swiper-item catchtouchmove="{{!isLogin || !isCheckIn ? 'stopTouchMove' : ''}}">
+		<view class="viewList">
+			<scroll-view style="height:{{inreward || !isCheckIn || !isLogin ? 'calc(100vh - 24rpx * 2)' : 'calc(100vh - 24rpx * 2 - 72rpx)'}};" scroll-y>
+				<block wx:for="{{goodsTagList}}" wx:key="idx">
+					<view class="tagItem" data-item="{{item}}" catchtap="goToGoodsList">
+						<text>{{item.name}}</text>
+						<view style="flex:1;"></view>
+						<text>({{item.count}})</text>
+						<text>></text>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
+	</swiper-item>
+	<swiper-item>
+		<view class="viewList">
+			<scroll-view style="height:{{inreward || !isCheckIn || !isLogin ? 'calc(100vh - 24rpx * 2)' : 'calc(100vh - 24rpx * 2 - 72rpx)'}};" scroll-y>
+				<block wx:for="{{sourceTagList}}" wx:key="idx">
+					<view class="tagItem" data-item="{{item}}" data-index="{{index}}" catchtap="goToSourceList">
+						<text>{{item.name}}</text>
+						<view style="flex:1;"></view>
+						<text>({{item.count}})</text>
+						<text>></text>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
+	</swiper-item>
+</swiper>

@@ -1,0 +1,22 @@
+<!--pages/tab_index/search_results/search_results.wxml-->
+<import src="../../../assets/template/business_list/business_list.wxml" />
+<import src="../../../assets/template/business_list_big_picture/business_list_big_picture.wxml" />
+<!--搜索栏 start-->
+<search-column input_value="{{keyword}}" bind:executeSearch="executeSearch"></search-column>
+<!--搜索栏 end-->
+
+<!--企业列表 新 start-->
+<template is="business_list_big_picture" data="{{business_list_data}}" />
+<!--企业列表 新 end-->
+
+<!--无网络 start-->
+<open-network id="openNetwork" bind:onRefresh="reloadThePage" style="display:{{networkType?'none':''}};"></open-network>
+<!--无网络 end-->
+
+<!--无相关内容 start-->
+<view class="nothing" data-length="{{business_list_data[0].length}}" style='display:{{(business_list_data[0].length>0)&&(business_list_data[0].length)?"":"none"}};'></view>
+<!--无相关内容 end-->
+
+<!--无相关内容 start-->
+<view class="nothing" data-length="{{business_list_data[0].length}}" style='display:{{business_list_data[0].length==0||!business_list_data[0].length?"":"none"}};'>没有相关内容</view>
+<!--无相关内容 end-->

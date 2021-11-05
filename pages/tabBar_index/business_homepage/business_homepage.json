@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "企业首页",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "wx_falls_layout_master": "/widget/wx-falls-layout-master/wx-falls-layout-master",
+    "cart_button": "/widget/cart/cart",
+    "business_news": "/widget/business-news/business-news",
+    "mMap": "/widget/mapTab/map",
+    "fileBox": "/widget/file-box/index",
+    "tabbar": "/widget/tabbar/index",
+    "goodsItem": "/widget/goodsItem/goodsItem",
+    "businessChartMap": "/widget/businessChartMap/businessChartMap",
+    "noneLine": "/widget/none-line/none-line"
+  }
+}

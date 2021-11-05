@@ -1,0 +1,124 @@
+.zs-tab-barv {
+  width: 100vw;
+  height: 100rpx;
+}
+
+.zs-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding-top: 12rpx;
+  right: 0;
+  display: flex;
+  z-index: 999;
+}
+
+.zs-tab-bar-border {
+  background-color: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 2rpx;
+  transform: scaleY(0.5);
+  z-index: 9999;
+}
+
+.zs-tab-bar-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.zs-tab-bar-item image {
+  width: 54rpx;
+  height: 54rpx;
+  display: block;
+}
+
+.zs-tab-bar-item>view {
+  position: relative;
+  font-size: 20rpx;
+}
+
+.zs-tab-bar-item-btn {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #333;
+  line-height: 1.2;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: auto;
+  font-family: -apple-system;
+}
+
+.zs-tab-bar-item-btn::after {
+  background: #fff;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #333;
+  line-height: 1.2;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: auto;
+  font-family: -apple-system;
+  background: #fff;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.zs-tab-bar-item-image {
+  width: 54rpx;
+  height: 54rpx;
+  display: block;
+  overflow: hidden;
+  pointer-events: auto;
+  margin-bottom: 4rpx;
+}
+
+.zs-tab-bar-item-text {
+
+  display: block;
+  line-height: 20rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: auto;
+  font-family: -apple-system;
+}
+
+/*红点提示*/
+
+.zs-dot {
+  position: relative;
+  z-index: 2;
+  top: -40rpx;
+  background: #f00;
+  border-radius: 10rpx;
+  left: 30rpx;
+  border: 6rpx solid #f00;
+}
+
+.zs-number {
+  position: absolute;
+  z-index: 2;
+  top: -10rpx;
+  right: -20rpx;
+  background: #f00;
+  border-radius: 100%;
+  color: #fff;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}

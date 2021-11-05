@@ -1,0 +1,22 @@
+<!--miniprogram/pages/tabBar_user_center/manager/business_myqrcode/business_myqrcode.wxml-->
+<wxs module="timeUtil" src="../../../../utils/timeUtil.wxs"></wxs>
+<wxs module="utils" src="../../../../utils/utils.wxs"></wxs>
+
+<topBar title="企业小程序码"></topBar>
+<view class='contain_bg vertical-hcenter'>
+  <view class='code_contain'>
+    <view style='flex:1;display:flex;align-items:center;justify-content:center;'>
+      <image style='width:70%;height：70%；margin:auto;' src="{{myQRCodeUrl}}" data-src="{{myQRCodeUrl}}" mode="widthFix"
+        catchtap="lookPhoto" />
+    </view>
+    <view class='vertical-hcenter' style='margin-bottom:10px;'>
+      <text style='font-size:16px;'>我的邀请码：{{inviteCode}}</text>
+      <text style='font-size:12px;color:#a0a0a0'>扫一扫小程序码图案查看企业</text>
+    </view>
+  </view>
+
+  <view class='horizontal-vcenter' style='width:90%;height:50px;margin-top:20px;margin-bottom:30px;'>
+    <button class='qrcode_btn btn_savecode' hover-class='btn_default_big_hover' catchtap='saveImage'>保存至相册</button>
+  </view>
+
+</view>

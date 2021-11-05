@@ -1,0 +1,48 @@
+<!--pages/skill/skill.wxml-->
+<view class="page">
+  <view class="weui-tab" wx:if="{{!onlyParent}}">
+    <view class="weui-tab__panel">
+      <view class="weui-tab__content">
+        <scroll-view scroll-y="true" class="left-cont" scroll-with-animation="true">
+          <block class="caixi" wx:key="id" wx:for="{{menus}}" wx:for-index="index">
+            <block wx:if="{{ scrollTop < item.maxHeight && scrollTop >= item.minHeight }}">
+              <view class="classify  active" bindtap="clickMenu" data-id='{{index}}' data-name="{{'list'+item.id}}">{{item.name}}</view>
+            </block>
+            <block wx:else>
+              <view class="classify" bindtap="clickMenu" data-id='{{index}}' data-name="{{'list'+item.id}}">{{item.name}}</view>
+            </block>
+          </block>
+        </scroll-view>
+        <scroll-view scroll-y="true" class="right-cont" scroll-with-animation="{{true}}" scroll-into-view="{{cate}}" bindscroll="scroll" bindtouchend='scrollTouchend'>
+          <view class="nav-right">
+            <block class="caixi" wx:key="id" wx:for="{{menus}}" wx:for-item="parentItem" wx:for-index="parentIndex">
+              <view class='item{{parentIndex}}'>
+                <view id="{{'list'+parentItem.id}}" class="title">{{parentItem.name}}</view>
+                <view class="classify-item">
+                  <block wx:for="{{parentItem.subs}}" wx:key="id" wx:for-item="childItem" wx:for-index="childIndex">
+                    <view class="item" bindtap='checkClassify' data-bean="{{childItem}}" data-parentbeancode="{{parentItem.code}}" hover-class="hoverclass">
+                      <image src="{{childItem.icons[0].url}}"></image>
+                      <view class="name">{{childItem.name}}</view>
+                    </view>
+                  </block>
+                </view>
+              </view>
+            </block>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <view wx:else>
+    <scroll-view scorll-y>
+      <view class="classList">
+        <block wx:key="id" wx:for="{{menus}}" wx:for-index="index">
+          <view class="classItem" bindtap='goToRanking' data-bean="{{item}}" hover-class="hoverclass">
+            <image src="{{item.icon}}"></image>
+            <view class="name">{{item.name}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</view>

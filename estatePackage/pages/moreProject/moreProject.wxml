@@ -1,0 +1,32 @@
+<!--estatePackage/pages/moreProject/moreProject.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<view class="sources" catchtap="goToChannelGoods">
+  <image class="imgSources" src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/huoyuan-bg.png" mode="widthFix"></image>
+  <view>
+    <text>我要代理</text>
+  </view>
+</view>
+
+<view class="list">
+  <block wx:for="{{dataList}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+      <view data-item="{{item}}" catchtap="goToDetail">
+        <image src="{{item.fileJson.illustration[0]}}"></image>
+        <view>
+          <view>
+            <text class="projectDescStatus {{item.orderRealEstateAttach.estateStatus == 1 ? 'projectDescStatus_selled' : 'projectDescStatus_other'}}">{{item.orderRealEstateAttach.estateStatus == 1 ? "在售" : "待售"}}</text>
+            <text class="projectName aline1">{{item.title}}</text>
+          </view>
+          <view class="desc">
+            <text class="aline1" decode="true">{{item.editAddr.areaName}}&nbsp;&nbsp;{{item.orderRealEstateAttach.address}}&nbsp;&nbsp;建筑面积&nbsp;&nbsp;{{item.orderRealEstateAttach.buildingArea}}㎡</text>
+          </view>
+          <view class="projectPrice">
+            <text wx:if="{{item.orderRealEstateAttach.sellingPriceType != 3}}">￥{{item.displayPrice}}</text>
+            <text wx:if="{{item.orderRealEstateAttach.sellingPriceType != 3}}">起</text>
+            <text wx:if="{{item.orderRealEstateAttach.sellingPriceType == 3}}">价格面议</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

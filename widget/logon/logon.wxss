@@ -1,0 +1,66 @@
+/* widget/logon/logon.wxss */
+
+.wx_logon_mask {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.container {
+  width: 500rpx;
+  height: 480rpx;
+  background: rgb(255, 255, 255);
+  border-radius: 10rpx;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container>image:nth-child(1) {
+  width: 120rpx;
+  height: 120rpx;
+  border: 2rpx solid #fff;
+  border-radius: 100rpx;
+  margin: auto;
+  display: block;
+}
+
+.container_text {
+  margin-bottom: 50rpx;
+  font-size: 30rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+
+.login_button {
+  font-size: 34rpx;
+  border: none;
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+  margin: 0;
+  border-radius: 10rpx;
+  margin-bottom: 50rpx;
+}
+
+.login_button::after {
+  border: none;
+}
+
+.no_login{
+  font-size: 28rpx;
+  color: rgb(202, 202, 202);
+  text-decoration:underline ;
+  margin-bottom: 30rpx;
+
+}

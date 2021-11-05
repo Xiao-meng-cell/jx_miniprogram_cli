@@ -1,0 +1,14 @@
+<!--miniprogram/pages/order/goods_opt_status/buy_success.wxml-->
+
+<mp_msg title="付款成功" type="success" icon="success" desc="可前往工作台查看订单详情" size="64">
+	<view slot="handle">
+		<button class="weui-btn" type="primary" catchtap="toLookDetails">查看订单</button>
+		<button class="weui-btn" type="default" catchtap="backUpPage">返回</button>
+	</view>
+	<view slot="footer">
+		<view class="weui-footer__links">
+			<navigator url="/pages/tabBar_index/business_homepage/business_homepage" open-type="switchTab" class="weui-footer__link">{{miniProText}}</navigator>
+		</view>
+		<view class="weui-footer__text">Copyright © 2017-2020 掌胜科技</view>
+	</view>
+</mp_msg>

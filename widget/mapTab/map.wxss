@@ -1,0 +1,149 @@
+/* widget/map/map.wxss */
+
+.mapPrivateView,
+.mapPrivateView view,
+.mapPrivateView text {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.mapView {
+  width: 100%;
+  border-radius: 15rpx;
+  overflow: hidden;
+}
+
+
+/* 项目周边 start */
+
+.projectNearby {
+  width: 100%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx 30rpx;
+}
+
+
+.projectNearby .scroll {
+  white-space: nowrap;
+  display: flex;
+}
+
+
+.projectNearby .row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.projectNearby .icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 4rpx;
+}
+
+
+.projectNearby .list {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  height: 400rpx;
+  overflow: scroll;
+  margin-top: 20rpx;
+}
+
+.projectNearby .listItem {
+  width: 100%;
+  margin-bottom: 20rpx;
+  padding-bottom: 24rpx;
+}
+
+.projectNearby .listItem:not(:last-child) {
+  border-bottom: 2rpx solid #eeeeee;
+}
+
+
+.projectNearby .listItem .dis {
+  text-align: right;
+}
+
+.dis {
+  margin-top: 6rpx;
+}
+
+.projectNearby .listItem .row {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.projectNearby .listItem .tag {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projectNearby .listItem .tagList {
+  padding-top: 8rpx;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.projectNearby .listItem .tagItem {
+  text-align: center;
+  border-radius: 25rpx;
+  border: #2F95FB 2rpx solid;
+  padding: 0 10rpx;
+  margin: 5rpx;
+  color: #2F95FB;
+  font-size: 20rpx;
+  background-color: white;
+}
+
+/* 项目周边 end */
+
+.tab {
+  width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.tab>view {
+  padding-left: 32rpx;
+  padding-right: 8rpx;
+}
+
+.tab .line-style {
+  background: #fff;
+  height: 6rpx;
+  width: 30rpx;
+  position: relative;
+
+}
+
+.tab .title-sel-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tab .title-sel-selected .line-style {
+  background: #2F95FB;
+  height: 6rpx;
+  width: 60rpx;
+  position: relative;
+}

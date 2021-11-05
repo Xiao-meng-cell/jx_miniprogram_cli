@@ -1,0 +1,31 @@
+/* widget/open-app/open-app.wxss */
+.open_app{
+  position: fixed;
+  bottom: 350rpx;
+  right: 20rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  overflow: hidden;
+  zoom: 1;
+  z-index: 9999;
+  color: white;
+  font-size:30rpx;
+  text-align: center;
+  padding:0;
+  box-sizing:border-box;
+  text-decoration:none;
+  line-height:36rpx;
+  -webkit-tap-highlight-color:transparent;
+  background-color:rgba(150, 150, 150, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.open_app_text{
+  color: white;
+  font-size:30rpx;
+  display: inline-block;
+  margin: auto;
+}

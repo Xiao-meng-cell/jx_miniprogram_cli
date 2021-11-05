@@ -1,0 +1,188 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<template name="normal">
+	<!--切换详情和产品 start-->
+	<view class="show_top" style="height:{{capsuleTop+38}}px" wx:if="{{isFixedTop && !official && !fromClerkShow}}">
+	</view>
+	<view class="x_layout {{ isFixedTop ?'screening_fixed':'tab_business_info '}}"
+		style="width: 100%;top:{{capsuleTop+36}}px" id='tabId' wx:if="{{!noActivity && !official &&!fromClerkShow}}">
+		<view wx:for="{{tab_config.tabs}}" wx:key="unique" data-index="{{item.id}}" data-type="{{item.tabType}}"
+			class='{{switch_index==index?"selected_tag_menu":"unselected_tag_menu"}}'
+			style="width: {{tab_config.item_width}}px;" bindtap="handlerTabTap">
+			<text>{{item.name}}</text>
+		</view>
+	</view>
+
+	<!--切换详情和产品 end-->
+	<view class="topBar" style="height:{{capsuleTop + 32}}px;" hidden="{{screening_top}}"></view>
+
+	<!-- 渐变层 start  -->
+	<!-- <view class="gradual {{!noActivity && !official &&!fromClerkShow ? 'gradualBgColor' : ''}}"></view> -->
+	<!-- 渐变层 end  -->
+
+
+	<!-- tab panel -->
+	<!-- <view class="page-section page-section-spacing swiper-wrap" wx:if="{{!fromClerkShow && !noActivity}}" style="height: 100%">
+		<swiper class="swiper" style="height:{{tabType=='goods' ? mediaInfoHeight:mediaInfoHeight1}}px;"
+			indicator-dots="{{swipe_config.indicator_dots}}" autoplay="{{swipe_config.autoplay}}"
+			interval="{{swipe_config.interval}}" duration="{{swipe_config.duration}}" current="{{switch_index}}"
+			bindchange="swiperChange" bind:transition="swiperTransition" data-type="{{tabType}}"> -->
+	<!-- 商品列表 start -->
+	<!-- <swiper-item> -->
+	<!-- <swiper-item class="swiper-item" wx:for="{{tab_config.tabs}}" wx:key="item"> -->
+	<view id="goods_list" wx:if="{{tabType=='goods' && !fromClerkShow && !noActivity}}">
+		<view class="goodsList">
+			<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+				<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+					<goodsItem id="goodsItem" data="{{item}}" scene="{{'merchant' + merchant_code}}" sceneDT="{{merchant_code}}">
+					</goodsItem>
+				</block>
+			</block>
+		</view>
+		<view class="switch1_btn fontS-14" data-index="{{tabPosition=='0'?1:0}}" data-type="news" bindtap="handlerTabTap"
+			wx:if="{{loadAll}}">点击查看企业动态</view>
+	</view>
+	<view id="business_info" wx:if="{{tabType=='news'}}">
+		<!-- 地址、排行信息 start -->
+		<view class="mainContent_group">
+			<!-- 地址信息 start -->
+			<view class="addrInfo" catchtap='mapNavigation'>
+				<image class='attribute_item2'
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_addr.png">
+				</image>
+				<view>
+					<text>{{business_info.addr==null?'暂无地址':business_info.addr}}</text>
+					<text class='dis' style='display:{{business_info.dis?"":"none"}}'>距您{{business_info.dis}}</text>
+				</view>
+				<view>
+					<text>导航</text>
+				</view>
+			</view>
+			<!-- 地址信息 end -->
+			<view class="fgx"></view>
+			<view class='business_info'>
+				<view catchtap='changeShowRange'>
+					<image class='attribute_item2'
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_notice.png">
+					</image>
+					<text
+						class='setShow_range {{change_show_range?"setShow_range_open":""}}'>{{business_info.intro==null||business_info.intro==''?'暂无信息':business_info.intro}}</text>
+				</view>
+				<view wx:if="{{business_info.intro!=null&&business_info.intro!=''}}" catchtap='changeShowRange'>
+					<text>{{change_show_range ? "收起简介":"展开简介"}}</text>
+				</view>
+			</view>
+		</view>
+		<!-- 地址、排行信息 end -->
+		<!--旗下精英人数-start-->
+		<view class="parter_box oh">
+			<view class="fl">
+				<view class="db_inline icon_flag">
+					<image wx:if="{{business_info.ultimate== 1}}"
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_black@3x.png"
+						alt=""></image>
+					<image wx:if="{{business_info.channel == 1 && business_info.ultimate != 1}}"
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_yellow@3x.png"
+						alt=""></image>
+					<image wx:if="{{business_info.channel == 0 && business_info.ultimate != 1}}"
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_blue@3x.png"
+						alt=""></image>
+				</view>
+				<view class="db_inline parent_text">旗下精英</view>
+			</view>
+			<view
+				class="fr {{ business_info.ultimate== 1 || (business_info.channel == 1 && business_info.ultimate != 1) ? 'yellow_border' : 'blue_border'}}">
+				<text wx:if="{{userLander}}" class="parent_num">{{userRole >= 0 ? parentCount :( parentCount > 20 ? parentCount
+					: '1-20')}}</text>
+				<text wx:if="{{userLander}}">人</text>
+				<text wx:if="{{!userLander}}" catchtap="login" style="font-size: 24rpx; color: #2f95fb;">登录查看人数</text>
+			</view>
+		</view>
+		<!--旗下精英人数-end-->
+		<!-- 成为共享合伙人 start -->
+		<view class="joinMe" catchtap="applyCard" wx:if="{{userRole < 0}}">
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/sqhhr.png">
+			</image>
+			<text>申请成为合伙人</text>
+			<view style="flex:1;"></view>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_forward.png">
+			</image>
+		</view>
+		<!-- 成为共享合伙人 end -->
+
+		<!-- 货源入口 start -->
+		<view class="channelGoods" catchtap="goToChannelGoods" wx:if="{{showChannle}}">
+			<view>
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/channel_source.png">
+				</image>
+				<text>{{businessStatus.productCount}}款货源等待代理</text>
+			</view>
+			<view style="flex:1;"></view>
+			<text>查看货源</text>
+		</view>
+		<!-- 货源入口 end -->
+
+		<!-- 合伙人动态 start -->
+		<view class="channelGoods" catchtap="goToNewsList" wx:if="{{fromClerkShow}}">
+			<view>
+				<text style="color:#2F95FB;font-size:0.9rem;margin-bottom:3px;font-weight:bold">合伙人动态</text>
+				<text>查看当日最热合伙人等</text>
+			</view>
+			<view style="flex:1;"></view>
+			<text>查看动态</text>
+		</view>
+		<!-- 合伙人动态  end -->
+		<view class="news_title" wx:if="{{!fromClerkShow}}">动态</view>
+		<!-- <business_news id="business_news" merchantCode="{{merchant_code}}" showTitle="{{showTitle}}"
+						includePlatform="false" bind:listEmpty="listEmpty" wx:if="{{!newsListEmpty}}">
+					</business_news> -->
+		<!-- 不存在tab导航栏吸顶遮罩 -->
+		<view class="dynamic-screening-fixed-mask-top" wx:if="{{isFixedTop && fromClerkShow}}"
+			style="height:{{capsuleTop+36}}px">
+
+		</view>
+		<!-- 动态筛选 -->
+		<view class="{{ isFixedTop? 'dynamic-screening-fixed' : ''}}" style="top: {{capsuleTop + 32 + tabHeight}}px">
+			<view class="{{isFixedTop? 'dynamic-screening-content' : ''}}">
+				<scroll-view class="scvNewsType" scroll-x scroll-with-animation scroll-left="{{(newsTypes_index - 1) * 68}}">
+					<view class="dynamic-screening__item {{index == newsTypes_index? 'dynamic-screening__item__select' : ''}}"
+						wx:for="{{newsTypes}}" wx:key="id" data-item="{{item}}" data-index="{{index}}" catchtap="onClickScreening">
+						<text>{{item.typeName}}</text>
+					</view>
+				</scroll-view>
+			</view>
+		</view>
+		<!-- <business_news id="business_news" merchantCode="{{merchant_code}}" clerkMark="1" includePlatform="{{false}}"
+			scope="clerk" bind:listEmpty="listEmpty" bindtap='getMediaInfoHeight' type="{{newsTypes_select.type}}"
+			clerkCode="{{clerk_code}}" wx:if="{{fromClerkShow && !newsListEmpty && merchant_code}}">
+		</business_news>
+		<business_news id="business_news" merchantCode="{{merchant_code}}" includePlatform="{{true}}" scope="merchant"
+			bind:listEmpty="listEmpty" bindtap='getMediaInfoHeight' type="{{newsTypes_select.type}}"
+			clerkCode="{{clerk_code}}" wx:if="{{!fromClerkShow && !newsListEmpty && merchant_code}}">
+		</business_news> -->
+		<business_news id="business_news" merchantCode="{{merchant_code}}" clerkMark="{{clerkMark}}"
+			includePlatform="{{includePlatform}}" scope="{{scope}}" bind:listEmpty="listEmpty" bindtap='getMediaInfoHeight'
+			type="{{newsTypes_select.type}}" clerkCode="{{clerk_code}}" wx:if="{{!newsListEmpty && merchant_code}}">
+		</business_news>
+		<view class="emptyView" wx:if="{{newsListEmpty}}">
+			<image
+				src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+			</image>
+			<text>暂无动态资讯</text>
+		</view>
+		<view class="switch1_btn fontS-14" data-index="{{tabPosition=='0'?0:1}}" data-type="goods" bindtap="handlerTabTap"
+			wx:if="{{!noActivity}}">
+			点击查看商品
+		</view>
+	</view>
+	<!-- </swiper-item> -->
+	<view style="height:200rpx;width:100%"></view>
+	<!-- 商品列表 end -->
+
+	<!-- 关于企业 start -->
+	<!-- <swiper-item> -->
+	<!-- </swiper-item> -->
+	<!-- 关于企业 end -->
+	<!-- </swiper>
+	</view> -->
+</template>

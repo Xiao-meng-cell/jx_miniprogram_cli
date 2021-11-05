@@ -1,0 +1,93 @@
+<!--miniprogram/pages/tabBar_index/confirm_order/confirm_order.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<!--收货地址 start -->
+<view class="receiving_address global_page_indent" catchtap='chooseUserAddress' hidden='{{!optional_permissions}}' >
+  <image :src="app.globalData.img_host + 'order_map"></image>
+  <view>
+    <view>
+      <text>{{order_addr.name}}</text>
+      <text> {{order_addr.phone}}</text>
+    </view>
+    <text>{{order_addr?order_addr.addrdetail:"请填写收货地址"}}</text>
+
+  </view>
+  <image :src="app.globalData.img_host + 'icon_next"></image>
+</view>
+
+<view class="receiving_address global_page_indent" catchtap='mapNavigation' hidden='{{optional_permissions}}'>
+  <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_map.png"></image>
+  <view>
+    <view>
+      <text>{{order_addr.name}}</text>
+      <text> {{order_addr.phone}}</text>
+    </view>
+    <text>{{order_addr?order_addr.addrdetail:"请填写收货地址"}}</text>
+
+  </view>
+  <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"></image>
+</view>
+
+<!--收货地址 end -->
+
+<!--间隔 start-->
+<view class='spacing'></view>
+<!--间隔 end-->
+
+<!--商品描述 start-->
+<view class='goods_describe global_page_indent'>
+  <image src='{{business_detail.illustration[0]}}' mode='aspectFill'></image>
+  <view class='goods_price'>
+    <view>{{business_detail.product.name}}</view>
+    <view>{{business_detail.product.description?business_detail.product.description:""}}</view>
+    <view>
+      <text>￥ {{price}}</text>
+      <!-- <text style='display:{{type_code=="Original"?"none":""}};'>￥{{business_detail.product.price}}</text> -->
+      <text style='display:none'>￥{{business_detail.product.price}}</text>
+      <text style='display:{{type_code=="Original"?"none":""}};'>{{business_detail.typeCodeName}}</text>
+    </view>
+  </view>
+</view>
+<!--商品描述 end-->
+
+<!--购买数量 start-->
+<view class='bottom_border_item buy_num global_page_indent'>
+  <text>购买数量</text>
+  <view>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del.png" catchtap='delQuantity'></image>
+    <text>{{quantity}}</text>
+    <image :src=""src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add.png" catchtap='addQuantity'></image>
+  </view>
+</view>
+<!--购买数量 end-->
+
+<!--优惠券 start-->
+<view class='bottom_border_item global_page_indent coupon' hidden='true'>
+  <text>优惠券</text>
+  <view>
+    <text>店铺分享折扣券</text>
+    <text>-￥20</text>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"></image>
+  </view>
+</view>
+<!--优惠券 end-->
+
+<!--留言 start-->
+<view class='bottom_border_item global_page_indent leaving_message'>
+  <text>买家留言</text>
+  <!-- <textarea placeholder='选填：填写内容已和企业确认' placeholder-class='placeholder_mesaage'  bindinput='inputCustomOrderMessage' catchtouchmove="doNotMove" value='{{order_message}}' maxlength="30"></textarea> -->
+  <input placeholder='选填：填写内容已和商家确认' placeholder-class='placeholder_mesaage' bindinput='inputCustomOrderMessage' catchtouchmove="doNotMove" value='{{order_message}}' maxlength="30"></input>
+</view>
+<!--留言 end-->
+
+<!--合计 start-->
+<view class='user_operation  {{iPhone_X?"iPhone_X":""}}'>
+  <view>
+    <text>合计：</text>
+    <text>￥{{total_price}}</text>
+    <text>{{type_code=="Original"?"未使用折扣":"已折扣"+utils.toFix(operation=="add"?discount_price:discount_price*quantity)+"元"}}</text>
+  </view>
+  <view catchtap='submissionOrder'>
+    提交订单
+  </view>
+</view>
+<!--合计 end-->

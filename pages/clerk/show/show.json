@@ -1,0 +1,13 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "homepage_button": "/widget/homepage-button/homepage-button",
+    "cart_button": "/widget/cart/cart",
+    "business_news": "/widget/business-news/business-news",
+    "goodsItem": "/widget/goodsItem/goodsItem",
+    "businessChartMap": "/widget/businessChartMap/businessChartMap",
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar",
+    "tabbar": "/widget/tabbar/index"
+  }
+}

@@ -1,0 +1,47 @@
+/* miniprogram/pages/tabBar_user_center/manager/business_myqrcode/business_myqrcode.wxss */
+.contain_bg{
+  /* background-image:  url('https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/dim_mask.jpg'); */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-color:  white;
+  background-size:100% 100%;
+}
+
+.code_contain{
+    width: 90%;
+    flex: 1;
+    margin-top: 60rpx;
+    background-color: #FFFFFF;
+    text-align: center;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.qrcode_btn {
+  width: 100%;
+  height: 90rpx;
+  border-radius: 8rpx;
+  padding: 0px;
+  text-align: center;
+  font-size: 26rpx;
+  text-indent: 0em;
+  align-items: center; /*垂直居中*/
+  justify-content: center; /*水平居中*/
+  line-height: 80rpx;
+  display: table;
+}
+
+.btn_savecode{
+ background: linear-gradient(to right, rgba(49, 183, 249), rgba(47, 149, 251));
+ color: white;
+}
+
+
+
+
+

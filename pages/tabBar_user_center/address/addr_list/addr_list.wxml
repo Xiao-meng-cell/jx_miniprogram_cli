@@ -1,0 +1,70 @@
+<!--miniprogram/pages/tabBar_user_center/address/addr_list.wxml-->
+<topBar title="收货地址"></topBar>
+<view class='contain'>
+  <view bindtap='toEidt' data-isEdit="false" data-addrObj='' class='horizontal-vcenter item_contain'
+    style='height:45px;' hover-class='btn_white_hover'>
+    <text class='item_add_addr'>添加收货地址</text>
+    <image class='item_right_next'
+      src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png" />
+  </view>
+
+  <!--间隔 start-->
+  <view class='spacing' style='height:1px;position:relative;'></view>
+  <!--间隔 end-->
+
+
+  <block wx:for='{{addressList}}' wx:key="item">
+    <view class='horizontal-vcenter item_contain_margin' wx:if="{{item.areaType==3?false:true}}">
+      <view style='flex:1;' catchtap='chooseUserAddr' data-item="{{item}}"
+        data-addrdetail='{{item.provinceName}}{{item.cityName}}{{item.areaName}}{{item.address}}'
+        data-name='{{item.linkman}}' data-phone='{{item.phone}}'>
+        <view>
+          <text class='item_nickname'>{{item.linkman}}</text>
+          <text class='item_phone'>{{item.phone?item.phone:""}}</text>
+          <text wx:if="{{item.isDefault==1}}" class='item_default_addr'>默认</text>
+        </view>
+        <text class='item_addr'>{{item.provinceName}}{{item.cityName}}{{item.areaName}}{{item.address}}</text>
+      </view>
+      <view class='item_vline' />
+      <view bindtap='toEidt' data-isEdit="true" data-addrObj='{{item}}'>
+        <text class='item_edit'>编辑</text>
+      </view>
+    </view>
+    <view style='height:1px;' />
+  </block>
+
+
+  <!--间隔 start-->
+  <view class='spacing' style='height:10rpx;position:relative;'></view>
+  <!--间隔 end-->
+
+
+  <view hidden="{{productCode && beyondDistance?false:true}}" class='horizontal-vcenter item_contain'
+    style='height:45px;' hover-class='btn_white_hover'>
+    <text class='item_add_addr'>以下地址不在商家配送区域</text>
+  </view>
+  <!--超出配送范围的地址 start-->
+  <block wx:for="{{addressList}}" wx:key="item" wx:index="index">
+    <view class='horizontal-vcenter item_contain_margin' wx:if="{{item.areaType==3?true:false}}">
+      <view wx:if="{{item.areaType==3?true:false}}" style='flex:1;' data-item="{{item}}"
+        data-addrdetail='{{item.provinceName}}{{item.cityName}}{{item.areaName}}{{item.address}}'
+        data-name='{{item.linkman}}' data-phone='{{item.phone}}'>
+        <view>
+          <text class='item_nickname' style="color: #a0a0a0;">{{item.linkman}}</text>
+          <text class='item_phone'>{{item.phone?item.phone:""}}</text>
+          <text wx:if="{{item.isDefault==1}}" class='item_default_addr'>默认</text>
+        </view>
+        <text class='item_addr' style="color: #a0a0a0;">{{item.address}}</text>
+      </view>
+      <view class='item_vline' />
+      <view bindtap='toEidt' data-isEdit="true" data-addrObj='{{item}}'>
+        <text class='item_edit'>编辑</text>
+      </view>
+    </view>
+    <view style='height:1px;' />
+  </block>
+  <!--超出配送范围的地址 end-->
+</view>
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

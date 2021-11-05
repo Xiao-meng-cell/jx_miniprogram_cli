@@ -1,0 +1,60 @@
+<!--pages/tabBar_user_center/menu_wallet/menu_wallet.wxml-->
+<!--我的收益-->
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
+<topBar title="我的收益"></topBar>
+<wux-dialog id="wux-dialog" />
+<wux-dialog id="wux-dialog--alert" />
+<view class="main">
+  <view class='wallet_bg'>
+    <view>
+      <text>可提现金额(元)</text>
+      <view bindtap="goToQuestion">
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/question.png">
+        </image>
+        <text>金额问题</text>
+      </view>
+    </view>
+    <text>{{utils.toFix((walletInfo.waiting)/100)}}</text>
+    <view class='charge' bindtap='tipUseApp'>
+      <text>提现结算</text>
+    </view>
+  </view>
+  <view class='wallet_menu'>
+    <view class='horizontal-vcenter'>
+      <view class='vertical-hcenter split-row' bindtap='details' data-moneytype='type_income' data-status='1'>
+        <text>未审核金额</text>
+        <view class="dshje">
+          <text>￥</text>
+          <text>{{utils.toFix((walletInfo.pending)/100)}}</text>
+        </view>
+      </view>
+      <view class='wallet_menu_split' />
+      <view class='vertical-hcenter split-row' bindtap='tipUseApp'>
+        <text>我的银行卡</text>
+        <text class="cardNum">{{walletInfo.bankCards}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="fgx"></view>
+  <view class="cash_out_hickory" catchtap="cashOutHickory">
+    <image
+      src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_withdrawal_record%403x.png">
+    </image>
+    <text>提现记录</text>
+    <view style="flex:1;"></view>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+    </image>
+  </view>
+  <view class="cash_out_hickory" catchtap="paySetting" wx:if="{{enableMember}}">
+    <image
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_setting%402x.png">
+    </image>
+    <text>支付设置</text>
+    <view style="flex:1;"></view>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+    </image>
+  </view>
+</view>
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

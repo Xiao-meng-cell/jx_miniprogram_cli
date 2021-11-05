@@ -1,0 +1,9 @@
+/* miniprogram/pages/business/video_show/video_show.wxss */
+.vertical-hcenter_contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /*垂直居中*/
+  justify-content: center; /*水平居中*/
+  height: 100%;
+  background: black;
+}

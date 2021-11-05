@@ -1,0 +1,48 @@
+/* pages/tabBar_user_center/menu_help/menu_help.wxss */
+
+.page-body {
+  width: 100%;
+  height: 100vh;
+}
+
+.page-body>view>text {
+  font-size: 24rpx;
+}
+
+.operateView {
+  display: flex;
+  flex-direction: column;
+}
+
+.operateItem {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30rpx;
+  height: 90rpx;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: #eee 2rpx solid;
+  font-size: 30rpx;
+  font-weight: bold;
+  position: relative;
+}
+
+.operateItem image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 30rpx;
+}
+
+.contact_customer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: transparent;
+}
+
+.merchantInfo {
+  display: flex;
+  flex-direction: column;
+  margin: 32rpx;
+}

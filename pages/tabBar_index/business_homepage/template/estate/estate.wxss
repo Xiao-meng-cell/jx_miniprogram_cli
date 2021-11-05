@@ -1,0 +1,719 @@
+/* 吸顶bar start */
+
+.navbar-wrap {
+  width: 100%;
+}
+
+.navbar-wrap .column {
+  width: 100%;
+  background: #fff;
+  border-bottom: solid 2rpx #eee;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.navbar-wrap .column.fixed {
+  position: fixed;
+}
+
+.navbar-wrap .col {
+  height: 150rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.navbar-wrap .row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.navbar-wrap .title {
+  width: 100%;
+  height: 88rpx;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* 吸顶bar end */
+
+/* 货源banner start  */
+
+.sourceBanner {
+  height: 160rpx;
+  margin-top: 20rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  padding: 0px 32rpx;
+  background-image: url(https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/huoyuan-bg%403x.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+}
+
+.sourceBanner .btn {
+  width: 180rpx;
+  margin-top: calc(160rpx / 2);
+  text-align: center;
+  border-radius: 28rpx;
+  padding: 5rpx 20rpx;
+  background: #2F95FB;
+}
+
+/* 货源banner end */
+
+
+/* 房产项目 star */
+.estateProjectList {
+  margin-top: 40rpx;
+  width: 100%;
+  height: 116rpx;
+}
+
+.estateProjectList .scroll {
+  white-space: nowrap;
+  display: flex;
+}
+
+.estateProjectList .scroll .rowItem {
+  display: inline-block;
+  margin: 0 10rpx;
+  border-radius: 24rpx;
+}
+
+.estateProjectList .scroll .rowItem .image {
+  width: 128rpx;
+  height: 98rpx;
+  border-radius: 16rpx;
+}
+
+.estateProjectList .scroll .rowItem .active {
+  width: 160rpx;
+  height: 116rpx;
+  border-radius: 16rpx;
+}
+
+.estateProjectList .rowItem .title {
+  width: 128rpx;
+  padding: 10rpx;
+  margin-top: -40rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.estateProjectInfo {
+  width: 100%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  padding: 32rpx 24rpx;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.estateProjectInfo .row {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.estateProjectInfo .tag {
+  text-align: center;
+  border-radius: 25rpx;
+  background: #2F95FB;
+  padding: 0 10rpx;
+  margin-right: 15rpx;
+}
+
+
+.estateProjectInfo .title {
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.estateProjectInfo .name {
+  margin-right: 20rpx;
+}
+
+.estateProjectInfo .address {
+  width: 100%;
+}
+
+.estateProjectInfo .icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.estateProjectInfo .tagList {
+  width: 100%;
+  padding: 20rpx 0;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.estateProjectInfo .tagList .tagItem {
+  margin: 10rpx 0;
+  width: 50%;
+}
+
+/* 房产项目 end */
+/* 项目周边 start */
+.projectBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 88rpx;
+  border-radius: 88rpx;
+  background: #2F95FB;
+  margin-top: 50rpx;
+}
+
+
+/* goodsBar start  */
+.goodsBar {
+  margin-top: 50rpx;
+  width: 100%;
+  height: 120rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  align-items: center;
+  padding: 20rpx;
+  display: flex;
+  flex-flow: row;
+}
+
+.goodsBar .left {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 20rpx;
+}
+
+.goodsBar .row {
+  display: flex;
+  flex-flow: row;
+}
+
+.goodsBar .col {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.goodsBar .icon {
+  width: 14rpx;
+  height: 26rpx;
+}
+
+/* goosBar end */
+
+/* 楼市资料 start */
+.projectMaterial {
+  margin-top: 40rpx;
+  width: 100%;
+  height: 302rpx;
+}
+
+.projectMaterial .scroll {
+  white-space: nowrap;
+  display: flex;
+  flex-flow: row;
+}
+
+.projectMaterial .scroll .rowItem {
+  display: inline-block;
+  width: 216rpx;
+  height: 302rpx;
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+.projectMaterial .rowItem:not(:first-child) {
+  margin-left: 24rpx;
+}
+
+.projectMaterialItem {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.projectMaterialItem .item-image {
+  width: 96rpx;
+  height: 96rpx;
+  margin: 50rpx;
+}
+
+.projectMaterialItem .row {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-top: 10rpx;
+  color: #A0A0A0;
+}
+
+.projectMaterialItem .title {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projectMaterialItem .row .loacation {
+  width: 26rpx;
+  height: 26rpx;
+}
+
+/* 楼市资料 end */
+
+/* 楼市资讯 start */
+.newsBar {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 120rpx;
+  background: #fff;
+  border-radius: 12px;
+  align-items: center;
+  padding: 20rpx 20rpx 20rpx 30rpx;
+  display: flex;
+  flex-flow: row;
+}
+
+.newsBar .left {
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 30rpx;
+}
+
+.newsBar .row {
+  display: flex;
+  flex-flow: row;
+}
+
+.newsBar .col {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.newsBar .icon {
+  width: 25rpx;
+  height: 25rpx;
+  margin-left: 20rpx;
+}
+
+.newsBar .tag {
+  text-align: center;
+  border-radius: 22rpx;
+  background: #FF476C;
+  padding: 0 10rpx
+}
+
+.newsBar .tag2 {
+  color: #D8D8D8;
+  text-align: center;
+  border-radius: 20rpx;
+  border: 2rpx solid #D8D8D8;
+  padding: 0 10rpx
+}
+
+.newsBar .live-icon {
+  width: 32rpx;
+  height: 26rpx;
+}
+
+.newsListItem {
+  margin-top: 20rpx;
+  width: 100%;
+  background: #fff;
+  border-radius: 24rpx;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+}
+
+.newsListItem .content {
+  width: 100%;
+  height: 350rpx;
+  margin-top: 20rpx;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.newsListItem .content .image {
+  height: 100%;
+  width: 100%;
+}
+
+.newsListItem .content .vr-icon {
+  position: relative;
+  height: 96rpx;
+  width: 96rpx;
+  top: -175rpx;
+
+}
+
+.newsListItem .menu {
+  width: 100%;
+}
+
+/* 楼市资料 end */
+
+
+/* 资料库 start  */
+.databank {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.file_list {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 75%;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 16rpx 16rpx 0 0;
+  padding: 0 20rpx;
+  z-index: 101;
+}
+
+
+.databankList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.databankItem {
+  position: relative;
+  width: 29.4%;
+  padding: 0 12rpx 12rpx 12rpx;
+  box-sizing: border-box;
+  margin: 20rpx 0 0 3%;
+  color: #2c3e50;
+  border-radius: 16rpx;
+  background: #fff;
+}
+
+.databankItem>image {
+  display: block;
+  width: 96rpx;
+  height: 96rpx;
+  margin: 48rpx auto 32rpx auto;
+}
+
+.databankItem>text {
+  font-size: .8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /*超出3行部分显示省略号，去掉该属性 显示全部*/
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.databankItem>view>image {
+  width: 24rpx;
+  height: 28rpx;
+  margin: 0 auto;
+}
+
+.databankItem>view>text {
+  margin: 0 20rpx 0 0;
+  font-size: 20rpx;
+  color: #a0a0a0;
+}
+
+.databank_text_text {
+  width: 100%;
+}
+
+.databank_video {
+  position: absolute;
+  right: 16rpx;
+  z-index: 3;
+}
+
+.databank_video>cover-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48rpx;
+  height: 48rpx;
+  z-index: 98;
+}
+
+.databankList .rowItem {
+  display: inline-block;
+  width: 216rpx;
+  height: 302rpx;
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+.show_map {
+  position: absolute;
+  width: 80rpx;
+  height: 80rpx;
+  left: 20rpx;
+  bottom: 20rpx;
+  z-index: 99;
+}
+
+.databank_audio {
+  position: absolute;
+  right: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10rpx;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16rpx;
+}
+
+.databank_audio>image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.databank_audio>text {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.databank_map {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 503;
+}
+
+.map_box {
+  position: fixed;
+  width: 96%;
+  height: 75%;
+  left: 2%;
+  bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: #fff;
+  z-index: 504;
+}
+
+.databank_map>view>image {
+  width: 44rpx;
+  height: 44rpx;
+  margin: 0 10rpx 20rpx 0;
+}
+
+.map_box map {
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx 16rpx 0 0;
+}
+
+.databank_map_memo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 60rpx;
+  right: 20rpx;
+}
+
+.databank_map_memo_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 160rpx;
+  height: 48rpx;
+  border-radius: 4rpx;
+  box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.16);
+  margin-bottom: 20rpx;
+  font-size: .8rem;
+}
+
+.dmmItemColor {
+  background-color: #fff;
+  color: rgb(55, 66, 77);
+}
+
+.dmmItemColor_selected {
+  background-color: rgb(47, 149, 251);
+  color: #fff;
+}
+
+.dmmItem_font_color {
+  color: rgb(55, 66, 77);
+}
+
+.databank_map_memo_item_icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+
+.databank_map_memo>cover-view {
+  display: flex;
+  flex-direction: row;
+}
+
+.bgm_rotation {
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 100;
+}
+
+.mainTitle {
+  display: flex;
+  flex-flow: row;
+  color: #37424D;
+  font-size: 32rpx;
+  justify-content: space-between;
+  margin-top: 50rpx;
+}
+
+.mainTitle .right {
+  color: #A0A0A0;
+  font-size: 22rpx;
+}
+
+/* 项目周边 导航栏 start */
+
+.tab {
+  width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.tab .line-style {
+  background: #fff;
+  height: 6rpx;
+  width: 30rpx;
+  position: relative;
+
+}
+
+.tab .title-sel-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tab .title-sel-selected .line-style {
+  background: #2F95FB;
+  height: 6rpx;
+  width: 60rpx;
+  position: relative;
+}
+
+/* 项目周边 导航栏 end */
+
+
+
+.movable-area {
+  pointer-events: none;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.movable-view {
+  pointer-events: auto;
+  width: 88rpx;
+  height: 88rpx;
+  top: 1000rpx;
+  left: 630rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, .12), 0 0 12rpx rgba(0, 0, 0, .04);
+  font-size: 18rpx;
+  color: #2F95FB;
+}
+
+.movable-view image {
+  width: 38rpx;
+  height: 38rpx;
+}
+.estate_btn{
+  padding: 24rpx 0;
+  background-color: #fff;
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 28rpx 0;
+}
+.title1{
+  color: #37424d;
+  font-weight: 700;
+  margin: 0 0 48rpx 32rpx;
+}
+.title2{
+  color: #37424d;
+  font-weight: 700;
+  margin: 0 0 32rpx 32rpx;
+}
+.y_layout{
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+}
+.x_layout{
+  display: flex;
+  flex-direction: row;
+}
+.item_box{
+  display: flex;
+  flex-wrap: wrap;
+}
+.item_btn{
+  width: 25%;
+  margin: 0 0 20rpx 0;
+}
+.icon_img{
+  width: 80rpx;
+  height: 80rpx;
+  margin: 0 0 4rpx 0;
+}
+.icon_text{
+  font-weight: 500;
+color: #37424d;
+}

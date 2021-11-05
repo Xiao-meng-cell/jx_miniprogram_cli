@@ -1,0 +1,57 @@
+/* miniprogram/pages/tabBar_user_center/address/addr_list.wxss */
+
+.contain {
+  background: #f4f4f4;
+  height: 100%;
+}
+
+.item_contain_margin {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.item_contain {
+  background: #fff;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+.item_right_next {
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.item_nickname {
+  color: #323232;
+  font-size: 32rpx;
+}
+
+.item_phone {
+  color: #a0a0a0;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+}
+.item_default_addr{
+  color:#5b86fe;font-size:22rpx; background:#edf0f8;border-radius:4rpx;padding-left:8rpx;padding-right:8rpx;padding-top:4rpx;padding-bottom:6rpx;margin-left:30rpx;
+}
+.item_addr {
+  color: #323232;
+  font-size: 24rpx;
+}
+
+.item_vline {
+  height: 70rpx;
+  width: 2rpx;
+  background: #eee;
+  margin-right: 20rpx;
+}
+
+.item_edit {
+  font-size: 28rpx;
+  color: #808080;
+}
+
+.item_add_addr {
+  flex: 1;
+  font-size: 32rpx;
+}

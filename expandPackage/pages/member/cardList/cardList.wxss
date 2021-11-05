@@ -1,0 +1,112 @@
+/* expandPackage/pages/member/cardList/cardList.wxss */
+page {
+  background: #f6f6f6;
+}
+
+/* 搜索栏 start */
+.searchBar {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  height: 44px;
+  background: #fff;
+}
+
+.searchBar>input {
+  display: block;
+  width: 100%;
+  height: 64rpx;
+  background: #f6f6f6;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.searchBar>view {
+  position: absolute;
+  width: calc(100vw - 32rpx * 2);
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.searchBar>view>image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 16rpx;
+}
+
+.searchBar>view>text {
+  font-size: 24rpx;
+  color: #a0a0a0;
+}
+
+/* 搜索栏 end */
+
+/* 会员卡列表 start */
+.cardList {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 24rpx 32rpx 0 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  height: 176rpx;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.cardItemBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx;
+}
+
+.merchantInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 32rpx;
+  width: calc(100% - 32rpx * 2);
+  height: 100%;
+  z-index: 2;
+}
+
+.merchantInfo>image {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 24rpx;
+  border-radius: 60rpx;
+  background: #a0a0a0;
+}
+
+.merchantInfo>text {
+  width: calc(100% - 32rpx * 2 - 96rpx - 24rpx);
+  color: #fff;
+}
+
+.loadAll {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: center;
+  color: #a0a0a0;
+  font-size: 24rpx;
+  padding: 48rpx 0 24rpx 0;
+}
+
+/* 会员卡列表 end */

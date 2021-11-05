@@ -1,0 +1,34 @@
+<!--pages/tabBar_user_center/menu_help/menu_help.wxml-->
+<topBar title="帮助中心"></topBar>
+<view class="page-body vertical-left">
+  <view class='vertical-left' style='margin:20px 15px 30px 15px;' wx:if="{{vicpalmMain}}">
+    <text>客服热线：400-003-2229</text>
+    <text>客服微信号：ZCRSKF03、ZCRSKF04</text>
+  </view>
+
+  <view class="operateView" wx:if="{{vicpalmMain}}">
+    <block wx:for="{{operateList}}" wx:key="id">
+      <navigator url="{{item.url}}">
+        <view class="operateItem">
+          <text>{{item.title}}</text>
+          <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+          </image>
+        </view>
+      </navigator>
+    </block>
+    <!-- <view class="operateItem">
+      <button class="contact_customer" open-type="contact"></button>
+      <text>联系客服</text>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+      </image>
+    </view> -->
+  </view>
+  <!--待修改 start-->
+  <view class="merchantInfo">
+    <text>联系电话：{{merchant.phone}}</text>
+  </view>
+  <button class='btn_default_big' style='margin-bottom:40px;' bindtap='callPhone'>拨打客服热线</button>
+</view>
+
+  <!--网络状态监听-->
+	<noneLine wx:if="{{!networkType}}"></noneLine>

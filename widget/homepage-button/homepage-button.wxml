@@ -1,0 +1,5 @@
+<!--widget/homepage-button/homepage-button.wxml-->
+<view wx:if="{{card_headimg?true:false}}" catchtap="handlerPageTap" hover-class="view_default_hover" class="homepage_button" catchtouchstart="down" catchtouchend="end" catchtouchmove="move" style="top:{{slide_button.top}}px;">
+  <image hidden="{{slide_menu.offsetRght>0?false:true}}" moede="aspectFit" class="homepage_button_bg" src="{{card_headimg +'?x-oss-process=image/resize,l_250'}}"></image>
+  <image hidden="{{slide_menu.offsetRght>0?true:false}}" moede="aspectFit" class="homepage_button_bg" src="{{business_info.bgUrls[0]+'?x-oss-process=image/resize,l_250'}}"></image>
+</view>

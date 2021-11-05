@@ -1,0 +1,39 @@
+<!--expandPackage/pages/member/cardList/cardList.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!-- 搜索栏 start -->
+<view class="searchBar">
+  <input type="text" focus="{{inputFocus}}" value="{{keyword}}" bindblur="inputFocus" bindinput="bindinput"></input>
+  <view catchtap="inputFocus" wx:if="{{!inputFocus && keyword == '' ? true : false}}">
+    <image
+      src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_search_bar.png">
+    </image>
+    <text>搜索公司名寻找会员卡</text>
+  </view>
+</view>
+<!-- 搜索栏 end -->
+<!-- 会员卡列表 start -->
+<view class="cardList" wx:if="{{cardList.length > 0}}">
+  <block wx:for="{{cardList}}" wx:for-item="pItem">
+    <block wx:for="{{pItem}}">
+      <view class="cardItem" data-item="{{item}}" catchtap="goToCardDetail">
+        <image class="cardItemBg" src="{{item.mainImg}}" mode="aspectFill"></image>
+        <view class="merchantInfo">
+          <image src="{{item.headImg + utils.resizeImg(250)}}" mode='aspectFill'></image>
+          <text style="color:{{item.styles.fontColor}};">{{item.name}}</text>
+        </view>
+      </view>
+    </block>
+  </block>
+  <view class="loadAll" hidden="{{!loadAll}}">
+    <text>已加载全部</text>
+  </view>
+</view>
+<view class='emptyView' wx:else>
+  <image
+    src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png'
+    style="margin-bottom:48rpx;">
+  </image>
+  <text style="margin-bottom:16rpx;">你还没有获得任何会员卡</text>
+  <text style="font-size:24rpx;">购买拥有会员系统的商品或成为该企业的合伙人</text>
+</view>
+<!-- 会员卡列表 end -->

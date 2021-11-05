@@ -1,0 +1,41 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<view>
+  <!--左侧部分 start-->
+  <view class='left_menu' style="width:20vw;">
+    <scroll-view scroll-y="true" class='tagCode_scroll_x'>
+      <!-- <view class='tagCode_item {{-1==selected_tagIndex?"tagCode_item_choose":""}}' data-code="{{0}}" data-index="{{-1}}" catchtap='changeTagCode_index'>全部</view> -->
+      <block wx:for="{{tagCodes}}" wx:key="item" wx:index="index">
+        <view class='tagCode_item {{index==selected_tagIndex?"tagCode_item_choose":""}}' data-code="{{item.code}}" data-index='{{index}}' catchtap='changeTagCode_index'>{{item.name}}</view>
+      </block>
+    </scroll-view>
+  </view>
+  <!--左侧部分 end-->
+  <!--右侧部分 start-->
+  <view id='card_list'>
+    <view class='operateBar'>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/bank_close.png" style='width:3.5vh;height:3.5vh;padding-right:2.5vh;' bindtap='delScene'>
+      </image>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode.png" style='width:3.5vh;height:3.5vh;' bindtap='shareScene'></image>
+    </view>
+    <block wx:for="{{cardList}}" wx:key="item" wx:index="index">
+      <view class='card_item' data-item='{{item}}' bindtap='toCardDetail'>
+        <image class='card_item_left' src='{{item.clerk.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+        <view class='card_item_right'>
+          <view>
+            <view class='aline1'>{{item.merchantCode == "temporary" ?" ":item.clerk.name}}</view>
+            <view class='aline1'>
+              {{item.merchantCode == "temporary" ?" ":item.clerk.phone}}</view>
+          </view>
+          <view class='aline1'>{{item.merchantCode == "temporary" ?"　":item.clerk.position}}</view>
+          <view class='aline1'>{{item.clerk.merchantName == null ?"　":item.clerk.merchantName}}</view>
+        </view>
+        <view class='temp_flag' wx:if='{{item.merchantCode == "temporary"}}'>
+          <view class='rotate'>
+            <text>游 客</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!--右侧部分 end-->
+</view>

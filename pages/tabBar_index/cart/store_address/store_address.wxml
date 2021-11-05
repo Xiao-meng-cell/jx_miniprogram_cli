@@ -1,0 +1,47 @@
+<!--miniprogram/pages/tabBar_index/cart/store_address/store_address.wxml-->
+<!--订单模块 start-->
+<view class="order_item global_page_indent">
+  <view class="business_merchant">
+    <image></image>
+    <text>商家店名</text>
+  </view>
+  <view class="order_item_view">
+    <view>到店自提</view>
+    <view class="order_item_img" catchtap="switchGoodList" >
+      <image></image>
+      <image></image>
+      <image></image>
+      <image></image>
+      <view>
+        <text>共5件</text>
+        <image class="more_order" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"></image>
+      </view>
+    </view>
+    <view class="order_item_img_onlyOne">
+      <image></image>
+      <view class="order_item_img_onlyOne_detail">
+        <view class="aline1">商品标题描述</view>
+        <view class="sku_detail">lafsjdklfjakl</view>
+        <view class="product_price">
+          <view>
+            <text>￥</text>
+            <text>36.80</text>
+          </view>
+          <text>x1</text>
+        </view>
+      </view>
+
+
+    </view>
+  </view>
+
+  <view class="merchant_addr ">
+    <text>商家自提定位</text>
+    <view>
+      <text class="aline1">大沙田街道拉开建设的离开房间垃圾昆仑山搭街坊</text>
+      <image class="next_icon" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"></image>
+    </view>
+  </view>
+
+</view>
+<!--订单模块 end-->

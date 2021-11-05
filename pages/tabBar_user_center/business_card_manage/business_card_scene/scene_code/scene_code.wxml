@@ -1,0 +1,62 @@
+<!--场景 小程序 码 start-->
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<view class='page' hidden='{{type=="clerk"?true:false}}'>
+  <view id='viewCardItem' class='card_list_item card_info' style='display:flex;min-height:100px;' catchtap='selectedCard'>
+    <view class="card_userhaedImg">
+      <image src='{{cardObj.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+    </view>
+    <view class="card_username">
+      <view style='display:flex;flex-direction:row;justify-content: space-between;'>
+        <text style='font-size:20px;'>{{cardObj.name}}</text>
+
+        <text style="width: 200rpx;max-width: 200rpx;">{{cardObj.phone}}</text>
+      </view>
+      <text style='margin-left:20rpx;height:24rpx;padding-top:3.5vh;'>{{cardObj.position==null?"":cardObj.position}}</text>
+      <block wx:if='{{cardObj.merchantShortName != null}}'>
+        <text style='margin-left:20rpx;margin-top:0.5vh;color:#A0A0A0;font-size:14px;'>{{cardObj.merchantShortName}}</text>
+      </block>
+      <block wx:elif='{{cardObj.merchantName != null}}'>
+        <text style='margin-left:20rpx;margin-top:0.5vh;color:#A0A0A0;font-size:14px;'>{{cardObj.merchantName}}</text>
+      </block>
+      <block wx:else>
+        <text style='margin-left:20rpx;margin-top:0.5vh;color:#A0A0A0;font-size:14px；'>　</text>
+      </block>
+    </view>
+  </view>
+  <view class='line'></view>
+  <text class='title' style='font-size:14px;padding-top:1.5vh'>邀请您加入</text>
+  <text style='padding-top:3vh;'>{{groupName}}</text>
+  <text class='title' style='font-size:14px;padding-top:3vh;color:#000;'>场合人数：{{groupCount}}</text>
+  <view class='qcode'>
+    <image src='{{sceneQRCodeUrl}}' style='width:450rpx;height:450rpx;'></image>
+  </view>
+  <view style='width:100vw;height:7vh;background-color: #ffffff;' wx:if='{{enbaleDelete}}' style='display:none;'>
+    <view class='btnSubmit' wx:if='{{enbaleDelete}}' bindtap='delScene'>
+      <text style='margin-top:0px;'>删除场合</text>
+    </view>
+  </view>
+</view>
+<!--场景 小程序 码 end-->
+<!--个人名片 start-->
+<view class='page' hidden='{{type=="clerk"?false:true}}'>
+  <view id='viewCardItem' class='card_list_item card_info' style='display:flex;min-height:100px;' catchtap='selectedCard'>
+    <view class="card_userhaedImg">
+      <image src='{{card_headimg}}' mode='aspectFill'></image>
+    </view>
+    <view class="card_username">
+      <view style='display:flex;flex-direction:row;'>
+        <text style='font-size:20px;'>{{card_name}}</text>
+        <view style='flex:1;'></view>
+        <text>{{card_phone}}</text>
+      </view>
+      <text style='margin-left:20rpx;height:24rpx;padding-top:3.5vh;'>{{card_position==null?"":card_position}}</text>
+      <text style='margin-left:20rpx;margin-top:0.5vh;color:#A0A0A0;font-size:14px;'>{{card_shortName?card_shortName:card_merchantName}}</text>
+    </view>
+  </view>
+  <view class='line'></view>
+  <text class='title' style='font-size:14px;padding-top:1.5vh'>微信扫一扫二维码收藏名片</text>
+  <view class='qcode'>
+    <image src='{{sceneQRCodeUrl}}' style='width:450rpx;height:450rpx;'></image>
+  </view>
+</view>
+<!--个人名片 end -->

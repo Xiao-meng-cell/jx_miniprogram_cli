@@ -1,0 +1,299 @@
+@import "/assets/styles/real_estate.wxss";
+
+page {
+  background: #f6f6f6;
+}
+
+#main {
+  margin-bottom: 70rpx;
+}
+
+/*返回 start*/
+
+.retrun_img, .retrun_view {
+  width: 162rpx;
+  height: 64rpx;
+  position: fixed;
+  z-index: 1000;
+  left: 10rpx;
+}
+
+.retrun_img{
+  z-index: 1000;
+}
+
+.retrun_view {
+  z-index: 1001;
+  display: flex;
+}
+
+.retrun_view_left, .retrun_view_right {
+  width: 80rpx;
+  height: 64rpx;
+}
+
+/*返回 end*/
+
+/* 分享按钮 start  */
+
+.btn {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.btnFavorite {
+  position: absolute;
+  right: calc(32rpx * 2 + 64rpx);
+  z-index: 1000;
+}
+
+button::after {
+  border: none;
+}
+
+button {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0);
+  right: 32rpx;
+  z-index: 1000;
+}
+
+.button-hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.inreward_share_button {
+  background: rgba(0, 0, 0, 0);
+  font-size: 22rpx;
+}
+
+/* 分享按钮 end  */
+
+/* 商品主图 start  */
+.home_bg {
+  width: 750rpx;
+  height: 540rpx;
+  position: relative;
+}
+
+.home_bg>swiper, .home_bg>swiper image {
+  width: 100%;
+  height: 100%;
+  background-color: #a0a0a0;
+  min-width: 750rpx;
+  min-height: 540rpx;
+  position: absolute;
+}
+
+/* 选择类型 start  */
+.changeType {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 76rpx;
+  width: 100%;
+  height: 40rpx;
+  z-index: 500;
+}
+
+.changeType>view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+}
+
+.changeTypeItem {
+  width: 80rpx;
+  height: 100%;
+}
+
+.changeTypeItem:not(:first-child) {
+  margin-left: 40rpx;
+}
+
+.changeType>view>text {
+  font-size: 20rpx;
+  line-height: 30rpx;
+  vertical-align: center;
+  text-align: center;
+}
+
+.selected_type {
+  background: linear-gradient(to right, #31b7f9, #5b86fe);
+  color: #fff;
+}
+
+.unselected_type {
+  background: rgba(246, 247, 248, 0.8);
+}
+
+/* 选择类型 end  */
+
+.imgNum {
+  position: absolute;
+  right: 30rpx;
+  bottom: 60rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: calc(40rpx - 6rpx * 2);
+  background: rgba(55, 66, 77, 0.5);
+  border-radius: 20rpx;
+  padding: 6rpx 20rpx 6rpx 20rpx;
+}
+
+.imgNum>text {
+  line-height: 20rpx;
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.vrMask {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.vrMask>image {
+  width: 96rpx;
+  height: 96rpx;
+}
+
+.vrBG {
+  width: 100%;
+  height: 100%;
+}
+
+/* 商品主图 end  */
+
+/* 户型信息 start  */
+.houseLayoutInfo {
+  position: relative;
+  top: -60rpx;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin: 0 32rpx;
+  z-index: 1000;
+}
+
+.houseLayoutInfo>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.houseLayoutInfo>view:nth-child(1)>text:nth-child(1) {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.houseLayoutDesc {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 32rpx 0;
+  border-bottom: #EEEEEE 2rpx solid;
+}
+
+.houseLayoutDesc>view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.houseLayoutDesc>view>text:nth-child(1) {
+  font-size: 32rpx;
+  color: #2F95FB;
+  margin-bottom: 6rpx;
+}
+
+.contentView {
+  padding: 48rpx 0 0 0;
+}
+
+.addrInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(100vw - 32rpx * 8 - 20rpx);
+}
+
+.addrInfo>image {
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.addrInfo>text {
+  width: calc(100% - 32rpx - 8rpx);
+  line-height: 44rpx;
+  color: #37424D;
+}
+
+/* 户型信息 end  */
+
+/* 户型 start  */
+
+.housePlansItem {
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+/* 户型 end  */
+
+.callMe {
+  position: fixed;
+  right: 32rpx;
+  bottom: 350rpx;
+  width: 136rpx;
+  height: 136rpx;
+  z-index: 1000;
+}
+
+/*企业电话 start*/
+
+.showMenu {
+  position: fixed;
+  bottom: 0;
+  z-index: 6005;
+  width: 100%;
+}
+
+.showMenu_item {
+  position: relative;
+  display: block;
+height: 80rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  text-align: center;
+  text-decoration: none;
+  line-height: 80rpx;
+  border-radius: 0;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000;
+  background-color: #f8f8f8;
+  border-bottom: 2rpx solid rgba(68, 68, 68, 0.3);
+}
+
+.showMenu_item:last-child {
+  border-bottom: none;
+}
+
+/*企业电话 end*/

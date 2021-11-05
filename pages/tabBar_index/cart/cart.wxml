@@ -1,0 +1,211 @@
+<!--pages/tabBar_index/cart/cart.wxml-->
+<wxs src="../../../utils/timeUtil.wxs" module="timeUtil" />
+<wxs src="../../../utils/utils.wxs" module="utils" />
+
+<topBar title="购物车"></topBar>
+<view class="body" wx:if="{{cartList_final.length > 0}}">
+  <scroll-view scroll-y>
+    <view class="menu">
+      <view class="editBtn" catchtap="setEdit">
+        <view wx:if="{{!edit}}">
+          <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/cart_edit.png">
+          </image>
+          <text>编辑</text>
+        </view>
+        <view wx:else>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/cart_edit_submit.png">
+          </image>
+          <text>完成</text>
+        </view>
+      </view>
+    </view>
+    <block wx:for="{{cartList_final}}" wx:key="{{item.merchant.id}}" wx:for-index="cart_index" wx:key="cart_key">
+      <!-- 购物车数据记录 start -->
+      <view class="cartItem {{isDeliveryTime ? 'cartItem_baking' : ''}}">
+        <!-- 顶部商家名称 start -->
+        <view class="cartItem_merchant" data-item="{{item}}" bindtap="jumpBusinessHomePage">
+          <radio color="#2f95fb" checked="{{item.selected}}" data-ci="{{cart_index}}" catchtap="selectedMerchant"
+            disabled="{{(!item.merchantEnable || item.error) && !edit}}"></radio>
+          <image src="{{item.merchant.bgUrls[0]}}"></image>
+          <text class="aline1">{{item.merchant.name}}</text>
+        </view>
+        <!-- 顶部商家名称 end -->
+        <!-- 购物车记录内容 start -->
+        <view class="cartItem_cartList">
+          <block wx:for="{{item.cartList}}" wx:for-item="cartItem" wx:key="{{cartItemid}}" wx:for-index="goods_index">
+            <!-- 单条产品记录 start -->
+            <view class="cartItem_cartList_item">
+              <radio color="#2f95fb" checked="{{cartItem.selected}}" data-ci="{{cart_index}}" data-gi="{{goods_index}}"
+                catchtap="selectedCartItem" disabled="{{cartItem.error && !edit}}">
+              </radio>
+              <!-- 右侧产品记录主体 start -->
+              <view bindtouchstart="cartItemTouchStart" bindtouchend="cartItemTouchEnd" data-item="{{cartItem}}"
+                data-code="{{cartItem.eventCode}}" data-activityType="{{cartItem.event.typeCode}}"
+                data-refUserCode="{{cartItem.refUserCode ? cartItem.refUserCode : ''}}"
+                bindtap="jumpBusinessActivityDetail" data-ci="{{cart_index}}" data-gi="{{goods_index}}"
+                bindlongtap="readyDel">
+                <!-- 产品信息 start -->
+                <view class="goodsInfo">
+                  <!-- 左侧图片区域 start -->
+                  <image
+                    src="{{cartItem.displayImg?cartItem.displayImg:utils.turnArrJson(cartItem.event.fileJson).illustration[0]}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_750/format,jpg"
+                    mode="aspectFill"></image>
+                  <view class="disableImg" wx:if="{{cartItem.error}}">
+                    <text>已失效</text>
+                  </view>
+                  <!-- 左侧图片区域 end -->
+                  <!-- 右侧产品信息 start -->
+                  <view class="goodsInfo_info">
+                    <text class="goodsInfo_title aline2">{{cartItem.event.title}}</text>
+                    <view>
+                      <text class="goodsInfo_skuText">{{cartItem.skuText}}</text>
+                    </view>
+                    <!-- 价格 数量 start -->
+                    <view class="goodsInfo_price">
+                      <view class="priceFont">
+                        <text>￥</text>
+                        <text>{{cartItem.displayUnitPrice}}</text>
+                      </view>
+                      <view style="flex:1;"></view>
+                      <!-- 数量 start -->
+                      <view class="num_view" catchtap="catchMouseOperate"
+                        wx:if="{{cartItem.event.status == 1 && cartItem.event.product.status == 1}}">
+                        <image
+                          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del.png"
+                          data-ci="{{cart_index}}" data-gi="{{goods_index}}" catchtap='delQuantity'
+                          wx:if="{{cartItem.num>1}}"></image>
+                        <image
+                          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del_unable.png"
+                          wx:else></image>
+                        <text>{{cartItem.num}}</text>
+                        <image
+                          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add.png"
+                          data-ci="{{cart_index}}" data-gi="{{goods_index}}" catchtap='addQuantity'
+                          wx:if="{{cartItem.event.product.typeCode != 'virtual'}}"></image>
+                        <image
+                          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add_unable.png"
+                          wx:else></image>
+                      </view>
+                      <!-- 数量 end -->
+                    </view>
+                    <!-- 价格 数量 end -->
+                    <!-- 标签 start -->
+                    <view class="goodsInfo_tag">
+                      <!-- 商品类型 start -->
+                      <view class="goodsInfo_tag_item wlsp"
+                        wx:if="{{cartItem.event.product.typeCode == 'logistics' && cartItem.event.addressType == 'user'}}">
+                        <text>物流商品</text>
+                      </view>
+                      <view class="goodsInfo_tag_item xnsp "
+                        wx:elif="{{cartItem.event.product.typeCode == 'deposit' || cartItem.event.product.typeCode == 'virtual'}}">
+                        <text>{{cartItem.event.product.typeCode == 'deposit' ? '定金商品' : '店内服务'}}</text>
+                      </view>
+                      <view class="goodsInfo_tag_item ddzt" wx:else>
+                        <text>到店自提</text>
+                      </view>
+                      <!-- 商品类型  end -->
+                      <view class="goodsInfo_tag_item wlsp">
+                        <text>{{cartItem.event.typeCodeName}}</text>
+                      </view>
+                    </view>
+                    <!-- 标签 end -->
+                    <view wx:if="cartItem.customerOrderMemo && cartItem.customerOrderMemo.length > 0">
+                      <text class="goodsInfo_skuText" wx:for="{{cartItem.customerOrderMemo}}" wx:for-item="memoItem"
+                        wx:key="memoKey">{{memoItem}}</text>
+                    </view>
+                  </view>
+                  <!-- 右侧产品信息 end -->
+                </view>
+                <!-- 产品信息 end -->
+                <!-- 优惠信息 start -->
+                <view class="discount" wx:if="{{cartItem.discountPriceDisplay}}">
+                  <view>
+                    <text>优惠券</text>
+                  </view>
+                  <text>共优惠{{cartItem.displayDiscountPrice}}元</text>
+                </view>
+                <!-- 优惠信息 end -->
+                <!-- 结束时间 start -->
+                <view class="endTime">
+                  <view wx:if="{{cartItem.event.status == 1 && cartItem.event.product.status == 1}}">
+                    <image
+                      src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/end@2x.png"
+                      wx:if="{{!cartItem.longValid}}"></image>
+                    <text
+                      wx:if="{{!cartItem.longValid}}">商品将在{{timeUtil.dateFormat(cartItem.event.endTime, "yyyy年MM月dd日 hh:mm:ss")}}结束</text>
+                    <view style="flex:1;"></view>
+                    <text wx:if="{{cartItem.refUser}}">由 {{cartItem.refUser.nickname}} 分享</text>
+                  </view>
+                </view>
+                <!-- 结束时间 end -->
+              </view>
+              <!-- 右侧产品记录主体 end -->
+              <!-- 操作提示蒙版 start -->
+              <view class="cartItem_cartList_item_operate" catchtap="cancelOperate" wx:if="{{cartItem.del}}">
+                <view class="operate_del" data-ci="{{cart_index}}" data-gi="{{goods_index}}" catchtap="removeCartItem">
+                  <image
+                    src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/remove_white.png">
+                  </image>
+                  <text>移出购物车</text>
+                </view>
+              </view>
+              <!-- 操作提示蒙版 end -->
+            </view>
+            <!-- 单条产品记录 end -->
+            <!-- 产品记录分隔 start -->
+            <view class="fgx" wx:if="{{goods_index != item.cartList.length - 1 }}"></view>
+            <!-- 产品记录分隔 end -->
+          </block>
+        </view>
+        <!-- 购物车记录内容 end -->
+      </view>
+      <!-- 购物车数据记录 end -->
+    </block>
+  </scroll-view>
+  <!-- 底部操作栏 start -->
+  <view class="dot" style="bottom:{{iPhone_X ? 148 : 96}}rpx;" wx:if="{{cartList_final.length > 0 && isLogin}}">
+    <view class="dot_list dot_total">
+      <radio color="#2f95fb" style="margin-left:30rpx;" checked="{{selectedAll}}" catchtap="selectedAll">
+        <text style="margin-left:15rpx;">全选</text>
+      </radio>
+      <view class="total" style="flex:1;" wx:if="{{!edit}}">
+        <text>合计：</text>
+        <text style="color:#2f95fb;">￥{{totalPrice}}</text>
+      </view>
+      <view class="submit" catchtap="goToPay" wx:if="{{!edit}}">
+        <text>立即结算</text>
+      </view>
+      <view class="removeCart" catchtap="removeCart" wx:if="{{edit}}">
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/remove.png">
+        </image>
+        <text>移出购物车</text>
+      </view>
+    </view>
+    <view class="dot_list delivery_time" wx:if="{{isDeliveryTime}}">
+      <text>配送时间</text>
+      <date-time-picker class="time_picker" bind:change="handleChange">
+        {{startDeliveryTime == "" ? "请选择配送时间" : startDeliveryTime}}</date-time-picker>
+      <image class="fr select_arrow"
+        src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+        mode="widthFix"></image>
+    </view>
+  </view>
+  <!-- 底部操作栏 end -->
+</view>
+<view class="emptyView" wx:if="{{cartList_final.length == 0 && isLogin}}">
+  <image
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_goods%403x.png">
+  </image>
+  <text>购物车为空</text>
+</view>
+<view class="login" wx:if="{{cartList_final.length == 0 && !isLogin}}">
+  <button type="primary" class='login_btn' catchtap="toLogin">您还没有登录，点击去登录</button>
+</view>
+<!--底部tabbar-->
+<tabbar id="tabbar" tabbarData="{{tabbar.list}}" active="{{tabBarActive}}" bgcolor="{{tabbar.bgcolor}}"
+  color="{{tabbar.color}}" selectedColor="{{tabbar.selectedColor}}" showborder="{{tabbar.showborder}}"
+  iPhoneX="{{iPhone_X}}" bind:tapChange="tabbarChange" />
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

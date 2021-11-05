@@ -1,0 +1,43 @@
+<!--widget/map/map.wxml-->
+<view class="mapPrivateView">
+	<view class="mapView" style="height:{{height}}px;">
+		<map id="map" longitude="{{mapData.longitude}}" latitude="{{mapData.latitude}}" markers="{{markers}}"
+			scale="{{scale}}" enable-satellite="{{enableSatellite}}" show-location style="width: 100%; height:{{height}}px;"
+			bindmarkertap="onMarkertap">
+		</map>
+	</view>
+	<view class="projectNearby fontS-14 fontC-a">
+		<view>
+			<!--Tab布局-->
+			<scroll-view class="scroll" scroll-x="true" scroll-x>
+				<view class='tab'>
+					<view class="{{item.id == projectNearbyCurrentIndex ? 'title-sel-selected fontC-d' : 'title-sel'}}"
+						bindtap='projectNearbyTabTitleClick' data-idx='{{item.id}}' data-keyword='{{item.value}}'
+						wx:for="{{mapTags}}" wx:key="*this">
+						<view class="row">
+							<image class="icon"
+								src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/{{item.id == projectNearbyCurrentIndex?item.activeIcon:item.icon}}">
+							</image>
+							<text>{{item.value}}</text>
+						</view>
+						<hr class="line-style" />
+					</view>
+				</view>
+			</scroll-view>
+			<!--内容布局-->
+			<view class="list">
+				<view class="listItem" wx:for="{{projectNearbyList}}" wx:key="id" catchtap="toNav" data-item='{{item}}'>
+					<view class="row fontS-10 fontC-d">
+						<text class="name fontS-16 fontC-a">{{item.title}}</text>
+						<text class="fontS-12 fontC-c dis">{{item._distance}}m</text>
+					</view>
+					<view wx:if="{{projectNearbyKeyword==='交通'}}" class="tagList">
+						<view wx:for="{{item.addressArr}}" wx:for-item="tagItem" class="tagItem" wx:key="id">
+							{{tagItem}}
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

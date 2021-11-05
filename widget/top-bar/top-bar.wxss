@@ -1,0 +1,54 @@
+/* widget/top-bar/top-bar.wxss */
+.top-bar {
+  position: fixed;
+  background: #FFF;
+  width: 100%;
+  z-index: 1001;
+}
+
+/* 左上角胶囊按钮 start*/
+
+.top-bar__retrun {
+  width: 81px;
+  height: 32px;
+  position: fixed;
+  z-index: 1000;
+  left: 10rpx;
+}
+
+.top-bar__view {
+  width: 81px;
+  height: 32px;
+  position: fixed;
+  z-index: 1001;
+  left: 10rpx;
+  display: flex;
+}
+
+.top-bar__viewleft {
+  width: 40px;
+  height: 32px;
+}
+
+/* 自定义头部标题 */
+.top-bar__titleBar {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  font-size: 36rpx;
+  color: #222;
+}
+
+.top-bar__viewright {
+  width: 40px;
+  height: 32px;
+}
+
+/* 左上角胶囊按钮 end*/
+
+.tbZwf {
+  position: relative;
+}

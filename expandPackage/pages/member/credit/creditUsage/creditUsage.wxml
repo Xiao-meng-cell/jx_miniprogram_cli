@@ -1,0 +1,42 @@
+<!--expandPackage/pages/member/credit/creditUsage/creditUsage.wxml-->
+<wxs module="utils" src="../../../../../utils/utils.wxs" />
+<!-- 可用列表 start -->
+<view class="list">
+  <block wx:for="{{ableList}}">
+    <view class="item usable">
+      <view>
+        <image src="{{item.storeHeadImg}}"></image>
+        <text class="aline1">{{item.storeName}}</text>
+        <text class="recharge" style="color:{{lightColor}};border:{{lightColor}} 2rpx solid;" data-item="{{item}}"
+          catchtap="goToAddCredit">充值</text>
+      </view>
+      <view>
+        <text>预充值余额(剩余可用￥{{item.balance}})</text>
+        <view style="flex:1;"></view>
+        <text style="color:{{lightColor}};">抵用{{item.amount}}元</text>
+      </view>
+    </view>
+  </block>
+</view>
+<!-- 可用列表 end -->
+
+<!-- 不可使用 start -->
+<view class="list">
+  <text>不可使用</text>
+  <block wx:for="{{unableList}}">
+    <view class="item unusable">
+      <view>
+        <image src="{{item.storeHeadImg}}">></image>
+        <text class="aline1">{{item.storeName}}</text>
+        <text class="recharge" style="color:{{lightColor}};border:{{lightColor}} 2rpx solid;" data-item="{{item}}"
+          catchtap="goToAddCredit" wx:if="{{item.userIsCurrentStoreVip}}">充值</text>
+      </view>
+      <view>
+        <text>预充值余额(剩余可用￥{{item.balance}})</text>
+        <view style="flex:1;"></view>
+        <text>{{item.cause}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+<!-- 不可使用 end -->

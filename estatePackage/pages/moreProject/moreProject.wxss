@@ -1,0 +1,95 @@
+/* estatePackage/pages/moreProject/moreProject.wxss */
+@import "/assets/styles/real_estate.wxss";
+
+page {
+  background: #f6f6f6;
+}
+
+.sources {
+  display: flex;
+  margin: 24rpx 0 0 32rpx;
+  width: calc(100vw - 32rpx * 2);
+}
+
+.imgSources {
+  width: 100%;
+}
+
+.sources>view {
+  position: absolute;
+  margin: 95rpx 0 0 32rpx;
+  display: flex;
+  font-size: 12px;
+  color: #fff;
+  background: #2F95FB;
+  padding: 4rpx 24rpx;
+  border-radius: 22rpx;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0 32rpx 32rpx 32rpx;
+}
+
+.list>view {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 16rpx;
+  margin: 24rpx 0 0 0;
+}
+
+.list>view>image {
+  width: 128rpx;
+  height: 128rpx;
+  background: #a0a0a0;
+  border-radius: 8rpx;
+}
+
+.list>view>view {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 32rpx * 3 - 128rpx - 16rpx);
+  margin: 0 0 0 16rpx;
+}
+
+.list>view>view>view:nth-of-type(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.projectName {
+  width: calc(100vw - 32rpx * 3 - 128rpx - 16rpx - 120rpx - 8rpx);
+  margin: 0 0 0 8rpx;
+}
+
+.projectDescTag {
+  margin: 8rpx 0 0 0;
+}
+
+.projectPrice {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 40rpx;
+  margin: 8rpx 0 0 0;
+}
+
+.projectPrice>text:nth-of-type(1) {
+  line-height: 28rpx;
+  color: #FF3B30;
+}
+
+.projectPrice>text:nth-of-type(2) {
+  font-size: 20rpx;
+  line-height: 20rpx;
+}
+
+.desc {
+  font-size: 22rpx;
+  color: #A0A0A0;
+  margin: 8rpx 0 0 0;
+}

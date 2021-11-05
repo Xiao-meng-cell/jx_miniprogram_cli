@@ -1,0 +1,469 @@
+<!--miniprogram/pages/order/bedelivered/delivered.wxml-->
+
+<!-- 主体内容 start -->
+<view class="main">
+	<!-- 背景、状态提示 start  -->
+	<image
+		src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/order_detail_bg_return.png"
+		wx:if="{{existAfterSale}}"></image>
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/order_detail_bg.png"
+		wx:else></image>
+	<view class="orderStatus">
+		<text>{{orderStatusStr}}</text>
+		<text>{{orderSubStatusStr}}</text>
+	</view>
+	<!-- 背景、状态提示 end  -->
+
+	<!-- 内容信息 start -->
+	<view class="content">
+		<!-- 配送记录 start -->
+		<!-- 烘焙商品 start -->
+		<view class="delivery_time oh"
+			wx:if="{{orderDetails.product.typeCode=='baking' && orderDetails.addressType == 'user'}}">
+			<view class="db_inline">
+				<image class="db_inline"
+					src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clork_icon.png">
+				</image>
+				<view class="db_inline">配送时间</view>
+			</view>
+			<view class="fr time_box">{{orderDetails.startDeliveryTime}}</view>
+		</view>
+		<!-- 烘焙商品 end -->
+		<!-- 物流商品 生鲜商品 start -->
+		<view class="logisticsInfo horizontal-vcenter" catchtap="toLogisticsDetails"
+			wx:if="{{((orderDetails.product.typeCode == 'logistics' && orderDetails.addressType == 'user') || orderDetails.product.typeCode == 'fresh') && (orderStats != 5 || (orderStats == 5 && orderDetails.items[0].afterSale.status == 1))}}">
+			<image
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_logistics.png">
+			</image>
+			<view
+				wx:if="{{orderStats == 2 || orderStats == 3 || orderStats == 4 || (orderStats == 5 && orderDetails.items[0].afterSale.status == 1)}}">
+				<view wx:if="{{!orderDetails.trackingNumberExist}}">
+					<text>{{(orderDetails.product.typeCode=='logistics' || orderDetails.product.typeCode=='baking') ? '暂无物流信息' :
+						'商家暂未接单'}}</text>
+					<text
+						wx:if="{{orderDetails.product.typeCode == 'fresh'}}">预计于{{startDeliveryTime}}至{{endDeliveryTime}}送达</text>
+				</view>
+				<view wx:else>
+					<block wx:if="{{orderDetailsLogistics}}">
+						<block wx:if="{{orderDetailsLogistics.list.length > 0}}">
+							<text class="aline1">{{orderDetailsLogistics.list[0].description}}</text>
+						</block>
+						<block wx:else>
+							<text>暂无物流信息</text>
+						</block>
+					</block>
+					<block wx:else>
+						<text>暂无物流信息</text>
+					</block>
+				</view>
+			</view>
+			<view wx:else>
+				<text>暂无信息</text>
+			</view>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+			</image>
+		</view>
+		<!-- 物流商品 生鲜商品 end -->
+		<!-- 售后地址 start -->
+		<view class="afterServiceAddr" wx:if="{{orderStats == 5 && orderDetails.items[0].afterSale.status != 1}}">
+			<view>
+				<image class="afterServiceAddr_flag"
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/orderDetail/icon_tui%403x.png">
+				</image>
+				<view>
+					<view>
+						<text class="afterServiceAddr_name">{{afterServiceAddr.name}}</text>
+						<text class="afterServiceAddr_phone">{{afterServiceAddr.phone}}</text>
+						<view style="flex:1;"></view>
+						<text class="afterServiceAddr_tag">退货地址</text>
+					</view>
+					<text class="afterServiceAddr_addr">{{afterServiceAddr.address}}</text>
+				</view>
+			</view>
+			<view class="afterServiceLogistics" data-type="afterService" catchtap="toLogisticsDetails">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/orderDetail/icon_refunds%403x.png">
+				</image>
+				<block wx:if="{{afterServiceLogistics && afterServiceLogistics.list.length > 0}}">
+					<text class="aline1">{{afterServiceLogistics.list[0].description}}</text>
+				</block>
+				<block wx:else>
+					<text>暂无物流信息</text>
+				</block>
+				<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+				</image>
+			</view>
+		</view>
+		<!-- 售后地址 end -->
+		<!-- 配送记录 end -->
+
+		<!-- 订单用户 start  -->
+		<view class="orderUser"
+			wx:if="{{(orderDetails.product.typeCode == 'logistics' && orderDetails.addressType =='merchant') || (orderDetails.product.typeCode == 'service' && orderDetails.addressType =='merchant') || orderDetails.product.typeCode=='virtual'|| orderDetails.product.typeCode=='deposit'}}">
+			<text>订单用户</text>
+			<view>
+				<text>{{orderDetails.linkman ? orderDetails.linkman:''}}</text>
+				<text>{{orderDetails.phone ? orderDetails.phone:''}}</text>
+				<view style="flex:1;"></view>
+			</view>
+			<view catchtap="copyAll" class="copyAll">
+				<image
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_copy@2x.png">
+				</image>
+				<text>一键复制</text>
+			</view>
+		</view>
+		<!-- 订单用户 end  -->
+
+		<!--房地产项目地址 start-->
+		<view class="addrInfo" wx:if="{{orderDetails.product.typeCode == 'estate'}}">
+			<view class="horizontal-vcenter" data-product='{{productInfo_items}}' bindtap='openLocation'
+				style="justify-content: space-between;">
+				<view class="addrInfo_service">
+					<text>项目地址</text>
+					<text>{{productInfo_items &&productInfo_items.eventAddress ?productInfo_items.eventAddress : '暂无地址'}}</text>
+				</view>
+				<text>导航</text>
+			</view>
+		</view>
+		<!--房地产项目地址 end-->
+
+		<!-- 券码 start  -->
+		<view class="CDKEY" data-code="{{orderDetails.product.typeCode}}"
+			wx:if="{{orderDetails.product.typeCode == 'virtual' || orderDetails.product.typeCode == 'service'}}">
+			<view wx:if="{{orderDetails.product.typeCode == 'virtual'}}">
+				<text>串码</text>
+				<text style="color:#5abdff;" wx:if="{{orderDetails.trackingNumberExist}}">{{orderDetails.trackingNumber}}</text>
+				<text style="color:#a0a0a0;" wx:else>卖家暂未提供串码</text>
+			</view>
+			<view wx:elif="{{orderDetails.product.typeCode == 'service'}}">
+				<text>消费券码</text>
+				<text style="color:#5abdff;">{{orderDetails.code}}</text>
+			</view>
+			<view wx:if="{{orderDetails.product.typeCode == 'virtual' && orderDetails.trackingNumberExist}}" class="callme"
+				catchtap="copyTrackingNumber">复制</view>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode.png"
+				data-bean='{{orderDetails}}' catchtap='toUserQCode'
+				wx:elif="{{(orderDetails.product.typeCode == 'service' && orderDetails.code && orderDetails.code != '' && orderDetails.isSigned == 1) || (orderDetails.trackingNumberExist)}}">
+			</image>
+			<!-- <image
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode_unable.png"
+				wx:else></image> -->
+		</view>
+		<!-- 券码 end  -->
+
+		<!--活动地址 start-->
+		<view class="addrInfo"
+			wx:if="{{(orderDetails.product.typeCode == 'logistics' && orderDetails.addressType =='merchant') || orderDetails.product.typeCode == 'deposit' || orderDetails.product.typeCode == 'virtual'}}">
+			<view class="horizontal-vcenter" data-bean='{{orderDetails}}' bindtap='openLocation'
+				style="justify-content: space-between;">
+				<image hidden="true"
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_store@3x.png">
+				</image>
+				<view class="addrInfo_service">
+					<text>{{orderDetails.product.typeCode == 'deposit' || orderDetails.product.typeCode ==
+						'virtual'?'活动地址':'到店自提'}}</text>
+					<text>{{orderDetails.eventAddress}}</text>
+				</view>
+				<text>导航</text>
+			</view>
+		</view>
+		<!--活动地址 end-->
+
+		<!-- 退款信息 start  -->
+		<view class="afterSales" wx:if="{{orderDetails.items[0].afterSale}}">
+			<view>
+				<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/refund.png">
+				</image>
+				<text>{{orderDetails.items[0].afterSale.typeCode == "return_order" ? "退款退货" : "仅退款"}}</text>
+				<view style="flex:1;"></view>
+				<text>{{noAfterServiceStatusStr}}</text>
+			</view>
+			<view class="afterSalesItem">
+				<text>退款金额</text>
+				<view style="flex:1;"></view>
+				<text>￥{{utils.priceSwitch(orderDetails.items[0].totalPrice)}}</text>
+			</view>
+			<view class="afterSalesItem" wx:if="{{orderDetails.items[0].damagePrice != 0}}">
+				<text>扣除违约金</text>
+				<view style="flex:1;"></view>
+				<text style="color:#FF3B30;">-￥{{utils.priceSwitch(orderDetails.items[0].damagePrice)}}</text>
+			</view>
+			<view class="afterSalesItem">
+				<text>申请时间</text>
+				<view style="flex:1;"></view>
+				<text style="color:#808080;">{{dateUtil.dateFormat(orderDetails.items[0].afterSale.createdTime,
+					'yyyy年MM月dd日 hh:mm:ss')}}</text>
+			</view>
+			<view class="afterSalesItem">
+				<text>退款理由</text>
+				<view style="flex:1;"></view>
+				<text style="color:#808080;">{{orderDetails.items[0].afterSale.title}}</text>
+			</view>
+			<view class="afterSalesItem" style="flex-direction: column;">
+				<text>退款说明</text>
+				<text style="color:#808080; margin-top:8rpx;">{{orderDetails.items[0].afterSale.description == "" ||
+					orderDetails.items[0].afterSale.description == null ? "无" :
+					orderDetails.items[0].afterSale.description}}</text>
+			</view>
+			<view class="afterSalesItem" style="flex-direction: column;"
+				wx:if="{{orderDetails.afterSale.urls.length > 0 && orderDetails.afterSale.urls[0] != ''}}">
+				<text>退款凭证</text>
+				<view class="afterSalesItemImages">
+					<block wx:for="{{orderDetails.afterSale.urls}}" wx:key="idx">
+						<image data-index="{{index}}" src="{{item}}" catchtap="imagePreview"></image>
+					</block>
+				</view>
+			</view>
+		</view>
+		<!-- 退款信息 end  -->
+
+		<!-- 商品信息 start -->
+		<view class="goodsInfo">
+			<view class="horizontal-vcenter">
+				<image src="{{orderDetails.onshelfStore.bgUrls[0]}}" mode="aspectFill"></image>
+				<text class="alone-line">{{orderDetails.onshelfStore.name}}</text>
+				<!-- 生鲜标识 start  -->
+				<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/fresh_flag.png"
+					hidden="{{orderDetails.product.typeCode != 'fresh'}}"></image>
+				<!-- 生鲜标识 end  -->
+			</view>
+			<block wx:for="{{orderDetails.items}}">
+				<!-- 商品描述 行start -->
+				<view class="goodsInfo_goods" data-item="{{item}}" catchtap="goToGoods">
+					<view class="goodsInfo_goods_info">
+						<image class='item_order_pimg' mode="aspectFill"
+							src="{{utils.turnArrJson(item.productFileUrls[0]).illustration[0]}}" />
+						<view style='flex:1;'>
+							<view>
+								<text class='item_order_gname'>{{item.productName}}</text>
+								<view style='flex:1;' />
+								<view>
+									<view>
+										<text style="font-size:20rpx;">￥</text>
+										<text class='txt-mid-content'>{{item.price/100}}</text>
+									</view>
+									<view style="color:#808080;">
+										<text style="font-size:20rpx;">x</text>
+										<text style="font-size:22rpx;">{{item.num}}{{item.productUnit==null?"":"(" + item.productUnit +
+											")"}}</text>
+									</view>
+								</view>
+							</view>
+							<view>
+								<text>{{item.skuName ? item.skuName : ""}}</text>
+							</view>
+							<view></view>
+							<view class="goodsTag">
+								<view class="goodsTagItem goodsTagItem_wl"
+									wx:if="{{(orderDetails.product.typeCode=='logistics' && orderDetails.addressType == 'user') || (orderDetails.product.typeCode=='baking' && orderDetails.addressType == 'user')}}">
+									<text>物流商品</text>
+								</view>
+								<view class="goodsTagItem goodsTagItem_xn"
+									wx:elif="{{orderDetails.product.typeCode=='virtual' || orderDetails.product.typeCode == 'deposit' || orderDetails.product.typeCode == 'estate'}}">
+									<text>{{orderDetails.product.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+								</view>
+								<view class="goodsTagItem goodsTagItem_dd" wx:else>
+									<text>到店自提</text>
+								</view>
+								<view class="goodsTagItem goodsTagItem_wl" wx:if="{{item.eventTypeName != ''}}">
+									<text>{{item.eventTypeName}}</text>
+								</view>
+								<view style="flex:1;"></view>
+								<view class="callme" data-item="{{item}}" catchtap="toAfterService"
+									wx:if="{{item.afterSale.status != 5 && orderDetails.status != 3 && orderDetails.status != 4 && item.returnAble == 1}}">
+									<text>{{item.asButtonText}}</text>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="end_time"
+						wx:if="{{orderDetails.dueTime != null && business_detail.dueTime != '' && orderDetails.product.typeCode == 'deposit'}}">
+						<view>
+							<image
+								src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/end@2x.png">
+							</image>
+							<text>商品将在{{dateUtil.dateFormat(orderDetails.dueTime, "yyyy年MM月dd日 hh:mm:ss")}}结束</text>
+						</view>
+					</view>
+				</view>
+				<!-- 商品描述 行end -->
+			</block>
+			<!-- 价格相关 start -->
+			<view class="priceInfo">
+				<view class='horizontal-vcenter order_price_desline'>
+					<text>商品总价</text>
+					<view style='flex:1;' />
+					<text>￥{{orderDetails.totalOrigPrice /100}}</text>
+				</view>
+				<block wx:for="{{orderDetails.coupons}}">
+					<view class='horizontal-vcenter order_price_desline'
+						wx:if="{{item.typeCode != 'after' && item.typeCode != 'vip_pay' }}">
+						<text>{{item.name}}</text>
+						<view style='flex:1;' />
+						<text wx:if="{{item.typeCode == 'pay'}}">{{orderDetails.discountsAmount > 0 ? "-￥" +
+							orderDetails.discountsAmount / 100 : "暂无任何优惠"}}</text>
+						<text wx:elif="{{item.typeCode == 'after'}}">{{rebatePrice ? '-￥' + rebatePrice : '暂无任何优惠'}}</text>
+						<text wx:else>-￥{{utils.priceSwitch(item.value)}}</text>
+					</view>
+				</block>
+				<view class='horizontal-vcenter order_price_desline'
+					wx:if="{{orderDetails.coupons.length < 1 && orderDetails.product.typeCode != 'estate'}}">
+					<text>购买优惠</text>
+					<view style='flex:1;' />
+					<text>暂无任何优惠</text>
+				</view>
+				<view class='horizontal-vcenter order_price_desline'
+					wx:if="{{orderDetails.coupons.length < 1 && orderDetails.product.typeCode == 'estate'}}">
+					<text>分享优惠</text>
+					<view style='flex:1;' />
+					<text>房产项目商品无优惠</text>
+				</view>
+				<view class='horizontal-vcenter order_price_desline' wx:if="{{orderDetails.carriage > 0}}">
+					<text>商品运费</text>
+					<view style='flex:1;' />
+					<text>￥{{orderDetails.carriage / 100}}</text>
+				</view>
+				<view class='horizontal-vcenter order_price_desline' wx:if="{{orderDetails.vipCouponAmount != 0}}">
+					<text>使用劵</text>
+					<view style='flex:1;' />
+					<text>-￥{{orderDetails.vipCouponAmount / 100}}</text>
+				</view>
+			</view>
+			<view class="horizontal-vcenter order_totalprice_desline" wx:if="{{orderDetails.balanceAmount > 0}}">
+				<text>预充值抵扣</text>
+				<view style='flex:1;' />
+				<text>-￥{{utils.priceSwitch(orderDetails.balanceAmount)}}</text>
+			</view>
+			<view class='horizontal-vcenter order_totalprice_desline'>
+				<text>实付金额</text>
+				<view style='flex:1;' />
+				<text>¥{{orderDetails.payPrice/100}}</text>
+			</view>
+			<view class='horizontal-vcenter order_totalprice_desline'>
+				<text>订单总价</text>
+				<view style='flex:1;' />
+				<text>¥{{orderDetails.totalPrice/100}}</text>
+			</view>
+			<view class="priceItem_logistics_free horizontal-vcenter" hidden="{{freePostageNum == 0}}">
+				<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge@2x.png"
+					class="logistics_info_img_free"></image>
+				<text>商品设置单次购买满{{freePostageNum}}{{logisticsChargeType == 1 ? "公斤" : "件"}}包邮</text>
+			</view>
+			<!-- 价格相关 end -->
+		</view>
+		<!-- 商品信息 end -->
+
+		<!--房地产联系合伙人 start -->
+		<!-- <view class="partner_box1" catchtap="showPartnerPhoneList" wx:if="{{orderDetails.product.typeCode == 'estate'}}">
+			<image class="partner_img" src="{{trackUserInfo.headimg}}"></image>
+			<view class="partner_box_center">
+				<text>{{trackUserInfo.nickname}}</text>
+				<text class="partner_text">项目联系人</text>
+			</view>
+			<view class="partner_icon_box">
+				<image class="partner_icon1"
+					src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/wxphone.png"></image>
+			</view>
+		</view> -->
+		<!--房地产联系合伙人  end -->
+
+		<!-- 备注 start -->
+		<!-- <view class="memo">
+			<text>备注</text>
+			<view style="flex:1;"></view>
+			<text style="{{orderDetails.customerOrderMemo && orderDetails.customerOrderMemo != '' ? '' : 'color:#d8d8d8;'}}">{{orderDetails.customerOrderMemo && orderDetails.customerOrderMemo != '' ? orderDetails.customerOrderMemo : '没有填写备注'}}</text>
+		</view> -->
+		<view class="memo">
+			<text>备注</text>
+			<view style="flex:1;"></view>
+			<view class="memo_text"
+				style="{{orderDetails.customerOrderMemo && orderDetails.customerOrderMemo != '' ? '' : 'color:#d8d8d8;'}}">
+				<text wx:if="{{orderDetails.customerOrderMemo == '' || orderDetails.customerOrderMemo.length == 0}}">没有填写备注
+				</text>
+				<view wx:else>
+					<text wx:for="{{orderDetails.customerOrderMemo}}" wx:key="cusId">{{item}}</text>
+				</view>
+			</view>
+		</view>
+		<!-- 备注 end -->
+
+		<!-- 订单信息 start -->
+		<view class="orderInfo">
+			<text>订单信息</text>
+			<view>
+				<view>
+					<text>订单编号</text>
+					<view style="flex:1;"></view>
+					<text>{{orderDetails.code}}</text>
+					<view class="copyOrderCode" data-bean='{{orderDetails}}' bindtap='copyOrderCode'>
+						<text>复制</text>
+					</view>
+				</view>
+				<view>
+					<text>创建日期</text>
+					<view style="flex:1;"></view>
+					<text>{{dateUtil.dateFormat(orderDetails.createdTime,'yyyy-MM-dd hh:mm:ss')}}</text>
+				</view>
+			</view>
+		</view>
+		<!-- 订单信息 end -->
+	</view>
+	<!-- 内容信息 end -->
+</view>
+<!-- 主体内容 end -->
+
+<!-- 底部操作容器 start -->
+<view class='order_bottom_view' catchtap="stopMouseOperate">
+	<text class="damagePrice"
+		wx:if="{{(orderDetails.product.typeCode == 'virtual'|| orderDetails.product.typeCode == 'deposit') && orderDetails.damagePrice > 0}}">此商品包含违约金，退款将被扣除¥{{orderDetails.damagePrice
+		/ 100}}</text>
+	<view style='flex:1;' />
+	<view class="order_bottom_view_btn order_bottom_view_btn_use" data-phone="4000032229" catchtap="contactBusiness"
+		wx:if="{{orderDetails.product.typeCode != 'estate'}}">
+		<text>掌创客服</text>
+	</view>
+	<view class="order_bottom_view_btn order_bottom_view_btn_pay" data-bean='{{orderDetails}}' catchtap='toReceivingGoods'
+		wx:if="{{orderStats == 2 && orderDetails.trackingNumberExist}}">
+		<text>确认收货</text>
+	</view>
+	<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{orderDetails}}' catchtap='delOrder'
+		wx:if="{{orderStats == 3 || orderStats == 4}}">
+		<text>删除订单</text>
+	</view>
+	<view class="order_bottom_view_btn order_bottom_view_btn_use" catchtap="clickUploadReturnInfo"
+		wx:if="{{orderStats == 5 && (afterServiceStatus == 2 || afterServiceStatus == 4)}}">
+		<text>{{afterServiceStatus == 2 ? "上传寄回凭证" : "修改物流单号"}}</text>
+	</view>
+</view>
+<!-- 底部操作容器 end -->
+
+<!--企业导航，企业号码 start-->
+<view class='showMenu' wx:if='{{!show_business_phone}}'>
+	<block wx:for="{{business_phone}}" wx:key="item" wx:if="{{business_phone}}">
+		<view class='showMenu_item' data-phone="{{item}}" catchtap="contactBusiness">
+			<text>{{item}}</text>
+		</view>
+	</block>
+	<view class='showMenu_item' data-phone="{{orderDetails.store.userPhone}}" catchtap="contactBusiness"
+		wx:if="{{!business_phone}}">
+		<text>{{orderDetails.store.userPhone}}</text>
+	</view>
+	<view catchtap='showBusinessPhoneList' class='showMenu_item'>
+		<text>取消</text>
+	</view>
+	<view class='wx-mask' catchtouchmove="stopMouseOperate" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--企业导航，企业号码 end-->
+
+<!--房地产合伙人联系 start-->
+<view class='showMenu' wx:if='{{!partner_call}}'>
+	<view class='showMenu_item' catchtap="contactPartner">
+		<text>{{trackUserInfo.phone}}</text>
+	</view>
+	<view catchtap='showPartnerPhoneList' class='showMenu_item'>
+		<text>取消</text>
+	</view>
+	<view class='wx-mask' catchtouchmove="stopMouseOperate" catchtap='showPartnerPhoneList'></view>
+</view>
+<!--房地产合伙人联系 end-->

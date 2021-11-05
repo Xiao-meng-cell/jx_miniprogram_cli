@@ -1,0 +1,40 @@
+/* widget/open-network/open-network.wxss */
+
+.network_view{
+  width: 100%;
+  height: 100%;
+  background: white;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 6999;
+}
+.network_not_open{
+  width: 100%;
+  height: 400rpx;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.network_not_open>image:nth-child(1){
+  width: 282rpx;
+  height: 200rpx;
+}
+
+.network_not_open>view:nth-child(2){
+  width: 150rpx;
+  height: 60rpx;
+  margin: auto;
+  font-size: 32rpx;
+  line-height: 60rpx;
+  border: 2rpx solid #cdcdcd;
+  border-radius: 10rpx;
+  margin-top: 50rpx;
+}

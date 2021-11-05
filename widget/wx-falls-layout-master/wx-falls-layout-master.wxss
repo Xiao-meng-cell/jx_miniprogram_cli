@@ -1,0 +1,104 @@
+/*widget/wx-falls-layout-master/wx-falls-layout-master.wxss*/
+@import '/assets/styles/zsy.wxss';
+@import '/app.wxss';
+
+/*内容部分 start*/
+
+.recommendGoods {
+  font-size: 30rpx;
+  color: rgb(47, 149, 251);
+  text-align: left;
+  height: 60rpx;
+  display: flex;
+}
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  background: #f6f7f8;
+  padding-top: 30rpx;
+}
+
+.goodsItem {
+  box-sizing: border-box;
+  width: 330rpx;
+  margin-bottom: 24rpx;
+  min-height: 10vh;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+/* .goodsItem:nth-child(2n) {
+  margin-left: 24rpx;
+} */
+
+.goodsItem>image {
+  width: 330rpx;
+  height: 330rpx;
+  border-top-left-radius: 16rpx;
+  border-top-right-radius: 16rpx;
+  background-color: #a0a0a0;
+}
+
+.goodsItem>view {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rpx;
+}
+
+.goodsItem>view>text {
+  height: 86rpx;
+  line-height: 43rpx;
+  font-size: 28rpx;
+  color: #202020;
+}
+
+.deliver_type {
+  border-top-left-radius: 30rpx;
+  border-bottom-left-radius: 30rpx;
+  font-size: 22rpx;
+  background: linear-gradient(to right, rgb(49, 183, 249), rgb(47, 149, 251));
+  color: white;
+  height: 36rpx;
+  width: 70rpx;
+  text-align: center;
+}
+
+.goods_bottom>view {
+  display: flex;
+  align-items: center;
+}
+
+.goods_bottom>view>text {
+  font-size: 20rpx;
+  color: rgb(160, 160, 160);
+  margin-left: 10rpx;
+}
+
+.goods_bottom>view>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.goodsMerchant {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.noMore {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 24rpx;
+  color: #a0a0a0;
+}
+
+/*内容部分 end*/

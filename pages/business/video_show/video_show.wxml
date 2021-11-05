@@ -1,0 +1,10 @@
+<!--miniprogram/pages/business/video_show/video_show.wxml-->
+<!--miniprogram/pages/business/dynamic_detail/dynamic_detail.wxml-->
+<wxs module="utils" src="../../../utils/utils.wxs" />
+<wxs module="dateUtil" src="../../../utils/timeUtil.wxs"></wxs>
+
+
+<view class="item_img_contain vertical-hcenter_contain">
+  <video id="myVideo" src="{{url}}" controls="{{true}}" autoplay="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" enable-progress-gesture="{{true}}" show-mute-btn="{{true}}" page-gesture="{{true}}" style="height:300px;width:100%;" bindplay='videoPlay' bindended='videoEnd' bindtimeupdate="progressChange">
+  </video>
+</view>

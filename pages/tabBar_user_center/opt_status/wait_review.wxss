@@ -1,0 +1,29 @@
+/* miniprogram/pages/tabBar_user_center/opt_status/wait_review.wxss */
+.status_icon {
+  width: 140rpx;
+  height: 140rpx;
+  margin-top: 60rpx;
+}
+
+.status_title {
+  font-size: 32rpx;
+  margin-top: 40rpx;
+  color: #323232;
+}
+
+.status_tip {
+  font-size: 24rpx;
+  margin-top: 30rpx;
+  color: #a0a0a0;
+}
+
+.look-btn {
+  width: 95%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  margin-top: 60rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+  background-color: #5b86fe;
+}

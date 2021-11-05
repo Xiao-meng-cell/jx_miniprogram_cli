@@ -1,0 +1,2 @@
+/* miniprogram/pages/tabBar_index/cart/store_address/store_address.wxss */
+@import '/pages/tabBar_index/cart/confirm_order_cart/confirm_order_cart.wxss';

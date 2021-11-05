@@ -1,0 +1,25 @@
+<!--miniprogram/pages/order/order_coupon_code/coupon_code.wxml-->
+
+<view class='vertical-hcenter'>
+  <!-- <image style='width:260px;height:260px;margin-top:40px;' mode="aspectFill" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/upload/media/2019/03/16/17/16/59/117_CtIDbv.jpg" /> -->
+  <canvas  class='canvas' style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px;margin-top:40px; display:none;" canvas-id='canvas' bindlongtap='save'></canvas>
+  <canvas hidden="{{canvasHidden}}" style="width:300px; height:300px;margin-top:40px;" canvas-id="mycanvas" />
+  <text style='margin-top:20px;color:#5b86fe;font-size:20px;'>{{orderBean}}</text>
+</view>
+<view style='display:none;'>
+  <view class='input-wrapper'>
+    <input bindinput='inputHandler' bindconfirm='confirmHandler' placeholder='输入需要转换为二维码的字符串' value='{{text}}'></input>
+  </view>
+  <view class='button-wrapper'>
+    <button bindtap='tapHandler'>转为二维码</button>
+  </view>
+  <canvas class='canvas' style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px;" canvas-id='canvas' bindlongtap='save'></canvas>
+
+  <!-- image显示 -->
+  <view class='tip'>长按保存</view>
+
+  <view class='line'></view>
+
+  <image src='{{imgsrc}}' style="display: block;margin:20rpx auto;width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px;"></image>
+  <view class='tip'>以图片的形式显示</view>
+</view>

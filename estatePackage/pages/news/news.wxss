@@ -1,0 +1,63 @@
+/* estatePackage/pages/news/news.wxss */
+@import "/assets/styles/real_estate.wxss";
+page {
+  background: #f6f6f6;
+}
+
+.main {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  width: calc(100vw - 32rpx * 2);
+}
+
+.multi>view,
+.four>view {
+  width: calc((100vw - 32rpx * 2 - 32rpx * 2 - 16rpx) / 3);
+  height: calc((100vw - 32rpx * 2 - 32rpx * 2 - 16rpx) / 3);
+  margin: 0 0 8rpx 0;
+}
+.item_box{
+  display: flex;
+  flex-wrap: wrap;
+}
+.item_btn{
+  width: 50%;
+}
+.item_btn>view{
+  margin: 24rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+.item_btn image{
+  border-radius: 24rpx 24rpx 0 0;
+  width: 100%;
+ height: 250rpx;
+}
+.loadText{
+  margin: 40rpx 0;
+  text-align: center;
+  color: #a0a0a0;
+}
+
+/* 新版缺省页 start */
+.emptyView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh
+}
+
+.emptyView>image {
+  width: calc(200rpx * 2);
+  height: calc(200rpx * 2);
+  margin-top: calc(60rpx * 2);
+  margin-bottom: calc(52rpx * 2);
+}
+
+.emptyView>text {
+  font-size: 32rpx;
+  color: #5fa4e9;
+  margin-bottom: calc(140rpx * 2);
+}
+
+/* 新版缺省页 end */

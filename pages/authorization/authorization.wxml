@@ -1,0 +1,42 @@
+
+<navigator-bar title="登录"></navigator-bar>
+<view class="wechat-view">
+  <image class='wechat-img'
+    src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/wfriend.png'></image>
+  <view class='wechat-text fontS-42'>申请获取以下权限</view>
+  <view class='wechat-text-info fontS-26'>获取你的公开信息(昵称，头像等)</view>
+  <button type="primary" class='wx-logo-botton' bindgetphonenumber="getPhoneNumber"
+		open-type="getPhoneNumber" style="width: 100%;font-weight: normal;">手机号一键登录</button>
+		  <!-- <button class="fontS-34 text-gray other-logo-botton" hover-class="none" style="font-weight: normal;" catchtap="otherPhoneLogin">其他手机登录</button> -->
+</view>
+
+<view class="note-text">
+  <!-- <view class="text-gray">根据相关法规政策，发布内容需要认证手机。若您的手机号未注册，将为您自动注册。</view> -->
+</view>
+
+<!-- 其他手机号码弹窗 -->
+<view catchtouchmove="true" class="cu-modal {{inputPhoneHidden ?'show':''}}">
+  <view class="cu-dialog">
+    <view class="ohter-phone">其他手机号码登录</view>
+    <view class="dialog-content solid-top solid-bottom">
+      <form>
+        <view class="cu-form-group">
+          <view class="title">手机号</view>
+          <input bindinput="mobileInput" class="text-left" maxlength="11" placeholder="请输入手机号码" type="number"
+            value="{{mobile}}" />
+        </view>
+        <view class="cu-form-group">
+          <view class="title">验证码</view>
+          <input bindinput="smsCodeInput" class="text-left" maxlength="11" placeholder="请输入验证码" type="number"
+            value="{{smsCode}}" />
+          <button type="primary" bindtap="getSmsCode" class="code-btn shadow fontS-28" disabled="{{disabled}}"
+            style="width:220rpx;">{{code}}</button>
+        </view>
+      </form>
+    </view>
+    <view class="flex flex-center btn-list">
+      <view class="flex-list cancle-btn-sm cancel-btn flex-btn" catchtap="hideModal">取消</view>
+      <view class="flex-list success-btn-sm flex-btn" catchtap="confirmBind">确定</view>
+    </view>
+  </view>
+</view>

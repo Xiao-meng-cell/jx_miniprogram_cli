@@ -1,0 +1,60 @@
+/* miniprogram/pages/tabBar_user_center/promoters/promoters.wxss */
+/*input  start*/
+.input_item{
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+}
+
+.input_item>image{
+  height: 45rpx;
+  width: 45rpx;
+}
+
+.input_item>view{
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+}
+
+.input_item>input{
+  font-size: 30rpx;
+  font-weight: bold;
+  flex: 1;
+  text-align: right;
+}
+/*input  end*/
+
+/*协议 start*/
+.agreement{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30rpx;
+}
+.agreement>image{
+  height: 36rpx;
+  width: 36rpx;
+}
+
+.agreement>view{
+  font-size: 26rpx;
+  margin-left: 20rpx;
+}
+/*协议 end*/
+
+/*申请按钮 start*/
+.apply{
+  height: 90rpx;
+  width: 70%;
+  background: rgb(47, 149, 251);
+  color: white;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 60rpx;
+  font-size: 34rpx;
+}
+/*申请按钮 end*/

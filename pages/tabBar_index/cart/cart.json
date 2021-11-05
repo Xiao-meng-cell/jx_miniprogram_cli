@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "tabbar": "/widget/tabbar/index",
+    "date-time-picker": "/widget/picker/picker",
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

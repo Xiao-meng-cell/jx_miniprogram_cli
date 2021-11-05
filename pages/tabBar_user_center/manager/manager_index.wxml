@@ -1,0 +1,228 @@
+<!--miniprogram/pages/tabBar_user_center/manager/manager_index.wxml-->
+<wxs module="dateUtil" src="../../../utils/timeUtil.wxs"></wxs>
+<wux-dialog id="wux-dialog" />
+<wux-dialog id="wux-dialog--alert" />
+
+<topBar title="企业管理主页"></topBar>
+<view>
+	<!-- 顶部内容 start -->
+	<view class='header_gradient'>
+		<image class='header_bg' mode="aspectFill"
+			src="{{myMerchantInfo.bgUrls ? myMerchantInfo.bgUrls[0] : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/default_bg.png'}}">
+		</image>
+		<view class="header_gradient_masking"></view>
+		<view class='order_header'>
+			<view class='big_order_menu'>
+				<view class="big_order_menu_name_status">
+					<text class="merchantNameStatus"
+						wx:if="{{auditStatus != 1 && myMerchantInfo.ultimate != 1 && myMerchantInfo.channel != 1}}">{{myMerchantInfo.name}}</text>
+					<text class="merchantNameTag"
+						wx:if="{{(auditStatus == 0 || auditStatus == 1) && (myMerchantInfo.ultimate == 1 || myMerchantInfo.channel == 1)}}">{{myMerchantInfo.name}}</text>
+					<text class="merchantNameTagStatus"
+						wx:if="{{auditStatus != 1 && auditStatus != 0 && (myMerchantInfo.ultimate == 1 || myMerchantInfo.channel == 1)}}">{{myMerchantInfo.name}}</text>
+					<view class="big_order_menu_name_status_status" wx:if="{{auditStatus != 1 && auditStatus != 0}}">
+						<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/fail@2x.png"
+							wx:if="{{auditStatus == -1}}"></image>
+						<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/wait@2x.png"
+							wx:else></image>
+						<text
+							class="{{auditStatus == -1 ? 'big_order_menu_status_name_color2' : 'big_order_menu_status_name_color'}}">{{auditStatusText}}</text>
+					</view>
+					<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_zk.png"
+						wx:if="{{myMerchantInfo.merchantType == 'mainStore' || myMerchantInfo.merchantType == 'branchStore'}}">
+					</image>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+						wx:elif="{{myMerchantInfo.ultimate == 1}}"></image>
+					<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_channel.png"
+						wx:elif="{{myMerchantInfo.channel == 1}}"></image>
+				</view>
+				<!-- <text>最近有15笔新订单未处理、新增3张名片申请</text> -->
+				<view class="big_order_menu_tag_time">
+					<text>{{myMerchantInfo.tagName}}</text>
+				</view>
+				<view class="big_order_menu_racking">
+					<text>本地排名 {{myMerchantInfo.tagRankLocal}}</text>
+					<text class="big_order_menu_racking_fgx">｜</text>
+					<text>全国排名 {{myMerchantInfo.hotRankCountry}}</text>
+					<text class="big_order_menu_racking_fgx">｜</text>
+					<text>热度 {{myMerchantInfo.hot}}</text>
+				</view>
+				<view class="big_order_menu_fgx"></view>
+				<view class="port" wx:if="{{myMerchantInfo.channel == 1 || myMerchantInfo.channel == 3}}">
+					<view class='order_menu_content' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon' mode="aspectFill"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_goods.png" />
+						<text class="order_menu_txt txt_black">商品管理</text>
+					</view>
+					<view class='order_menu_content' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon' mode="aspectFill"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_source.png" />
+						<text class="order_menu_txt txt_black">货源管理</text>
+					</view>
+					<view class='order_menu_content' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon' mode="aspectFill"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_couponcode.png" />
+						<text class="order_menu_txt txt_black">券码核销</text>
+					</view>
+					<view catchtap='showToApp' class='order_menu_content' hover-class='btn_white_hover'>
+						<image class='order_menu_icon'
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_order.png" />
+						<text class="order_menu_txt txt_black">订单管理</text>
+					</view>
+				</view>
+				<view class="port" wx:else>
+					<view class='order_menu_content2' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon' mode="aspectFill"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_goods.png" />
+						<view>
+							<text>商品管理</text>
+							<text>自卖和代理</text>
+						</view>
+					</view>
+					<view style="flex:1;"></view>
+					<view class='order_menu_content2' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon' mode="aspectFill"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_couponcode.png" />
+						<view>
+							<text>扫码核销</text>
+							<text>核销订单</text>
+						</view>
+					</view>
+					<view style="flex:1;"></view>
+					<view class='order_menu_content2' catchtap='showToApp' hover-class='btn_white_hover'>
+						<image class='order_menu_icon'
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/manager_order.png" />
+						<view>
+							<text>订单管理</text>
+							<text>销售订单</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class='to_detail' catchtap="goToIndex">
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/btn_home.png">
+			</image>
+		</view>
+	</view>
+	<!-- 顶部内容 end -->
+	<!-- 主体内容 start -->
+	<view class='vertical-hcenter order_content'>
+		<!-- <image class="imgServiceTips" mode='widthFix'
+			src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/level_up_AD.png"
+			bindtap="goToChannel" wx:if="{{displayLevelUp}}"></image> -->
+		<!-- <view class="imgServiceTips olPayentry" catchtap="goToStepPay" wx:if="{{stepPayInfo.status == -1}}">
+			<view>
+				<text>未完成</text>
+				<view class="time">
+					<view wx:if="{{stepPayTimeD != '00'}}">
+						<text class="timeItem">{{stepPayTimeD[0]}}</text>
+						<text class="timeItem">{{stepPayTimeD[1]}}</text>
+						<text>天</text>
+					</view>
+					<view>
+						<text class="timeItem">{{stepPayTimeH[0]}}</text>
+						<text class="timeItem">{{stepPayTimeH[1]}}</text>
+						<text>时</text>
+					</view>
+					<view>
+						<text class="timeItem">{{stepPayTimeM[0]}}</text>
+						<text class="timeItem">{{stepPayTimeM[1]}}</text>
+						<text>分</text>
+					</view>
+					<view wx:if="{{stepPayTimeD == '00'}}">
+						<text class="timeItem">{{stepPayTimeS[0]}}</text>
+						<text class="timeItem">{{stepPayTimeS[1]}}</text>
+						<text>秒</text>
+					</view>
+				</view>
+			</view>
+		</view> -->
+		<view class="auxFunc">
+			<text>辅助功能</text>
+			<view class="port">
+				<navigator url="/pages/tabBar_user_center/manager/business_myqrcode/business_myqrcode" class='auxFuncItem'
+					bindtap='toProblemOrder' hover-class='btn_white_hover'>
+					<image class='order_menu_icon' mode="aspectFill"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode.png" />
+					<text class="order_menu_txt txt_black">企业小程序码</text>
+				</navigator>
+				<view bindtap="editBusinessInfo" class='auxFuncItem' hover-class='btn_white_hover'>
+					<image class='order_menu_icon' mode="aspectFill"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_image@2x.png" />
+					<text class="order_menu_txt txt_black">企业信息</text>
+				</view>
+			</view>
+		</view>
+		<view class="auxFunc">
+			<view class="other_func">
+				<text>其他功能</text>
+				<text
+					wx:if="{{dateUtil.dateFormat(endTime,'yyyy-MM-dd') != null}}">入驻到期：{{dateUtil.dateFormat(endTime,'yyyy-MM-dd')}}</text>
+			</view>
+			<view class="port">
+			</view>
+		</view>
+	</view>
+	<!-- 主体内容 end -->
+	<!-- 底部内容 start -->
+	<view style="height:100%;"></view>
+	<view class='checkOut' bindtap='checkOut'>
+		<text>注销企业</text>
+	</view>
+	<!-- 注销验证码输入 -->
+	<view class='viewCheckOut' wx:if='{{enterVCode}}' bindtap='cancelEnterVCode'>
+		<view class='viewCheckOutCode' catchtap='stopClick'>
+			<view>
+				<input placeholder='请输入验证码' maxlength='15' bindinput='verificationCodeInput'></input>
+				<button class='btn_default_big' style="width:130px;margin-left:12px;font-size:14px;"
+					hover-class='btn_default_big_hover' disabled='{{countdown > 0}}' bindtap='getClient'>{{sendBtnText}}</button>
+			</view>
+			<button class='btn_default_big' style="width:100%;margin-top:12px;" hover-class='btn_default_big_hover'
+				disabled='{{verificationCode == ""}}' bindtap='submitCheckout'>确定</button>
+		</view>
+	</view>
+	<!-- 底部内容 end -->
+</view>
+<!-- 上传资质提示 start -->
+<view class="tipBG" wx:if="{{showLicenseTips}}" bindtap="closeModal" catchtouchmove="stopClick">
+	<view class="tipContent" catchtap="stopClick">
+		<view>
+			<text>{{tipsTitle}}</text>
+		</view>
+		<text class="tipContent_text">{{tipsContent}}</text>
+		<text class="tipContent_text2" wx:if="{{tipsSubContent != ''}}">{{tipsSubContent}}</text>
+		<view class="tips_fgx"></view>
+		<view class="submit" catchtap="closeModal">
+			<text>确定</text>
+		</view>
+	</view>
+</view>
+<!--上传资质提示 end -->
+
+<!-- 合同协议 start -->
+<view class="agreement" catchtap="displayAgreement" wx:if="{{displayAgreement}}">
+	<view>
+		<text class="agreementTitle">掌创人生品牌旗舰店入驻协议</text>
+		<text class="agreementSubTitle">甲方：广西掌胜科技集团有限公司</text>
+		<text class="agreementSubTitle">地址：防城港市港口区行政中心区站前路与5号路交汇处东南面高铁一号7层719号房</text>
+		<text class="agreementSubTitle">联系人： </text>
+		<text class="agreementSubTitle">电话： </text>
+		<view class="agreementCheck">
+			<text>...</text>
+		</view>
+		<view class="agreementBottomBar">
+			<view style="background: #5ABDFF;" catchtap="goToAccountInfo">
+				<text>对公账号信息</text>
+			</view>
+			<view style="background: #2F95FB;"
+				data-url="https://oss.vicpalm.com/static/weclubbing/protocol-zcrs/flagshipAgreement.html"
+				data-title="掌创人生品牌旗舰店入驻协议" catchtap="jumpWebView">
+				<text>查看完整协议</text>
+			</view>
+		</view>
+		<!-- <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_arrow.png" class="agreementDownload" catchtap="downloadAgreement"></image> -->
+	</view>
+</view>
+<!-- 合同协议 end -->

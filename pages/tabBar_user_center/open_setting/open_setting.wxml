@@ -1,0 +1,4 @@
+<!--pages/tabBar_user_center/open_setting/open_setting.wxml-->
+<wux-dialog id="wux-dialog" />
+<wux-dialog id="wux-dialog--alert" />
+<button bindtap="openSetting">打开设置页</button>

@@ -1,0 +1,85 @@
+/* miniprogram/pages/tabBar_user_center/business_card_manage/business_card_searchResult/business_card_searchResult.wxss */
+
+page {
+  background: #f6f6f6;
+}
+
+.type {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30rpx;
+}
+
+.type>view {
+  width: 50%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #5b86fe;
+  position: relative;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  bottom: -10rpx;
+  background: #5b86fe;
+  width: 40rpx;
+  /*两个选项的情况下*/
+  /* width: 8%; */
+  right: 0;
+  left: 0;
+  margin: auto;
+  height: 6rpx;
+  border-radius: 100rpx;
+}
+
+.clerk_item {
+  background: #f6f6f6;
+}
+
+.loadAll {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 72rpx;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  color: #a0a0a0;
+}
+
+/* 联想自动补全 start */
+.autoComplete {
+  position: fixed;
+  top: calc(64rpx + 12rpx * 2);
+  left: 0;
+  padding: 0px 32rpx;
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 32rpx * 2);
+  height: calc(100vh - 64rpx + 12rpx * 2);
+  background: #fff;
+}
+
+.resultItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 74rpx;
+  align-items: center;
+  border-bottom: 2rpx solid #eeeeee;
+}
+
+.resultItem>text:nth-of-type(1) {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #323232;
+  margin-right: 8rpx;
+}
+
+.resultItem>text:nth-of-type(2) {
+  font-size: 20rpx;
+  color: #A0A0A0;
+}
+
+/* 联想自动补全 end */

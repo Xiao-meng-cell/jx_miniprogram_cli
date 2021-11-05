@@ -1,0 +1,73 @@
+/* pages/tabBar_user_center/menu_wallet/balancerecord/balancerecord.wxss */
+
+.item-wrap-row {
+  padding: 24rpx 20rpx;
+}
+
+/*水平垂直居中对齐*/
+
+.horizontal-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /*垂直居中*/
+}
+
+.left-icon {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50rpx;
+  background: #a0a0a0;
+}
+
+/**中间布局**/
+
+.mid-content {
+  margin-left: 5vw;
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+}
+
+.right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* 日期选择 */
+
+.picker_group {
+  position: fixed;
+  top: 0;
+  width: 750rpx;
+  height: 85rpx;
+  line-height: 85rpx;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: #888;
+  background: #fff;
+  border-bottom: 1rpx solid #efefef;
+}
+
+.picker_group picker {
+  /* background-color: yellow; */
+  color: #588afd;
+  height: 55rpx;
+  line-height: 55rpx;
+  margin: 0 2%;
+  padding: 0 2%;
+  border: 1rpx solid #588afd;
+  border-radius: 30rpx;
+}
+
+.empty_view {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}

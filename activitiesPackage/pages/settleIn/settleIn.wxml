@@ -1,0 +1,97 @@
+<!--activitiesPackage/page/settleIn/settleIn.wxml-->
+<view class="settle_in_page">
+    <view class="top_pic">
+      <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/top_pic.png" mode="widthFix"></image>
+    </view>
+    <view class="main_box_list">
+        <view class="activity_box">
+            <view class="activity_content">
+                <view class="activity_logo">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/logo.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/title.png" mode="heightFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy1}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail" wx:if="{{index < 3}}">
+                    <image wx:if="{{item.customizeKey == 'HL1.1'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/package_a.png" mode="widthFix"></image>
+                    <image wx:if="{{item.customizeKey == 'HL1.2'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/package_b.png" mode="widthFix"></image>
+                    <image wx:if="{{item.customizeKey == 'HL1.3'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/package_c.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title activity_title1">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/title2.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy1}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail" wx:if="{{ index >= 3}}">
+                    <image wx:if="{{item.customizeKey == 'HL1.4'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/package_a1.png" mode="widthFix"></image>
+                    <image wx:if="{{item.customizeKey == 'HL1.5'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy1/package_a2.png" mode="widthFix"></image>
+                </view>
+                <view class="note_text fontS-10">*单个用户ID仅能购买一次，且仅能试用一次</view>
+            </view>
+        </view>
+
+        <view class="activity_box">
+            <view class="activity_content">
+                <view class="activity_logo">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy2/logo.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy2/title.png" mode="heightFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy2}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail">
+                     <image wx:if="{{item.customizeKey == 'HL2.1'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy2/package_a.png" mode="widthFix"></image>
+                </view>
+            </view>
+        </view>
+
+        <view class="activity_box">
+            <view class="activity_content">
+                <view class="activity_logo">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy3/logo.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy3/title.png" mode="heightFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy3}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail">
+                     <image wx:if="{{item.customizeKey == 'HL3.1'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy3/package_a.png" mode="widthFix"></image>
+                </view>
+            </view>
+        </view>
+
+        <view class="activity_box">
+            <view class="activity_content">
+                <view class="activity_logo">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy4/logo.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy4/title.png" mode="heightFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy4}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail">
+                     <image wx:if="{{item.customizeKey == 'HL4.1'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy4/package_a.png" mode="widthFix"></image>
+                </view>
+            </view>
+        </view>
+
+        <view class="activity_box">
+            <view class="activity_content">
+                <view class="activity_logo">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy5/logo.png" mode="widthFix"></image>
+                </view>
+                <view class="activity_title">
+                    <image src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy5/title.png" mode="heightFix"></image>
+                </view>
+                <view class="activity_list" wx:for="{{courtesy5}}" wx:for-item="item" wx:key="id" data-code="{{item.eventCode}}" catchtap="goGoodsDetail">
+                     <image wx:if="{{item.customizeKey == 'HL5.1'}}" src="http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/courtesy5/package_a.png" mode="widthFix"></image>
+                </view>
+            </view>
+        </view>
+
+        <view class="note_box">
+            <view class="note_title fontS-30">活动规则：</view>
+            <view class="note_content fontS-13">
+                <view class="content_list">1、用户下单后请联系客服，并提供核销券码给客服核销；客服将会在1个工作日内回复，并提供优惠券码或相关商品服务；同时用户也可在APP信息提示上查看购买的优惠券码，并按提示，进行入驻；</view>
+                <view class="content_list">2、如用户购买7天商家入驻体验商品，获得平台提供的优惠券码后，输入相关的企业信息与优惠券码，即可入驻掌创人生；用户入驻体验到期后，当前入驻等级会恢复至购买体验券前的入驻等级；</view>
+                <view class="content_list">3、购买除“7天商家入驻”外的商品，向客服出示核销码核销后，我们将会根据下单用户的实际需求，双方约定成品交付日期，并进行后续的持续跟进维护。</view>
+                <view class="content_list">4、更多详情请查看平台相关信息或拨打平台热线400-003-2229</view>
+            </view>
+        </view>
+    </view>
+</view>

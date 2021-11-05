@@ -1,0 +1,86 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_manage/business_card_tagList/business_card_tagList.wxml-->
+
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!--搜索栏 start-->
+<view style="width:100vw;height:7vh;background-color:#fff;">
+	<view class="search_bar">
+		<input placeholder="搜索名片所属企业名称" placeholder-style="color:#A0A0A0;font-size:16px;" value="{{searchKeyword}}" bindinput="searchKeywordInputHandler"></input>
+		<text bindtap="clearSearchKeyword">清空</text>
+	</view>
+</view>
+<!--搜索栏 end-->
+<!-- 显示主体 start -->
+<view wx:if="{{!searchResult}}">
+	<!--左侧部分 start-->
+	<view class='left_menu' style="width:20vw;top:7vh;">
+		<scroll-view scroll-y="true" class='tagCode_scroll_x'>
+			<view class='tagCode_item {{-1==selected_tagIndex?"tagCode_item_choose":""}}' data-code="{{''}}" data-index="{{-1}}" catchtap='changeTagCode_index'>全部({{allCardNum?allCardNum:0}})</view>
+			<block wx:for="{{tagCodes}}" wx:key="item" wx:index="index">
+				<view class='tagCode_item {{index==selected_tagIndex?"tagCode_item_choose":""}}' data-code="{{item.tagCode}}" data-index='{{index}}' catchtap='changeTagCode_index'>{{item.tagName}}</view>
+			</block>
+		</scroll-view>
+	</view>
+	<!--左侧部分 end-->
+	<!--右侧部分 start-->
+	<view id='card_list' style="top:7vh;">
+		<block wx:for="{{cardList}}" wx:key="item" wx:index="index">
+			<view class='card_item' data-item='{{item}}' data-merchantcode='{{item.merchantCode}}' data-id='{{item.id}}' data-status="{{item.status}}" bindtap='jumpCardDetail' hidden='{{item.merchantCode== "temporary"?true:false}}'>
+				<view class="card_item_info">
+					<image class='card_item_left' src='{{item.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+					<view class='card_item_right'>
+						<view>
+							<view class='aline1' style="flex:1;">{{item.name}}</view>
+							<!-- <view class='aline1'>{{item.phone}}</view> -->
+							<view class="role1" style="width:auto;padding-top:0rpx;margin-right:10rpx;">
+								<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/pm%403x.png" wx:if="{{item.role == 1}}"></image>
+								<text wx:if="{{item.role == 1}}">事业合伙人</text>
+							</view>
+						</view>
+						<view class='aline1'>
+							<text>{{item.position}}</text>
+						</view>
+						<view class='aline1'>{{item.merchantName}}</view>
+					</view>
+				</view>
+				<view class="card_item_bar" data-code="{{item.merchantCode}}" data-role="{{item.role}}" data-merchantstatus="{{item.merchantStatus}}" data-id="{{item.id}}" catchtap='lookMineTeam' wx:if="{{item.role == 1}}">
+					<view>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/card_favorites/members%403x.png"></image>
+						<view>团队成员</view>
+					</view>
+				</view>
+				<view class='temp_flag' wx:if='{{item.status == 2}}'>
+					<view class='rotate'>
+						<text>待审核</text>
+					</view>
+				</view>
+				<view style='position:absolute;top:20rpx;right:20rpx;' catchtap='shareCardCode' data-id="{{item.id}}">
+					<image hidden="{{item.status==2?true:false}}" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode.png" style='width:48rpx;height:48rpx;'></image>
+				</view>
+			</view>
+		</block>
+	</view>
+	<!--右侧部分 end-->
+</view>
+<!-- 显示主体 end -->
+<!-- 搜索结果 start -->
+<view class="searchResult" wx:else>
+	<block wx:for="{{tempCardList}}" wx:key="item" wx:index="index">
+		<view data-item='{{item}}' data-merchantcode='{{item.merchantCode}}' data-id='{{item.id}}' data-status="{{item.status}}" bindtap='jumpCardDetail' hidden='{{item.merchantCode== "temporary"?true:false}}'>
+		<view class='temp_flag1' wx:if='{{item.status == 2}}'>
+					<view class='rotate'>
+						<text>待审核</text>
+					</view>
+				</view>
+			<image class='card_item_left' src='{{item.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+			<view class='card_item_right'>
+				<view>
+					<view class='aline1'>{{item.name}}</view>
+					<view class='aline1'>{{item.phone}}</view>
+				</view>
+				<view class='aline1'>{{item.position}}</view>
+				<view class='aline1'>{{item.merchantName}}</view>
+			</view>
+		</view>
+	</block>
+</view>
+<!-- 搜索结果 end -->

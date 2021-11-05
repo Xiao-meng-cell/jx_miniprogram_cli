@@ -1,0 +1,13 @@
+<!--expandPackage/pages/member/goodsCoupon/goodsCoupon.wxml-->
+  <myCoupon id="myCoupon" checked="{{checked}}" bind:myevent="onMyEvent" storeCode="{{storeCode}}"></myCoupon>
+  <view class="total x_layout fontS-12">
+      <view class="x_layout" style="padding:12rpx 0 12rpx 32rpx">
+        <view style="color: #999999">可减</view>
+        <text class="price_color" decode="{{true}}">&nbsp;¥</text>
+        <view class="price_color fontS-18 fontW-500">{{vipDiscount}}</view>
+      </view>
+      <view class="x_layout" style="padding:12rpx 24rpx 12rpx 0">
+        <view class="coupon_type">已选{{sum}}张券</view>
+        <view class="total_btn" catchtap="goShopDetail">确定</view>
+      </view>
+    </view>

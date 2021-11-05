@@ -1,0 +1,136 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  margin: 30rpx;
+}
+
+.page text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.page input {
+  height: 6vh;
+  border: 2rpx gainsboro solid;
+  border-radius: 10rpx;
+  font-size: 36rpx;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  margin-top: 2vh;
+  margin-bottom: 3vh;
+}
+
+.card_list_item {
+  background-color: white;
+  width: 700rpx;
+  min-height: 390rpx;
+  position: relative;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0px 0rpx 10rpx 2rpx rgba(0, 0, 0, 0.161);
+  margin-top: 50rpx;
+  padding-bottom: 10rpx;
+}
+
+.card_list_item_selected {
+  box-shadow: 0px 0rpx 10rpx 2rpx rgba(91, 134, 254, 1);
+}
+
+.card_userhaedImg {
+  position: relative;
+  overflow: hidden;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-top: 30rpx;
+}
+
+.card_userhaedImg >image:nth-child(1) {
+  background-color: #eee;
+  width: 150rpx;
+  height: 150rpx;
+  position: relative;
+  overflow: hidden;
+  border-radius: 100rpx;
+}
+
+.card_username>text:nth-child(1) {
+  font-weight: 600;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  max-width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_username>text:nth-child(2) {
+  color: #a0a0a0;
+  font-size: 24rpx;
+  width: 260rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_username>text:nth-child(3) {
+  float: right;
+  margin-right: 20rpx;
+}
+
+#viewCardItem>view:nth-child(4), #viewCardItem>view:nth-child(5),
+.temporaryMerchant {
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  color: #a0a0a0;
+  font-size: 24rpx;
+}
+
+#viewCardItem>view:nth-child(5) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.line {
+  width: 150rpx;
+  height: 5rpx;
+  background-color: #ddd;
+  margin: 15rpx 30rpx;
+}
+
+.add_card_item {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0rpx 0rpx 0rpx 0rpx rgba(0, 0, 0, 0);
+  border: 2px #eee dashed;
+  border-radius: 10rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSubmit {
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 7vh;
+  background-color: #5b86fe;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectedFlag {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}

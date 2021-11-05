@@ -1,0 +1,107 @@
+/* assets/template/business_list.wxss */
+/*企业列表*/
+
+.business_service_list {
+  box-sizing: border-box;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  position: relative;
+}
+
+.userinfo {
+  display: flex;
+  font-size: 24rpx;
+  color: #a0a0a0;
+  width: 100%;
+  /* height: 96rpx; */  /*恢复头像之后记得放开*/
+  align-items: center;
+  margin-top: 20rpx;/*恢复头像后记得注释掉*/
+}
+
+.userinfo>view:nth-child(2) {
+  width: 70%;
+  max-width: 450rpx;
+  overflow: hidden;
+}
+
+.userinfo>view:nth-child(3) {
+  position: absolute;
+  right: 30rpx;
+  text-align: right;
+}
+
+.userinfo>view:nth-child(3)>view:nth-child(2) {
+  display: flex;
+}
+
+.username {
+  font-size: 34rpx;
+  color: #323232;
+}
+
+.user_headimg {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 48rpx;
+  background-color: #f4f4f4;
+  margin-right: 30rpx;
+}
+
+.three_dots {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.browse {
+  width: 32rpx;
+  height: 32rpx;
+  background-color: #f4f4f4;
+}
+
+.service_text {
+  box-sizing: border-box;
+  font-size: 24rpx;
+  color: #323232;
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+}
+
+.service_img_video {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.service_img_video>image {
+  width: 220rpx;
+  height: 220rpx;
+  margin-right: 5rpx;
+  flex-grow: 0.3;
+  background-color: #eee;
+  border-radius: 10rpx;
+  margin-top: 10rpx;
+}
+
+.service_img_video>image:nth-child(1) {
+}
+
+.sercvie_operation{
+  font-size: 24rpx;
+  margin-top: 30rpx;
+  color: #a0a0a0;
+}
+
+.sercvie_operation>view:nth-child(1){
+  float: left;
+  overflow: hidden;
+  zoom: 1;
+  display: flex;
+}
+.sercvie_operation>view:nth-child(2){
+  float: right;
+  overflow: hidden;
+  zoom: 1;
+  display: flex; 
+}

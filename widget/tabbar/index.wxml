@@ -1,0 +1,26 @@
+<!--miniprogram/custom-tab-bar/index.wxml-->
+
+<view class="zs-tab-barv"></view>
+<view id="main" class="zs-tab-bar" style="background:{{bgcolor}};padding-bottom:{{iPhoneX ? 60 : 12}}rpx;">
+	<view class="zs-tab-bar-border" wx:if="{{showborder}}" style="background:{{bordercolor}};"></view>
+	<block wx:for="{{list}}" wx:key="index" wx:if="{{item.isShow}}">
+		<view class="zs-tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" data-name="{{item.text}}"
+			bindtap="switchTab">
+			<view>
+				<!--ICON图-->
+				<image class="zs-tab-bar-item-image" src="{{selected === index ? item.selectedIconPath : item.iconPath}}">
+				</image>
+				<!--红点提示-->
+				<view class="zs-dot" wx:if="{{item.isdot}}"></view>
+				<!--数字提示-->
+				<view class="zs-number" wx:if="{{item.number!=0 && item.number!=undefined}}">{{item.number}}</view>
+			</view>
+			<!--文字-->
+			<view class="zs-tab-bar-item-text" style="color: {{selected === index ? selectedColor : color}};">
+				{{item.text}}</view>
+			<!-- <view class="zs-tab-bar-item-text"
+				style="color: {{selected === index ? selectedColor : color}};margin-top:{{(item.isdot&&item.number==0)?-10:(item.number!=0&&item.number!=undefined?-20:0)}}rpx;">
+				{{item.text}}</view> -->
+		</view>
+	</block>
+</view>

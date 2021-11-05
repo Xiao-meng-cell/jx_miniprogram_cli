@@ -1,0 +1,481 @@
+/* miniprogram/pages/tabBar_user_center/business_card_detail/business_card_detail.wxss */
+@import "../../../../pages/tabBar_index/business_homepage/business_homepage.wxss";
+@import "../../../../pages/clerk/show/show.wxss";
+
+/*名片 start*/
+
+.card_floating_window {
+  background-color: white;
+  width: 690rpx;
+  height: 580rpx;
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0px 0rpx 10rpx 2rpx rgba(0, 0, 0, 0.161);
+  margin-top: 2rpx;
+}
+
+.card_floating_window>image:nth-child(1) {
+  background-color: #eee;
+  width: 690rpx;
+  height: 400rpx;
+  position: relative;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  overflow: hidden;
+}
+
+.card_info {
+  width: 690rpx;
+  height: 90rpx;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.card_info_img {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 10rpx;
+}
+
+.card_name {
+  display: flex;
+  flex-direction: column;
+  width: 316rpx;
+  flex: 1;
+  position: relative;
+}
+
+.card_name>view:nth-child(1) {
+  margin-bottom: 20rpx;
+  margin-top: 14rpx;
+  display: flex;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(1) {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: rgb(50, 50, 50);
+  margin-right: 30rpx;
+  /* max-width: 150rpx; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(2),
+.card_name>view:nth-child(2) {
+  font-size: 24rpx;
+  color: rgb(160, 160, 160);
+}
+
+.card_name::after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  top: 0rpx;
+  background: rgb(222, 222, 222);
+  height: 90%;
+  right: 0rpx;
+  margin: auto;
+  width: 1px;
+  border-radius: 10rpx;
+}
+
+.contactBusiness {
+  width: 38rpx;
+  height: 38rpx;
+  margin: 38rpx 30rpx 38rpx 60rpx;
+}
+
+/*名片 end*/
+
+.template_list {
+  position: fixed;
+  background: white;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  padding-top: 10rpx;
+  top: -10rpx;
+}
+
+.template_list>view:nth-child(1) {
+  font-size: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add_card_message {
+  position: fixed;
+  background: white;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  top: 10%;
+  margin: auto;
+}
+
+.noList {
+  width: 100%;
+  height: 150rpx;
+  line-height: 150rpx;
+  font-size: 30rpx;
+  color: #a0a0a0;
+  text-align: center;
+}
+
+/* 隐藏滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.clerk_detail_info {
+  width: 690rpx;
+  border: 2rpx solid rgb(244, 244, 244);
+  margin: auto;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.clerk_detail_info_intro {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 90rpx;
+  padding-left: 10rpx;
+  font-size: 24rpx;
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.clerk_detail_info_intro>text:nth-child(1) {
+  width: 150rpx;
+  color: rgb(128, 128, 128);
+}
+
+.clerk_detail_info_intro>view:nth-child(2) {
+  width: 100%;
+  margin-left: 40rpx;
+}
+
+.send_message {
+  width: 500rpx;
+  top: 40%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-radius: 60rpx;
+  background-color: #5b86fe;
+  color: white;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.send_message>button {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  position: absolute;
+}
+
+.send_message_cancel {
+  width: 200rpx;
+  background-color: white;
+  color: #5b86fe;
+  text-align: center;
+  font-size: 30rpx;
+  justify-content: center;
+}
+
+.setPhone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 30rpx;
+  color: #a0a0a0;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+}
+
+.card_choose_template {
+  width: 100%;
+  height: 60rpx;
+}
+
+/*企业过期 start*/
+
+/* .merchant_err{
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: white;
+  text-align: center;
+  font-size: 34rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.toIndex{
+  border-radius: 60rpx;
+  border:1px solid #bdc0c1;
+  color: #bdc0c1;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  margin-top: 30rpx;
+} */
+
+/*企业过期 end*/
+
+.fullRowBtn {
+  display: flex;
+  flex-direction: row;
+  height: 90rpx;
+  border-radius: 10rpx;
+  background-color: rgb(91, 134, 254);
+  margin-top: 100rpx;
+  margin-bottom: -50rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.levelUp {
+  height: 100%;
+  line-height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: white;
+  border: 2rpx solid rgb(249, 186, 44);
+  color: rgb(249, 186, 44);
+  border-radius: 10rpx;
+  font-size: 30rpx;
+}
+
+.levelDown {
+  height: 100%;
+  line-height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: white;
+  border: 2rpx solid rgb(255, 0, 17);
+  color: rgb(255, 0, 17);
+  border-radius: 10rpx;
+  font-size: 30rpx; 
+}
+
+/*内容部分 start*/
+
+.recommendGoods {
+  font-size: 30rpx;
+  color: rgb(47, 149, 251);
+  /* text-align: left; */
+  height: 60rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0rpx 15rpx 0 15rpx;
+  background: rgb(244, 244, 244);
+}
+
+.goodsItem {
+  box-sizing: border-box;
+  width: 330rpx;
+  margin: 0 15rpx 30rpx 15rpx;
+  min-height: 10vh;
+  background-color: #fff;
+  border-radius: 18rpx;
+}
+
+.goodsItem>image {
+  width: 330rpx;
+  height: 330rpx;
+  border-top-left-radius: 18rpx;
+  border-top-right-radius: 18rpx;
+  background-color: #a0a0a0;
+}
+
+.goodsItem>view {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10rpx;
+}
+
+.goodsItem>view>text:first-child {
+  font-size: 28rpx;
+  color: rgb(50, 50, 50);
+  height: 76rpx;
+}
+
+.deliver_type {
+  border-top-left-radius: 30rpx;
+  border-bottom-left-radius: 30rpx;
+  font-size: 22rpx;
+  /* background: linear-gradient(90deg, rgb(49, 183, 249), rgb(47, 149, 251)); */
+  background: linear-gradient(to right, rgb(49, 183, 249), rgb(47, 149, 251));
+  color: white;
+  height: 36rpx;
+  width: 70rpx;
+  text-align: center;
+}
+
+.deliver_type_red {
+  /* background: linear-gradient(90deg, rgb(255, 114, 114), rgb(234, 51, 63)); */
+  background: linear-gradient(to right, rgb(255, 114, 114), rgb(234, 51, 63));
+}
+
+.goodstag {
+  display: flex;
+  font-size: 16rpx;
+  height: 22rpx;
+  justify-content: left;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.goodstag_deliver {
+  border-top-right-radius: 4rpx;
+  border-bottom-right-radius: 4rpx;
+  box-sizing: content-box;
+  padding-right: 4rpx;
+}
+
+.goodstag>view:nth-child(1)>text:nth-child(2) {
+  color: rgb(47, 149, 251);
+  border: 2rpx solid rgb(47, 149, 251);
+}
+
+.goodstag>view:nth-child(2)>text:nth-child(2) {
+  color: rgb(234, 51, 63);
+  border: 2rpx solid rgb(234, 51, 63);
+}
+
+.goodstag>view:nth-child(3)>text,
+.goodstag>view:nth-child(4)>text {
+  color: rgb(234, 51, 63);
+  border: 2rpx solid rgb(234, 51, 63);
+  border-radius: 4rpx;
+  padding-left: 4rpx;
+  padding-right: 4rpx;
+}
+
+.goodstag>view {
+  margin-left: 10rpx;
+}
+
+.goodstag>view:first-child {
+  margin-left: 0rpx;
+}
+
+.goodstag_text {
+  border-top-left-radius: 4rpx;
+  border-bottom-left-radius: 4rpx;
+  color: white;
+  display: inline-block;
+  padding-left: 4rpx;
+  padding-right: 4rpx;
+}
+
+.goodstag_text_blue {
+  background: rgb(47, 149, 251);
+}
+
+.goodstag_text_red {
+  background: rgb(234, 51, 63);
+}
+
+.goods_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10rpx;
+  margin-bottom: 4rpx;
+}
+
+.goods_bottom>view {
+  display: flex;
+  align-items: center;
+}
+
+.goods_bottom>view>text {
+  font-size: 20rpx;
+  color: rgb(160, 160, 160);
+  margin-left: 10rpx;
+}
+
+.goods_bottom>view>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.goods_padding_margin {
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+
+.inbonus {
+  font-size: 22rpx;
+  color: rgb(255, 0, 17);
+}
+
+/*内容部分 end*/
+
+.clerk_edit {
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.clerk_edit>view {
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid #eee;
+  box-sizing: border-box;
+}
+
+.clerk_edit>view>text:nth-child(1) {
+  width: 120rpx;
+  padding-left: 10rpx;
+  font-size: 24rpx;
+  color: rgb(128, 128, 128);
+}
+
+.clerk_edit>view>input,
+.clerk_edit>view>view {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  float: right;
+  width: 364rpx;
+  margin-left: 40rpx;
+  flex: 1;
+
+}

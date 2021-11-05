@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "#F6F6F6",
+  "usingComponents": {
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

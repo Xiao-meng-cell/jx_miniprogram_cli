@@ -1,0 +1,10 @@
+<!--widget/data-null/data-null.wxml-->
+<!--数据缺省-->
+<view class="data_null_page" style="margin-bottom:{{iPhone_X? 54 : 20}}rpx;">
+  <!--断网-online-->
+  <image class="data_null_icon"
+    src="../../assets/images/online_null.png" mode="widthFix">
+  </image>
+  <view class="null_text fontS-12">网络断开了，请连接刷新重试</view>
+  <!-- <view class="smallBtn_defalut null_btn">刷新页面</view> -->
+</view>

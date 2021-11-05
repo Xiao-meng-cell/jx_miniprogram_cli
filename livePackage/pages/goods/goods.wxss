@@ -1,0 +1,61 @@
+/* miniprogram/pages/live/goods/goods.wxss */
+
+.goods {
+  display: flex;
+  flex-direction: column;
+}
+
+.goods_item {
+  display: flex;
+  flex-direction: row;
+  margin-top: 32rpx;
+  margin-left: 32rpx;
+  margin-right: 48rpx;
+  padding-bottom: 32rpx;
+  border-bottom: rgba(187, 187, 187, 0.34) 2rpx solid;
+}
+
+.goods_item>image {
+  width: 176rpx;
+  height: 176rpx;
+  border-radius: 20rpx;
+  margin-right: 16rpx;
+}
+
+.goods_item>view {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100vw - 32rpx - 48rpx - 176rpx - 16rpx);
+  height: 176rpx;
+}
+
+.goods_item>view>text {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #363636;
+}
+
+.goods_item>view>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.goods_item>view>view>text:nth-child(1) {
+  line-height: 32rpx;
+  font-size: 32rpx;
+  color: #ea333f;
+  margin-right: 16rpx;
+}
+
+.goods_item>view>view>text:nth-child(2) {
+  line-height: 20rpx;
+  font-size: 20rpx;
+  color: #a6a6a6;
+}
+
+.goods_item>view>view>image {
+  width: 46rpx;
+  height: 46rpx;
+}

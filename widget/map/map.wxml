@@ -1,0 +1,28 @@
+<!--widget/map/map.wxml-->
+<view class="mapView" style="height:{{height}}px;">
+	<map id="map" longitude="{{mapData.longitude}}" latitude="{{mapData.latitude}}" markers="{{markers}}" scale="{{scale}}" enable-satellite="{{enableSatellite}}" show-location style="width: 100%; height:{{height}}px;">
+		<cover-view class="controlsRightTopCover" wx:if="{{showControls}}">
+			<cover-view class="text  {{!enableSatellite ?'active':''}}" catchtap="satelliteChange" data-id="{{false}}">
+				地图
+			</cover-view>
+			<cover-view class="text  {{enableSatellite ?'active':''}} " catchtap="satelliteChange" data-id="{{true}}">
+				卫星
+			</cover-view>
+		</cover-view>
+		<cover-view class="controlsRightCover" wx:if="{{showControls}}">
+			<cover-view wx:for="{{controls}}" wx:key="id">
+				<cover-view class="row" catchtap="controltap" data-keyword="{{item.value}}" data-id="{{item.id}}">
+					<!-- <cover-image class="image" src="{{ossPath+item.icon}}" /> -->
+						<cover-image class="image"  src="{{item.id == controlId?ossPath+item.activeIcon:ossPath+item.icon}}" /> 
+					<cover-view class="text active">
+						{{item.value}}
+					</cover-view> 
+				</cover-view>
+			</cover-view>
+		</cover-view>
+		<cover-view class="controlsLeftCover" wx:if="{{showControls}}">
+			<cover-image class="image" src="{{ossPath+'enter_add.png'}}" catchtap="scaleTap" data-scale="{{1}}" />
+			<cover-image class="image" src="{{ossPath+'enter_del.png'}}" catchtap="scaleTap" data-scale="{{-1}}" />
+		</cover-view>
+	</map>
+</view>

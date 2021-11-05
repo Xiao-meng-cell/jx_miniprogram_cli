@@ -1,0 +1,101 @@
+<!--expandPackage/pages/member/cardDetail/cardDetail.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<view class="viewImg">
+  <image id="imgBg" src="{{cardInfo.coverImg + utils.resizeImg(800)}}" class="imgBg" mode="widthFix"
+    bindload="imgBgLoad">
+  </image>
+  <image id="imgBgMask" class="imgBgMask"
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/imgBgMask.png"
+    mode="widthFix" bindload="imgBgMaskLoad" wx:if="{{cardInfo.remarks == 'customize'}}"></image>
+</view>
+<view class="pageHead" style="margin-top:{{capsuleTop}}px;height:{{capsuleHeight}}px" wx:if="{{wxVersion >= 0}}">
+  <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/icon_back%403x.png"
+    catchtap="backPreviousPage"></image>
+  <text>会员卡详情</text>
+</view>
+
+<!-- 会员卡 start -->
+<view class="card" style="margin-top:{{cardInfoMarinTop}}px;">
+  <image src="{{cardInfo.coverImg + utils.resizeImg(500)}}" class="cardBg" mode="aspectFill"
+    wx:if="{{cardInfo.remarks == 'customize'}}"></image>
+  <view class="cardHead">
+    <image src="{{cardInfo.headImg + utils.resizeImg(250)}}" mode="aspectFill"></image>
+    <view>
+      <view class="merchantName" style="height:{{cardInfo.name.length > 15 ? 40 : 48}}rpx;">
+        <text
+          style="color:{{cardInfo.styles.fontColor}};font-size:{{cardInfo.name.length > 15 ? 24 : 28}}rpx;line-height:{{cardInfo.name.length > 15 ? 24 : 28}}rpx;">{{cardInfo.name}}</text>
+        <view class="fiagVip">
+          <block wx:for="{{vipImgUrl}}">
+            <image src="{{item}}" mode="heightFix"></image>
+          </block>
+        </view>
+      </view>
+      <view class="viewExp" wx:if="{{!noLevel}}">
+        <progress class="progExp" stroke-width="2" border-radius="1" percent="{{expPercentage}}"
+          backgroundColor="{{cardInfo.styles.expBackgroundColor}}"
+          activeColor="{{cardInfo.styles.expActiveColor}}"></progress>
+        <view class="currentExp"
+          style="left:{{expPercentage}}%;background:{{cardInfo.styles.expColor}};box-shadow: 0 0 4rpx 8rpx {{cardInfo.styles.expColor}};">
+        </view>
+      </view>
+      <view class="levelUp" style="color:{{cardInfo.styles.fontColor}};" wx:if="{{!noLevel && levelUpDifference != 0}}">
+        <text>升级{{cardInfo.nextVipLevelInfo.name}}还需</text>
+        <text>{{levelUpDifference}}</text>
+        <text>成长值</text>
+      </view>
+      <view class="levelUp" style="color:{{cardInfo.styles.fontColor}};opacity:0.6;"
+        wx:if="{{!noLevel && levelUpDifference == 0}}">
+        <text>您已达到最高级</text>
+      </view>
+    </view>
+  </view>
+  <view style="flex:1;"></view>
+  <view class="cardData">
+    <view class="cardDataItem" style="color:{{cardInfo.styles.fontColor}};" data-type="jf" catchtap="goToRecord">
+      <text>{{cardInfo.integral}}</text>
+      <view>
+        <text>积分</text>
+      </view>
+    </view>
+    <view class="dataFgx" wx:if="{{cardInfo.remarks == 'customize'}}"></view>
+    <view class="cardDataItem" style="color:{{cardInfo.styles.fontColor}};" data-type="czz" catchtap="goToRecord">
+      <text>{{cardInfo.growthValue}}</text>
+      <view>
+        <text>成长值</text>
+      </view>
+    </view>
+    <view class="dataFgx" wx:if="{{cardInfo.remarks == 'customize'}}"></view>
+    <view class="cardDataItem" style="color:{{cardInfo.styles.fontColor}};" data-type="ycz" catchtap="goToRecord">
+      <text>{{cardInfo.balanceYuan}}</text>
+      <view>
+        <text>预充值</text>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 会员卡 end -->
+<!-- 菜单 start -->
+<view class="menu">
+  <view catchtap="goToCoupon">
+    <text>我的券</text>
+    <view style="flex:1;"></view>
+    <view class="couponNum" style="background:{{cardInfo.couponCount > 0 ? '#FF2D55' : '#D8D8D8'}};">
+      <text>{{cardInfo.couponCount ? cardInfo.couponCount > 99 ? "99+" : cardInfo.couponCount : 0}}</text>
+    </view>
+    <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+    </image>
+  </view>
+  <view catchtap="goToAddCredit">
+    <text>立即充值</text>
+    <view style="flex:1;"></view>
+    <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+    </image>
+  </view>
+  <view catchtap="goToHomepage">
+    <text>商家首页</text>
+    <view style="flex:1;"></view>
+    <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+    </image>
+  </view>
+</view>
+<!-- 菜单 end -->

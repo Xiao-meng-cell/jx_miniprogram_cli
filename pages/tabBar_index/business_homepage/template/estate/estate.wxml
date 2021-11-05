@@ -1,0 +1,198 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<template name="estate">
+  <!-- 吸顶bar start -->
+  <view class="navbar-wrap" wx:if="{{isFixedTop}}">
+    <view class="column {{isFixedTop?'fixed':''}}">
+      <view class="col" style="margin-top:{{capsuleTop*2}}rpx;">
+        <text class="title">{{productInfo.title}}</text>
+        <view class="row">
+          <view class='tab' style="justify-content: space-around;">
+            <view class="{{0 == navbarCurrentIndex ? 'title-sel-selected fontS-16 fontC-d' : 'title-sel'}}"
+              bindtap='navbarTabTitleClick' data-idx='0'>
+              <text>房产项目</text>
+              <hr class="line-style" style=" margin-top: 10rpx;" />
+            </view>
+            <view class="{{1 == navbarCurrentIndex ? 'title-sel-selected fontS-16 fontC-d' : 'title-sel'}}"
+              bindtap='navbarTabTitleClick' data-idx='1'>
+              <text>动态</text>
+              <hr class="line-style" style=" margin-top: 10rpx;" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 用于吸顶后 占位用的 -->
+    <view class="column" wx:if="{{isFixedTop}}"></view>
+  </view>
+  <!-- 吸顶bar end -->
+
+   <!-- 新增房产项目-start-->
+  <view class="estate_btn" wx:if="{{merchant_code && merchant_code=='2041926838963101566'}}">
+<view class="fontS-14 title1">房产项目</view>
+<view class="item_box">
+<view class="y_layout item_btn" wx:for="{{estateList}}" wx:key="item" catchtap="onEstateClick" data-type='{{item.text}}'>
+  <image class="icon_img" src="{{'https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/new_estate/' + item.icon}}"></image>
+  <view class="fontS-11 icon_text">{{item.text}}</view>
+  </view>
+</view>
+</view>
+     <!-- 新增房产项目 end -->
+  <!--旗下精英人数-start-->
+  <view class="parter_box oh">
+    <view class="fl">
+      <view class="db_inline icon_flag">
+        <image wx:if="{{business_info.ultimate== 1}}"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_black@3x.png"
+          alt=""></image>
+        <image wx:if="{{business_info.channel == 1 && business_info.ultimate != 1}}"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_yellow@3x.png"
+          alt=""></image>
+        <image wx:if="{{business_info.channel == 0 && business_info.ultimate != 1}}"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_flag_blue@3x.png"
+          alt=""></image>
+      </view>
+      <view class="db_inline parent_text">旗下精英</view>
+    </view>
+    <view
+      class="fr {{ business_info.ultimate== 1 || (business_info.channel == 1 && business_info.ultimate != 1) ? 'yellow_border' : 'blue_border'}}">
+      <text wx:if="{{userLander}}"
+        class="parent_num">{{userRole >= 0 ? parentCount :( parentCount > 20 ? parentCount : '1-20')}}</text>
+      <text wx:if="{{userLander}}">人</text>
+      <text wx:if="{{!userLander}}" catchtap="login" style="font-size: 24rpx; color: #2f95fb;">登录查看人数</text>
+    </view>
+  </view>
+  <!--旗下精英人数-end-->
+  <view class="sourceBanner" wx:if="{{channelGoodsCount >0}}" catchtap="goToChannelGoods">
+    <!-- <view class="fontS-16 fontC-d">进入货源列表</view> -->
+    <view class="btn  fontS-14 fontC-f">我要代理</view>
+  </view>
+
+  <!-- 房产项目 start -->
+  <view class="mainTitle" wx:if="{{productInfo.id}}">
+    <text>房产项目</text>
+    <text class="right" catchtap="toMoreProject">更多项目</text>
+  </view>
+  <view class="estateProjectList" wx:if="{{productList.length > 0}}">
+    <scroll-view class="scroll" scroll-x="true" scroll-x>
+      <view wx:for="{{productList}}" wx:key="item" class="rowItem" catchtap="onProductClick" data-id='{{item.id}}'>
+        <view style="display:flex;flex-flow:column; justify-items: center;">
+          <image class="{{item.id!=productInfo.id?'image':'active'}}" src="{{item.pic}}"></image>
+          <text class="title fontS-10 fontC-f" wx:if="{{item.id!=productInfo.id}}">{{item.title}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="estateProjectInfo fontS-14 fontC-a" wx:if="{{productInfo.id}}">
+    <text class="title fontS-14 fontC-a">{{productInfo.title}} </text>
+    <view class="tagrow">
+      <text class="tag fontS-12 fontC-f">{{productInfo.sellingPriceType}}</text>
+      <text class="fontS-18 fontC-e" wx:if="{{productInfo.sellingPriceType != '价格面议'}}">{{productInfo.price}}</text>
+      <text class="fontS-10" wx:if="{{productInfo.sellingPriceType != '价格面议'}}">起</text>
+      <text class="fontS-18 fontC-e"
+        wx:if="{{productInfo.sellingPriceType == '价格面议'}}">{{productInfo.sellingPriceType}}</text>
+    </view>
+    <view class="tagList">
+      <view class="tagItem">
+        <text class="fontS-14 fontC-c" style="margin-right:20rpx;">类型</text>
+        <text class="fontS-14 fontC-a">{{productInfo.infoType}}</text>
+      </view>
+      <view class="tagItem">
+        <text class="fontS-14 fontC-c" style="margin-right:20rpx;">建筑面积</text>
+        <text class="fontS-14 fontC-a">{{productInfo.buildingArea}}m²</text>
+      </view>
+      <view class="tagItem" style="width:100%;">
+        <text class="fontS-14 fontC-c" style="margin-right:20rpx;">户型</text>
+        <text class="fontS-14 fontC-a">{{productInfo.unitDesc}}</text>
+      </view>
+    </view>
+    <view class="row" catchtap="mapNavigation">
+      <image class="icon"
+        src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/icon_position@2x.png"></image>
+      <text class="address">{{productInfo.address}}</text>
+    </view>
+  </view>
+  <!-- 房产项目 end -->
+
+  <!-- 项目周边 start -->
+  <view class="mainTitle" style="margin-bottom: 10px;" wx:if="{{productInfo.id}}">
+    <text>项目周边</text>
+  </view>
+  <view class="map" wx:if="{{productInfo.id}}">
+    <mMap mapTag="{{productInfo.mapTags}}" mapData="{{mapData}}" height="120" />
+  </view>
+
+  <!-- 项目周边 end -->
+
+  <view class="projectBtn fontS-16 fontC-f" catchtap="toDetail" wx:if="{{productInfo.id}}">
+    <text>查看项目</text>
+  </view>
+
+  <!-- 商品bar start -->
+  <view class="goodsBar" catchtap="backGoodsPage">
+    <image class="left" src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/shoping@2x.png">
+    </image>
+    <view class="col" style="  flex: 1;">
+      <view class="row">
+        <text class="fontS-14  fontC-d">商品列表</text>
+      </view>
+      <text class="fontS-12  fontC-c">快来看看有没有你喜欢的</text>
+    </view>
+    <view class="col" style="align-items: center;">
+      <image class="icon"
+        src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/icon_forward.png"></image>
+    </view>
+  </view>
+  <!-- 商品bar end -->
+
+  <!-- 楼市资料 start -->
+  <view class="mainTitle" wx:if="{{databank.length > 0}}">
+    <text>楼市资料</text>
+    <text class="right" catchtap="toMoreMaterial">更多资料</text>
+  </view>
+  <view class="projectMaterial" wx:if="{{databank.length>0 }}">
+    <view class="scroll">
+      <view wx:for="{{databank[0]}}" wx:key="item" class="rowItem" data-file="{{item}}" catchtap="openFile">
+        <view class="projectMaterialItem">
+          <image class="item-image" src="{{item.fileTypeIcon}}"></image>
+          <text class="title fontS-12 fontC-a">{{item.title}}</text>
+          <view class="row fontS-10 fontC-c">
+            <text class="date">{{item.displayTime}}</text>
+            <image class="loacation"
+              src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/ziliaoku-position%403x.png" wx:if="{{item.lat && item.lng}}">
+            </image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 楼市资料 end -->
+  <view id="navbarflag2" />
+  <view class="dynamic-screening-content">
+			<scroll-view class="scvNewsType" scroll-x scroll-with-animation scroll-left="{{(newsTypes_index - 1) * 68}}">
+				<view class="dynamic-screening__item {{index == newsTypes_index? 'dynamic-screening__item__select' : ''}}"
+					wx:for="{{newsTypes}}" wx:key="id" data-item="{{item}}" data-index="{{index}}" catchtap="onClickScreening">
+					<text>{{item.typeName}}</text>
+				</view>
+			</scroll-view>
+		</view>
+  <business_news id="business_news" merchantCode="{{merchant_code}}" clerkMark="1" includePlatform="{{false}}" scope="clerk" bind:listEmpty="listEmpty" wx:if="{{fromClerkShow && !newsListEmpty && merchant_code}}" type="{{newsTypes_select.type}}">
+  </business_news>
+  <business_news id="business_news" merchantCode="{{merchant_code}}" clerkMark="0" includePlatform="{{true}}" scope="merchant" wx:if="{{!fromClerkShow && !newsListEmpty && merchant_code}}"  type="{{newsTypes_select.type}}" bind:listEmpty="listEmpty">
+  </business_news>
+  <view class="emptyView" wx:if="{{newsListEmpty}}">
+			<image
+				src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+			</image>
+			<text>暂无动态资讯</text>
+		</view>
+  <!-- 悬浮联系人 start -->
+  <!-- <movable-area class="movable-area" wx:if="{{business_info.hiddenPhone != 1}}">
+    <movable-view class="movable-view" direction="all" style="top:{{moveTop}}px;left:{{moveLeft}}px;">
+      <image class="loacation" src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/phone1.png"
+        catchtap="showBusinessPhoneList"></image>
+      <view>联系我</view>
+    </movable-view>
+  </movable-area> -->
+  <!-- 悬浮联系人 end -->
+</template>

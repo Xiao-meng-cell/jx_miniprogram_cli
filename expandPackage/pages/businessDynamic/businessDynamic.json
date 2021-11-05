@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "business_news": "/widget/business-news/business-news",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

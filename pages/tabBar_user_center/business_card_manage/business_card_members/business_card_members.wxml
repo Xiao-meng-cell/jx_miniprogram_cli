@@ -1,0 +1,109 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_manage/business_card_members/business_card_members.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<view class="card_list_merchant">
+  <scroll-view class='card_collection' scroll-y style='height:{{scrollHeight}}px;' scroll-into-view="{{alpha}}">
+    <view class="viewOperta">
+      <!--搜索栏 start-->
+      <view class='search_column'>
+        <image
+          src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_search%402x.png"
+          class="search_column_icon"></image>
+        <input class='search_column_input' placeholder='搜索合伙人' bindinput='searchCard' bindconfirm='searchList'></input>
+        <text catchtap="searchList">搜索</text>
+      </view>
+      <!--搜索栏 end-->
+      <view class="search_column_item" catchtap="toApplyList" wx:if="{{role == 3}}">
+        <text>申请列表</text>
+        <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+        </image>
+      </view>
+      <view class="search_column_item" catchtap="invitePersonnel" wx:if="{{role == 3}}">
+        <text>邀请合伙人</text>
+        <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+        </image>
+      </view>
+      <view class="search_column_item" wx:if="{{role == 3}}">
+        <text>允许合伙人互看名片</text>
+        <switch checked="{{lookEachOther == 1}}" color="#2f95fb" bindchange="lookEachOther"></switch>
+      </view>
+      <!-- <view class="search_column_item">
+        <text>关联个人联系方式</text>
+        <switch color="#2f95fb"></switch>
+      </view> -->
+    </view>
+    <view style="width:100%;height:6px;background:#f4f4f4;" wx:if="{{role == 3}}"></view>
+    <block wx:for="{{alphabet_list_display}}" wx:key="item_key" wx:for-item="item_key" wx:if="{{memberCount > 0}}">
+      <view class="alphabetItem">
+        <view wx:if='{{item_key.datas.length > 0}}'>
+          <text class="section-item-header" id="{{item_key.alphabet}}">
+            {{item_key.alphabet == 'other' ? '#' : item_key.alphabet}}
+          </text>
+        </view>
+        <block wx:for="{{item_key.datas}}" wx:key="item" wx:for-item="item">
+          <view class='card_item' data-merchantcode='{{item.merchantCode}}' data-id='{{item.id}}'
+            data-status="{{item.status}}" catchtap='jumpCardDetail'>
+            <image class='card_item_left' src='{{item.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+            <view class='card_item_right'>
+              <view>
+                <text class='aline1'>{{item.name}}</text>
+                <view style="flex:1;"></view>
+                <text class="card_item_right_phone"
+                  wx:if="{{(role == 3 || lookEachOther == 1) && item.phone}}">{{item.phone}}</text>
+                <view style="flex:1;"></view>
+                <view class="card_item_right_position" wx:if="{{role == 3 || lookEachOther == 1}}">
+                  <text class='aline1 {{item.role == 1 ? "positionWidthRole1" : ""}} card_item_right_position_text'
+                    wx:if="{{item.position}}">{{item.position}}</text>
+                  <image
+                    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/pm%403x.png"
+                    wx:if="{{item.role == 1}}"></image>
+                  <text class="card_item_right_position_syhhr" wx:if="{{item.role == 1}}">事业合伙人</text>
+                </view>
+              </view>
+              <image
+                src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/business_qrcode%403x.png"
+                data-id="{{item.id}}" catchtap="shareCardCode" wx:if="{{role == 3 || lookEachOther == 1}}">
+              </image>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+    <view class="emptyView" wx:if="{{memberCount==0 || alphabet_list_display.length==0}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_card%20delete%403x.png">
+      </image>
+      <text>暂无成员</text>
+    </view>
+  </scroll-view>
+</view>
+<!-- 邀请start -->
+<view class="inviteBg" wx:if="{{inviteDisplay}}" catchtap="closeInvite" catchtouchmove="doNotMove">
+  <view catchtap="doNotMove">
+    <button data-role="1" open-type="share" wx:if="{{role == 2 || role == 3}}" style="background-color:#fff;">
+      <view>
+        <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/yqjl.png"></image>
+        <text>邀请事业合伙人</text>
+      </view>
+    </button>
+    <button data-role="0" open-type="share" style="background-color:#fff;">
+      <view>
+        <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/yqywy.png">
+        </image>
+        <text>邀请共享合伙人</text>
+      </view>
+    </button>
+  </view>
+</view>
+<!-- 邀请end -->
+
+<!--个人 首字母滑动 start-->
+<view id="rightAlpha" data-id="selector" catchtouchstart="handlerAlphaTap" catchtouchmove="handlerMove"
+  catchtouchend='handlerEnd' class="alphanet-selector">
+  <view wx:for="{{alphabet_list_display}}" data-ap="{{item.alphabet}}" wx:key="unique" class="selector-one">
+    {{item.alphabet == 'other' ? '#' : item.alphabet}}
+  </view>
+</view>
+<view hidden='{{hidden_alpha}}' class='show-alpha'>
+  {{alpha == 'other' ? '#' : alpha}}
+</view>
+<!--个人 首字母滑动 end-->

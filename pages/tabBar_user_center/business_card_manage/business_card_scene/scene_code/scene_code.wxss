@@ -1,0 +1,68 @@
+@import "../business_card_scene.wxss";
+
+.page {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 30rpx 0px 30rpx;
+}
+
+.card_info {
+  margin-top: 0px;
+  box-shadow: 0px 0rpx 0rpx 0rpx rgba(0, 0, 0, 0);
+}
+
+.card_username {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  padding-top: 2vh;
+}
+
+.card_username>view>text {
+  font-weight: 600;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  max-width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_username>view>text:last-child {
+  font-size: 24rpx;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.title {
+  color: #a0a0a0;
+}
+
+.qcode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.btnSubmit {
+  display: flex;
+  bottom: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 7vh;
+  border-radius: 10rpx;
+  background-color: #5b86fe;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}

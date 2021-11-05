@@ -1,0 +1,35 @@
+<!--pages/tabBar_user_center/menu_wallet/paySetting/paySetting.wxml-->
+<!-- 输入密码 start -->
+<view class="password" hidden="{{step != 2 ? true : false}}">
+  <text>{{title}}</text>
+  <text>{{subTitle}}</text>
+  <pwdInput id="inPassword" length="{{passwordLength}}" isPassword="false" bind:passwordChange="getPassword"></pwdInput>
+  <text class="forgetPassword" catchtap="forgetPassword" wx:if="{{displayForgetPassword}}">忘记密码</text>
+</view>
+<!-- 输入密码 end -->
+<!-- 输入验证码 start -->
+<view class="code" hidden="{{step != 1 ? true : false}}">
+  <view>
+    <text>手机号</text>
+    <view>
+      <text>{{phone}}</text>
+    </view>
+  </view>
+  <view>
+    <text>验证码</text>
+    <view>
+      <input type="number" style="font-size: 14px;color: #37424d;" maxlength="6" placeholder="请输入验证码"
+        placeholder-style="color: #d8d8d8;font-size: 14px;" bindinput="codeInput" />
+      <view class="getCode" catchtap="getCaptcha" hidden="{{countdownCaptcha != 0}}">
+        <text>获取验证码</text>
+      </view>
+      <view class="captchaReset" hidden="{{countdownCaptcha == 0}}">
+        <text>{{countdownCaptcha}}秒后重发</text>
+      </view>
+    </view>
+  </view>
+  <view class="next" catchtap="nextStep">
+    <text style="color: #ffffff;">下一步</text>
+  </view>
+</view>
+<!-- 输入验证码 end -->

@@ -1,0 +1,59 @@
+<!--pages/tabBar_user_center/business_card_manage/business_card_scene/business_card_scene.wxml-->
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<view class='page'>
+  <view class='scene_info' wx:if="{{sceneExist}}">
+    <image src='{{sceneObj.headimg}}' mode='aspectFill'></image>
+    <text>{{groupName}}</text>
+    <text style='font-size:16px;font-weight:normal;color:#a0a0a0;'>(共{{groupCount}}人)</text>
+    <view style='width:100%;height:1px;background-color:#EEE;margin-top:20rpx;'></view>
+  </view>
+  <text style='font-size:16px;'>选择名片</text>
+  <view id='viewCard'>
+    <!--名片列表 start-->
+    <block wx:for="{{card_list}}" wx:key="item">
+      <block wx:for="{{item}}" wx:for-item="item_key" wx:key="id">
+        <view id='viewCardItem' class='card_list_item {{item_key.selected==true?"card_list_item_selected":""}}'
+          catchtap='selectedCard' data-merchantcode='{{item_key.merchantCode}}' data-id='{{item_key.id}}'
+          data-status="{{item_key.status}}" data-index='{{index}}'>
+          <view class="card_userhaedImg">
+            <image src='{{item_key.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+          </view>
+          <view class="card_username">
+            <text>{{item_key.name}}</text>
+            <text>{{item_key.position==null?"":item_key.position}}</text>
+            <text>{{item_key.phone==null?"":item_key.phone}}</text>
+          </view>
+          <view class='line'
+            wx:if='{{(item_key.merchantShortName!=null ||item_key.merchantName!=null) && item_key.merchantAddr!=null}}'>
+          </view>
+          <view wx:if='{{item_key.merchantShortName!=null ||item_key.merchantName!=null}}'>
+            {{item_key.merchantShortName?item_key.merchantShortName:item_key.merchantName}}</view>
+          <view>{{item_key.merchantAddr?item_key.merchantAddr:""}}</view>
+          <view class='selectedFlag' wx:if='{{item_key.selected}}'>
+            <image style='width:72rpx;height:72rpx;'
+              src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/right.png'></image>
+          </view>
+          <view style='position: absolute;top: 7vh;right:10vw;' wx:if='{{item_key.merchantCode != "temporary"}}'>
+            <image
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_qcode.png"
+              style='width:64rpx;height:64rpx;'></image>
+          </view>
+        </view>
+      </block>
+    </block>
+    <!--名片列表 end-->
+    <!-- 新增临时名片start -->
+    <view class='card_list_item add_card_item' catchtap='addTempCard'>
+      <text style='font-size:10vw;color:#A8A8A8;margin-top:0px;'>+</text>
+      <text style='color:#A8A8A8;margin-top:0px;'>新增并使用临时名片</text>
+    </view>
+    <!-- 新增临时名片end -->
+  </view>
+  <!-- 加入场合按钮start -->
+  <view style='width:100%;height:7vh;background-color:#FFFFFF;' bindtap='joinScene'>
+    <view class='btnSubmit'>
+      <text style='margin-top:0px;'>加入场合</text>
+    </view>
+  </view>
+  <!-- 加入场合按钮end -->
+</view>

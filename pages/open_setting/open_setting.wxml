@@ -1,0 +1,2 @@
+<!--pages/tab_index/open_setting/open_setting.wxml-->
+<button bindtap="openSetting">打开设置页</button>

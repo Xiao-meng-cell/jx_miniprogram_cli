@@ -1,0 +1,18 @@
+<!--widget/top-bar/top-bar.wxml-->
+<view class="top-bar" style="height:{{isHeight ? (capsuleTop==0 ? 68 : capsuleTop + 40) : 0}}px;" wx:if="{{!sharing}}">
+	<!-- 左上角胶囊按钮 start -->
+	<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/back_and_home.png"
+		style="top:{{capsuleTop==0?28:capsuleTop}}px;" class="top-bar__retrun" wx:if="{{wxVersion>=0}}"></image>
+	<cover-view wx:if="{{wxVersion>=0}}" class="top-bar__view" style="top:{{capsuleTop==0?28:capsuleTop}}px;">
+		<cover-view class="top-bar__viewleft" catchtap="backPreviousPage"></cover-view>
+		<cover-view class="top-bar__viewright" catchtap="backIndexPage"></cover-view>
+	</cover-view>
+	<!-- 左上角胶囊按钮 end -->
+	<!-- 标题栏 start -->
+	<view class="top-bar__titleBar"
+		style="top:{{isHeight ? (capsuleTop==0 ? 28 : capsuleTop) : 0}}px;height:{{isHeight ? capsuleHeight : 0}}px;">
+		{{title}}
+	</view>
+</view>
+<view class="tbZwf" style="height:{{isHeight ? (capsuleTop == 0 ? 68 : capsuleTop + 40) : 0}}px;" wx:if="{{!sharing}}">
+</view>

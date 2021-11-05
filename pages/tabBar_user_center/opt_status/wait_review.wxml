@@ -1,0 +1,8 @@
+<!--miniprogram/pages/tabBar_user_center/opt_status/wait_review.wxml-->
+<view class='vertical-hcenter'>
+  <image class='status_icon' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/tab_user_selected.png" />
+  <text class='status_title'>资料审核中</text>
+  <text class='status_tip'>请耐心等待，我们正在对您提交的资料进行审核！</text>
+  <button class="weui-input btn_default_status look-btn" hover-class='btn_default_hover' formType="submit" bindtap='backIndex'>返回首页</button>
+  
+</view>

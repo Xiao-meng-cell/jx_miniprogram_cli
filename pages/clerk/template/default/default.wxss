@@ -1,0 +1,110 @@
+/* 商品分类 start  */
+
+.goods_tag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  background: rgb(244, 244, 244);
+  padding: 24rpx 32rpx 0rpx 32rpx;
+}
+
+.goods_tag>scroll-view {
+  width: calc(100% - 40rpx - 32rpx);
+}
+
+.goodsTagItem {
+  display: inline-block;
+  font-size: 24rpx;
+  line-height: 40rpx;
+  border-radius: 28rpx;
+  background-color: #fff;
+  color: #202020;
+  padding: 12rpx 24rpx 12rpx 24rpx;
+}
+
+.goodsTagItem_selected {
+  background-color: #2f95fb;
+  color: #fff;
+}
+
+.goodsTagItem:not(:first-child) {
+  margin-left: 24rpx;
+}
+
+.goodsTagItem:last-child {
+  margin-right: 32rpx;
+}
+
+.business_goods_tag {
+  position: absolute;
+  right: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.business_goods_tag_masking {
+  position: absolute;
+  right: calc(40rpx + 32rpx * 2);
+  width: 40rpx;
+  height: 64rpx;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(246, 247, 248, 1));
+}
+
+/* 商品分类 end  */
+
+/*直播状态 start*/
+
+.clerk_live_default {
+  height: calc(36rpx * 2);
+  position: absolute;
+  /* z-index: 2; */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  bottom: 0;
+  width: 100%;
+}
+
+.clerk_live_default_img1 {
+  width: 64rpx;
+  height: 64rpx;
+  background: white;
+  border-radius: 100rpx;
+  margin-right: 16rpx;
+}
+
+.clerk_live_default_text {
+  color: white;
+  font-size: 26rpx;
+}
+
+.clerk_live_default_img2 {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 12rpx;
+}
+
+/*直播状态 end*/
+
+/* 交换名片 start  */
+.clerk_operation_default>view:not(:first-child) {
+  margin-left: 16rpx;
+}
+
+.exchangeDefault {
+  position: absolute;
+  top: calc(161rpx * 2 + 1012rpx + 40rpx + 46rpx);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #fff;
+  margin-top: 42rpx;
+}
+
+/* 交换名片 end  */

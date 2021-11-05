@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "search-column": "/widget/search-column/search-column",
+    "clerkItem": "/widget/clerkItem/clerkItem"
+  }
+}

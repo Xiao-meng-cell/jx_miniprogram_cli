@@ -1,0 +1,316 @@
+//https://blog.csdn.net/xbw12138/article/details/78966916?%3E
+//<wxs module="utils" src="../utils.wxs"></wxs>
+var utils = {
+  toFix: function (value) {
+    return value.toFixed(2) //此处2为保留两位小数
+  }
+}
+
+//JS日期系列：根据出生日期 得到周岁年龄               
+//参数strBirthday已经是正确格式的2007-02-09这样的日期字符串
+//后续再增加相关的如日期判断等JS关于日期处理的相关方法
+function jsGetAge(strBirthday) {
+  if (strBirthday == null || strBirthday == '' || strBirthday.length == 0) {
+    return '--';
+  }
+  var returnAge;
+  var strBirthdayArr = strBirthday.split("-");
+  var birthYear = strBirthdayArr[0];
+  var birthMonth = strBirthdayArr[1];
+  var birthDay = strBirthdayArr[2];
+  var d = getDate();
+  var nowYear = d.getFullYear();
+  var nowMonth = d.getMonth() + 1;
+  var nowDay = d.getDate();
+  if (nowYear == birthYear) {
+    returnAge = 0; //同年 则为0岁    
+  } else {
+    var ageDiff = nowYear - birthYear; //年之差        
+    if (ageDiff > 0) {
+      if (nowMonth == birthMonth) {
+        var dayDiff = nowDay - birthDay; //日之差                
+        if (dayDiff < 0) {
+          returnAge = ageDiff - 1;
+        } else {
+          returnAge = ageDiff;
+        }
+      } else {
+        var monthDiff = nowMonth - birthMonth; //月之差                
+        if (monthDiff < 0) {
+          returnAge = ageDiff - 1;
+        } else {
+          returnAge = ageDiff;
+        }
+      }
+    } else {
+      returnAge = -1; //返回-1 表示出生日期输入错误 晚于今天 
+    }
+  }
+  return returnAge; //返回周岁年龄   
+}
+
+function isBlank(str) {
+  if (Object.prototype.toString.call(str) === '[object Undefined]') { //空
+    return true
+  } else if (
+    Object.prototype.toString.call(str) === '[object String]' ||
+    Object.prototype.toString.call(str) === '[object Array]') { //字条串或数组
+    return str.length == 0 ? true : false
+  } else if (Object.prototype.toString.call(str) === '[object Object]') {
+    return JSON.stringify(str) == '{}' ? true : false
+  } else {
+    return true
+  }
+
+}
+
+/**
+ * 订单状态
+ * @param url
+ * @returns {*}
+ */
+function stepstatus(type, status) {
+  var mstatus = 0;
+  var t = type
+  if (t == "supplyTask" || t == "demandTaskV2") { //服务任务&&需求任务
+    if (status == 1) {
+      mstatus = 1;
+    } else if (status == 2) {
+      mstatus = 3;
+    } else if (status == 3 || status == 7) {
+      mstatus = 4;
+    } else if (status == 5) {
+      mstatus = 2;
+    } else if (status == 4 || status == 6 || status == 8 || status == 9) {
+      mstatus = 5;
+    } else {
+      mstatus = 4;
+    }
+  } else if (t == "biddingTask") { //竞价
+    if (status == 1 || status == 5) {
+      mstatus = 1;
+    } else if (status == 2) {
+      mstatus = 3;
+    } else if (status == 3 || status == 8) {
+      mstatus = 4;
+    } else if (status == 6) {
+      mstatus = 2;
+    } else if (status == 4 || status == 7 || status == 9 || status == 10) {
+      mstatus = 5;
+    } else {
+      mstatus = 4;
+    }
+  }
+  return mstatus;
+};
+
+//出现问题订单
+function isuueStatus(type, status) {
+  var mstatus = 0;
+  var t = type
+  if (t == "supplyTask") {
+    if (status == "发起任务" || status == "发起子任务" || status == "供方拒绝邀约") {
+      mstatus = 1;
+    } else if (status == "供方接受邀约" || status == "供方到达") {
+      mstatus = 2;
+    } else if (status == "需方确认到达" || status == "供方完成任务") {
+      mstatus = 3;
+    } else if (status == "需方确认完成任务") {
+      mstatus = 4;
+    }
+  } else if (t == "biddingTask") {
+    if (status == "发起任务" || status == "发起子任务" || status == "供方拒绝邀约") {
+      mstatus = 1;
+    } else if (status == "供方接受邀约" || status == "供方到达") {
+      mstatus = 2;
+    } else if (status == "需方确认到达" || status == "供方完成任务") {
+      mstatus = 3;
+    } else if (status == "需方确认完成任务") {
+      mstatus = 4;
+    }
+  }
+  return mstatus;
+};
+//获取出现错误的哪个步骤
+function getErrorStatus(itemObject) {
+  var type = itemObject.taskTypeCode;
+  var status = itemObject.status;
+  var operationLogs = itemObject.operationLogs;
+  var resultStatus = stepstatus(type, status);
+  var issueStatus = 0;
+  if (resultStatus == 5) {
+    for (var i = 0; i < operationLogs.length; i++) {
+      var logStatus = operationLogs[i];
+      console.log("type为:" + type + ",operation为：" + logStatus.operation);
+      var s = isuueStatus(type, logStatus.operation);
+      issueStatus = s > issueStatus ? s : issueStatus;
+    }
+  }
+  return issueStatus;
+};
+/**
+ * 订单图片组字符串转换json
+ */
+function turnArrJson(str) {
+  var obj = JSON.parse(str);
+  return obj
+};
+
+/**
+ * 判断该路径是否是视频
+ */
+function isVideo(url) {
+  if (url != undefined) {
+    var index = url.lastIndexOf(".");
+    var end = url.length;
+    var res = url.substring(index, end);
+    res = res.toLowerCase()
+    //console.log(res);
+    if (res == ".mp4" || res == ".rm" || res == ".rmvb" || res == ".mov" || res == ".m4v" || res == ".avi" || res == ".dat" || res == ".mkv" || res == ".flv" || res == ".3gp" || res == ".wmv" || res == ".asf" || res == ".3gp") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
+//按长边短边：将图最长边限制在 100 像素，短边按比例处理。
+function resizeImg(long) {
+  return '?x-oss-process=image/resize,l_' + long;
+};
+//将图按比例缩略到原来的 1/2。
+function resizeImgSurvey(survey) {
+  return '?x-oss-process=image/resize,p_' + survey;
+};
+
+function judgeImg(url) {
+  var temp = url;
+  var res = url.toLowerCase();
+  if (res.lastIndexOf(".webp") > -1) {
+    res = temp;
+  } else {
+    res = temp
+  }
+  return res
+}
+
+/** 字符串分隔 */
+function str_split(str, flag) {
+  return str.split(flag)
+}
+
+/** 字符串截取 */
+function str_substring(str, startIndex, lenght) {
+  return str.substring(startIndex, lenght)
+}
+
+/**
+ * 计算总邮费
+ * 计数类别type, 基础价格basePrice, 增量价格increasePrice, 购买数量num, 单位重量weight, 临界值basicNum
+ */
+function countLogisticsPrice(type, basePrice, increasePrice, num, weight, basicNum, increaseNum) {
+  var totalPrice = 0;
+  var total_num_weight = 1;
+  if (type == 1) {
+    var unitWeight = weight <= 0 ? 1 : weight;
+    total_num_weight = num * unitWeight <= basicNum ? basicNum : num * unitWeight
+  } else if (type == 2) {
+    total_num_weight = num <= basicNum ? basicNum : num
+  }
+  totalPrice = basePrice + Math.ceil((total_num_weight - basicNum) / increaseNum) * increasePrice
+  totalPrice = totalPrice / 100;
+  return totalPrice;
+}
+
+
+/**
+ * 字符串截取
+ */
+function stringCut(str, num, minlength) {
+  var length = minlength ? minlength : 0;
+  if (str) {
+    var end = str.length;
+    if (end > num) {
+      end = num
+    }
+    var res = str.substring(0, end);
+    var result = ""
+    if (str.length > num) {
+      result = res + "..."
+    } else {
+      result = res
+    }
+    return result
+  } else {
+    return "";
+  }
+}
+
+/**
+ * 价格处理分转换元
+ */
+function priceSwitch(x, keepFen = true) {
+  //强制保留两位小数
+  var num = x
+  num = num * 0.01; //分到元
+  num += ''; //转成字符串
+  var f = parseFloat(num);
+  if (isNaN(f)) return false;
+  var f = Math.round(num * 100) / 100;
+  var s = f.toString();
+  var rs = s.indexOf('.');
+  if (rs < 0) {
+    rs = s.length;
+    s += '.';
+  }
+  while (s.length < (rs + 1) + 2) {
+    s += '0';
+  }
+  //每三位用一个逗号隔开
+  var leftNum = s.split(".")[0];
+  var rightNum = "." + s.split(".")[1];
+  var result;
+  //定义数组记录截取后的价格
+  var resultArray = [];
+  if (leftNum.length > 3) {
+    var i = true;
+    while (i) {
+      resultArray.push(leftNum.slice(-3));
+      leftNum = leftNum.slice(0, leftNum.length - 3);
+      if (leftNum.length < 4) {
+        i = false;
+      }
+    }
+    //由于从后向前截取，所以从最后一个开始遍历并存到一个新的数组，顺序调换
+    var sortArray = []
+    for (var i = resultArray.length - 1; i >= 0; i--) {
+      sortArray.push(resultArray[i]);
+    }
+    result = leftNum + sortArray.join("") + rightNum;
+  } else {
+    result = s;
+  }
+  return keepFen ? result : parseInt(result).toFixed(0);
+}
+
+
+module.exports = {
+  toFix: utils.toFix,
+  jsGetAge: jsGetAge,
+  isBlank: isBlank,
+  stepstatus: stepstatus,
+  isuueStatus: isuueStatus,
+  getErrorStatus: getErrorStatus,
+  turnArrJson: turnArrJson,
+  isVideo: isVideo,
+  resizeImg: resizeImg,
+  resizeImgSurvey: resizeImgSurvey,
+  str_split: str_split,
+  str_substring: str_substring,
+  judgeImg: judgeImg,
+  countLogisticsPrice: countLogisticsPrice,
+  stringCut: stringCut,
+  priceSwitch: priceSwitch
+}

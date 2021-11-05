@@ -1,0 +1,10 @@
+/* miniprogram/pages/navigate/navigate.wxss */
+.btn_box{
+  margin: 100rpx 60rpx;
+  padding: 30rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  background: blue;
+  border-radius: 8rpx;
+}

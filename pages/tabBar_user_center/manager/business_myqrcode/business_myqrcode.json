@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

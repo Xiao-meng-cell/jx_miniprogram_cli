@@ -1,0 +1,21 @@
+<!--expandPackage/pages/afterService/uploadReturnInfo/uploadReturnInfo.wxml-->
+<view class="main">
+  <view class="logisticsNum">
+    <text>退货物流单号</text>
+    <input type="text" value="{{logisticsNum}}" placeholder="请填写寄回物流单号" placeholder-class="placeholder"
+      bindinput="logisticsNumInput" />
+    <image class="inputRightIcon"
+      src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_scan%403x.png"
+      catchtap="sacanLogisticsNum">
+    </image>
+  </view>
+</view>
+
+<!-- 底部操作容器 start -->
+<view class='order_bottom_view' catchtap="stopMouseOperate">
+  <view style="flex:1;"></view>
+  <view class="order_bottom_view_btn order_bottom_view_btn_use" catchtap="uploadReturnInfo">
+    <text>完成上传</text>
+  </view>
+</view>
+<!-- 底部操作容器 end -->

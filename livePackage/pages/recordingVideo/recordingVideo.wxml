@@ -1,0 +1,6 @@
+<!--livePackage/pages/recordingVideo/recordingVideo.wxml-->
+<view class="video_box" wx:if="{{liveUrl}}" >
+    <video id="clerkTemplateVideo" src="{{liveUrl}}" autoplay="{{autoplay}}" loop="{{loop}}"
+      controls="{{controls}}" muted="{{muted}}" play-btn-position="center" show-center-play-btn="true"
+			bindplay="ctvVideoPlay" bindpause="ctvVideoPause" catchtouchmove="doNotMove" class="video"></video>
+</view>

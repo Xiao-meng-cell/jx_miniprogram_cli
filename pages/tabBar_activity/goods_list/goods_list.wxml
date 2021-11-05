@@ -1,0 +1,114 @@
+<!--miniprogram/pages/tabBar_activity/goods_list/goods_list.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<!-- 分类标签栏 start -->
+<scroll-view scroll-x="true" style="width:100%;white-space:nowrap;" class="type_bg_{{type}}" wx:if="{{!merchantTypeHidden}}">
+	<view class="type">
+		<block wx:for="{{typeList}}" wx:for-item="item" wx:key="index">
+			<view class="{{item.selected == true ? 'selectType':''}}" data-item="{{item}}" bindtap="typeSelected">
+				<text style="color:#FFFFFF;">{{item.name}}</text>
+			</view>
+		</block>
+	</view>
+</scroll-view>
+<!-- 分类标签栏 end -->
+<!-- 排序栏 satrat -->
+<view class="sort sort_bg_{{type}}" wx:if="{{!sortHidden}}">
+	<block wx:for="{{sortList}}" wx:key="index" wx:if="{{type == 'jpgw'}}">
+		<view style="color:{{item.selected ? '#e18600' : '#FFF'}};" data-item="{{item}}" catchtap="sortSelected">{{item.name}}</view>
+	</block>
+	<block wx:for="{{sortList}}" wx:key="index" wx:if="{{type == 'fxfl'}}">
+		<view style="color:{{item.selected ? '#0058b1' : '#FFF'}};" data-item="{{item}}" catchtap="sortSelected">{{item.name}}</view>
+	</block>
+	<block wx:for="{{sortList}}" wx:key="index" wx:if="{{type == 'zstj'}}">
+		<view style="color:{{item.selected ? '#67047e' : '#FFF'}};" data-item="{{item}}" catchtap="sortSelected">{{item.name}}</view>
+	</block>
+</view>
+<!-- 排序栏 end -->
+<!-- 商品分类栏 start -->
+<view class="goodsType" wx:if="{{!goodsTypeHidden}}">
+	<view data-index="1" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex == 1 ? 'goodsType_selected' : 'goodsType_unselected'}}">推荐排序</text>
+	</view>
+	<view data-index="2" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex == 2 ? 'goodsType_selected' : 'goodsType_unselected'}}">{{activityTypeText}}</text>
+		<view id="triangle-down" class="{{goodsTypeSelectedIndex == 2? 'triangle-down_selected' : 'triangle-down_unselected'}}"></view>
+	</view>
+	<view data-index="3" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex  == 3? 'goodsType_selected' : 'goodsType_unselected'}}">价格</text>
+		<view>
+			<view id="triangle-up" class="{{goodsTypeSelectedIndex  == 3 && priceSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}"></view>
+			<view id="triangle-down" style="margin-top:4rpx;" class="{{goodsTypeSelectedIndex  == 3 && !priceSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}"></view>
+		</view>
+	</view>
+	<view data-index="4" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex == 4 ? 'goodsType_selected' : 'goodsType_unselected'}}">销量</text>
+	</view>
+</view>
+<!-- 商品分类栏 end -->
+<!-- 列表主体 start -->
+<view class="goodsList" wx:if="{{business_activity_list[0].length > 0}}" style="padding-top:30rpx;">
+	<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+			<view class="goodsItem" data-clerk_code="{{clerk_code}}" catchtap="jumpBusinessActivityDetail" data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+				<image src="{{item.illustration+utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+				<view>
+					<text class="aline2 goods_padding_margin" style="height:83rpx;">{{item.title}}</text>
+					<view class="priceDesc priceFont">
+						<text>￥</text>
+						<text>{{item.minPriceYuan}}</text>
+					</view>
+					<view class="goodstag goods_padding_margin">
+						<view wx:if="{{item.product.typeCode=='logistics'&&item.addressType!='merchant'}}">
+							<text class="goodstag_text goodstag_text_red">邮</text>
+							<text class="goodstag_deliver goodstag_wl">物流商品</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='virtual'}}">
+							<text class="goodstag_text goodstag_text_yellow">店</text>
+							<text class="goodstag_deliver goodstag_visual">店内服务</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='deposit'}}">
+							<text class="goodstag_text goodstag_text_yellow">定</text>
+							<text class="goodstag_deliver goodstag_visual">定金商品</text>
+						</view>
+						<view wx:else>
+							<text class="goodstag_text goodstag_text_blue">自</text>
+							<text class="goodstag_deliver goodstag_dd">到店自提</text>
+						</view>
+						<view wx:if="{{item.typeCodeName=='成交返利'?false:true}}">
+							<text>{{item.typeCodeName}}</text>
+						</view>
+					</view>
+					<view class="goods_padding_margin goodsItem_store_dis" style="margin-top:18rpx;" wx:if="{{goodsTypeHidden}}">
+						<image src="{{item.merchant.bgUrls.length > 0 ? item.merchant.bgUrls[0] : item.merchant.userHeadimg}}"></image>
+						<text class="aline1">{{item.merchant.name}}</text>
+						<view style="flex:1;"></view>
+						<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/location.png"></image>
+						<text style="font-size:20rpx;">{{item.dis}}</text>
+					</view>
+					<view class="goods_bottom goods_padding_margin">
+						<view>
+							<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/attend_num%403x.png"></image>
+							<text>{{item.total}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+</view>
+<view class="emptyView" wx:else>
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png"></image>
+	<text>没有任何数据</text>
+</view>
+<!-- 列表主体 end -->
+<!-- 玩法过滤 start -->
+<view class="activityType" catchtouchmove="stopTouchMove" catchtap="closeActivityTypeContent" hidden="{{activityTypeHidden}}">
+	<view class="activityTypeContent">
+		<block wx:for="{{activityTypeList}}" wx:key="idx">
+			<view data-item="{{item}}" catchtap="clickActivityType">
+				<text>{{item.name}}</text>
+			</view>
+		</block>
+	</view>
+</view>
+<!-- 玩法过滤 end -->

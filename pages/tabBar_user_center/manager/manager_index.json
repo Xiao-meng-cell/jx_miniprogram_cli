@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

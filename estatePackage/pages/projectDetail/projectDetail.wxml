@@ -1,0 +1,16 @@
+<!--estatePackage/detail/project_detail/project_detail.wxml-->
+<view class="main">
+	<block wx:for="{{dataList}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+			<view class="contentView">
+				<text>{{item.title}}</text>
+				<block wx:for="{{item.entry}}" wx:for-item="entryItem" wx:key="index2">
+					<view>
+						<text>{{entryItem.title}}</text>
+						<text>{{entryItem.details}}</text>
+					</view>
+				</block>
+			</view>
+		</block>
+	</block>
+</view>

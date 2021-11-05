@@ -1,0 +1,4 @@
+<!--estatePackage/pages/mapNav/index.wxml-->
+<view class="mapView" >
+	<map id="map" longitude="{{lng}}" latitude="{{lat}}" markers="{{markers}}" scale="{{scale}}" enable-satellite="{{enableSatellite}}" show-location style="width: 100%; height:{{hight}}px;" />
+</view>

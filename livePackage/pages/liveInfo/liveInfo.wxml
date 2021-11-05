@@ -1,0 +1,125 @@
+<!--livePackage/pages/liveInfo/liveInfo.wxml-->
+<view class="main_business">
+  <view class="retrun_view" style="top:{{capsuleTop + 16}}px;">
+    <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_back_white%402x.png" catchtap="goLiveRoom"></image>
+   <text class="fontS-17">直播详情</text>
+</view>
+
+<!-- <view class="card_head" style="height:{{capsuleTop+32}}px;position: relative" hidden="{{forward_status}}"></view> -->
+<view class="top_bg"></view>
+
+<view class="mainContent">
+  	<!-- 商家详情 start -->
+  <view class="merchantInfo">
+    <view catchtap="jumpBusiness">
+			<image src="{{business_info.headimg}}"></image>
+			<view>
+				<view>
+					<text class='business_title'>{{business_info.name==null?"--":business_info.name}}</text>
+					<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_flagship.png"
+						wx:if="{{business_info.ultimate == 1 && business_info.merchantType != 'mainStore' && business_info.merchantType != 'branchStore'}}"></image>
+					<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/tag_channel.png"
+						wx:if="{{business_info.channel == 1 && business_info.ultimate != 1 && business_info.merchantType != 'mainStore' && business_info.merchantType != 'branchStore'}}"></image>
+						<image
+						src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness-zcrs/assets/zhikong.png"
+						wx:if="{{business_info.merchantType == 'mainStore' || business_info.merchantType == 'branchStore'}}">
+					</image>
+				</view>
+				<view>
+					<text>{{business_info.tagName}}</text>
+					<text>|</text>
+					<text>{{business_info.hot}}关注</text>
+					<view style="margin-left: auto;;" class="horizontal-vcenter1" catchtap="goToBusinessDynamic"
+						wx:if="{{fromClerkShow}}">
+						<text style="font-size:0.8rem;color:#2F95FB;margin-right:10px">企业展示</text>
+						<image style="width:6px;height:10px;"
+							src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+						</image>
+					</view>
+				</view>
+			</view>
+    </view>
+    <view class="fgx1"></view>
+		<view class="fgx" wx:if="{{businessStatus.live == 1}}"></view>
+		<view class="horizontal-vcenter business_info_operate">
+			<view style="justify-content: flex-start;" class="horizontal-vcenter" catchtap="merchantFavorites">
+				<image
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_follow_fill@2x.png"
+					wx:if="{{merchantFavorites}}"></image>
+				<image
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_follow@2x.png"
+					wx:else></image>
+				<text>{{merchantFavorites ? "已收藏" : "收藏企业"}}</text>
+			</view>
+			<view class="horizontal-vcenter" catchtap="callUp" >
+				<image
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_call@2x.png">
+				</image>
+				<text>致电联系</text>
+			</view>
+			<view style="justify-content: flex-end;" class="horizontal-vcenter" catchtap="goToBusinessDynamic">
+				<text>企业展示</text>
+				<image style="width:12px;height:12px;"
+					src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+				</image>
+			</view>
+		</view>
+		<!-- <image class="notPass"
+			src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/not%20pass.png"
+			wx:if="{{!certified}}"></image> -->
+  </view>
+	<!-- 商家详情 end -->
+  <!-- 进入直播 start -->
+  <view class="item_box">
+  <image src="{{liveBg ? liveBg :business_info.headimg}}"></image>
+  <view>
+    <view class="first">{{liveTitle != "" ?  liveTitle :( business_info.name==null||business_info.name==""?business_info.shortName:business_info.name)}}</view>
+    <view class="second">
+      <view>直播中</view>
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon-live-blue-GIF.gif"></image>
+    </view>
+    <view class="third">{{onlineTotal}} 人观看</view>
+  </view>
+  <view class="bottom_btn" catchtap="goLiveRoom">进入直播</view>
+  </view>
+  <!-- 进入直播 end -->
+<view class="item_box" wx:if="{{beginTime && beginTime!=''}}">
+  <image src="{{recordingInfo.bgUrl}}"></image>
+  <view>
+    <view class="first">{{recordingInfo.title}}</view>
+    <view class="fourth">开播：{{beginTime}}</view>
+  </view>
+	<!-- <view class="bottom_btn" catchtap="">分享</view> -->
+	<button class="bottom_btn" open-type='share'>分享</button>
+</view>
+
+  <block wx:for="{{videoData}}" wx:for-item="item" wx:for-index="index" wx:key="item">
+<view class="item_box">
+  <image src="{{item.file_bg}}"></image>
+  <view>
+    <view class="first">{{item.file_name}}</view>
+    <view class="fourth">已开播：{{item.start_time}}</view>
+  </view>
+  <view class="bottom_btn"  data-url="{{item.video_url}}" catchtap="goRecordingVideo">查看录播</view>
+</view>
+</block>
+
+</view>
+
+
+
+
+
+<!--企业导航，企业号码 start-->
+<view class='showMenu' hidden='{{show_business_phone}}'>
+		<view class='showMenu_item' catchtap="contactBusiness">
+			<text>{{business_phone}}</text>
+		</view>
+	<view catchtap='showBusinessPhoneList' class='showMenu_item'>
+		<text>取消</text>
+	</view>
+	<view class='wx-mask' catchtouchmove="doNotMove" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--企业导航，企业号码 end-->
+</view>

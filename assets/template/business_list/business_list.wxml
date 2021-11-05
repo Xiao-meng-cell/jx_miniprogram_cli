@@ -1,0 +1,56 @@
+<!--assets/template/business_list.wxml-->
+<!--企业列表-->
+
+<template name="business_list_item">
+<!--没有数据 start-->
+<view style='display:{{business_list.length==0?"":"none"}};text-align:center;font-size:28rpx;'>暂无企业动态</view>
+<!--没有数据 end-->
+  <!--列表  start-->
+  <block wx:for="{{business_list}}" wx:key="item">
+    <view class='business_service_list'>
+      <view class='userinfo'>
+        <!-- <image class='user_headimg' src='{{business_info.bgUrls}}'></image> -->
+        <view>
+          <view class='username'>{{business_info.name==null?"":business_info.name}}</view>
+          <!-- <view>1月21日·南宁市123km</view> -->
+        </view>
+        <!-- <view>
+        <image class='three_dots' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots.png"></image>
+        <view>
+          <image class='browse'></image>
+          <text>8634</text>
+        </view>
+      </view> -->
+      </view>
+
+
+      <view class='service_text'>
+        {{item.description==null?"":item.description}}
+      </view>
+
+
+      <view class='service_img_video'>
+        <!-- <video></video> -->
+        <block wx:for="{{item.fileUrls}}"  wx:for-item="item_key" wx:key="id">
+          <image src='{{item_key}}'  data-src='{{item_key}}' data-list="{{item.fileUrls}}" catchtap='imgYu' mode='aspectFill'></image>
+        </block>
+      </view>
+
+      <view class='sercvie_operation'>
+        <!-- <view>
+        <image class='browse'></image>
+        <text>1234</text>
+      </view> -->
+        <!-- <view>
+        <image class='browse'></image>
+        <text>约TA</text>
+      </view> -->
+      </view>
+    </view>
+    <!--间隔 start-->
+    <view class='spacing' style='height:2rpx;position:relative;'></view>
+    <!--间隔 end-->
+  </block>
+
+  <!--列表   end-->
+</template>

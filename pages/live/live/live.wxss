@@ -1,0 +1,124 @@
+/* pages/live/live.wxss */
+.goods_tag_business1 {
+  /* display: flex; */
+    position: relative;
+  white-space: nowrap;
+  display: block;
+  /* flex-direction: row; */
+  align-items: center;
+  height: 55rpx;
+  width: 90%;
+  background: linear-gradient(to bottom, #ffffff, #F6F6F6);
+  padding: 28rpx 11% 0 30rpx;
+}
+.goodsTagItem1{
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #37424D;
+  padding: 0 40rpx 0 0;
+}
+.goodsTagItem1_selected{
+  color: #2F95FB;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/*遮罩层 */
+.classify{
+  position: absolute;
+  width: 10%;
+  height: 35px;
+  right: 0;
+  top: 28rpx;
+  z-index: 44;
+  background: linear-gradient(to bottom, #ffffff, #F6F6F6);
+}
+  .classify .icon{
+  width:25px ;
+  height: 25px;
+  margin-left: 5px;
+  }
+  .classify_box {
+    margin-top: 40px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: #efefef;
+    z-index: 9999;
+  }
+  
+  .calssify_tab {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
+    margin: 10px 0 40px 0;
+    
+  }
+  .calssify_view{
+    white-space:nowrap;
+    height: 80%;
+  }
+  .classify_top {
+    position: relative;
+    padding: 10px 0;
+    /* background: #fff; */
+  }
+  
+  .back_box {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+  }
+  
+  .classify_back{
+    width: 16px;
+    height: 16px;
+  }
+  
+  .classify_titile {
+    text-align: center;
+  }
+  
+  .classify_box_title {
+    display: flex;
+    padding: 10px 0;
+    background: #fff;
+  }
+  
+  .classify_box_title div {
+    flex: 1;
+    font-size: .9rem;
+    text-align: center;
+  }
+  
+  .classify_title_active {
+    padding: 0 0 6px 0;
+    border-bottom: 2px solid #5b86fe;
+  }
+  
+  .classify_good_name {
+    position: relative;
+    margin: 10px 10px 0 10px;
+    font-size: .9rem;
+    padding: 14px 30px 14px 10px;
+    border-radius: 6px;
+    background: #fff;
+  }
+  
+  .classify_good_name:last-child {
+    margin: 10px;
+  }
+  
+  .goods_name_active {
+    color: #5b86fe;
+  }
+  
+  .classify_next {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    width: 16px;
+    height: 16px;
+  }

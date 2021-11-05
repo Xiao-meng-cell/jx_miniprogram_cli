@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

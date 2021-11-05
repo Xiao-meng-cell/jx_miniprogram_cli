@@ -1,0 +1,40 @@
+<!--expandPackage/pages/businessDynamic/businessDynamic.wxml-->
+<topBar title="企业展示" bind:backPreviousPage="backPreviousPage" userDefalutBack="{{userDefalutBack}}"></topBar>
+<view class="type_box" style="top:{{capsuleTop==0?68:capsuleTop + 40}}px;">
+    <scroll-view class="scvNewsType" scroll-x scroll-left="{{scrollLeft}}" scroll-with-animation>
+        <block wx:for="{{newsTypes}}" wx:key="id">
+            <view style="width:{{newsTypeItemWidth}}px;"
+                class="newsTypeItem {{ Index == index ? 'newsTypeItem_selected' : ''}}" data-index="{{index}}"
+                data-item="{{item}}" catchtap="changeNewsType">
+                <text>{{item.typeName}}</text>
+            </view>
+        </block>
+        <view style="left: {{offset}}px;" class="under-line withAnimate"></view>
+    </scroll-view>
+    <view class="classify" catchtap="showClassify">
+        <image class="icon" src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/h5-project/img/classify.png"></image>
+    </view>
+</view>
+<!--动态分类遮罩层-->
+<view wx:if="{{keepout}}" class="classify_box">
+    <!-- 动态分类-->
+    <view class="calssify_tab" style="margin-top:{{capsuleTop==0?68:capsuleTop + 40}}px;">
+        <scroll-view scroll-y='true' class="calssify_view">
+        <block wx:for="{{newsTypes}}" wx:key="index">
+            <view class="classify_good_name" data-index1="{{index}}" data-item1="{{item}}" catchtap="newsCategoryFn">
+                <view class="db_inline {{newsIndex == index ? 'goods_name_active' : ''}}">{{item.typeName}}</view>
+                <view class="db_inline">
+                    <image class="classify_next"
+                        src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/next.png">
+                    </image>
+                </view>
+            </view>
+        </block>
+    </scroll-view>
+    </view>
+</view>
+<view class="business_news_list">
+    <business_news id="business_news" merchantCode="{{merchantCode}}"  includePlatform="{{true}}" scope="merchant" type="{{newsTypes[selectedTabIndex].type}}"
+        bind:listEmpty="listEmpty">
+    </business_news>
+</view>

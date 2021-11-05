@@ -1,0 +1,125 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<template name="estate">
+  <!-- 项目详情 start  -->
+	<view class="projectDetailInfo">
+		<view></view>
+		<text>项目详情</text>
+		<view></view>
+	</view>
+	<!-- 项目介绍 start -->
+	<view class="projectDesc">
+		<!-- 楼盘名称 状态 status  -->
+		<view>
+			<text class="projectDescName">{{business_detail.product.orderRealEstateAttach.title}}</text>
+			<view class="projectDescStatus {{business_detail.product.orderRealEstateAttach.estateStatus == 1 ? 'projectDescStatus_selled' : 'projectDescStatus_other'}}">
+				<text>{{business_detail.product.orderRealEstateAttach.estateStatus == 1 ? "在售" : "待售"}}</text>
+			</view>
+		</view>
+		<!-- 楼盘名称 状态 end  -->
+		<!-- 楼盘标签 start -->
+		<view class="projectDescTag">
+			<block wx:for="{{business_detail.product.orderRealEstateAttach.estateTags}}" wx:key="id">
+				<view class="projectDescTagItem">
+					<text>{{item.tag}}</text>
+				</view>
+			</block>
+		</view>
+		<!-- 楼盘标签 end -->
+		<!-- 楼盘售价 start -->
+		<view class="projectDescPrice">
+			<view class="projectDescPriceType">
+				<text>{{business_detail.product.orderRealEstateAttach.priceType}}</text>
+			</view>
+			<view>
+				<text>{{business_detail.product.orderRealEstateAttach.displayPrice}}</text>
+				<text wx:if="{{business_detail.product.orderRealEstateAttach.sellingPriceType != 3 && business_detail.product.orderRealEstateAttach.isNegotiable != 1}}">起</text>
+			</view>
+		</view>
+		<!-- 楼盘售价 end -->
+		<!-- 楼盘地址 start -->
+		<view class="projectDescAddr" catchtap="openLocation">
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_position%402x.png"></image>
+			<text>{{business_detail.product.orderRealEstateAttach.city}}{{business_detail.product.orderRealEstateAttach.address}}</text>
+		</view>
+		<!-- 楼盘地址 end -->
+		<view class="projectDescToDetail" catchtap="goToProjectDetail">
+			<text>更多信息</text>
+		</view>
+	</view>
+	<!-- 项目介绍 end -->
+	<!-- 项目周边 start -->
+	<view class="projectNearby">
+		<text>项目周边</text>
+		<!-- <mMap mapTag="[交通,学校,医院,购物,银行,餐饮]" mapData="{{mapData}}"/> -->
+		<map longitude="{{business_detail.product.orderRealEstateAttach.lng}}" latitude="{{business_detail.product.orderRealEstateAttach.lat}}" markers="{{markers}}" bindmarkertap="markertap"></map>
+		<view class="projectNearbyPoint">
+			<view class="projectNearbyPointNav">
+				<block wx:for="{{business_detail.product.orderRealEstateAttach.estateSurroundingTags}}" wx:key="id">
+					<view class="projectNearbyPointNavItem {{projectNearbyPointNavIndex == index ? 'switch projectNearbyPointNavItem_selected' : 'projectNearbyPointNavItem_unselected'}}" data-index="{{index}}" data-keyword="{{item.name}}" catchtap="changeNearbyPointNav">
+					<image src="{{projectNearbyPointNavIndex == index ? item.iconSelected : item.icon}}"></image>
+					<text>{{item.name}}</text>
+				</view>
+				</block>
+			</view>
+			<view class="projectNearbyList">
+				<block wx:for="{{projectNearbyList}}" wx:key="id">
+					<view class="projectNearbyListItem" data-item="{{item}}" data-index="{{projectNearbyPointNavIndex}}" catchtap="goToNav">
+						<view>
+							<text>{{item.title}}</text>
+							<view style="flex:1;"></view>
+							<text>{{item.dis}}m</text>
+						</view>
+						<view class="projectNearbyListItemAddrList" wx:if="{{item.addressList && item.addressList.length > 0}}">
+							<block wx:for="{{item.addressList}}" wx:for-item="addrItem" wx:key="id">
+									<text class="projectNearbyListItemAddrListItem">{{addrItem}}</text>
+							</block>
+						</view>
+						<text class="projectNearbyListItemAddr" wx:else>
+								{{item.address}}
+						</text>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
+	<!-- 项目周边 end -->
+
+	<!-- 户型 start -->
+	<view class="houseLayout">
+		<text>户型</text>
+		<scroll-view scroll-x>
+			<view class="housePlans">
+				<block wx:for="{{business_detail.product.orderRealEstateAttach.estateUnitInfos}}" wx:key="id">
+					<view class="housePlansItem" data-item="{{item}}" catchtap="goToHouseLayout">
+						<image src="{{item.image}}"></image>
+						<text class="aline1">{{item.unitStructure}}{{item.buildingArea}}㎡</text>
+						<text>{{item.displayPrice}}</text>
+					</view>
+				</block>
+			</view>
+		</scroll-view>
+	</view>
+	<!-- 户型 end -->
+
+	<!-- 最新动态 start -->
+	<view class="news" catchtap="goToNews">
+		<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/news.png"></image>
+		<view>
+			<text>最新动态</text>
+			<text>快来了解一下最新动态</text>
+		</view>
+	</view>
+	<!-- 最新动态 end -->
+
+	<!-- 联系人 start  -->
+	<view class="manager" catchtap="showBusinessPhoneList" wx:if="{{managerDisplay}}">
+		<!-- <image src="estate {{business_detail.merchant.userHeadimg}}"></image> -->
+		 <image src="{{business_detail.trackUserInfo.headimg}}"></image> 
+		<view>
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_call.png"></image>
+			<text>项目负责人</text>
+		</view>
+	</view>
+	<!-- 联系人 end  -->
+	<!-- 项目详情 end  -->
+</template>

@@ -1,0 +1,251 @@
+<!--pages/tabBar_user_center/channel/goodsDetail/goodsDetail.wxml-->
+<import src="/pages/tabBar_index/business_detail/template/estate/estate.wxml" />
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!-- 图片start-->
+<view class='home_bg'>
+	<swiper autoplay="true" indicator-dots="{{imgList.length > 1 ? true : false}}" circular="true" interval="5000" duration="1000" bindchange="mainImgChange" wx:if="{{selectedDisplayType == 'img'}}">
+		<block wx:for="{{imgList}}" wx:key="item">
+			<swiper-item>
+				<image src="{{utils.judgeImg(item)}}" mode='aspectFill' />
+			</swiper-item>
+		</block>
+	</swiper>
+	<video src='{{videoURL}}' style="width: 100%;height: 100%;" poster="{{videoURL+'?x-oss-process=video/snapshot,t_1000,f_jpg'}}" autoplay="{{videoAutoPlay}}" wx:elif="{{selectedDisplayType == 'vid' && videoURL}}"></video>
+	<image class="vrBG" src="{{data.orderRealEstateAttach.coverImg ? data.orderRealEstateAttach.coverImg : ''}}" wx:if="{{selectedDisplayType == 'vr'}}"></image>
+	<text style="display:{{business_detail.dis && !selectedVideo?'':'none'}}">距您{{business_detail.dis}}</text>
+	<view class="changeType" wx:if="{{existVideo || vrUrl != ''}}">
+		<view class="changeTypeItem {{selectedDisplayType == 'vr' ? 'selected_type' : 'unselected_type'}}" data-type="vr" catchtap="changeShow" wx:if="{{vrUrl != ''}}">
+			<text>VR看房</text>
+		</view>
+		<view class="changeTypeItem {{selectedDisplayType == 'vid' ? 'selected_type' : 'unselected_type'}}" data-type="vid" bindtap="changeShow">
+			<text>视频</text>
+		</view>
+		<view class="changeTypeItem {{selectedDisplayType == 'img' ? 'selected_type' : 'unselected_type'}}" data-type="img" bindtap="changeShow">
+			<text>图片</text>
+		</view>
+	</view>
+	<view class="picNums" wx:if="{{selectedDisplayType == 'img' && imgList.length > 1}}">
+		<text>{{imgIndex}}/{{imgList.length}}</text>
+	</view>
+	<view class="vrMask" catchtap="goToVr" wx:if="{{selectedDisplayType == 'vr'}}">
+		<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png"></image>
+	</view>
+</view>
+<!-- 图片end-->
+
+<!-- 名称，价格start -->
+<view class="namePrice">
+	<view>
+		<text style="font-size:18px;font-weight:bold;line-height:18px;" class="priceFont">￥</text>
+		<text style="font-size:24px;font-weight:bold;line-height:24px;" class="priceFont">{{minPrice}}</text>
+		<text style="font-size:24px;font-weight:bold;line-height:24px;" class="priceFont" wx:if="{{!onlyPrice}}">-{{maxPrice}}</text>
+		<view style="width:31px;"></view>
+		<text>建议零售　￥{{minSuggestedPrice}}</text>
+		<text wx:if="{{!onlyPrice}}">-{{maxSuggestedPrice}}</text>
+		<view style="flex:1;"></view>
+	</view>
+	<view>
+		<text>{{estimate}}</text>
+	</view>
+	<view>
+		<text class="goodsName">{{data.name}}</text>
+	</view>
+	<view wx:if="{{!neverDie}}">
+		<text>结束时间：{{displayEndTime}}</text>
+	</view>
+	<view class="tagView">
+		<view>
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/gray_hook3x.png"></image>
+			<text>{{data.typeCode == "service" ? "到店商品": (data.typeCode == "virtual" ? "店内服务" : data.typeCode == "logistics" ? "物流商品" : "定金商品")}}</text>
+		</view>
+		<view style="flex:1;"></view>
+		<text>已有{{data.agentNum}}人代理，库存剩余{{totalStock}}</text>
+	</view>
+	<view class="returnAble">
+		<text>{{data.returnAble==0?"不可退货":"支持退货"}}</text>
+		<text wx:if="{{data.typeCode == 'fresh'}}">生鲜配送商品商家签收后不支持售后</text>
+		<text wx:elif="{{data.returnAbleEnum == 'YES'}}">商品支持退货，未收货即可发起售后申请</text>
+		<text wx:if="{{data.typeCode == 'estate' && data.returnAbleEnum == 'NO'}}">此商品是定金商品，购买后不支持退款</text>
+	</view>
+</view>
+<!-- 名称，价格end -->
+
+<!--间隔 start-->
+<view class='spacing'></view>
+<!--间隔 end-->
+
+<!-- 货源数据 start-->
+<view class="goodsData">
+	<text>货源数据</text>
+	<view class="goodsDataInfo">
+		<view>
+			<text>近30天销售</text>
+			<view>
+				<text>{{goodsInfo.orderNum}}</text>
+				<text>份</text>
+			</view>
+			<text style="color:#EFC257;">优质货源</text>
+		</view>
+		<view wx:if="{{data.typeCode != 'estate'}}">
+			<text>发货时长</text>
+			<view>
+				<text>{{goodsInfo.trackingTime}}</text>
+				<text>天</text>
+			</view>
+			<text>平均{{goodsInfo.receiveTime}}天到货</text>
+		</view>
+		<view>
+			<text>近30天代理</text>
+			<view>
+				<text>{{goodsInfo.agentNum}}</text>
+				<text>人</text>
+			</view>
+			<text>人均销售{{goodsInfo.avgSales == "NaN" ? 0 : goodsInfo.avgSales}}份</text>
+		</view>
+	</view>
+</view>
+<!-- 货源数据 end -->
+
+<!-- 房地产 start -->
+<template is="estate" data="{{business_detail,projectNearbyPointNavIndex,projectNearbyList,markers,managerDisplay}}" wx:if="{{data.typeCode == 'estate'}}" />
+<!-- 房地产 end -->
+<!-- 普通商品 start  -->
+<block wx:else>
+	<!-- 货源规格、运费 start -->
+	<view class="goodsData" style="padding-top:0px;">
+		<view class="goodsData_item" bindtap="showSku">
+			<text>货源规格</text>
+			<view style="flex:1;"></view>
+			<text style="color:#A0A0A0;">＞</text>
+		</view>
+		<view class="goodsData_item logistics_item">
+			<text>运费</text>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/location.png"></image>
+			<text>{{sourceAddr}}市发货</text>
+			<view style="flex:1;"></view>
+			<view></view>
+			<view catchtap="goToLogisticsDetail">
+				<text style="color:#2f95fb;margin-right: 16rpx;">地区运费详情</text>
+				<text style="color:#A0A0A0;">＞</text>
+			</view>
+		</view>
+	</view>
+	<!-- 货源规格、运费 end -->
+
+	<!--间隔 start-->
+	<view class='spacing'></view>
+	<!--间隔 end-->
+
+	<!-- 图文详情 start-->
+	<view class="goodsDetail">
+		<text>图文详情</text>
+		<text>{{data.description==null?"":data.description}}</text>
+		<view>
+			<block wx:for="{{data.fileJsonObj.longPicture}}" wx:key="item">
+				<image data-src='{{item}}' data-list="{{data.fileJsonObj.longPicture}}" catchtap='imgYu' src='{{utils.judgeImg(item)}}' mode='widthFix'></image>
+			</block>
+		</view>
+	</view>
+	<!-- 图文详情 end -->
+</block>
+<!-- 普通商品 end  -->
+
+<!--空白区域，撑起页面用 start-->
+<view style='width:100%;height:{{iPhone_X?"150rpx":"130rpx"}};' data-iPhone_X='{{iPhone_X}}'></view>
+<!--空白区域，撑起页面用 end-->
+
+<!--联系企业，企业号码 start-->
+<view class='showMenu' hidden='{{show_business_phone}}'>
+	<block wx:for="{{business_phone}}" wx:key="item">
+		<view class='showMenu_item' data-phone="{{item}}" catchtap="contactBusiness">
+			<text>{{item}}</text>
+		</view>
+	</block>
+	<view catchtap='showBusinessPhoneList' class='showMenu_item'>
+		<text>取消</text>
+	</view>
+	<view class='wx-mask' catchtouchmove="doNotMove" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--联系企业，企业号码 end-->
+
+<!--用户操作，购买，联系企业，分享部分  start-->
+<view class='user_operation {{iPhone_X?"iPhone_X":""}}'>
+	<view catchtap='jumpBusinessHomePage' data-tagcode="{{business_detail.tagCode}}">
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/tab_business_default.png"></image>
+		<view>企业</view>
+	</view>
+	<view catchtap='showBusinessPhoneList'>
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/im.png"></image>
+		<view>联系</view>
+	</view>
+	<view style="margin-right:40rpx;" wx:if="{{data.typeCode=='estate'}}">
+	</view>
+
+	<block wx:if="{{data.typeCode == 'estate'}}">
+		<view style="background-color:#2F95FB;" catchtap="applyAgent">
+			<view>货源代理</view>
+		</view>
+	</block>
+	<block wx:else>
+		<view style="background-color:#74c7ff;" catchtap="applyAgent">
+			<view>单货源代理</view>
+		</view>
+		<view style="background-color:#2f95fb;margin-left:40rpx;" catchtap="applyStoreAgent">
+			<view>整店货源代理</view>
+		</view>
+	</block>
+
+</view>
+<!--用户操作，购买，联系企业，分享部分  end-->
+
+<!-- 申请代理成功start -->
+<view class="tipBG" wx:if="{{showModal}}" bindtap="closeModal" catchtouchmove="stopMove">
+	<view class="tipContent" catchtap="stopClick">
+		<view>
+			<text>申请成功</text>
+		</view>
+		<text class="tipContent_text">待品牌厂家审批申请通过后，可查看出厂价并二次编辑开始售卖。</text>
+		<text class="tipContent_text2">可在APP"后台管理"-"商品管理"里查看详情</text>
+		<view></view>
+		<view class="submit" catchtap="closeModal">
+			<text>完成</text>
+		</view>
+	</view>
+</view>
+<!-- 申请代理成功end -->
+
+<!-- sku start -->
+<view class="tipBG" wx:if="{{showSku}}" bindtap="closeModal" catchtouchmove="stopMouseOperate">
+	<view class="tipMain" catchtap="stopMouseOperate">
+		<scroll-view class="scvSku" scroll-y>
+			<view>
+				<block wx:for="{{specList}}" wx:key="specItemId" wx:for-index="specItemIdx">
+					<view class="specItem">
+						<text>{{item.name}}</text>
+						<view class="specDetailList">
+							<block wx:for="{{item.productSpecs}}" wx:key="specId" wx:for-item="specItem" wx:for-index="specIdx">
+								<view class="specDetailItem {{specItem.selected == true ? 'specDetailItemSelected' : ''}}" data-itemIdx="{{specItemIdx}}" data-specIdx="{{specIdx}}" catchtap="clickTypeItem">{{specItem.value}}</view>
+							</block>
+						</view>
+						<view style="width:100%;height:1rpx;background-color:#eee;"></view>
+					</view>
+				</block>
+			</view>
+		</scroll-view>
+		<!-- <view class="submitBtn" catchtap="closeModal">
+      <text>确定</text>
+    </view> -->
+	</view>
+	<image src="{{showImg?showImg:utils.judgeImg(imgList[0])}}" mode="aspectFill" catchtap="stopMouseOperate"></image>
+	<view class="priceRelate">
+		<text hidden="{{onlyPrice}}">￥{{minSuggestedPrice}} - {{maxSuggestedPrice}}</text>
+		<text hidden="{{!onlyPrice}}">￥{{displayPrice}}</text>
+		<text style="color:#a0a0a0;font-size:3vw;margin-left:5vw;">建议零售</text>
+	</view>
+	<view class="stockRelate">
+		<text style="color: #a0a0a0;">库存{{totalStock}}</text>
+		<text style="color: #ea333f;">{{estimate}}</text>
+	</view>
+	<text class="selected">已选　{{selected_text?selected_text:"暂无"}}</text>
+</view>
+<!-- sku end -->

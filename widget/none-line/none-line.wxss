@@ -1,0 +1,26 @@
+/* widget/none-line/none-line.wxss */
+
+.data_null_page {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  text-align: center;
+  background: #fff;
+  z-index: 99999;
+}
+
+.data_null_icon {
+  display: block;
+  width: 266rpx;
+  margin: 231rpx auto 53rpx auto;
+}
+
+.null_btn{
+  margin-top: 32rpx;
+}
+
+.null_text{
+  color: #9699A0;
+}

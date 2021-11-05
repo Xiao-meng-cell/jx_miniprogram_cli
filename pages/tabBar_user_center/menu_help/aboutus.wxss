@@ -1,0 +1,41 @@
+/* pages/tabBar_user_center/menu_help/aboutus.wxss */
+
+.content_block{
+  width: 100%;
+  text-align: center;
+  /* display: flex;
+  justify-content: center;
+  flex-direction: row; */
+}
+
+.o_logo{
+  width:258rpx;
+  height:258rpx;
+  border-radius: 64rpx;
+  margin:0 auto;
+}
+
+.o_logo_200{
+  width:200rpx;
+  height:200rpx;
+  margin:0 auto;
+}
+
+.title{
+  font-size:34rpx;
+  margin-top:10%;
+}
+
+.context{
+  margin:16px auto;
+  
+}
+
+.copyright{
+  position: absolute;
+  font-size:28rpx;
+  bottom:5%;
+  left:0;
+  right:0;
+  margin: auto;
+}

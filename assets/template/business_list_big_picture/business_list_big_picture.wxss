@@ -1,0 +1,122 @@
+/**商家列表**/
+
+.business_list_big_picture {
+  width: 100%;
+  min-height: 355rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  background-color: rgb(244, 244, 244);
+}
+
+.business_list_big_picture>image:nth-child(1) {
+  width: 690rpx;
+  height: 344rpx;
+  position: absolute;
+  border-radius: 18rpx;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  z-index: 5;
+}
+
+.business_list_big_picture>view:nth-child(2) {
+  position: relative;
+  top: 233rpx;
+  font-size: 24rpx;
+  border-bottom-left-radius: 17rpx;
+  border-bottom-right-radius: 17rpx;
+}
+
+.business_list_big_picture>view:nth-child(2)>view:nth-child(1) {
+  font-size: 34rpx;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  margin-top: 10rpx;
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  z-index: 99;
+  padding-top: 1vh;
+}
+
+.desc view:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  color: #a0a0a0;
+  font-size: 3vw;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  justify-content: center;
+}
+
+.desc image {
+  width: 3vw;
+  height: 3vw;
+}
+
+.tagName {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 24rpx;
+  color: #fff;
+  z-index: 110;
+}
+
+.tagName>view {
+  background-color: #2f95fb;
+  border-radius: 10rpx;
+  padding: 4rpx 12rpx 4rpx 12rpx;
+  margin-right: 20rpx;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0rpx;
+  right: 30rpx;
+  width: 110rpx;
+  height: 36rpx;
+  background-color: #2f95fb;
+  border-top-right-radius: 18rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  z-index: 10;
+}
+
+.top2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 36rpx;
+  right: 30rpx;
+  width: 110rpx;
+  height: 36rpx;
+  background-color: #fff;
+  border-bottom-left-radius: 6rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #2f95fb;
+  z-index: 10;
+}

@@ -1,0 +1,314 @@
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<template name="business">
+  <view class="main_business">
+    <view class="card_head" style="height:{{capsuleTop+32}}px;" hidden="{{forward_status}}"></view>
+    <!-- 名片信息 start -->
+    <view class="clerkInfo_business_big">
+      <view class="clerkInfo_business">
+        <image class="business_clerkskin" src="{{clerk.clerkskinUrl}}" mode="aspectFill"></image>
+        <view>
+          <view>
+            <image class="clerkInfo_headimg_business" src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}"
+              mode="aspectFill"></image>
+            <view>
+              <view>
+                <text class="aline1"
+                  style="width:300rpx; overflow: hidden;text-overflow: ellipsis;">{{card_name}}</text>
+              </view>
+              <text class="aline1">{{card_position==null?"":card_position}}</text>
+            </view>
+            <image
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_phone_white@3x.png"
+              data-phone="{{card_phone}}" catchtap="contactBusiness" hidden="true"></image>
+          </view>
+          <view>
+            <text>公司：{{business_info.name==null||business_info.name==""?business_info.shortName:business_info.name}}</text>
+            <text data-text="{{card_wx}}" catchtap='setCopyText'>微信：{{card_wx==null?"--":card_wx}}</text>
+            <text class="aline2" catchtap='mapNavigation'>地址：{{business_info.addr?business_info.addr:"--"}}</text>
+          </view>
+        </view>
+      </view>
+
+
+
+    </view>
+    <!-- 名片信息 end -->
+
+    <!--企业简介 start-->
+    <view class='business_info_intro '>
+      <view catchtap='changeShowRange'>
+        <text>企业简介</text>
+        <image class='setShow_range_img {{change_show_range?"setShow_range_img_open":""}}'
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/nav-bottom.png">
+        </image>
+      </view>
+      <view wx:if="{{change_show_range}}" catchtap='changeShowRange' class='global_page_indent '>
+        <image src="{{ business_info.bgUrls[0]}}" mode='aspectFill'></image>
+        <text>{{business_info.intro==null||business_info.intro==''?'暂无信息':business_info.intro}}</text>
+      </view>
+    </view>
+    <!--企业简介 end-->
+
+    <!-- 收藏，地址，分享，浏览记录 start -->
+    <view class="favAddrShare_business global_page_indent">
+      <view>
+        <!-- <view hover-class='btn_hover' catchtap='{{isFollow?"cancelFollow":"addFollow"}}'> -->
+        <view hover-class='btn_hover' catchtap='addFollow' wx:if="{{landerUserId != userId}}">
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_show_fav.png">
+          </image>
+          <text>{{isFollow?'已收藏':'收藏'}}</text>
+        </view>
+        <view hover-class='btn_hover' catchtap='mapNavigation'>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_show_addr.png">
+          </image>
+          <text>地址</text>
+        </view>
+        <view hover-class='btn_hover' class="sharecard">
+          <button open-type='share' data-useshots='true'></button>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_show_share.png">
+          </image>
+          <text>分享</text>
+        </view>
+        <view hover-class='btn_hover' data-phone="{{card_phone}}" catchtap="contactBusiness">
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_show_phone.png">
+          </image>
+          <text>电话</text>
+        </view>
+      </view>
+      <view wx:if="{{showVisitorRecord}}">
+        <view>
+          <block wx:for="{{seen_list}}" wx:key="item" wx:if="{{index<6}}">
+            <image src='{{item.headimg + utils.resizeImg(50)}}' mode='aspectFill'></image>
+          </block>
+          <view wx:if="{{seen_list.length > 6}}">
+            <text>...</text>
+          </view>
+        </view>
+        <text>已有{{hot}}人浏览</text>
+      </view>
+    </view>
+    <!-- 收藏，地址，分享，浏览记录 end -->
+
+    <!--直播状态 start-->
+    <view class="clerk_live" catchtap="jumpLive" mode='aspectFill' wx:if="{{clerk.live==1?true:false}}">
+      <!-- <view class="clerk_live" catchtap="jumpLive" mode='aspectFill' > -->
+      <image class="animation_live_rotation" src="{{business_info.bgUrls[0]}}"></image>
+      <text>正在直播中...</text>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_live@3x.png">
+      </image>
+    </view>
+    <!--直播状态 end-->
+
+    <!-- 交换名片 start  -->
+    <view class="exchangeBusiness" catchtap="displayCardList" wx:if="{{landerUserId != userId && cardListCount > 0}}">
+      <text>交换名片</text>
+    </view>
+    <!-- 交换名片 end  -->
+
+    <!-- tabs start -->
+    <view class="tab-bar_business" wx:if="{{tab_config.fixed}}">
+      <view wx:for="{{tab_config.tabs}}" wx:key="unique" data-index="{{index}}" bindtap="handlerTabTap"
+        class="tab {{selectedTabIndex==index?'tab-active':''}} " style="width: {{tab_config.item_width}}px;">
+        <text>{{item}}</text>
+      </view>
+      <view style="width: {{tab_config.item_width}}px; left: {{tab_config.underline.offset}}px;top:68rpx;"
+        class="under-line withAnimate">
+        <view></view>
+      </view>
+    </view>
+    <scroll-view class="tab-bar_business" scroll-x="true" bindscroll="onScroll" style="width: 100%;"
+      scroll-left="{{tab_config.tab_left}}" wx:else>
+      <view wx:for="{{tab_config.tabs}}" wx:key="unique" data-index="{{index}}"
+        class="tab {{selectedTabIndex==index?'tab-active':''}} " style="width: {{tab_config.item_width}}px;"
+        bindtap="handlerTabTap">
+        <text>{{item}}</text>
+      </view>
+      <view style="width: {{tab_config.item_width}}px; left: {{tab_config.underline.offset}}px;top:68rpx;"
+        class="under-line withAnimate">
+        <view></view>
+      </view>
+    </scroll-view>
+    <!-- tabs end -->
+
+    <!-- tab panel -->
+    <view class="page-section page-section-spacing swiper-wrap">
+      <swiper class="swiper" style="height:{{mediaInfoHeight}}px;" indicator-dots="{{swipe_config.indicator_dots}}"
+        autoplay="{{swipe_config.autoplay}}" interval="{{swipe_config.interval}}" duration="{{swipe_config.duration}}"
+        current="{{selectedTabIndex}}" bindchange="swiperChange">
+        <!-- 商品列表 start -->
+        <swiper-item>
+          <view id="viewMI1" class="mediaInfo_business">
+            <!--内部商品列表 start-->
+            <!-- 商品分类 start -->
+            <view class="goods_tag_business" catchtouchmove="stopMouseOperate"
+              hidden="{{goodsTagList.length == 0 || goodsTagList.length == 1}}">
+              <scroll-view scroll-x="true">
+                <block wx:for="{{goodsTagList}}" wx:key="index">
+                  <view
+                    class="goodsTagItem_business {{goodsTagSelectedIndex == index ? 'goodsTagItem_selected_business' : ''}}"
+                    data-item="{{item}}" data-index="{{index}}" catchtap="clickGoodsTag">
+                    <text>{{item.name}}</text>
+                  </view>
+                </block>
+              </scroll-view>
+              <image class="business_goods_tag"
+                src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_goods_tag_white.png"
+                data-index="0" catchtap="goToGoodsCategory"></image>
+              <!-- <view class="business_goods_tag_masking_business"></view> -->
+            </view>
+            <!-- 商品分类 end -->
+            <view class="goodsList_business" wx:if="{{goodsList.length > 0}}"
+              style="background: transparent;justify-content:  space-between;">
+              <block wx:for="{{goodsList}}" wx:for-item="item" wx:key="id">
+                <view class="goodsItem " data-clerk_code="{{clerk_code}}" catchtap="goToDetail"
+                  data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+                  <image src="{{item.illustration}}" mode="aspectFill"></image>
+                  <view>
+                    <text class="aline2 goods_padding_margin">{{item.title}}</text>
+                    <view class="priceDesc priceFont">
+                      <text>￥</text>
+                      <text>{{item.minPriceYuan}}</text>
+                    </view>
+                    <view class="goodstag goods_padding_margin">
+                      <view wx:if="{{item.product.typeCode=='logistics'&&item.addressType!='merchant'}}"
+                        style="background: rgba(255, 111, 0, 0.1);border-radius: 12rpx;">
+                        <text class="goodstag_text goodstag_text_red">邮</text>
+                        <text class="goodstag_deliver goodstag_wl" style="border:none;">物流商品</text>
+                      </view>
+                      <view wx:elif="{{item.product.typeCode=='virtual'}}"
+                        style="background: rgba(255, 183, 77,0.1);border-radius: 12rpx;">
+                        <text class="goodstag_text goodstag_text_yellow">店</text>
+                        <text class="goodstag_deliver goodstag_visual" style="border:none;">店内服务</text>
+                      </view>
+                      <view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}"
+                        style="background: rgb(255, 183, 77,0.1);border-radius: 12rpx;">
+                        <text class="goodstag_text goodstag_text_yellow">定</text>
+                        <text class="goodstag_deliver goodstag_visual" style="border:none;">定金商品</text>
+                      </view>
+                      <view wx:else style="background: rgba(47, 149, 251,0.1);border-radius: 12rpx;">
+                        <text class="goodstag_text goodstag_text_blue">自</text>
+                        <text class="goodstag_deliver goodstag_dd" style="border:none;">到店自提</text>
+                      </view>
+                    </view>
+                    <view class="goods_item_bottom goods_padding_margin">
+                      <text>{{item.total}}</text>
+                      <image
+                        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/attend_num%403x.png">
+                      </image>
+                    </view>
+                  </view>
+                </view>
+              </block>
+              <view class='lookMoreGoods' wx:if="{{goodsList.length >= 20}}" style="color:white;">
+                <text catchtap="jumpClerkGoodList">点击查看更多商品</text>
+              </view>
+            </view>
+            <view class='emptyView' style="background:rgba(0, 16, 55, 1);" wx:else>
+              <image
+                src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png'>
+              </image>
+              <text>很抱歉~暂无商品</text>
+            </view>
+            <!--内部商品列表 end-->
+          </view>
+        </swiper-item>
+        <!-- 商品列表 end -->
+        <!-- 名片详情 start -->
+        <swiper-item>
+          <view id="viewMI2" style="padding-top:30rpx;padding-bottom:30rpx;position: relative;z-index: 2;"
+            wx:if="{{(clerk.voiceUrl != null && clerk.voiceUrl != '') || (clerk.signature != null && clerk.signature != '') || card_message != '' || (clerk.videoUrl != null && clerk.videoUrl != '') || mediaInfoPhotos.length > 0}}">
+            <!-- 语音签名 start -->
+            <view id="voice_signature" class="mediaInfo_business">
+              <view class="mediaInfo_title_business1" wx:if="{{clerk.voiceUrl != null && clerk.voiceUrl != ''}}">
+                <text>语音介绍</text>
+              </view>
+              <view class="mediaInfo_content_border_business" style="padding:0rpx;" catchtap="voicePlayPause"
+                wx:if="{{clerk.voiceUrl != null && clerk.voiceUrl != ''}}">
+                <view class="mediaInfo_voice_business">
+                  <image src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}" mode="aspectFill"></image>
+                  <view></view>
+                  <view>
+                    <image
+                      src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/voice_business.png"
+                      wx:if="{{!audioPlaying}}"></image>
+                    <image
+                      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/voice_business.gif"
+                      wx:else></image>
+                    <text data-log="{{voiceTime}}">{{voiceTime}}"</text>
+                  </view>
+                </view>
+              </view>
+              <view class="mediaInfo_title_business1" wx:if="{{clerk.signature != null && clerk.signature != ''}}">
+                <text>个性签名</text>
+              </view>
+              <view class="mediaInfo_content_border_business mediaInfo_content_business"
+                wx:if="{{clerk.signature != null && clerk.signature != ''}}">
+                <text>{{clerk.signature == null ? "" : clerk.signature}}</text>
+              </view>
+              <view class="mediaInfo_title_business1" style='display:{{card_messagecard_message?"":"none"}};'>
+                <text>私人定制</text>
+              </view>
+              <view class="mediaInfo_content_border_business mediaInfo_content_business"
+                style='display:{{card_message?"":"none"}};'>
+                <image
+                  src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x_blue.png"
+                  style="width:24rpx;height:24rpx;margin-right:12rpx;"></image>
+                <text catchlongtap="setCopyText" data-text="{{card_message==null||card_message==''?'':card_message}}"
+                  catchtap="showTextareaEdit">{{card_message==null||card_message==''?'暂无信息':card_message}}</text>
+              </view>
+            </view>
+            <!-- 语音签名 end -->
+            <!-- 视频介绍 start -->
+            <view id="video_desc" class="mediaInfo_business" wx:if="{{clerk.videoUrl != null && clerk.videoUrl != ''}}">
+              <view class="mediaInfo_title_business1">
+                <text>视频介绍</text>
+              </view>
+              <view class="mediaInfo_content_border_business mediaInfo_content_business">
+                <video id="mediaInfo_video" src="{{clerk.videoUrl}}" show-center-play-btn="true" bindplay="ctvVideoPlay"
+                  bindpause="ctvVideoPause" catchtouchmove="doNotMove"></video>
+                <text>{{clerk.videoDesc == null ? "" : clerk.videoDesc}}</text>
+              </view>
+            </view>
+            <!-- 视频介绍 end -->
+            <!-- 相册风采 start -->
+            <view id="album_style" class="mediaInfo_business" wx:if="{{mediaInfoPhotos.length > 0}}">
+              <view class="mediaInfo_title_business1">
+                <text>相册风采</text>
+              </view>
+              <view class="mediaInfo_content_border_business mediaInfo_content_business"
+                style="  flex-shrink: 0;flex-wrap: wrap;justify-content: space-around;flex-direction: row;">
+                <block wx:for="{{mediaInfoPhotos}}" wx:key="id">
+                  <image class="{{index % 2 == 0 ? '':'album_style_view_image_odd'}}" src="{{item}}" mode="aspectFill"
+                    data-src="{{item}}" data-list="{{mediaInfoPhotos}}" catchtap="imgYu"></image>
+                </block>
+              </view>
+            </view>
+            <!-- 相册风采 end -->
+          </view>
+          <view class='emptyView' style="background:rgba(0, 16, 55, 1);" wx:else>
+            <image
+              src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png'>
+            </image>
+            <text>暂无信息</text>
+          </view>
+        </swiper-item>
+        <!-- 名片详情 end -->
+      </swiper>
+    </view>
+    <!-- tab end -->
+  </view>
+
+  <!-- 购物车 start -->
+  <cart_button id="cart_button"></cart_button>
+  <!-- 购物车 end -->
+
+  <!--商务名片背景图 start-->
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/picture_background.png"
+    class="business_picture_bg" mode="aspectFill">
+  </image>
+  <!--商务名片背景图 end-->
+</template>

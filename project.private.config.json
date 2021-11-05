@@ -1,0 +1,66 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "直播间",
+          "pathName": "livePackage/pages/live/live",
+          "query": "merchantCode=2041726248633105342&higherLevelCode=&clerk_code=I5ZL12UAC9&sceneType=2041726248633105342&sceneDT=84895",
+          "scene": null
+        },
+        {
+          "name": "名片列表",
+          "pathName": "pages/tabBar_user_center/business_card_manage/business_card_index/business_card_index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "名片详情",
+          "pathName": "pages/clerk/show/show",
+          "query": "workerId=53407",
+          "scene": null
+        },
+        {
+          "name": "商家主页",
+          "pathName": "pages/tabBar_index/business_homepage/business_homepage",
+          "query": "merchantCode=2041926838963101566",
+          "scene": null
+        },
+        {
+          "name": "pages/tabBar_user_center/business_card_manage/business_card_scene/scene_detail/scene_detail",
+          "pathName": "pages/tabBar_user_center/business_card_manage/business_card_tagList/business_card_tagList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "商品",
+          "pathName": "pages/tabBar_index/business_detail/business_detail",
+          "query": "code=2035727210760103452",
+          "scene": null
+        },
+        {
+          "name": "叠叠乐",
+          "pathName": "pages/diedeile/diediele",
+          "query": "eventCode=2035727210760103452&shareUserId=15405",
+          "scene": null
+        },
+        {
+          "name": "www",
+          "pathName": "/pages/tabBar_index/business_detail/business_detail",
+          "query": "code=2035727210760103452",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+/* pages/tabBar_user_center/menu_wallet/cashOutHickory/cashOutHickory.wxss */
+@import '/pages/tabBar_user_center/menu_wallet/balancerecord/balancerecord.wxss';
+
+.dateBar {
+  display: flex;
+  height: 6vh;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  background-color: #f4f4f4;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateBar text {
+  color: #a0a0a0;
+  font-size: 2vh;
+}
+
+.hickoryItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(100vw - 32rpx * 2);
+  margin: 0rpx 32rpx;
+  padding: 32rpx 0rpx;
+  border-bottom: #eeeeee 1rpx solid;
+}
+
+.hickoryItem>image {
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 32rpx;
+}
+
+.hickoryItem>view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 32rpx;
+}
+
+.empty_view {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}

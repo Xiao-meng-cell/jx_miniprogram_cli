@@ -1,0 +1,10 @@
+<!--widget/filter-tabs/filtertabs.wxml-->
+<view class="filter">
+	<view class="item"  wx:for="{{filterList}}" wx:key="*this" bindtap="onTabClick" data-item="{{item}}">
+		<text  style="color:#000;" class="{{filterTabIndex == item.id? 'active':''}}">{{ item.title }}</text>
+		<view class="col" style="justify-content:center;  align-items: center;" wx:if="{{!item.hide}}">
+			<image style="width: 20rpx;height: 10rpx;   margin: 0 10rpx;" src="{{filterTabIndex == item.id && filterTagIndex ? iconUrl+'arrow_up_active.png' : iconUrl+'arrow_up_default.png'}}" />
+			<image style="width: 20rpx;height: 10rpx;   margin: 0 10rpx;" src="{{filterTabIndex == item.id && !filterTagIndex? iconUrl+'arrow_down_active.png': iconUrl+'arrow_down_default.png'}}" />
+		</view>
+	</view>
+</view>

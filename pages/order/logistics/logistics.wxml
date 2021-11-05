@@ -1,0 +1,153 @@
+<!--miniprogram/pages/order/logistics/logistics.wxml-->
+<view class='g_con'>
+	<!-- 顶部快递信息 start -->
+	<view class='topExpress'>
+		<view class='topExpress-left'>
+			<image
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_logistics.png"
+				style='width:60rpx;height:60rpx;border-radius:50%;'></image>
+		</view>
+		<view class='topExpress-right'>
+			<view class='topExpress-right-top'>
+				<text style="color:#5ABDFF;"
+					wx:if="{{orderDetailsLogistics.status == '查询异常'}}">{{orderDetailsLogistics.status}}</text>
+				<text>{{orderDetailsLogistics.comName}}　　{{orderDetailsLogistics.num}}</text>
+				<view style='flex:1;' />
+				<button class="btn_copy" data-code='{{orderDetailsLogistics.num}}' bindtap='copyCode'>复制</button>
+			</view>
+		</view>
+	</view>
+	<!-- 顶部快递信息 end -->
+	<!-- 物流时间轴 -->
+	<view class='expressRecord'>
+		<!-- 顶部收货地址 -->
+		<view class='expressRecord-getAddress'>
+			<view class='getAddress-icon'>
+				收
+			</view>
+			<view class='getAddress-text'>
+				<text>[收货地址] {{addr}}</text>
+			</view>
+		</view>
+
+		<!-- 顶部收货地址半个时间轴线 -->
+		<view class='noReach-online-top-close'></view>
+
+		<block wx:if="{{orderDetailsLogistics.list.length==1}}">
+			<!-- 单个物流记录点时间轴：当前正在进行的物流状态 -->
+			<view class='expressRecord-single-close'>
+
+				<!-- 左边子容器 -->
+				<view class='expressRecord-single-noReach-online-top-close'>
+					<!-- 正在进行的时间轴上半个时间线 -->
+					<view class='online-top-closing'></view>
+					<!-- 正在进行的时间轴点 -->
+					<view class='dot-closing'></view>
+					<!-- 正在进行的时间轴下半个时间线 -->
+					<view class='online-bottom'></view>
+				</view>
+
+				<!-- 右边子容器 -->
+				<view class='expressRecord-text'>
+					<!-- <view class='expressRecord-statusing'>运输中</view> -->
+					<view class='expressRecord-status-addressing'>
+						<text>{{orderDetailsLogistics.list[0].description}}</text>
+					</view>
+				</view>
+				<!-- 相对父级容器绝对定位的日期 -->
+				<view class='expressRecord-dating'>
+					<view class='expressRecord-date-time'>
+						<text>{{orderDetailsLogistics.list[0].dateStr}}</text>
+						<text>{{orderDetailsLogistics.list[0].timeStr}}</text>
+					</view>
+				</view>
+			</view>
+		</block>
+		<block wx:else>
+			<block wx:for="{{orderDetailsLogistics.list}}" wx:key="item" wx:for-item="item" wx:for-index="index">
+				<!-- 当前正在进行的最新物流状态 start -->
+				<block wx:if="{{index==0}}">
+					<view class='expressRecord-single-close'>
+						<!-- 左边子容器 -->
+						<view class='expressRecord-single-noReach-online-top-close'>
+							<!-- 正在进行的时间轴上半个时间线 -->
+							<view class='online-top-closing'></view>
+							<!-- 正在进行的时间轴点 -->
+							<view class='dot-closing'></view>
+							<!-- 正在进行的时间轴下半个时间线 -->
+							<view class='online-bottom'></view>
+						</view>
+						<!-- 右边子容器 -->
+						<view class='expressRecord-text'>
+							<!-- <view class='expressRecord-statusing'>运输中</view> -->
+							<view class='expressRecord-status-addressing'>
+								<text>{{item.description}}</text>
+							</view>
+						</view>
+						<!-- 相对父级容器绝对定位的日期 -->
+						<view class='expressRecord-dating'>
+							<view class='expressRecord-date-time'>
+								<text>{{item.dateStr}}</text>
+								<text>{{item.timeStr}}</text>
+							</view>
+						</view>
+					</view>
+				</block>
+				<!-- 当前正在进行的最新物流状态 end -->
+				<!-- 非当前正在进行的物流状态 start -->
+				<block wx:else>
+					<!-- 第一条最早的物流状态 start -->
+					<block wx:if="{{orderDetailsLogistics.list.length-1==index}}">
+						<view class='expressRecord-single-close'>
+							<view class='expressRecord-single-noReach-online-top-close'>
+								<view class='online-top-close'></view>
+								<view class='dot-close'></view>
+								<!-- 起始位置，下半个时间轴线不用 -->
+								<view class='online-bottom-start'></view>
+							</view>
+							<view class='expressRecord-text'>
+								<view class='expressRecord-status-address'>
+									<text>{{item.description}}</text>
+								</view>
+							</view>
+							<view class='expressRecord-date'>
+								<view class='expressRecord-date-time'>
+									<text>{{item.dateStr}}</text>
+									<text>{{item.timeStr}}</text>
+								</view>
+							</view>
+						</view>
+					</block>
+					<!-- 第一条最早的物流状态 end -->
+
+					<!-- 已过去的普通物流状态 start -->
+					<block wx:else>
+						<!-- 单个物流记录点时间轴：已经过去的物流状态 -->
+						<view class='expressRecord-single-close'>
+							<view class='expressRecord-single-noReach-online-top-close'>
+								<view class='online-top-close'></view>
+								<view class='dot-close'></view>
+								<view class='online-bottom'></view>
+							</view>
+
+							<view class='expressRecord-text'>
+								<view class='expressRecord-status'></view>
+								<view class='expressRecord-status-address'>
+									<text>{{item.description}}</text>
+								</view>
+							</view>
+							<view class='expressRecord-date'>
+								<view class='expressRecord-date-time'>
+									<text>{{item.dateStr}}</text>
+									<text>{{item.timeStr}}</text>
+								</view>
+							</view>
+						</view>
+					</block>
+					<!-- 已过去的普通物流状态 end -->
+				</block>
+				<!-- 非当前正在进行的物流状态 end -->
+			</block>
+		</block>
+	</view>
+</view>

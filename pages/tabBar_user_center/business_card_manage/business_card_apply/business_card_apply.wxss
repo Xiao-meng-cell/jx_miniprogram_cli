@@ -1,0 +1,412 @@
+/* miniprogram/pages/tabBar_user_center/business_card_manage/business_card_apply/business_card_apply.wxss */
+@import "../../../../pages/tabBar_index/business_homepage/business_homepage.wxss";
+
+/*名片 start*/
+
+.retrun_img {
+  width: 36rpx;
+  height: 36rpx;
+  position: fixed;
+  z-index: 5000;
+  left: 20rpx;
+  margin-top: 20rpx;
+}
+
+.retrun_text {
+  position: fixed;
+  z-index: 5050;
+  left: 100rpx;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.card_floating_window {
+  background-color: white;
+  width: 690rpx;
+  height: 580rpx;
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0px 0rpx 10rpx 2rpx rgba(0, 0, 0, 0.161);
+  margin-top: 2rpx;
+}
+
+.card_floating_window>image:nth-child(1) {
+  background-color: #eee;
+  width: 690rpx;
+  height: 400rpx;
+  position: relative;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  overflow: hidden;
+}
+
+.card_info {
+  width: 690rpx;
+  height: 90rpx;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.card_info_img {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 10rpx;
+}
+
+.card_phone {
+  width: 38rpx;
+  height: 38rpx;
+  margin: 38rpx;
+}
+
+.card_name {
+  display: flex;
+  flex-direction: column;
+  width: 316rpx;
+  flex: 1;
+  position: relative;
+}
+
+.card_name>view:nth-child(1) {
+  margin-bottom: 20rpx;
+  margin-top: 14rpx;
+  display: flex;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(1) {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: rgb(50, 50, 50);
+  margin-right: 30rpx;
+  max-width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(2),
+.card_name>view:nth-child(2) {
+  font-size: 24rpx;
+  color: rgb(160, 160, 160);
+}
+
+.card_name::after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  top: 0rpx;
+  background: rgb(222, 222, 222);
+  height: 90%;
+  right: 0rpx;
+  margin: auto;
+  width: 2rpx;
+  border-radius: 10rpx;
+}
+
+/*名片 end*/
+
+.chooseBusiness {
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+  left: 0rpx;
+  bottom: 30rpx;
+  margin: auto;
+  font-size: 28rpx;
+  background-color: #d9dbdbb2;
+  width: 350rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  border-radius: 30rpx;
+  z-index: 1000;
+}
+
+.business_search {
+  position: absolute;
+  z-index: 5000;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.search_view {
+  width: 700rpx;
+  padding-left: 10rpx;
+  font-size: 24rpx;
+  background-color: #f4f4f4;
+  display: flex;
+  margin: auto;
+  height: 100rpx;
+  align-items: center;
+}
+
+.search_view>input {
+  display: block;
+  width: 580rpx;
+  height: 80rpx;
+}
+
+.search_view>text:nth-child(2) {
+  padding: 10rpx;
+}
+
+.nearby_stores {
+  font-size: 30rpx;
+  padding-left: 30rpx;
+  margin-top: 30rpx;
+}
+
+.business_list_item {
+  margin-left: 30rpx;
+  border-top: 1rpx solid #d9dbdbb2;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.business_list_item>view:nth-child(1)>text:nth-child(1) {
+  font-weight: 600;
+  font-size: 30rpx;
+}
+
+.business_list_item>view:nth-child(1)>text:nth-child(2) {
+  float: right;
+  margin-right: 30rpx;
+  font-size: 28rpx;
+  color: #a9a9a9;
+  margin-top: 10rpx;
+}
+
+.business_list_item>view:nth-child(2) {
+  font-size: 28rpx;
+  color: #a9a9a9;
+}
+
+.ser_uploadClose {
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  top: 0px;
+  right: 0px;
+  border-top-right-radius: 10rpx;
+}
+
+.ser_uploadimg {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+  position: relative;
+  margin-left: 30rpx;
+}
+
+.uploadImg {
+  font-size: 30rpx;
+  color: #323232;
+  height: 160rpx;
+  display: flex;
+  align-items: center;
+}
+
+.make_button {
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(47, 149, 251, 1);
+  color: white;
+  border-radius: 60rpx;
+  margin-top: 96rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  font-size: 32rpx;
+}
+
+.userImg {
+  position: relative;
+  height: 40rpx;
+}
+
+.userImg>image {
+  /* background-color: #eee; */
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  overflow: hidden;
+  border-radius: 100rpx;
+  top: -70rpx;
+  left: 30rpx;
+  border: 1px solid white;
+}
+
+.one_click_import {
+  position: fixed;
+  right: 30rpx;
+  bottom: 100rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.219);
+  z-index: 10;
+}
+
+.one_click_import>text {
+  font-size: 24rpx;
+  color: white;
+}
+
+/* 名片信息 start */
+
+.clerkInfo_business {
+  width: calc(345rpx * 2);
+  height: calc(220rpx * 2);
+  margin: 30rpx 30rpx 0 30rpx;
+  border-radius: 12rpx;
+  /* background: linear-gradient(135deg, rgb(88, 159, 255), rgb(100, 120, 255)); */
+  position: relative;
+  z-index: 2;
+}
+
+.business_clerkskin {
+  position: absolute;
+  width: 690rpx;
+  height: 440rpx;
+  z-index: 1;
+}
+
+.clerkInfo_business>view {
+  margin: 58rpx 60rpx 56rpx 40rpx;
+  position: absolute;
+  z-index: 2;
+}
+
+.clerkInfo_business>view>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+}
+
+.clerkInfo_headimg_business {
+  width: 116rpx;
+  height: 116rpx;
+  border: 4rpx #fff solid;
+  border-radius: 20rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  width: calc(165rpx * 2);
+  margin-left: 30rpx;
+  padding-right: 5rpx;
+  color: #fff;
+  font-weight: bold;
+  font-size: 24rpx;
+  /* border-right-color: rgba(255, 255, 255, 0.5);
+  border-right-style: solid;
+  border-right-width: 4rpx; */
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1)>text:nth-child(1) {
+  width: calc((165rpx * 2 - 40rpx) * 0.4);
+  font-size: 32rpx;
+  margin-right: 40rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1)>text:nth-child(2) {
+  width: calc((165rpx * 2 - 40rpx) * 0.6);
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>text:nth-child(2) {
+  margin-top: 24rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>image:nth-child(3) {
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 67rpx;
+  margin-top: 38rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 54rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.clerkInfo_business>view>view:nth-child(2)>text:nth-child(2),
+.clerkInfo_business>view>view:nth-child(2)>text:nth-child(3) {
+  margin-top: 24rpx;
+}
+
+/* 名片信息 end */
+
+/*商务名片背景 start*/
+
+.business_bg {
+  height: 104rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.business_bg>image {
+  width: 160rpx;
+  height: 104rpx;
+  position: relative;
+  border-radius: 12rpx;
+}
+
+.business_bg_cover {
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12rpx;
+
+}
+
+.business_bg_cover_image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+
+.business_bg_title {
+  font-size: 26rpx;
+  color: rgba(173, 173, 173, 1);
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-top: 56rpx;
+}
+
+/*商务名片背景 end*/

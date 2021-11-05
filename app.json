@@ -1,0 +1,147 @@
+{
+  "pages": [
+    "pages/tabBar_index/business_homepage/business_homepage",
+    "pages/tabBar_index/cart/cart",
+    "pages/tabBar_user_center/user_center",
+    "pages/tabBar_user_center/menu_wallet/menu_wallet",
+    "pages/tabBar_user_center/menu_wallet/paySetting/paySetting",
+    "pages/order/order",
+    "pages/tabBar_user_center/business_card_manage/business_card_index/business_card_index",
+    "pages/tabBar_user_center/business_card_manage/business_card_searchResult/business_card_searchResult",
+    "pages/tabBar_index/business_goods/business_goods",
+    "pages/tabBar_index/cart/confirm_order_cart/confirm_order_cart",
+    "pages/tabBar_user_center/address/addr_edit/edit",
+    "pages/tabBar_user_center/address/addr_list/addr_list",
+    "pages/tabBar_index/cart/store_address/store_address",
+    "pages/tabBar_user_center/business_card_manage/business_card_tagList/business_card_tagList",
+    "pages/tabBar_user_center/business_card_manage/business_card_apply/business_card_apply",
+    "pages/tabBar_user_center/business_card_manage/business_card_detail/business_card_detail",
+    "pages/tabBar_index/business_detail/business_detail",
+    "pages/tabBar_index/ranking/ranking",
+    "pages/tabBar_index/banner/banner_web_view",
+    "pages/tabBar_user_center/manager/inputqrcode/inputqrcode",
+    "pages/authorization/authorization",
+    "pages/tabBar_index/search_page/search_page",
+    "pages/tabBar_index/search_results/search_results",
+    "pages/tabBar_index/switch_city/switch_city",
+    "pages/open_setting/open_setting",
+    "pages/tabBar_user_center/manager/manager_index",
+    "pages/order/goods_opt_status/buy_success",
+    "pages/tabBar_user_center/opt_status/wait_review",
+    "pages/tabBar_user_center/menu_help/menu_help",
+    "pages/tabBar_user_center/menu_help/aboutus",
+    "pages/tabBar_user_center/menu_help/protocol_recharge",
+    "pages/tabBar_user_center/menu_help/protocol_use",
+    "pages/tabBar_user_center/menu_wallet/balancerecord/balancerecord",
+    "pages/tabBar_user_center/menu_wallet/record_details/record_details",
+    "pages/skill/skill",
+    "pages/tabBar_user_center/open_setting/open_setting",
+    "pages/tabBar_index/confirm_order/confirm_order",
+    "pages/tabBar_user_center/manager/apply_manager/apply_manager",
+    "pages/tabBar_user_center/dynamic/for_user",
+    "pages/business/dynamic_detail/dynamic_detail",
+    "pages/web_view_html/web_view_html",
+    "pages/order/logistics/logistics",
+    "pages/tabBar_user_center/manager/business_myqrcode/business_myqrcode",
+    "pages/business/video_show/video_show",
+    "pages/tabBar_user_center/business_card_manage/business_card_scene/business_card_scene",
+    "pages/tabBar_user_center/business_card_manage/business_card_scene/scene_detail/scene_detail",
+    "pages/tabBar_user_center/business_card_manage/business_card_favorites/business_card_favorites",
+    "pages/tabBar_user_center/business_card_manage/business_card_scene/temp_card/temp_card",
+    "pages/tabBar_user_center/business_card_manage/business_card_scene/join_scene/join_scene",
+    "pages/tabBar_user_center/business_card_manage/business_card_scene/scene_code/scene_code",
+    "pages/tabBar_user_center/business_card_manage/business_card_record/business_card_record",
+    "pages/tabBar_user_center/business_card_manage/business_card_members/business_card_members",
+    "pages/tabBar_user_center/business_card_manage/business_card_show/business_card_show",
+    "pages/tabBar_user_center/menu_wallet/cashOutHickory/cashOutHickory",
+    "pages/tabBar_user_center/menu_wallet/cashOutHickory/detail/cashOutHickoryDetail",
+    "pages/tabBar_user_center/channel/goodsDetail/goodsDetail",
+    "pages/clerk/show/show",
+    "pages/tabBar_activity/goods_list/goods_list",
+    "pages/tabBar_index/recruit/detail/recruit_detail",
+    "pages/tabBar_activity/search_page/search_page",
+    "pages/tabBar_activity/search_results/search_results",
+    "pages/order/order_coupon_code/coupon_code",
+    "pages/tabBar_user_center/promoters/promoters",
+    "pages/tabBar_user_center/learning_garden/learning_garden",
+    "pages/clerk/clerk_good_list/clerk_good_list",
+    "pages/tabBar_index/logistics_info_detail/logistics_info_detail",
+    "pages/clerk/dynamic/dynamic_card",
+    "pages/tabBar_activity/goods_category/goods_category",
+    "pages/tabBar_user_center/channel/goodsList/goodsList",
+    "pages/live/live/live",
+    "pages/pay/pay",
+    "pages/order/detail/order_details",
+    "pages/navigate/navigate",
+    "pages/invitation/invitation",
+    "pages/diedeile/diediele"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFF",
+    "navigationBarTitleText": "靖西·新城学府",
+    "backgroundColor": "#FFF",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序计算城市距离"
+    }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxa9d7652287357b33",
+    "wx6d0be72cf94b71b8",
+    "wx00a71e008067167b"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "subPackages": [
+    {
+      "root": "livePackage",
+      "pages": [
+        "pages/live/live",
+        "pages/complaint/complaint",
+        "pages/liveInfo/liveInfo"
+      ]
+    },
+    {
+      "root": "estatePackage",
+      "pages": [
+        "pages/houseLayout/houseLayout",
+        "pages/projectDetail/projectDetail",
+        "pages/moreProject/moreProject",
+        "pages/moreMaterial/moreMaterial",
+        "pages/news/news",
+        "pages/mapNav/index"
+      ]
+    },
+    {
+      "root": "expandPackage",
+      "pages": [
+        "pages/businessDynamic/businessDynamic",
+        "pages/hotPartnerList/hotpartnerList",
+        "pages/afterService/afterService",
+        "pages/afterService/uploadReturnInfo/uploadReturnInfo",
+        "pages/annualReview/annualReview",
+        "pages/member/cardList/cardList",
+        "pages/member/records/records/records",
+        "pages/member/cardDetail/cardDetail",
+        "pages/member/credit/addCredit/addCredit",
+        "pages/member/coupon/coupon",
+        "pages/member/records/detail/detail",
+        "pages/member/credit/creditUsage/creditUsage",
+        "pages/waitVerification/waitVerification"
+      ]
+    },
+    {
+      "root": "activitiesPackage",
+      "pages": [
+        "pages/settleIn/settleIn"
+      ]
+    }
+  ]
+}

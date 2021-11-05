@@ -1,0 +1,46 @@
+<!--pages/tabBar_user_center/menu_wallet/balancerecord/balancerecord.wxml-->
+<import src='template.wxml' />
+<wux-dialog id="wux-dialog" />
+<wux-dialog id="wux-dialog--alert" />
+<wxs module="brUtil" src="balancerecord.wxs"></wxs>
+<view class='hotelListContent'>
+
+	<!-- 时间段 -->
+	<view class="picker_group" hidden='true'>
+		<picker mode="date" value="{{date1}}" end="{{date2}}" bindchange="bindDateChange1">
+			<view class="picker">
+				{{date1}}
+			</view>
+		</picker>
+		至
+		<picker mode="date" value="{{date2}}" start="{{date1}}" end="{{nowDate}}" bindchange="bindDateChange2">
+			<view class="picker">
+				{{date2}}
+			</view>
+		</picker>
+	</view>
+
+	<view class='list_contain'>
+		<view wx:for="{{listDatas}}" wx:key="item" data-item="{{item}}" bindtap="goToDetail">
+			<template is="listItem" wx:key="key" data="{{...item}}" />
+			<view wx:if='{{index != listDatas.length - 1}}' class='view_divider_line' />
+		</view>
+	</view>
+
+	<view wx:if="{{loadenable}}" class="loadmore">
+		<image src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/loading.gif' class="loading" mode="scaleToFill" style='margin:auto 0;'></image>
+		<text style='margin-left:20rpx;'>正在加载更多</text>
+	</view>
+	<view wx:if="{{listDatas.length>0}}" class="loadmore">
+		<view class='line leftline' />
+		<text>没有更多了</text>
+		<view class='line rightline' />
+	</view>
+	<view class="emptyView" wx:else>
+		<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png"></image>
+		<text>没有任何数据</text>
+	</view>
+</view>
+
+  <!--网络状态监听-->
+	<noneLine wx:if="{{!networkType}}"></noneLine>

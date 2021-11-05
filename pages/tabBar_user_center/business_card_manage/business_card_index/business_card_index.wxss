@@ -1,0 +1,257 @@
+/* miniprogram/pages/tabBar_user_center/business_card_manage/business_card_index/business_card_index.wxss */
+.top_column {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  background: white;
+}
+
+/* 搜索栏 start  */
+.search_column {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 64rpx;
+  background: #F6F6F6;
+  border-radius: 32rpx;
+}
+
+.search_column>image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 24rpx;
+  margin-right: 16rpx;
+}
+
+.search_column>text {
+  font-size: 24rpx;
+  color: #a0a0a0;
+}
+
+/* 搜索栏 end  */
+
+/* 菜单 start  */
+.menu_column {
+  display: flex;
+  flex-direction: column;
+  height: 304rpx;
+  padding: 0 68rpx 32rpx 68rpx;
+  background: #fff;
+}
+
+.menu_column>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu_column>view:nth-of-type(1) {
+  margin-bottom: 32rpx;
+}
+
+.menu_column>view:nth-of-type(3) {
+  padding-top: 32rpx;
+}
+
+.menu_column>view:nth-of-type(3)>view>image {
+  width: 16rpx;
+  height: 16rpx;
+  margin-left: 8rpx;
+}
+
+.unselectedFilter {
+  font-size: 24rpx;
+  color: #808080;
+}
+
+.selectedFilter {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #37424D;
+}
+
+.createSituation {
+  font-size: 24rpx;
+  color: #D8D8D8;
+}
+
+.menu_column_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  color: #37424D;
+  margin-top: 32rpx;
+}
+
+.menu_column_item>image {
+  width: 56rpx;
+  height: 56rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 菜单 end  */
+
+/* 入驻提示 start  */
+#tips_bg {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+#imgTips {
+  width: 2000rpx;
+  height: 900rpx;
+}
+
+#imgCard {
+  position: fixed;
+  left: 50rpx;
+  width: 300rpx;
+  height: 200rpx;
+}
+
+#imgEnter {
+  position: fixed;
+  right: 50rpx;
+  width: 300rpx;
+  height: 200rpx;
+}
+
+/* 入驻提示 end  */
+
+/* 筛选过滤条件 start  */
+.filter {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.filter_noIpx{
+  top: calc(304rpx + 32rpx + 9vh);
+  height: calc(100vh - 304rpx - 32rpx - 9vh);
+}
+
+.filter_ipx{
+  top: calc(304rpx + 32rpx + 88px);
+  height: calc(100vh - 304rpx - 32rpx - 88px);
+}
+
+scroll-view {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+}
+
+.filterItem {
+  display: flex;
+  flex-direction: row;
+  padding: 24rpx;
+  background: #fff;
+  font-size: 24rpx;
+}
+
+.filterItem:not(:last-child) {
+  border-bottom: #eeeeee 2rpx solid;
+}
+
+.viewFilter {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding-top: 2vh;
+}
+
+.viewFilter>view:not(:first-child) {
+  margin-top: 12rpx;
+}
+
+.viewFilter>view:not(:last-child) {
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+
+.viewFilter>view>text {
+  font-size: 28rpx;
+}
+
+.filterList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.filterList>view {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+  margin-right: 24rpx;
+  margin-bottom: 12rpx;
+}
+
+.filterListItem {
+  color: rgb(160, 160, 160);
+  background: rgba(160, 160, 160, 0.1);
+}
+
+.filterListItem_selected {
+  color: rgb(47, 149, 251);
+  background: rgba(47, 149, 251, 0.1);
+}
+
+.filterBottomBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.filterBottomBar>view {
+  display: flex;
+  flex-direction: row;
+  width: 50vw;
+  justify-content: center;
+  padding-top: 24rpx;
+  padding-bottom: 24rpx;
+  font-size: 28rpx;
+}
+
+.filterBottomBar>view:nth-child(1) {
+  color: #a0a0a0;
+}
+
+.filterBottomBar>view:nth-child(2) {
+  color: #fff;
+  background: rgb(47, 149, 251);
+}
+
+/* 筛选过滤条件 end  */
+
+/* 名片列表 start  */
+.card_part {
+  display: flex;
+  flex-direction: column;
+  background: #f6f6f6;
+}
+
+.loadAll {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: center;
+  color: #a0a0a0;
+  font-size: 24rpx;
+  padding-top: 48rpx;
+  padding-bottom: 24rpx;
+}
+
+/* 名片列表 end  */

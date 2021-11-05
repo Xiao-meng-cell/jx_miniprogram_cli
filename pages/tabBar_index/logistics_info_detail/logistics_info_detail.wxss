@@ -1,0 +1,60 @@
+/* pages/tabBar_index/logistics_info_detail/logistics_info_detail.wxss */
+
+page {
+  display: flex;
+  flex-direction: column;
+}
+
+.cotent_area {
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.source {
+  display: flex;
+  flex-direction: row;
+  height: 88rpx;
+  align-items: center;
+  font-size: 28rpx;
+  color: #37424D;
+}
+
+.provinceName {
+  font-size: 28rpx;
+  color: #37424D;
+}
+
+.payAreaListItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.payAreaListItem>text {
+  margin-bottom: 10rpx;
+}
+
+.payAreaListItem>view {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 8rpx;
+}
+
+.fgx {
+  height: 1px;
+  background-color: #eee;
+  margin-top: 14rpx;
+  margin-bottom: 24rpx;
+}
+
+.space {
+  width: 100%;
+  height: 20rpx;
+  background-color: #f4f4f4;
+  margin-top: 24rpx;
+}
+
+.logistics_free_img {
+  width: 96rpx;
+  height: 32rpx;
+}

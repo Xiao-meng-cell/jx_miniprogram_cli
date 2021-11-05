@@ -1,0 +1,71 @@
+/* expandPackage/pages/member/credit/creditUsage/creditUsage.wxss */
+page {
+  background: #f6f6f6;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16rpx;
+}
+
+.list>text:nth-of-type(1) {
+  margin-left: 32rpx;
+  font-weight: 700;
+  margin-bottom: 16rpx;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  background: #ffffff;
+  border-radius: 16r8px;
+  margin-bottom: 16rpx;
+}
+
+.item>view:nth-of-type(1),
+.item>view:nth-of-type(2) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 68rpx;
+}
+
+.item>view:nth-of-type(1) {
+  border-bottom: 2rpx solid #eeeeee;
+}
+
+.item>view:nth-of-type(1)>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+  border-radius: 8rpx;
+}
+
+.item>view:nth-of-type(1)>text:nth-of-type(1) {
+  flex: 1;
+}
+
+.usable text {
+  font-size: 24rpx;
+  color: #37424D;
+}
+
+.unusable>view:nth-of-type(1)>text {
+  font-size: 24rpx;
+  color: #A0A0A0;
+}
+
+.unusable>view:nth-of-type(2)>text {
+  font-size: 24rpx;
+  color: #D8D8D8;
+}
+
+.recharge {
+  font-size: 24rpx;
+  padding: 8rpx 32rpx;
+  border-radius: 24rpx;
+}

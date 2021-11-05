@@ -1,0 +1,71 @@
+<!--miniprogram/pages/tabBar_activity/search_results/search_results.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<!-- 搜索start -->
+<view class='first_view_serch'>
+	<view class='search_view'>
+		<icon size='15' type='search'></icon>
+		<input class='search_view_input' focus='true' placeholder='搜索' value="{{keyword}}" placeholder-class='' confirm-type='search' bindconfirm='reRoad' bindinput="changeSearchText"></input>
+	</view>
+	<view class='search_view_text' bindtap='reRoad'>
+		<text>搜索</text>
+	</view>
+</view>
+<!-- 搜索end -->
+
+<!--企业活动 start-->
+<view class="goodsList" wx:if="{{business_activity_list[0].length > 0}}">
+	<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+			<view class="goodsItem" data-clerk_code="{{clerk_code}}" catchtap="jumpBusinessActivityDetail" data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+				<image src="{{item.illustration+utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+				<view>
+					<view>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/fresh_flag.png" class="fresh_flag" hidden="{{item.product.typeCode != 'fresh'}}"></image>
+					</view>
+					<text class="aline2 goods_padding_margin" style="line-height:43rpx;height:86rpx;">{{item.title}}</text>
+					<view class="priceDesc priceFont">
+						<text style="font-size:28rpx;">￥</text>
+						<text style="font-size:32rpx;font-weight:bold;flex:1;">{{item.minPriceYuan}}</text>
+					</view>
+					<view class="goodstag goods_padding_margin">
+						<view wx:if="{{item.product.typeCode=='logistics'&&item.addressType!='merchant'}}">
+							<text class="goodstag_text goodstag_text_red">邮</text>
+							<text class="goodstag_deliver goodstag_wl">物流商品</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='virtual'}}">
+							<text class="goodstag_text goodstag_text_yellow">店</text>
+							<text class="goodstag_deliver goodstag_visual">店内服务</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='deposit'}}">
+							<text class="goodstag_text goodstag_text_yellow">定</text>
+							<text class="goodstag_deliver goodstag_visual">定金商品</text>
+						</view>
+						<view wx:else>
+							<text class="goodstag_text goodstag_text_blue">自</text>
+							<text class="goodstag_deliver goodstag_dd">到店自提</text>
+						</view>
+						<view wx:if="{{item.typeCodeName=='成交返利'?false:true}}">
+							<text>{{item.typeCodeName}}</text>
+						</view>
+					</view>
+					<view class="goods_padding_margin goodsMerchant">
+						<image src="{{item.merchant.bgUrls.length > 0 ? item.merchant.bgUrls[0] : item.merchant.userHeadimg}}"></image>
+						<text class="aline1">{{item.merchant.name}}</text>
+						<view style="flex:1;"></view>
+						<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/location.png"></image>
+						<text style="font-size:20rpx;">{{item.dis}}</text>
+					</view>
+					<view class="goods_item_bottom goods_padding_margin">
+						<text>{{item.total}}</text>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/attend_num%403x.png"></image>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+</view>
+<!--企业活动 end-->
+<view class="emptyView" wx:else>
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png" style='width:394rpx;height:326rpx;'></image>
+	<text>没找到“{{keyword}}”相关商品</text>
+</view>

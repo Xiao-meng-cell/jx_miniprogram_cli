@@ -1,0 +1,2 @@
+<!--pages/tabBar_user_center/menu_help/protocol_recharge.wxml-->
+<web-view src="https://oss.vicpalm.com/static/weclubbing/protocol-zcrs/user_agreement.html?id=zsy_charge"></web-view>

@@ -1,0 +1,85 @@
+<!--pages/tabBar_user_center/menu_wallet/record_details/record_details.wxml-->
+<wxs module="dateUtil" src="../../../../utils/timeUtil.wxs"></wxs>
+<wxs module="utils" src="../../../../utils/utils.wxs"></wxs>
+<wxs module="brUtil" src="../balancerecord/balancerecord.wxs"></wxs>
+<view style='position: relative;height:100%;'>
+  <!-- 主体部分 start -->
+  <view style='height:100%;'>
+    <view class='view_divider_line' />
+    <view class='head'>
+      <text wx:if="{{status == 1 ||status == 2}}">待到账</text>
+      <text wx:else>{{statusName}}</text>
+      <text>{{batchName}}</text>
+      <text>{{amountYuan}}</text>
+      <view wx:if="{{status != 1 && status != 2}}">{{bankname}}（{{brUtil.cutbankCard(bankcard)}}）</view>
+      <text class="tipMessage" wx:if="{{status == 5}}">{{result}}</text>
+    </view>
+    <view class='element_divider_margin' wx:if='{{displayOriginDetail == "true"}}' />
+    <view class='mid_order_bdes' wx:if='{{displayOriginDetail == "true"}}'>
+      <!-- 商品描述 行start -->
+      <view class='horizontal-vcenter' style='align-items:flex-start;' wx:if='{{displayOriginDetail == "true"}}'>
+        <image class='item_order_pimg' mode="aspectFill" src="{{productImg}}" />
+        <view style='flex:1;'>
+          <view class='horizontal-vcenter'>
+            <text class='item_order_gname'>{{productName}}</text>
+            <view style='flex:1;' />
+            <text class='txt_black txt-mid-content' wx:if='{{relationType == "relation_type_supply_task" || relationType == "relation_type_merchant_pay"}}'>￥{{amountYuan}}</text>
+            <text class='txt_black txt-mid-content' wx:else>￥{{utils.toFix(totalPrice/100)}}</text>
+          </view>
+          <view class='horizontal-htop'>
+            <text class='item_order_desc'>{{productDescription == "null" || productDescription == "undefined" ? "" : productDescription}}</text>
+            <view style='flex:1;' />
+            <text style='width:300rpx;font-size:10px;color:#a0a0a0;text-align:right;padding-left:0.5vw;' wx:if='{{relationType != "relation_type_supply_task" && relationType != "relation_type_merchant_pay"}}'>x{{num}}{{productUnit=="null" || productUnit=="undefined"?"":"(" + productUnit + ")"}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 商品描述 行end -->
+      <!-- <view class='view_divider_line' style='margin:10px 0px 10px 0px;' />
+
+      <view class='horizontal-vcenter order_price_desline'>
+        <text>商品价格</text>
+        <view style='flex:1;' />
+        <text>￥{{utils.toFix(price/100)}}</text>
+      </view>
+      <view class='horizontal-vcenter order_price_desline'>
+        <text>折扣</text>
+        <view style='flex:1;' />
+        <text>-￥{{utils.toFix(((price * num)- totalPrice) / 100)}}</text>
+      </view>
+      <view class='horizontal-vcenter order_totalprice_desline'>
+        <text>订单总价</text>
+        <view style='flex:1;' />
+        <text>¥{{utils.toFix(totalPrice/100)}}</text>
+      </view> -->
+    </view>
+    <view class='element_divider_margin' />
+
+    <view class='horizontal-vcenter' style='color:#a0a0a0;font-size:12px;margin:10px 0px 10px 10px;'>
+      <view class='vertical-left' style="width:100%;">
+        <view>
+          <text>编号：{{code}}</text>
+          <view style="flex:1;"></view>
+          <button class="btn_opt_contain btn_grey_border" data-bean='{{code}}' bindtap='copyOrderCode'>复制</button>
+        </view>
+
+        <text>创建日期：{{dateUtil.dateFormat(createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+        <text>到账日期：{{dateUtil.dateFormat(settledTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+      </view>
+    </view>
+    <!-- 占位 防止被底部悬浮栏遮挡 start -->
+    <view class='horizontal-vcenter' style='height:50px'>
+    </view>
+    <!-- 占位 防止被底部悬浮栏遮挡 end -->
+  </view>
+  <!-- 主体部分 end -->
+  <!-- 底部操作容器 start -->
+  <view class='horizontal-vcenter order_bottom_view' hidden='true'>
+    <text style='font-size:14px;color:#323232;margin-left:15px;'>合计:</text>
+    <text style='font-size:14px;color:#fb5c56; '>￥{{orderDetails.totalPrice/100}}</text>
+    <text style='font-size:14px;color:#eeeeee;margin:0px 10px 0px 10px;'>|</text>
+    <text style='font-size:12px;color:#a0a0a0;'>已优惠{{((orderDetails.price*orderDetails.num)-orderDetails.totalPrice)/100}}元</text>
+    <view style='flex:1;' />
+    <text style='font-size:16px;color:#fff;background:#fb5c56;height:48px;line-height:48px;text-align: center;align-items: center;padding:0px 20px 0px 20px;' data-bean='{{orderDetails}} ' bindtap='toPayMoney'>立即付款</text>
+  </view>
+  <!-- 底部操作容器 end -->
+</view>

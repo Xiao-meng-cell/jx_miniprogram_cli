@@ -1,0 +1,35 @@
+<!--pages/travel/waitVerification/waitVerification.wxml-->
+<wxs module="utils" src="../../../utils/utils.wxs" />
+<view class="merChantView">
+  <view class="merchantInfo" catchtap="goToMerchant">
+    <image src="{{merchantInfo.displayHeadImg}}"></image>
+    <text class="aline1">{{merchantInfo.name}}</text>
+  </view>
+</view>
+<view class="main">
+  <view class="orderList" wx:if="{{orderList.length > 0}}">
+    <block wx:for="{{orderList}}">
+      <view class="orderItem" data-index="{{index}}" catchtap="changeOrderItem">
+        <!-- <image
+          src="{{item.selcted ? 'https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/CHOICE%403x.png' : 'https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/NO%403x.png'}}">
+        </image> -->
+        <radio style="margin-right: 32rpx;" color="#2f95fb" checked="{{item.selcted}}" />
+        <view>
+          <text class="aline2">{{item.productName}}</text>
+          <text>共{{item.num}}件商品 订单金额￥{{item.totalPriceYuan}}</text>
+        </view>
+        <image src="{{utils.turnArrJson(item.eventFileUrls[0]).illustration[0]}}" mode="aspectFill">
+        </image>
+      </view>
+    </block>
+  </view>
+  <view class="emptyView" wx:else>
+    <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/empty/order.png"></image>
+    <text>暂无可核销商品</text>
+  </view>
+</view>
+<view class="bottom">
+  <view class="submit" catchtap="submit">
+    <text>一键核销</text>
+  </view>
+</view>

@@ -1,0 +1,175 @@
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<template name="festival">
+  <!-- 背景 -->
+  <image class="main_festival_bg" src="{{clerk.bgskinUrl}}" mode="aspectFill"></image>
+
+  <!--背景音乐 start-->
+  <image class="bgm_rotation  {{audioPlaying?'animation_bgm_rotation':''}}" hidden="{{forward_status}}"
+    data-log="{{audioPlaying}}"
+    src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/bgm2x.png"
+    catchtap="playOrPauseFestivalBgm"></image>
+  <!--背景音乐 end-->
+
+  <!--框内容 start-->
+  <!--正面 start-->
+  <view class="frame face" animation="{{animation_face}}" style="z-index:{{ctfClerkFront?'5':'4'}};"
+    hidden="{{forward_status}}">
+    <!-- 内容背景 -->
+    <image class="main_festival_content_bg" src="{{clerk.boxUrl}}" mode="aspectFit"></image>
+    <!-- 头像 -->
+    <image class="clerkInfo_headimg_festival" src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}"
+      mode="aspectFill"></image>
+    <!-- 挂件 -->
+    <image class="main_festival_pendant" hidden="{{clerk.pendantUrl?false:true}}" src="{{clerk.pendantUrl}}"
+      mode="aspectFit"></image>
+    <!-- 内容框 -->
+    <view class="main_festival_content">
+      <view class="main_festival_content_name">
+        <text id="txtName" class="aline1" style="width:{{nameWidth}}px;">{{card_name}}</text>
+        <text id="txtPosition" class="aline1" style="width:{{positionWidth}}px;">{{card_position}}</text>
+      </view>
+      <view class="main_festival_content_gs" catchtap="handlerPageTap">
+        <text>{{business_info.name==null||business_info.name==""?business_info.shortName:business_info.name}}</text>
+      </view>
+      <image class="main_festival_content_img imgUrl" src="{{clerk.imgUrl}}"></image>
+      <view class="main_festival_content_text" catchtap="showTextareaEdit">
+        <text>{{card_message==null||card_message==""?"":card_message}}</text>
+      </view>
+      <view class="main_festival_content_btn" catchtap="switchFrontBack" data-id="1">
+        <text>点击翻转</text>
+      </view>
+    </view>
+  </view>
+  <!--正面 end-->
+  <!--反面 start-->
+  <view class="frame back" animation="{{animation_back}}" style="z-index:{{ctfClerkFront?'4':'5'}};"
+    hidden="{{forward_status}}">
+    <!-- 内容背景 -->
+    <image class="main_festival_content_bg" src="{{clerk.boxUrl}}" mode="aspectFit"></image>
+    <!-- 头像 -->
+    <image class="clerkInfo_headimg_festival" src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}"
+      mode="aspectFill"></image>
+    <!-- 挂件 -->
+    <image class="main_festival_pendant" hidden="{{clerk.pendantUrl?false:true}}" src="{{clerk.pendantUrl}}"
+      mode="aspectFit"></image>
+    <!-- 内容框 -->
+    <view class="main_festival_content">
+      <view class="main_festival_content_name">
+        <text>{{card_name}}</text>
+        <text>{{card_position}}</text>
+      </view>
+      <view class="main_festival_content_gs" catchtap="handlerPageTap">
+        <text>{{business_info.name==null||business_info.name==""?business_info.shortName:business_info.name}}</text>
+      </view>
+      <view class="main_festival_content_info ">
+        <view wx:if="{{showContact}}">
+          <text>电话</text>
+          <text data-phone="{{card_phone}}" catchtap="contactBusiness"
+            style="color: rgb(47, 149, 251);">{{card_phone==null||card_phone==""?"--":card_phone}}</text>
+        </view>
+        <view wx:if="{{showContact}}">
+          <text>微信</text>
+          <text data-text="{{card_wx}}" catchtap='setCopyText'>{{card_wx==null?"--":card_wx}}</text>
+        </view>
+        <!-- <view>
+            <text>邮箱</text>
+            <text  >{{card_email==null||card_email==""?"--":card_email}}</text>
+          </view> -->
+        <view catchtap='mapNavigation'>
+          <text>地址</text>
+          <text style="color: rgb(47, 149, 251);">{{business_info.addr}}</text>
+        </view>
+        <view>
+          <text>签名</text>
+          <text>{{clerk.signature==null||clerk.signature==""?"--":clerk.signature}}</text>
+        </view>
+      </view>
+      <view class="main_festival_content_btn" catchtap="switchFrontBack" data-id="2">
+        <text>点击翻转</text>
+      </view>
+    </view>
+  </view>
+  <!--反面 end-->
+
+  <!-- 操作按钮 start -->
+  <view class="main_festival_operate">
+    <view wx:if="{{landerUserId != userId}}">
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_fav.png"
+        catchtap='addFollow' wx:if="{{isFollow}}"></image>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_unfav.png"
+        catchtap='addFollow' wx:if="{{!isFollow}}"></image>
+      <text>{{!isFollow ? '收藏' : '已收藏'}}</text>
+    </view>
+    <view>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_clerk.png"
+        catchtap="switchFrontBack" data-id="1" hidden="{{!ctfClerkFront}}"></image>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_clerk2.png"
+        catchtap="switchFrontBack" data-id="2" hidden="{{ctfClerkFront}}"></image>
+      <text>名片</text>
+    </view>
+    <view>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_phone.png"
+        data-phone="{{card_phone}}" catchtap='save_phone'></image>
+      <text>联系</text>
+    </view>
+    <view class='sharecard'>
+      <button open-type='share' data-useshots='true' wx:if="{{showContact}}"></button>
+      <view class="view-btn" wx:if="{{!showContact}}" catchtap="contactBusiness"></view>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_share.png">
+      </image>
+      <text>分享</text>
+    </view>
+    <view wx:if="{{goodsList.length > 0}}">
+      <image src=" http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctf_goods.png"
+        class='bounce' data-goodsList="{{goodsList.length}}" catchtap="jumpClerkGoodList">
+      </image>
+      <text>商品</text>
+    </view>
+    <view wx:if="{{clerk.live == 1}}">
+      <image
+        src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_clerk_live.png"
+        catchtap="jumpLive"></image>
+      <text>直播</text>
+    </view>
+    <view>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_store_fill%403x.png"
+        catchtap="jumpBusiness">
+      </image>
+      <text>企业</text>
+    </view>
+  </view>
+  <!-- 操作按钮 end -->
+
+  <!-- 交换名片 start  -->
+  <view class="exchangeFestival" catchtap="displayCardList" wx:if="{{landerUserId != userId && cardListCount > 0}}">
+    <text>交换名片 ></text>
+  </view>
+  <!-- 交换名片 end  -->
+  <!--框内容 end-->
+  <!-- 专供分享转发截图使用 start -->
+  <view class="profile_forward_festival {{isIOS?'profile_forward_ios_festival':''}}" hidden="{{!forward_status}}">
+    <view class="profile_info">
+      <image class="profile_info_skin_festival " src="{{clerk.clerkskinUrl}}"></image>
+      <view class="profile_info_content_festival">
+        <image src="{{clerk.imgUrl}}"></image>
+        <view>
+          <image class="clerkInfo_headimg_shareinfo_festival"
+            src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}" mode="aspectFill"></image>
+          <view class="profile_info_content_headimg_name_festival">
+            <view>
+              <text>{{card_name}}</text>
+              <text>{{card_position==null?"":card_position}}</text>
+            </view>
+            <text
+              style="margin-top: 24rpx;">{{business_info.name==null||business_info.name==""?business_info.shortName:business_info.name}}</text>
+          </view>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_phone@3x.png">
+          </image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 专供分享转发截图使用 end -->
+</template>

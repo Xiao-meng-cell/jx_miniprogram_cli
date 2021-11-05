@@ -1,0 +1,10 @@
+<!--widget/logon/logon.wxml-->
+<view class='wx_logon_mask' catchtouchmove="doNotMove" style='display:{{hidden_logon_widget?"none":""}};'>
+  <view class="container">
+    <image src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/wfriend.png'></image>
+    <view class='container_text aline2'>小程序需要获取你的昵称,头像等</view>
+    <button type="primary" class='login_button' open-type="getUserInfo" bindgetuserinfo="getUserInfo" hidden="{{hidden_logon_buttom}}" >授权登录</button>
+    <view class="no_login" catchtap="cancelLogin">暂不授权</view>
+    <button type="primary" class='login_button' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" hidden='{{hidden_bindPhone_buttom}}'>获取手机号</button>
+  </view>
+</view>

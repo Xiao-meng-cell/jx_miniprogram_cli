@@ -1,0 +1,22 @@
+<!--livePackage/pages/complaint/complaint.wxml-->
+<view class="complaintMain">
+	<text class="title" style="margin-top:24px;">投诉该用户原因</text>
+	<textarea placeholder="请填写投诉原因" placeholder-class="placeholder" maxlength="200" bindinput="complaintTextValue"></textarea>
+	<text class="title" style="margin-top:43px;">图片证据</text>
+	<view class="picList">
+		<block wx:for="{{complaintImgList}}" wx:key="id">
+			<view class="picItem">
+				<image src="{{item}}" mode="aspectFill" data-src='{{item}}' data-list="{{complaintImgList}}" catchtap="imgYu"></image>
+				<view class="picItemRemove" data-index='{{index}}' data-list="{{complaintImgList}}" catchtap="removePic">
+					<text>X</text>
+				</view>
+			</view>
+		</block>
+		<view class="picItem addPicItem" catchtap="uploadImg" hidden="{{complaintImgList.length >= 12}}">
+			<image class="addPic" src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/add%20picture%402x.png"></image>
+		</view>
+	</view>
+	<view class="complaintSubmit" catchtap="complaintSubmit">
+		<text>提交</text>
+	</view>
+</view>

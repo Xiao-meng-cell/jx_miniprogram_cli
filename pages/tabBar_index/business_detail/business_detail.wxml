@@ -1,0 +1,820 @@
+<!--miniprogram/pages/tabBar_index/business_detail/business_detail.wxml-->
+<import src="../business_detail/template/normal/normal.wxml" />
+<import src="../business_detail/template/estate/estate.wxml" />
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<wxs src="../../../utils/timeUtil.wxs" module="timeUtil" />
+<topBar isHeight="{{isHeight}}" bind:backPreviousPage="backPreviousPage" userDefalutBack="{{userDefalutBack}}"
+  wx:if="{{!forwarding}}"></topBar>
+<view id="main">
+  <!--商品主图 start-->
+  <view class='home_bg'>
+    <swiper autoplay="true" indicator-dots="{{imgList.length > 1 ? true : false}}" circular="true" interval="3000"
+      duration="1000" bindchange="imgListChange" wx:if="{{selectedDisplayType == 'img'}}">
+      <block wx:for="{{imgList}}" wx:key="item">
+        <swiper-item>
+          <image src="{{utils.judgeImg(item)}}" mode='aspectFill' />
+        </swiper-item>
+      </block>
+    </swiper>
+    <video src='{{videoURL}}' style="width:{{windowWidth}}px;height:750rpx" autoplay="{{videoAutoPlay}}"
+      wx:elif="{{selectedDisplayType == 'vid'}}"></video>
+    <image class="vrBG"
+      src="{{business_detail.product.orderRealEstateAttach.coverImg ? business_detail.product.orderRealEstateAttach.coverImg : ''}}"
+      wx:if="{{selectedDisplayType == 'vr'}}"></image>
+    <view class="changeType global_page_indent" wx:if="{{existVideo || vrUrl != ''}}">
+      <view class="changeTypeItem {{selectedDisplayType == 'vr' ? 'selected_type' : 'unselected_type'}}" data-type="vr"
+        catchtap="changeShow" wx:if="{{vrUrl != ''}}">
+        <text>VR看房</text>
+      </view>
+      <view wx:if="{{existVideo}}"
+        class="changeTypeItem {{selectedDisplayType == 'vid' ? 'selected_type' : 'unselected_type'}}" data-type="vid"
+        catchtap="changeShow">
+        <text>视频</text>
+      </view>
+      <view class="changeTypeItem {{selectedDisplayType == 'img' ? 'selected_type' : 'unselected_type'}}"
+        data-type="img" catchtap="changeShow">
+        <text>图片</text>
+      </view>
+    </view>
+    <view class="imgNum" wx:if="{{selectedDisplayType == 'img' && imgList.length > 1}}">
+      <text>{{mainImgIndex}}/{{imgList.length}}</text>
+    </view>
+    <view class="vrMask" catchtap="goToVr" wx:if="{{selectedDisplayType == 'vr'}}">
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png">
+      </image>
+    </view>
+  </view>
+  <!--商品主图 end-->
+  <!-- 右上角悬浮 start -->
+  <view class="fixedView" style="top:{{capsuleTop == 0 ? 100 : capsuleTop + capsuleHeight + 42}}px;"
+    wx:if="{{product_activityType != 'estate'}}" hidden="{{forwarding}}">
+    <view catchtap="goToCart">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/home_shopping_live2x.png">
+      </image>
+      <view class="cartNum" wx:if="{{cartNum && cartNum > 0}}">
+        <text>{{cartNum}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 右上角悬浮 end -->
+  <!-- 生鲜标识 start  -->
+  <image id="fresh_flag"
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/fresh_flag.png"
+    class="fresh_flag" style="top:{{fresh_flag_top}}px;z-index:{{fresh_flag_z_index}};"
+    hidden="{{business_detail.product.typeCode != 'fresh'}}"></image>
+  <!-- 生鲜标识 end  -->
+  <!--商品价格，优惠已售 start-->
+  <view class="red_mask global_page_indent">
+    <view class="red_mask_left">
+      <view class="priceFont">
+        <text>￥</text>
+        <text>{{minPrice}}{{maxPrice == minPrice ? "" : "-" + maxPrice}}</text>
+        <view class="reference-price" wx:if="{{eventProducts[0].referencePrice != 0}}">
+          <text>￥</text>
+          <text>{{minReferencePrice}}{{maxReferencePrice == minReferencePrice ? "" : "-" +maxReferencePrice}}</text>
+        </view>
+        <view class="estateDepositTag" wx:if="{{product_activityType == 'estate'}}">
+          <text>定</text>
+          <text>定金商品</text>
+        </view>
+      </view>
+      <!-- <view wx:if="{{product_activityType != 'estate'}}">
+        <text wx:if="{{business_detail.total > 0}}">已售{{business_detail.total > 0 ?business_detail.total : 0}}</text>
+      </view> -->
+    </view>
+    <!-- 普通商品 时效性 start -->
+    <view class="red_mask_right countdown" wx:if="{{activityTime && product_activityType != 'estate'}}">
+      <text wx:if="{{business_detail.product.typeCode=='fresh' && activityTime_d < 30}}">距截止时间剩余</text>
+      <text wx:if="{{activityTime_d < 365}}">距结束仅剩</text>
+      <view wx:if="{{activityTime_d < 1 }}">
+        <text wx:if="{{activityTime_d < 28}}">{{activityTime_h}}</text>
+        <span wx:if="{{activityTime_d < 28}}">:</span>
+        <text wx:if="{{activityTime_d < 28}}">{{activityTime_m}}</text>
+        <span wx:if="{{activityTime_d < 28}}">:</span>
+        <text wx:if="{{activityTime_d < 1}}">{{activityTime_s}}</text>
+      </view>
+      <view wx:elif="{{activityTime_d >=1 && activityTime_d < 30}}">
+        <text>{{activityTime_d}}</text>
+        <span>天</span>
+        <text>{{activityTime_h}}</text>
+        <span>小时</span>
+      </view>
+      <view wx:elif="{{activityTime_d >= 30 && activityTime_d < 365}}">
+        <text>{{activityTime_month}}</text>
+        <span>个月</span>
+        <text>{{activityTime_day}}</text>
+        <span>天</span>
+      </view>
+      <view wx:else>
+        <text style="color:#A0A0A0;">长期有效</text>
+      </view>
+    </view>
+    <!-- 普通商品 时效性 end -->
+    <!-- 生鲜超时 start -->
+    <view class="red_mask_right freshNextRound" wx:if="{{product_activityType == 'fresh' && freshNextRound}}">
+      <view>
+        <image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_overtime@2x.png">
+        </image>
+        <text>已超过此次截止时间</text>
+      </view>
+      <text>下次截止时间为:{{timeUtil.dateFormat(business_detail.product.nextDeliveryDay, "M月d日 h:m")}}</text>
+    </view>
+    <!-- 生鲜超时 end -->
+    <image class="notPass"
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/not%20pass.png"
+      hidden="{{certified}}"></image>
+  </view>
+  <!--商品价格，优惠已售 end-->
+  <!--商品名称，玩法说明，不支持退换部分 start-->
+  <view class='business_introduce global_page_indent'>
+    <text>{{business_detail.title}}</text>
+  </view>
+  <view class="memberTips global_page_indent"
+    wx:if="{{enableMember && business_detail.isVipStore == '1' && business_detail.currentUserIsEventStoreVip == '1' && business_detail.allowCoupon == '0'}}">
+    <text class="fontS-12 fontC-g">该商品不参与优惠券活动，不可用预充值支付</text>
+  </view>
+  <view class='business_explain global_page_indent' hidden="{{product_activityType == 'estate'}}">
+    <view class="business_explain_view">
+      <image class='explain'
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/gray_hook3x.png"
+        wx:if="{{business_detail.product.typeCode != ''}}"></image>
+      <text
+        hidden="{{business_detail.product.typeCode=='service'||business_detail.addressType=='merchant'?false:true}}">到店商品</text>
+      <text hidden="{{business_detail.product.typeCode=='virtual'?false:true}}">店内服务</text>
+      <text hidden="{{business_detail.product.typeCode=='deposit'?false:true}}">定金商品</text>
+      <text
+        hidden="{{(business_detail.product.typeCode=='logistics' && business_detail.addressType !='merchant') || (business_detail.product.typeCode=='baking' && business_detail.addressType !='merchant') ? false : true}}">物流商品</text>
+      <block wx:for="{{business_detail.tags}}" wx:key="item">
+        <image class='explain'
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/gray_hook3x.png"
+          wx:if="{{item=='成交返利'||item=='内部返利'?false:true}}"></image>
+        <text wx:if="{{item=='成交返利'||item=='内部返利'?false:true}}">{{item}}</text>
+      </block>
+      <image class='explain'
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/gray_hook3x.png"
+        wx:if="{{shareDiscount}}"></image>
+      <text wx:if="{{shareDiscount}}">分享优惠</text>
+    </view>
+    <!-- <view catchtap='tabExplainDetail'>
+      <image class='explain' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/explain.png"></image>玩法说明
+    </view> -->
+  </view>
+  <view class="discount_info global_page_indent" wx:if="{{shareDiscount}}">
+    <view>
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/shareDiscount.png">
+      </image>
+      <text>购买前先分享，购买享受￥{{shareDiscountPrice}}优惠</text>
+      <view style="flex:1;"></view>
+      <view>
+        <button class="inreward_share_button" open-type="share"></button>
+        <text style="{{isShare ? 'color:#D8D8D8;' : ''}}">{{isShare ? "已分享" : "分享"}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="end_time global_page_indent"
+    wx:if="{{business_detail.endTime != null && business_detail.endTime != '' && business_detail.product.typeCode == 'deposit'}}">
+    <view>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/end@2x.png">
+      </image>
+      <text>商品将在{{timeUtil.dateFormat(business_detail.endTime, "yyyy年MM月dd日 hh:mm:ss")}}结束</text>
+    </view>
+  </view>
+  <view class="fgxEstate global_page_indent" wx:if="{{product_activityType == 'estate'}}">
+    <view></view>
+  </view>
+  <!-- wx:if="{{business_detail.sharePlay && business_detail.sharePlay.isOpen=='1'}}" !-->
+  <view class="diedeile" wx:if="{{business_detail.sharePlay && business_detail.sharePlay.isOpen=='1'}}">
+    <!-- 叠叠乐1.0 start-->
+    <view wx:if="{{business_detail.sharePlay.type != 'H5'}}">
+    <view class="x-layout text-color">
+      <view class="text2 fontS-18 fontW-700">{{sharePlay.discountPrice}}</view> 
+      <view class="fontS-11">分享优惠￥{{sharePlay.discountPrice}}，最多可优惠￥{{sharePlay.maxDiscountPrice}}</view>
+        <button class="fontS-11 share-diediele fontW-700 {{sharePlay.count <= shareTotal?'text3':'text-color'}}" open-type="share">{{sharePlay.count <= shareTotal ?'已达上限':'去分享'}}</button>
+      </view>
+      <view class="x-layout" style="align-items: flex-start;margin-top:16rpx" wx:if="{{shareRecord && shareRecord.length>0}}">
+        <view class="text3 fontS-11">已分享{{shareTotal}}人：</view>
+        <view class="z-layout" style="flex:1" wx:if="{{!allHeadimg}}">
+          <view wx:for="{{shareRecord}}" wx:key="item" class="head-image" wx:if="{{index<11}}">
+            <image src="{{item.shareTargetHeadImg}}"></image>
+          </view>
+        </view>
+        <view class="z-layout" style="flex:1" wx:if="{{allHeadimg}}">
+          <view wx:for="{{shareRecord}}" wx:key="item" class="head-image">
+            <image src="{{item.shareTargetHeadImg}}"></image>
+          </view>
+        </view>
+        <image class="icon-diedie" src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/estatePackage/icon_down@2x.png" catchtap="showAllHeadimg"></image>
+      </view>
+    </view>
+     <!-- 叠叠乐1.0 end-->
+      <!-- 叠叠乐2.0 start-->
+    <view class="x-layout text-color" wx:if="{{business_detail.sharePlay.type == 'H5'}}">
+      <view class="fontS-14 ">好友助力获大额优惠，好友越多力度越大</view>
+      <button class="fontS-14 share-diediele fontW-700 text-color" open-type="share" data-operate='diedeile'>去分享</button>
+    </view>
+    
+      <!-- 叠叠乐2.0 end-->
+  </view>
+  <view class="business_explain_tag global_page_indent">
+    <view class="{{business_detail.product.returnAble == 0 ? 'returnAbleNo' : 'returnAbleYes'}}">
+      <text hidden="{{product_activityType == 'estate'}}">{{business_detail.product.returnAble == 0 ? "不可退货" :
+        "支持退货"}}</text>
+      <text hidden="{{product_activityType != 'estate'}}">{{business_detail.product.returnAble == 0 ? "不可退款" :
+        "支持退款"}}</text>
+    </view>
+    <text style="color:#37424d;" wx:if="{{product_activityType == 'fresh'}}">生鲜配送商品商家签收后不支持售后</text>
+    <text wx:elif="{{business_detail.product.returnAble == 1 && damagePriceYuan == 0}}">商品支持退货，未收货即可发起售后申请</text>
+    <text style="color:#37424d;"
+      wx:if="{{business_detail.product.returnAble == 1 && damagePriceYuan != 0}}">此商品包含违约金，如需退款，将被扣除违约金：￥{{damagePriceYuan}}</text>
+    <text style="color:#37424d;"
+      wx:if="{{product_activityType == 'estate' && business_detail.product.returnAble == 0}}">此商品是定金商品，购买后不支持退款</text>
+  </view>
+  <!--商品名称，玩法说明，不支持退换部分 end-->
+
+  <!-- 房地产 start -->
+  <template is="estate" wx:if="{{product_activityType == 'estate'}}"
+    data="{{business_detail,projectNearbyPointNavIndex,projectNearbyList,markers,managerDisplay,mapData,projectMapTag}}" />
+  <!-- 房地产 end -->
+
+  <!-- 普通商品 start  -->
+  <template is="normal"
+    data="{{showLogisticsTemple,logisticsStatus,sourceAddr,targetAddr,logisticsPrice,freePostageNum,freshTips,showZTDZ,lastDeliveryStartTime,lastDeliveryEndTime,pickAddr,join_user_num,join_user_list,business_detail}}"
+    wx:else />
+  <!-- 普通商品 end  -->
+
+  <!--间隔 start-->
+  <view class="spacing_goods"></view>
+  <!--间隔 end-->
+  <!--填写订单 start-->
+  <view class="orderInfo global_page_indent">
+    <view>
+      <text>填写订单</text>
+    </view>
+    <!--产品规格 start-->
+    <!-- <view class="fgx" hidden="{{(product_activityType == 'estate') ? true : false}}"></view>
+    <view class="sku_otp" hidden="{{(product_activityType == 'estate') ? true : false}}">
+      <view class="sku_otp_image">
+        <image src="{{sku_url?sku_url:imgList[0]}}?x-oss-process=image/resize,p_80" mode='aspectFill'></image>
+        <view class="sku_otp_title">
+          <view class="priceFont-content">
+            <view class="priceFont">
+              <text>￥</text>
+              <text>{{sku_priceYuan==null||sku_priceYuan==""?"":sku_priceYuan}}</text>
+            </view>
+            <view class="reference-price" wx:if="{{sku_referencePriceYuan}}">
+              <text>￥</text>
+              <text>{{sku_referencePriceYuan==null||sku_referencePriceYuan==""?"":sku_referencePriceYuan}}</text>
+            </view>
+          </view>
+          <text>库存{{sku_stock == null || sku_stock == "" ? 0 : sku_stock}}</text>
+          <text
+            hidden="{{(business_detail.product.returnAble == 0) && (product_activityType == 'virtual' || product_activityType == 'deposit' || product_activityType == 'estate') && damagePriceYuan != 0 ? false : true}}">违约金￥{{damagePriceYuan}}</text>
+        </view>
+      </view>
+      <block wx:for="{{specList}}" wx:for-item="item" wx:key="id">
+        <view class="sku_otp_item">
+          <text class="third_title">{{item.name}}</text>
+          <view class="sku_text">
+            <block wx:for="{{item.productSpecs}}" wx:for-item="item_key" wx:key="id_key">
+              <text class="sku_text_select_{{item_key.lock}}" data-lock="{{item_key.lock}}"
+                data-speccode="{{item_key.specCode}}" data-key="{{item_key.key}}" data-id="{{item_key.id}}"
+                data-value="{{item_key.value}}" catchtap="chooseSkus">{{item_key.value}}</text>
+            </block>
+          </view>
+        </view>
+      </block>
+      <block wx:for="{{orderMessage}}" wx:for-item="item" wx:key="id">
+        <view class="sku_otp_item">
+          <text class="third_title">{{item.text}}</text>
+          <view class="sku_text">
+            <block wx:for="{{item.values}}" wx:for-item="item_key" wx:key="id_key">
+              <text class="sku_text_select {{item_key.isSelect ? 'sku_text_selected' : ''}}" data-text="{{item.text}}"
+                data-value="{{item_key}}" catchtap="chooseOrderMsg">{{item_key.name}}</text>
+            </block>
+          </view>
+        </view>
+      </block> -->
+      <!--便捷备注选项-->
+    <!-- </view> -->
+    <!--产品规格 end-->
+    <!-- <view class="fgx" hidden="{{(product_activityType == 'estate') ? true : false}}"></view> -->
+    <!--购买数量 start-->
+    <!-- <view class='bottom_border_item buy_num' hidden="{{(product_activityType == 'estate') ? true : false}}">
+      <text class="third_title">购买数量</text>
+      <view>
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del.png"
+          catchtap='delQuantity' wx:if="{{quantity>1}}"></image>
+        <image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del_unable.png"
+          wx:else></image>
+        <view>
+          <text class="sub_title" style="line-height: 28rpx;">{{quantity}}</text>
+        </view>
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add.png"
+          catchtap='addQuantity' wx:if="{{business_detail.product.typeCode != 'virtual' && quantity < sku_stock}}">
+        </image>
+        <image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add_unable.png"
+          wx:else></image> -->
+        <!---虚拟商品单个订单限制购买数量-->
+      <!-- </view>
+    </view> -->
+    <!--购买数量 end-->
+    <!-- <text class="freshTips" hidden="{{business_detail.product.typeCode != 'fresh'}}">生鲜类商品签收后不支持售后</text>
+    <view class="fgx"></view> -->
+    <!-- 是否支持退货 start -->
+    <view class="business_return_able">
+      <view class="{{business_detail.product.returnAble == 0 ? 'returnAbleNo' : 'returnAbleYes'}}">
+        <text hidden="{{product_activityType == 'estate'}}">{{business_detail.product.returnAble == 0 ? "不可退货" :
+          "支持退货"}}</text>
+        <text hidden="{{product_activityType != 'estate'}}">{{business_detail.product.returnAble == 0 ? "不可退款" :
+          "支持退款"}}</text>
+      </view>
+      <text style="color:#37424d;" wx:if="{{product_activityType == 'fresh'}}">生鲜配送商品商家签收后不支持售后</text>
+      <text wx:elif="{{business_detail.product.returnAble == 1 && damagePriceYuan == 0}}">商品支持退货，未收货即可发起售后申请</text>
+      <text style="color:#37424d;"
+        wx:if="{{business_detail.product.returnAble == 1 && damagePriceYuan != 0}}">此商品包含违约金，如需退款，将被扣除违约金：￥{{damagePriceYuan}}</text>
+      <text style="color:#37424d;"
+        wx:if="{{product_activityType == 'estate' && business_detail.product.returnAble == 0}}">此商品是定金商品，购买后不支持退款</text>
+    </view>
+    <!-- 是否支持退货 end -->
+  </view>
+  <!--填写订单 end-->
+  <view class="spacing_goods"></view>
+  <view class="addr_price global_page_indent">
+    <!--收货地址 start-->
+    <view wx:if="{{!showZTDZ}}"
+      hidden="{{(product_activityType=='virtual'||product_activityType=='deposit' || product_activityType == 'estate') ? true : false}}"
+      data-log="product_activityType">
+      <view class="bottom_border_item" catchtap="chooseUserAddress">
+        <text class="sub_title">收货地址</text>
+        <view style="flex:1;"></view>
+        <text style="color:#808080;font-size:24rpx;line-height:24rpx;" wx:if="{{order_addr != ''}}">地址管理</text>
+        <image wx:if="{{order_addr != ''}}"
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+          style='width:24rpx;height:24rpx;margin-left:0 rpx;'></image>
+      </view>
+      <view wx:if="{{order_addr == ''}}">
+        <view class="bottom_border_item">
+          <text class="sub_title">姓名</text>
+          <input value="{{name}}" bindinput="nameInput" bindblur="cancelEdit" placeholder="收货人姓名"
+            placeholder-class="bottom_border_item_grey_text" maxlength="6"></input>
+          <!-- <text class="bottom_border_item_grey_text" data-type="name" bindtap="setEdit"
+            hidden="{{nameEnable}}">{{name == "" ? "收货人姓名" : name}}</text> -->
+        </view>
+        <view class="bottom_border_item">
+          <text class="sub_title">手机号</text>
+          <input type="number" value="{{phone}}" bindinput="phoneInput" bindblur="cancelEdit" placeholder="收货人号码"
+            placeholder-class="bottom_border_item_grey_text" maxlength="11"></input>
+          <!-- <text class="bottom_border_item_grey_text" data-type="phone" bindtap="setEdit"
+            hidden="{{phoneEnable}}">{{phone == "" ? "收货人号码" : phone}}</text> -->
+        </view>
+        <view class="bottom_border_item" catchtap='open'>
+          <text class="sub_title">省市区</text>
+          <view style="flex:1;"></view>
+          <text focus="{{focus}}" bindfocus="open"
+            wx:if="{{choose_result[2]?true:false}}">{{provincesList[addrIndex[0]].name}}-{{choos_citiesList[addrIndex[1]].name}}-{{choos_countyList[addrIndex[2]].name}}</text>
+          <text class="bottom_border_item_grey_text" focus="{{focus}}" bindfocus="open" wx:else>请选择地址</text>
+          <image style='width:20rpx;height:20rpx;margin-left:10rpx;'
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png" />
+        </view>
+        <view class="bottom_border_item">
+          <text class="sub_title">详细地址</text>
+          <input value="{{addr}}" bindinput="addrInput" bindblur="cancelEdit" placeholder="街道、门牌号等"
+            placeholder-class="bottom_border_item_grey_text"></input>
+          <!-- <text class="bottom_border_item_grey_text" data-type="addr" bindtap="setEdit"
+            hidden="{{addrEnable}}">{{addr == "" ? "街道、门牌号等" : addr}}</text> -->
+        </view>
+        <view class="bottom_border_item" style="justify-content:left;">
+          <radio-group bindtap="unitChange">
+            <radio checked="{{saveAddr}}" style="display:flex;"></radio>
+          </radio-group>
+          <text style="color:#a0a0a0;font-size:3vw;margin-left:3vw;" bindtap="unitChange">记录并保存到“我的收货地址”</text>
+        </view>
+      </view>
+      <view class="addrInfo" wx:else>
+        <view>
+          <text>{{order_addr.name}}</text>
+          <text style="margin-left:32rpx;">{{order_addr.phone}}</text>
+        </view>
+        <text>{{order_addr.addrdetail}}</text>
+      </view>
+    </view>
+    <view class="service_addr" wx:else
+      hidden="{{(product_activityType == 'virtual' || product_activityType == 'deposit' || product_activityType == 'estate') ? true : false}}">
+      <view class="horizontal-vcenter">
+        <image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_store_black@2x.png">
+        </image>
+        <text class="sub_title">到店自提地址</text>
+      </view>
+      <text>{{pickAddr.addr}}</text>
+    </view>
+    <view
+      wx:if="{{product_activityType =='deposit' || product_activityType =='virtual' || product_activityType == 'estate'}}">
+      <view class="bottom_border_item">
+        <text class="third_title">姓名</text>
+        <input placeholder="填写姓名" placeholder-class="bottom_border_item_grey_text" maxlength="15" value="{{name}}"
+          bindinput="nameInput"></input>
+      </view>
+      <view class="bottom_border_item">
+        <text class="third_title">手机号</text>
+        <input placeholder="填写手机号" type="number" placeholder-class="bottom_border_item_grey_text" maxlength="11"
+          value="{{phone}}" bindinput="phoneInput"></input>
+      </view>
+    </view>
+    <!--收货地址 end-->
+    <!-- 价格相关 start -->
+    <view class="priceItem" hidden="{{product_activityType == 'estate'}}">
+      <text>商品总价</text>
+      <text>￥{{business_detail.spzj}}</text>
+    </view>
+    <view class="priceItem" wx:if="{{business_detail.sharePlay && business_detail.sharePlay.isOpen=='1'}}">
+      <text>分享优惠</text>
+      <text>-￥{{discount_price}}</text>
+    </view>
+    <!-- 使用券 start -->
+    <view class="priceItem" catchtap="goCouponPage" wx:if="{{business_detail.allowCoupon=='1' && enableMember}}">
+      <view class="x_layout">
+        <view class="priceItem_img1">￥</view>
+        <text>使用券</text>
+      </view>
+      <view class="x_layout" wx:if="{{vipCouponEmpty}}">
+        <text>暂无任何优惠券</text>
+      </view>
+      <view class="x_layout" wx:else>
+        <text wx:if="{{vipDiscount && vipDiscount!=0}}" style="color:#FF3B30">-￥{{vipDiscount}}</text>
+        <view wx:if="{{vipDiscount == 0}}" class="priceItem_img3">可使用会员券</view>
+        <image class="priceItem_img2"
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+        </image>
+      </view>
+    </view>
+    <!-- 使用券 end -->
+    <view class="priceItem" wx:if="{{showLogisticsTemple && product_activityType != 'estate'}}">
+      <text>物流运费</text>
+      <text>￥{{logisticsPrice}}</text>
+    </view>
+    <view class="priceItem" wx:if="{{showLogisticsTemple && logisticsStatus == 2 && logisticsPrice != 0}}">
+      <view style="flex:1;"></view>
+      <text style="font-size:20rpx;color: #fe2130;" wx:if="{{logisticsChargeType == 1}}">单件商品重{{sku_weight /
+        1000}}公斤，配送到{{logisticsInfo.provinceName}}{{logisticsInfo.proBasicNum / 1000}}公斤内{{logisticsInfo.basicPrice /
+        100}}元，每增{{logisticsInfo.increaseNum / 1000}}公斤增加{{logisticsInfo.increasePrice / 100}}元</text>
+      <text style="font-size:20rpx;color: #fe2130;" wx:else>配送到{{logisticsInfo.provinceName}}，{{logisticsInfo.proBasicNum}}件内{{logisticsInfo.basicPrice /
+        100}}元，每增{{logisticsInfo.increaseNum}}件增加{{logisticsInfo.increasePrice / 100}}元</text>
+    </view>
+    <view class="totalPriceItem">
+      <text class="third_title">合计</text>
+      <text wx:if="{{business_detail.allowCoupon=='1' && enableMember && vipDiscount && vipDiscount!=0}}">使用1张券</text>
+      <view style="flex:1;"></view>
+      <view class="totalPriceItem_price">
+        <text>￥</text>
+        <!-- <text>{{business_detail.allowCoupon == '1' && enableMember  ? total_vip_price
+          :total_price}}</text> -->
+        <text>{{total_price}}</text>
+      </view>
+    </view>
+    <view class="bottom_border_item2"
+      hidden="{{(product_activityType=='virtual'||product_activityType=='deposit')?false:true}}">
+      <text style="font-size:22rpx;color:#a0a0a0;">您本次购买的商品不需要填写收货地址，请仔细确定每个商品所需的购买信息</text>
+    </view>
+    <view class="priceItem_logistics_free horizontal-vcenter" hidden="{{freePostageNum == 0}}">
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge@2x.png"
+        class="logistics_info_img_free"></image>
+      商品设置单次购买满{{logisticsChargeType == 1 ? freePostageNum / 1000 + "公斤" : freePostageNum + "件"}}包邮
+    </view>
+    <!-- 价格相关 end -->
+    <!-- 支付方式start -->
+    <view class="bottom_border_item pay_way">
+      <text class="third_title">支付方式</text>
+      <view>
+        <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/wechat_pay.png">
+        </image>
+        <text class="sub_title">微信支付</text>
+      </view>
+    </view>
+    <!-- 支付方式end -->
+    <!-- 备注 start -->
+    <view class="bottom_border_item" hidden="{{(product_activityType == 'estate') ? true : false}}">
+      <text class="third_title">备注</text>
+      <input placeholder="可填写你对商品的要求(选填)" placeholder-class="bottom_border_item_grey_text" value="{{order_message}}"
+        bindinput="memoInput"></input>
+    </view>
+    <!-- 备注 end -->
+  </view>
+  <view class="spacing_goods" wx:if="{{enableMember}}"></view>
+  <!-- 预充值抵扣 start -->
+  <!-- <view class="memberRecharge global_page_indent" catchtap="useMemberRecharge"
+    wx:if="{{business_detail.allowCoupon=='1' && enableMember}}">
+    <image
+      src="{{useMemberRecharge ? 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_checkbox_16px%403x.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/Checkbox_16px%403x.png'}}"
+      wx:if="{{enableMemberRecharge}}">
+    </image>
+    <image
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/Checkbox_disable%403x.png"
+      wx:else></image>
+    <text>使用会员卡预充值抵扣</text>
+    <text class="memberRecharge_jy" style="margin-left:16rpx;"
+      wx:if="{{business_detail.allowCoupon == '1' && rechargeBalance == 0}}">余额为￥0</text>
+    <view style="flex:1;"></view>
+    <view class="rechargeInfo" wx:if="{{enableMemberRecharge}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_prepaid%403x.png">
+      </image>
+      <text hidden="{{!useMemberRecharge}}">抵用{{utils.priceSwitch(usableCredit)}}元</text>
+      <text hidden="{{useMemberRecharge}}">可用预充值抵扣</text>
+    </view>
+    <block wx:else>
+      <text class="memberRecharge_cz" catchtap="goToAddCredit" wx:if="{{business_detail.allowCoupon == '1'}}">充值</text>
+      <text class="memberRecharge_jy" wx:else>当前商品不可用预充值抵扣</text>
+    </block>
+
+  </view> -->
+  <!-- 预充值抵扣 end -->
+  <view class="buy" style="background: rgb(160, 160, 160);" wx:if="{{goodsStatus != 1}}">
+    <text>活动已下架</text>
+  </view>
+  <view id="submissionOrder_button"
+    class="buy {{logisticsStatus == 3?'unbuy':'' &&  sku_stock == null || sku_stock == ''? 'cartButtonColor':''}}"
+    bindtap="submissionOrder" wx:else>
+    <text>{{platform == 'ios' && product_activityType == 'virtual' ? '立即预约' : '立即支付'}}</text>
+  </view>
+  <view class="errorTip" wx:if="{{logisticsStatus == 3}}">
+    <text>收货地址不在商家配送区域内请另外选择</text>
+  </view>
+</view>
+
+<!--空白区域，撑起页面用 start-->
+<view style='width:100%;height:{{iPhone_X?"230rpx":"150rpx"}};'></view>
+<!--空白区域，撑起页面用 end-->
+
+<!--用户操作，购买，联系企业，分享部分  start-->
+<view class='user_operation {{iPhone_X?"iPhone_X":""}}' hidden="{{!operation_show}}">
+  <view class="bottomBtn" data-tagcode="{{business_detail.tagCode}}" catchtap='jumpBusinessHomePage'>
+    <image
+      src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_store%403x.png">
+    </image>
+    <text>企业</text>
+  </view>
+  <view class="bottomBtn" catchtap="showShareBtn">
+    <image
+      src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_share%403x.png">
+    </image>
+    <text>分享</text>
+  </view>
+  <view class="bottomBtn" catchtap="goodsFavorites" wx:if="{{product_activityType != 'estate'}}">
+    <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_collect%403x.png"
+      wx:if="{{!goodsFavorites}}"></image>
+    <image
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_collect_light%403x.png"
+      wx:else></image>
+    <text>{{goodsFavorites ? "已收藏" : "收藏"}}</text>
+  </view>
+  <view style="flex:1;"></view>
+  <view catchtap="toBottom" wx:if="{{goodsStatus != 1}}" class="buyButton disableBtn">
+    <text>活动已下架</text>
+  </view>
+  <view class="buyCartView" wx:else>
+    <view class="buyButton" style="width:160px;" catchtap="toBottom" wx:if="{{product_activityType == 'estate'}}">
+      <text>支付定金</text>
+    </view>
+    <block wx:else>
+      <view class="cartButton {{sku_stock == null || sku_stock == '' ? 'cartButtonColor':''}}" catchtap="showCart">
+        <text>加入购物车</text>
+      </view>
+      <view class="buyButton {{sku_stock == null || sku_stock == '' ? 'cartButtonColor':''}}" catchtap="toBottom">
+        <text>{{platform == 'ios' && product_activityType == 'virtual' ? '立即预约' : '立即购买'}}</text>
+      </view>
+    </block>
+  </view>
+</view>
+<!--用户操作，购买，联系企业，分享部分  end-->
+
+
+<!--联系企业，企业号码 start-->
+<view class='showMenu' hidden='{{show_business_phone}}'>
+  <block>
+    <view class='showMenu_item' catchtap="contactBusiness" data-phone="{{business_phone}}">
+      {{business_phone}}
+    </view>
+  </block>
+  <view catchtap='showBusinessPhoneList' class='showMenu_item'>
+    <text>取消</text>
+  </view>
+  <view class='wx-mask' catchtouchmove="doNotMove" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--联系企业，企业号码 end-->
+
+<!--企业已过期 start-->
+<view class="merchant_err" style="top:0;" catchtap="" catchtouchmove="doNotMove" wx:if="{{merchant_err}}">
+  <text wx:if="{{business_detail.status == 0||business_detail.status == -1?true:false}}">该产品已过期，无法购买</text>
+  <text wx:if="{{business_detail.merchant.status == 0||business_detail.merchant.status == 3?true:false}}">该企业已{{business_detail.merchant.status
+    == 0?"注销":(business_detail.merchant.status == 3?"过期":"")}}，产品无法购买</text>
+  <text wx:if="{{!business_detail}}">该产品不存在</text>
+  <view class="toIndex" catchtap="toIndex">去首页</view>
+</view>
+<!--企业已过期 end-->
+
+<view wx:if="{{condition}}" class="citypicker">
+  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}"
+    bindchange="bindChange" class="citybody">
+    <view class="cityheader">
+      <view bindtap="open" class="city-cancel">取消</view>
+      <view bindtap="open" data-sure="true" class="city-true">确定</view>
+    </view>
+    <picker-view-column>
+      <view wx:for="{{provincesList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{choos_citiesList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}
+      </view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{choos_countyList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}
+      </view>
+    </picker-view-column>
+  </picker-view>
+</view>
+
+<!-- 购物车 start -->
+<view class="cartBG" wx:if="{{cartDisplay}}" catchtouchmove="catchMouseOperate" catchtap="showCart">
+  <view class="cartBoby" catchtap="catchMouseOperate">
+    <image src="{{sku_url?sku_url:imgList[0]}}?x-oss-process=image/resize,p_80" mode='aspectFill'></image>
+    <view class="priceFont-content priceRelate">
+      <view class="priceFont">
+        <text style="font-size:32rpx;">￥{{sku_priceYuan==null||sku_priceYuan==""?"":sku_priceYuan}}</text>
+      </view>
+      <view class="reference-price" wx:if="{{sku_referencePriceYuan}}">
+        <text>￥</text>
+        <text>{{sku_referencePriceYuan==null||sku_referencePriceYuan==""?"":sku_referencePriceYuan}}</text>
+      </view>
+    </view>
+    <view class="stockRelate">
+      <text>库存 {{sku_stock == null || sku_stock == "" ? 0 : sku_stock}}</text>
+    </view>
+    <text class="selected">{{selected_text?selected_text:"暂无"}}</text>
+    <scroll-view class="scroll-view_cart" style="bottom:{{isShare?'170':'380'}}rpx;" scroll-y>
+      <block wx:for="{{specList}}" wx:key="specItemId" wx:for-index="specItemIdx">
+        <view class="specItem">
+          <text class="skuName">{{item.name}}</text>
+          <view class="specDetailList">
+            <block wx:for="{{item.productSpecs}}" wx:key="specId" wx:for-item="specItem" wx:for-index="specIdx">
+              <view class="specDetailItem {{specItem.lock == 1 ? 'specDetailItemSelected' : ''}}"
+                data-lock="{{specItem.lock}}" data-speccode="{{specItem.specCode}}" data-key="{{specItem.key}}"
+                data-id="{{specItem.id}}" data-value="{{specItem.value}}" catchtap="chooseSkus">{{specItem.value}}
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+      <!--便捷备注选项-->
+      <block wx:for="{{orderMessage}}" wx:for-item="item" wx:key="id">
+        <view class="sku_otp_item">
+          <text class="third_title">{{item.text}}</text>
+          <view class="sku_text">
+            <block wx:for="{{item.values}}" wx:for-item="item_key" wx:key="id_key">
+              <text class="sku_text_select {{ item_key.isSelect ? 'sku_text_selected' : ''}}" data-text="{{item.text}}"
+                data-value="{{item_key}}" catchtap="chooseOrderMsg">{{item_key.name}}</text>
+            </block>
+          </view>
+        </view>
+      </block>
+      <!--购买数量 start-->
+      <view class="fgx"></view>
+      <view class='bottom_border_item buy_num'>
+        <text class="sub_title">购买数量</text>
+        <view>
+          <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del.png"
+            catchtap='delQuantity' wx:if="{{quantity > 1}}"></image>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_del_unable.png"
+            wx:else></image>
+          <input style="border:1px #a0a0a0 solid;width:10vw;text-align:center;" type="number" value="{{quantity}}"
+            bindinput="numInput" bindblur="cancelEdit" wx:if="{{isEdit}}" focus="{{isEdit}}"></input>
+          <text wx:else>{{quantity}}</text>
+          <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add.png"
+            catchtap='addQuantity' wx:if="{{business_detail.product.typeCode != 'virtual' && quantity < sku_stock}}">
+          </image>
+          <image
+            src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_add_unable.png"
+            wx:else></image>
+          <!---虚拟商品单个订单限制购买数量1-->
+        </view>
+      </view>
+      <view class="memberTips" style="padding-top:0rpx;" wx:if="{{enableMember && business_detail.allowCoupon == '0'}}">
+        <text class="fontS-12 fontC-g">该商品不参与优惠券活动，不可用预充值支付</text>
+      </view>
+      <!--购买数量 end-->
+      <view class="fgx" hidden="{{freePostageNum == 0}}"></view>
+      <view class="priceItem_logistics_free horizontal-vcenter" hidden="{{freePostageNum == 0}}">
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge@2x.png"
+          class="logistics_info_img_free"></image>
+        <text>商品设置单次购买满{{logisticsChargeType == 1 ? freePostageNum / 1000 + "公斤" : freePostageNum + "件"}}包邮</text>
+      </view>
+    </scroll-view>
+    <view class="shareInfo shareInfo_cart" wx:if="{{!isShare}}">
+      <!--间隔 start-->
+      <view class="spacing_goods" style="margin-bottom:20rpx;margin-top:0rpx;"></view>
+      <!--间隔 end-->
+      <text wx:if="{{shareDiscount}}">分享优惠￥{{shareDiscountPrice}}</text>
+      <text style="color:#000;" wx:else>分享</text>
+      <view style="margin-top:20rpx;">
+        <view style="position: relative;">
+          <button class="inreward_share_button" open-type="share" ></button>
+          <image
+            src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/share_wechat.png"
+            mode="widthFix"></image>
+          <text>到微信</text>
+        </view>
+      </view>
+    </view>
+    <view class="buy cartBtn" catchtap="joinCart">
+      <text>加入购物车</text>
+    </view>
+  </view>
+</view>
+<!-- 购物车 end -->
+
+<!-- 转发分享用截图 start -->
+<view class="viewShareScreenshot" style="top:{{capsuleTop + 32}}px;" hidden="{{!forwarding}}"
+  wx:if="{{platform == 'ios'}}">
+  <image src="{{imgList[0]}}" mode="widthFix">
+  </image>
+  <view class="shareScreenshotInfo" style="top:230px;">
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_name aline1">
+      <text>{{business_detail.merchant.shortName == null || business_detail.merchant.shortName == "" ?
+        business_detail.merchant.name : business_detail.merchant.shortName}}-{{business_detail.title}}</text>
+    </view>
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_addr aline1">
+      <text>{{business_detail.merchant.addr}}</text>
+    </view>
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_price">
+      <text>￥{{minPrice}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="viewShareScreenshot" hidden="{{!forwarding}}" wx:else>
+  <image src="{{imgList[0]}}" mode="widthFix">
+  </image>
+  <view class="shareScreenshotInfo" style="top:195px;">
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_name aline1">
+      <text>{{business_detail.merchant.shortName == null || business_detail.merchant.shortName == "" ?
+        business_detail.merchant.name : business_detail.merchant.shortName}}-{{business_detail.title}}</text>
+    </view>
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_addr  aline1">
+      <text>{{business_detail.merchant.addr}}</text>
+    </view>
+    <view class="shareScreenshotInfoRow shareScreenshotInfo_price">
+      <text>￥{{minPrice}}</text>
+    </view>
+  </view>
+</view>
+<!-- 转发分享用截图 end -->
+
+<!-- 生鲜超时提示 start  -->
+<view class="freshOvertimeTips" wx:if="{{business_detail.product.typeCode == 'fresh' && freshOvertimeTips}}">
+  <text>已经超过截止时间，现在购买将在{{timeUtil.dateFormat(business_detail.product.nextDeliveryDay, "M月d日")}}配送</text>
+  <text style="margin-left:18rpx;font-weight:bold;font-size:24rpx;" catchtap="closeFreshOvertimeTips">×</text>
+</view>
+<!-- 生鲜超时提示 end  -->
+
+
+<view class="shareInfo" wx:if="{{showBtn}}">
+  <text>分享商品</text>
+  <view class="shareInfo1">
+    <text wx:if="{{business_detail.bonusYuan && business_detail.bonusYuan!=''}}"
+      style="margin-right:5px">分享成交赚佣{{business_detail.bonusYuan}}元</text>
+    <text wx:if="{{business_detail.typeCode == 'discount'}}">分享优惠￥{{shareDiscountPrice}}</text>
+    <text wx:if="{{shareDiscount}}" style="font-size:24rpx;color:#fe2130;">分享优惠￥{{discount_price}}</text>
+    <!-- <text style="font-size:24rpx;color:#000;" wx:else>分享</text> -->
+  </view>
+  <view>
+    <view style="position: relative;">
+      <button class="inreward_share_button" open-type="share"></button>
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/share_wechat.png"
+        mode="widthFix"></image>
+      <!-- <text>到微信</text> -->
+    </view>
+  </view>
+</view>
+<view class="mask" wx:if="{{showBtn}}" catchtap="showShareBtn"></view>
+
+<!-- 支付密码组件 start -->
+<payPassword id="payPassword" amount="{{usableCredit}}" merchant="{{business_detail.merchant}}"
+  bind:close="closePayPassword" bind:verifyPic="verifyPic" />
+<!-- 支付密码组件 end -->
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>
+
+<!-- 获取用户授权弹窗 -->
+<view class="resetLocation" catchtap="hiddenResetLocation" wx:if="{{resetLocation}}">
+  <view>
+    <text>温馨提示</text>
+    <text>位置授权已被拒绝，需要重新打开</text>
+    <button open-type='openSetting' bindopensetting="ResetLocation">重新定位</button>
+  </view>
+</view>

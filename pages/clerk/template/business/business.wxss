@@ -1,0 +1,713 @@
+page {
+  height: 100%;
+}
+
+.main_business {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  /* background-color: #252b4b; */
+  background-color: rgb(0, 16, 55);
+  z-index: 1;
+}
+
+/* 名片信息 start */
+
+.clerkInfo_business_big {
+  position: relative;
+  z-index: 3;
+}
+
+.clerkInfo_business {
+  width: calc(345rpx * 2);
+  height: calc(220rpx * 2);
+  border-radius: calc(12rpx * 2);
+  /* background: linear-gradient(135deg, rgb(88, 159, 255), rgb(100, 120, 255)); */
+  position: relative;
+  z-index: 2;
+  margin: auto;
+  margin-top: 24rpx;
+  margin-bottom: 0;
+}
+
+.business_clerkskin {
+  position: absolute;
+  width: calc(345rpx * 2);
+  height: calc(220rpx * 2);
+  z-index: 1;
+  border-radius: calc(12rpx * 2);
+
+}
+
+.clerkInfo_business>view:nth-child(2) {
+  margin: 58rpx 60rpx 56rpx 40rpx;
+  position: absolute;
+  z-index: 2;
+}
+
+.clerkInfo_business>view>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+}
+
+.clerkInfo_headimg_business {
+  width: 120rpx;
+  height: 120rpx;
+  border: 4rpx #fff solid;
+  border-radius: 24rpx;
+  margin-right: 32rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  width: calc(165rpx * 2);
+  margin-left: 30rpx;
+  padding-right: 5rpx;
+  color: #fff;
+  font-weight: bold;
+  font-size: 24rpx;
+  /* border-right-color: rgba(255, 255, 255, 0.5);
+  border-right-style: solid;
+  border-right-width: 4rpx; */
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1)>text:nth-child(1) {
+  width: calc((165rpx * 2 - 40rpx) * 0.4);
+  font-size: 32rpx;
+  margin-right: 40rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>view:nth-child(1)>text:nth-child(2) {
+  width: calc((165rpx * 2 - 40rpx) * 0.6);
+}
+
+.clerkInfo_business>view>view:nth-child(1)>view:nth-child(2)>text:nth-child(2) {
+  margin-top: 24rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(1)>image:nth-child(3) {
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 67rpx;
+  margin-top: 38rpx;
+}
+
+.clerkInfo_business>view>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 54rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+
+}
+
+.clerkInfo_business>view>view:nth-child(2)>text:nth-child(2),
+.clerkInfo_business>view>view:nth-child(2)>text:nth-child(3) {
+  margin-top: 24rpx;
+}
+
+/* 名片信息 end */
+
+/* 收藏，地址，分享，浏览记录 start */
+
+.favAddrShare_business {
+  display: flex;
+  flex-direction: column;
+  /* width: calc(345rpx * 2); */
+  /* margin: 20rpx 30rpx 32rpx 30rpx; */
+  margin-top: 32rpx;
+  margin-bottom: 32rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.favAddrShare_business>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.favAddrShare_business>view:nth-child(1)>view {
+  display: flex;
+  flex-direction: row;
+  width: 220rpx;
+  height: 96rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 29, 97);
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.favAddrShare_business>view:nth-child(1)>view:nth-child(2),
+.favAddrShare_business>view:nth-child(1)>view:nth-child(3),
+.favAddrShare_business>view:nth-child(1)>view:nth-child(4) {
+  margin-left: 15rpx;
+}
+
+.favAddrShare_business>view:nth-child(1)>view>image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 14rpx;
+  flex-shrink: 0;
+}
+
+.favAddrShare_business>view:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  width: calc(100vw - 30rpx * 4);
+  height: 96rpx;
+  background-color: rgb(0, 29, 97);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.favAddrShare_business>view:nth-child(2)>view {
+  display: flex;
+  flex-direction: row;
+}
+
+.favAddrShare_business>view:nth-child(2)>view>image {
+  width: 56rpx;
+  height: 56rpx;
+  border: #fff 2rpx solid;
+  border-radius: 32rpx;
+}
+
+.favAddrShare_business>view:nth-child(2)>view>image:nth-child(n + 2) {
+  margin-left: -16rpx;
+}
+
+.favAddrShare_business>view:nth-child(2)>view>view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: -16rpx;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 32rpx;
+  background-color: #fff;
+  color: #343960;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+/* 收藏，地址，分享，浏览记录 end */
+
+/* 切页栏 start */
+
+/* 隐藏滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.tab-bar_business {
+  position: relative;
+  white-space: nowrap;
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #fff;
+  height: 72rpx;
+  background-color: rgb(0, 29, 97);
+  z-index: 2;
+}
+
+.tab-bar_business .tab {
+  display: inline-block;
+  padding-top: 20rpx;
+  padding-bottom: 18rpx;
+  text-align: center;
+}
+
+.tab-bar_business .tab-active {}
+
+.tab-bar_business .under-line {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: calc(2rpx * 2);
+}
+
+.tab-bar_business .under-line view {
+  width: 56rpx;
+  height: 100%;
+  background-color: rgba(47, 149, 251, 1);
+  border-radius: 20rpx;
+}
+
+/* 切页栏 end */
+
+/*切页内容 start*/
+
+.page-section-spacing {
+  padding: 0;
+}
+
+.swiper {
+  flex: 1;
+}
+
+.swiper-item {
+  display: block;
+}
+
+.scroll_container {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  padding-top: 5px;
+  height: 100%;
+  top: 0px;
+  bottom: 0px;
+}
+
+.mediaInfo_business {
+  padding: 0rpx 20rpx 0rpx 20rpx;
+  width: calc(100vw - 20rpx * 2);
+}
+
+.mediaInfo_title_business1 {
+  margin-left: 30rpx;
+  margin-bottom: 10rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.mediaInfo_content_business {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.mediaInfo_content_business>video {
+  width: 630rpx;
+  height: 260rpx;
+  border-radius: 12rpx;
+  margin-bottom: 32rpx;
+}
+
+.mediaInfo_content_border_business {
+  background-color: rgb(0, 29, 97);
+  border-radius: 12rpx;
+  padding: 20rpx 30rpx 20rpx 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.mediaInfo_voice_business {
+  display: flex;
+  flex-direction: row;
+  height: 140rpx;
+  align-items: center;
+  padding-left: 30rpx;
+  padding-right: 54rpx;
+}
+
+.mediaInfo_voice_business>image {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 12rpx;
+  background-color: #a0a0a0;
+}
+
+.mediaInfo_voice_business>view:nth-child(2) {
+  margin-left: 24rpx;
+  width: 0rpx;
+  height: 0rpx;
+  border-bottom: 10rpx solid transparent;
+  border-top: 10rpx solid transparent;
+  border-right: 10rpx solid #2f95fb;
+}
+
+.mediaInfo_voice_business>view:nth-child(3) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(100vw - 30rpx * 2 - 30rpx - 110rpx - 24rpx - 10rpx - 54rpx);
+  height: 90rpx;
+  border-radius: 12rpx;
+  background-color: #2f95fb;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.mediaInfo_voice_business>view:nth-child(3)>image {
+  margin-left: 20rpx;
+  margin-right: 30rpx;
+  width: 58rpx;
+  height: 58rpx;
+}
+
+#album_style>view>image {
+  width: 310rpx;
+  height: 310rpx;
+  border-radius: 12rpx;
+  background-color: #f4f4f4;
+  margin-bottom: 10rpx;
+  flex-shrink: 1;
+}
+
+.album_style_view_image_odd {
+  margin-left: 10rpx;
+}
+
+/*切页内容 end*/
+
+.empty_view {
+  height: calc(100vh - 220rpx * 2 - 24rpx * 2 - 96rpx - 20rpx - 80rpx - 70rpx);
+}
+
+.goodsList_business {
+  padding: 0rpx 15rpx 0 15rpx;
+  background: rgb(244, 244, 244);
+  display: flex;
+  flex-direction: row;
+  padding-top: 30rpx;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  background: rgb(244, 244, 244);
+}
+
+/* 商品分类 start  */
+
+.goods_tag_business {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  /* background: #252b4b; */
+  padding: 24rpx 32rpx 0rpx 32rpx;
+}
+
+.goods_tag_business>scroll-view {
+  width: calc(100% - 40rpx - 32rpx);
+}
+
+.goodsTagItem_business {
+  display: inline-block;
+  font-size: 24rpx;
+  line-height: 40rpx;
+  border-radius: 28rpx;
+  background-color: #fff;
+  color: #202020;
+  padding: 12rpx 24rpx 12rpx 24rpx;
+}
+
+.goodsTagItem_selected_business {
+  background-color: rgb(0, 29, 97);
+  color: #fff;
+}
+
+.goodsTagItem_business:not(:first-child) {
+  margin-left: 24rpx;
+}
+
+.goodsTagItem_business:last-child {
+  margin-right: 32rpx;
+}
+
+.business_goods_tag {
+  position: absolute;
+  right: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.business_goods_tag_masking_business {
+  position: absolute;
+  right: calc(40rpx + 32rpx * 2);
+  width: 96rpx;
+  height: 64rpx;
+  /* background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(37, 43, 75, 1)); */
+}
+
+/* 商品分类 end  */
+
+/* 企业简介收起/弹出 start */
+
+.business_info_intro>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 24rpx; */
+  height: 102rpx;
+  justify-content: center;
+  align-items: center;
+  color: rgb(47, 149, 251);
+  overflow: hidden;
+}
+
+.business_info_intro>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 20rpx; */
+  z-index: 2;
+}
+
+.business_info_intro>view:nth-child(2)>image {
+  width: calc(315rpx * 2);
+  height: calc(130rpx * 2);
+  margin-bottom: 30rpx;
+  border-radius: calc(6rpx * 2);
+}
+
+.business_info_intro>view:nth-child(2)>text {
+  color: white;
+  font-size: 24rpx;
+  margin-bottom: 30rpx;
+  line-height: 46rpx;
+}
+
+.business_info_intro {
+  font-size: 24rpx;
+  background: rgb(0, 29, 97);
+  margin: auto;
+  border-bottom-right-radius: calc(12rpx * 2);
+  border-bottom-left-radius: calc(12rpx * 2);
+  width: calc(345rpx * 2);
+  margin-top: 0;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.business_info_intro::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  background: rgb(0, 29, 97);
+  width: 100%;
+  right: 0;
+  left: 0;
+  height: 20rpx;
+  z-index: 0;
+}
+
+/* .business_info_intro::after{
+  content: '';
+  position: absolute;
+  top: -10px;
+  background: rgb(0, 29, 97);
+  width: 100%; 
+  right: 0;
+  left: 0;
+  height: 20rpx;
+  z-index: 0;
+} */
+
+.setShow_range_img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.setShow_more_card_img {
+  width: 24rpx;
+  height: 24rpx;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  /* Internet Explorer */
+  -moz-transform: rotate(90deg);
+  /* Firefox */
+  -webkit-transform: rotate(90deg);
+  /* Safari 和 Chrome */
+  -o-transform: rotate(90deg);
+  /* Opera */
+}
+
+.setShow_range_img_open {
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  /* Internet Explorer */
+  -moz-transform: rotate(180deg);
+  /* Firefox */
+  -webkit-transform: rotate(180deg);
+  /* Safari 和 Chrome */
+  -o-transform: rotate(180deg);
+  /* Opera */
+}
+
+/*企业简介收起/弹出 end*/
+
+/*商务名片背景图 start*/
+
+.business_picture_bg {
+  position: absolute;
+  width: 100%;
+  height: calc(455rpx * 2);
+  top: 0;
+  /* z-index: -1; */
+}
+
+.business_picture_bg_cover {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 160rpx;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 16, 55, 1));
+  z-index: -1;
+}
+
+/*商务名片背景图 end*/
+
+/*直播状态 start*/
+
+.clerk_live {
+  height: calc(48rpx * 2);
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(0, 29, 97);
+  border-radius: 16rpx;
+  margin-bottom: 32rpx;
+}
+
+.clerk_live>image:nth-child(1) {
+  width: 64rpx;
+  height: 64rpx;
+  background: white;
+  border-radius: 100rpx;
+  margin-right: 16rpx;
+}
+
+.clerk_live>text:nth-child(2) {
+  color: white;
+  font-size: 26rpx;
+}
+
+.clerk_live>image:nth-child(3) {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 12rpx;
+}
+
+.animation_live_rotation {
+  animation-name: live_rotation;
+  /*动画的名称 */
+  animation-duration: 5000ms;
+  /*动画从开始到结束的时间*/
+  animation-timing-function: linear;
+  /*动画执行快慢的参数*/
+  animation-iteration-count: infinite;
+  /*动画执行多少次的参数*/
+  /*以下是兼容ios所需，参数意义与上相同*/
+  -webkit-animation-name: live_rotation;
+  -webkit-animation-duration: 5000ms;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  transform-origin: center 50%;
+}
+
+@keyframes live_rotation {
+  /*开始转的角度*/
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  /*结束的角度*/
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*兼容ios*/
+
+@-webkit-keyframes live_rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*直播状态 end*/
+
+/**/
+
+.otp_business {
+  height: 96rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.otp_business>view {
+  display: flex;
+  flex-direction: row;
+  width: 220rpx;
+  height: 96rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 29, 97);
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.otp_business>view>image {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 30rpx;
+}
+
+
+/**/
+
+/* 交换名片 start */
+.exchangeBusiness {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  height: 64rpx;
+  font-size: 28rpx;
+  margin-bottom: 64rpx;
+  background: #001D61;
+  border-radius: 16rpx;
+  color: #fff;
+  z-index: 2;
+}
+
+/* 交换名片 end */

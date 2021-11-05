@@ -1,0 +1,143 @@
+<topBar title=""  bind:backPreviousPage="backPreviousPage" userDefalutBack="{{userDefalutBack}}"></topBar>
+
+<!-- 分享按钮 start -->
+<button open-type='share' style="top:{{capsuleTop + 48}}px;">
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_share%403x.png" class="btn" data-business_userid='{{business_userid}}' data-id='{{lander.id}}'></image>
+</button>
+<!-- 分享按钮 end -->
+
+<view id="main">
+	<!--商品主图 start-->
+	<view class='home_bg' style="width:{{windowWidth}}px">
+		<swiper autoplay="true" indicator-dots="{{imgList.length > 1 ? true : false}}" circular="true" interval="3000" duration="1000" bindchange="imgListChange" wx:if="{{selectedDisplayType == 'img'}}">
+			<block wx:for="{{imgList}}" wx:key="id">
+				<swiper-item>
+					<image src="{{item}}" mode='aspectFill' />
+				</swiper-item>
+			</block>
+		</swiper>
+		<video src='{{videoURL}}' style="width:{{windowWidth}}px;height:540rpx" autoplay="{{videoAutoPlay}}" play-btn-position="center" wx:elif="{{selectedDisplayType == 'vid'}}"></video>
+		<image class="vrBG" src="{{unitData.coverImg ? unitData.coverImg : ''}}" wx:if="{{selectedDisplayType == 'vr'}}"></image>
+		<view class="changeType global_page_indent" wx:if="{{existVideo || (vrUrl && vrUrl != '')}}"> 
+      <view class="changeTypeItem {{selectedDisplayType == 'vr' ? 'selected_type' : 'unselected_type'}}" data-type="vr" catchtap="changeShow" wx:if="{{vrUrl && vrUrl != ''}}">
+        <text>VR看房</text>
+      </view>
+      <view class="changeTypeItem {{selectedDisplayType == 'vid' ? 'selected_type' : 'unselected_type'}}" data-type="vid" catchtap="changeShow">
+        <text>视频</text>
+      </view>
+      <view class="changeTypeItem {{selectedDisplayType == 'img' ? 'selected_type' : 'unselected_type'}}" data-type="img" catchtap="changeShow">
+        <text>图片</text>
+      </view>
+    </view>
+		<view class="imgNum" wx:if="{{selectedDisplayType == 'img' && imgList.length > 1}}">
+			<text>{{mainImgIndex}}/{{imgList.length}}</text>
+		</view>
+		<view class="vrMask" catchtap="goToVr" wx:if="{{selectedDisplayType == 'vr'}}">
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png"></image>
+    </view>
+	</view>
+	<!--商品主图 end-->
+
+	<!-- 户型信息 start -->
+	<view class="houseLayoutInfo">
+		<view>
+			<text>{{unitData.title}}</text>
+		</view>
+		<!-- 户型标签 start -->
+		<view class="projectDescTag">
+			<block wx:for="{{unitData.unitTags}}" wx:key="id">
+				<view class="projectDescTagItem">
+					<text>{{item.tag}}</text>
+				</view>
+				</block>
+			</view>
+			<!-- 户型标签 end -->
+			<!-- 户型属性 start  -->
+			<view class="houseLayoutDesc">
+				<view>
+					<text>{{unitData.displayPrice}}</text>
+					<view class="projectDescTagItem" style="margin-left: 0;">
+						<text>售价</text>
+					</view>
+				</view>
+				<view>
+					<text>{{unitData.unitStructure}}</text>
+					<view class="projectDescTagItem" style="margin-left: 0;">
+						<text>户型</text>
+					</view>
+				</view>
+				<view>
+					<text>{{unitData.buildingArea}}㎡</text>
+					<view class="projectDescTagItem" style="margin-left: 0;">
+						<text>面积</text>
+					</view>
+				</view>
+			</view>
+			<!-- 户型属性㎡ start  -->
+			<!-- 户型信息 start -->
+			<view class="contentView">
+				<view>
+					<text style="width:112rpx;">建筑面积</text>
+					<text style="width:220rpx;">{{unitData.buildingArea}}㎡</text>
+					<text>可用面积</text>
+					<text>{{unitData.availableArea}}㎡</text>
+				</view>
+				<view>
+					<text style="width:112rpx;">类型</text>
+					<text style="width:220rpx;">{{unitData.unitType}}</text>
+					<text>楼层高度</text>
+					<text>{{unitData.floorHeight}}</text>
+				</view>
+				<view>
+					<text>户型分布</text>
+					<text>{{unitData.unitDistribution}}</text>
+				</view>
+				<view>
+					<text>首付比例</text>
+					<text>{{unitData.downPaymentRatio}}</text>
+				</view>
+				<view wx:if="{{fromNews!='false'}}">
+					<text>所属楼盘</text>
+					<view class="addrInfo" catchtap="goToHomepage">
+						<text>{{unitData.property}}</text>
+						<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next_big.png"></image>
+					</view>
+				</view>
+			</view>
+			<!-- 户型信息 end -->
+	</view>
+	<!-- 户型信息 end -->
+
+	<!-- 户型 start -->
+	<view class="houseLayout" wx:if="{{housePlans.length > 0}}">
+		<text>本楼盘其他户型</text>
+		<scroll-view scroll-x>
+			<view class="housePlans">
+				<block wx:for="{{housePlans}}" wx:key="id">
+					<view class="housePlansItem" data-item="{{item}}" catchtap="changeHousePlans">
+						<image src="{{item.image}}"></image>
+						<text>{{item.title}}</text>
+						<text>{{item.displayPrice}}</text>
+					</view>
+				</block>
+			</view>
+		</scroll-view>
+	</view>
+	<!-- 户型 end -->
+</view>
+
+<!--联系企业，企业号码 start-->
+<view class='showMenu' hidden='{{show_business_phone}}'>
+  <block>
+    <view class='showMenu_item' catchtap="contactBusiness" data-phone="{{business_phone}}">
+     {{business_phone}}
+    </view>
+  </block>
+  <view catchtap='showBusinessPhoneList' class='showMenu_item'>
+    <text>取消</text>
+  </view>
+  <view class='wx-mask' catchtouchmove="doNotMove" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--联系企业，企业号码 end-->
+
+<image class="callMe"  src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/call%403x.png" catchtap="showBusinessPhoneList"></image>

@@ -1,0 +1,116 @@
+/**商家列表**/
+page {
+  background: #f6f6f6;
+}
+
+.business_list_big_picture {
+  display: flex;
+  flex-direction: row;
+  width: calc(100vw - 32rpx * 2);
+  height: 208rpx;
+  margin: 0 32rpx 16rpx 32rpx;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.business_list_big_picture>image:nth-child(1) {
+  width: 144rpx;
+  height: 144rpx;
+  background-color: #f2f2f2;
+  margin: 32rpx 16rpx 32rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+.business_list_big_picture>view:nth-child(2) {
+  font-size: 24rpx;
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 32rpx * 2 - 16rpx - 20rpx - 144rpx);
+  margin-bottom: 32rpx;
+}
+
+.desc>text:nth-of-type(1) {
+  color: #323232;
+  font-size: 28rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+}
+
+.desc>view:nth-of-type(2) {
+  height: calc(208rpx - 32rpx * 4 - 40rpx);
+}
+
+.desc>view:nth-of-type(3),
+.desc>view:nth-of-type(4) {
+  display: flex;
+  flex-direction: row;
+  height: 32rpx;
+  color: #a0a0a0;
+  font-size: 22rpx;
+}
+
+.desc>view:nth-of-type(3)>view>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.tagName {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 22rpx;
+  color: #fff;
+  z-index: 110;
+}
+
+.tagName>view {
+  background-color: #2f95fb;
+  padding: 4rpx 12rpx 4rpx 12rpx;
+  margin-right: 24rpx;
+  border-bottom-left-radius: 8rpx;
+  border-bottom-right-radius: 8rpx;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 30rpx;
+  width: 110rpx;
+  height: 36rpx;
+  background-color: #2f95fb;
+  border-top-right-radius: 18rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  z-index: 10;
+}
+
+.top2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 36rpx;
+  right: 30rpx;
+  width: 110rpx;
+  height: 36rpx;
+  background-color: #fff;
+  border-bottom-left-radius: 6rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #2f95fb;
+  z-index: 10;
+}

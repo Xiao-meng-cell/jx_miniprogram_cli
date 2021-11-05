@@ -1,0 +1,50 @@
+/* expandPackage/pages/afterService/uploadReturnInfo/uploadReturnInfo.wxss */
+@import '/assets/styles/com_order_details.wxss';
+
+page {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 32rpx;
+  width: calc(100vw - 32rpx * 2);
+}
+
+.main>view {
+  width: 100%;
+}
+
+.main>view>input {
+  margin: 12rpx 0 0 0;
+  padding: 16rpx 68rpx 16rpx 32rpx;
+  width: calc(100% - 32rpx - 32rpx - 4rpx);
+  border: #cccccc 2rpx solid;
+  border-radius: 16rpx;
+  font-size: 24rpx;
+  line-height: 24rpx;
+}
+
+.placeholder {
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #dddddd;
+  background: #fff;
+  text-align: left;
+}
+
+.inputRightIcon {
+  position: absolute;
+  right: 16rpx;
+  bottom: 22rpx;
+  width: 36rpx;
+  height: 36rpx;
+  z-index: 2;
+}
+
+.logisticsNum {
+  position: relative;
+}

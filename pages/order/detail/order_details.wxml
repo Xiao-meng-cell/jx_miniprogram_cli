@@ -1,0 +1,74 @@
+<!--miniprogram/pages/order/detail/order_details.wxml-->
+<wxs module="dateUtil" src="../../../utils/timeUtil.wxs"></wxs>
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
+<topBar title="订单详情"></topBar>
+<!-- 物流商品 start -->
+<block
+	wx:if="{{(orderDetails.product.typeCode == 'logistics' && orderDetails.addressType == 'user') || orderDetails.product.typeCode == 'baking'}}">
+	<!-- 待付款 start -->
+	<block wx:if="{{orderDetails.status==1  || orderDetails.status==0}}">
+		<include src="/pages/order/detail/bepaid.wxml" />
+	</block>
+	<!-- 待付款 end -->
+	<!-- 已付款-待发货-已完成-已挂起 start -->
+	<block wx:elif="{{orderDetails.status==2||orderDetails.status==3||orderDetails.status==4||orderDetails.status==5}}">
+		<include src="/pages/order/detail/delivered.wxml" />
+	</block>
+	<!-- 已付款-待发货-已完成-已挂起 end -->
+</block>
+<!-- 物流商品 end -->
+
+<!-- 到店商品 start -->
+<block
+	wx:if="{{orderDetails.product.typeCode=='service' || (orderDetails.product.typeCode == 'logistics' && orderDetails.addressType == 'merchant')}}">
+	<!-- 待付款 start -->
+	<block wx:if="{{orderDetails.status==1}}">
+		<include src="/pages/order/detail/bepaid.wxml" />
+	</block>
+	<!-- 待付款 end -->
+	<!-- 已付款-待发货-已完成-已挂起-已取消 start -->
+	<block wx:elif="{{orderDetails.status==2||orderDetails.status==3||orderDetails.status==5||orderDetails.status==4}}">
+		<include src="/pages/order/detail/beused.wxml" />
+	</block>
+</block>
+<!-- 到店商品 end -->
+
+<!-- 虚拟商品，定金商品，房地产 start -->
+<block
+	wx:if="{{orderDetails.product.typeCode=='virtual'|| orderDetails.product.typeCode=='deposit' || orderDetails.product.typeCode=='estate'}}">
+	<!-- 待付款 start -->
+	<block wx:if="{{orderDetails.status==1}}">
+		<include src="/pages/order/detail/bepaid.wxml" />
+	</block>
+	<!-- 待付款 end -->
+	<!-- 已付款-待发货-已完成-已挂起 start -->
+	<block wx:elif="{{orderDetails.status==2||orderDetails.status==3||orderDetails.status==5}}">
+		<include src="/pages/order/detail/delivered.wxml" />
+	</block>
+	<!-- 已付款-待发货-已完成-已挂起 end -->
+	<!-- 已取消 start -->
+	<block wx:elif="{{orderDetails.status==4}}">
+		<include src="/pages/order/detail/delivered.wxml" />
+	</block>
+	<!-- 已取消 end -->
+</block>
+<!-- 虚拟商品，定金商品，房地产 end -->
+
+<!-- 生鲜商品 start -->
+<block wx:if="{{orderDetails.product.typeCode == 'fresh'}}">
+	<!-- 待付款 start -->
+	<block wx:if="{{orderDetails.status==1}}">
+		<include src="/pages/order/detail/bepaid.wxml" />
+	</block>
+	<!-- 待付款 end -->
+	<!-- 已付款-待发货-已完成-已挂起 start -->
+	<block
+		wx:elif="{{orderDetails.status==2 || orderDetails.status==3 || orderDetails.status==4 || orderDetails.status==5}}">
+		<include src="/pages/order/detail/beused.wxml" />
+	</block>
+	<!-- 已付款-待发货-已完成-已挂起 end -->
+</block>
+<!-- 生鲜商品 end -->
+
+  <!--网络状态监听-->
+	<noneLine wx:if="{{!networkType}}"></noneLine>

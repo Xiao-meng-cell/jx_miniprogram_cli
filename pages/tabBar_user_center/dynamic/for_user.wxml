@@ -1,0 +1,100 @@
+<!--miniprogram/pages/tabBar_user_center/dynamic/for_user.wxml-->
+<wxs module="dateUtil" src="../../../utils/timeUtil.wxs"></wxs>
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<view class="layout_container">
+  <!-- tab导航栏 -->
+  <!-- scroll-left属性可以控制滚动条位置 -->
+  <!-- scroll-with-animation滚动添加动画过渡 -->
+  <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+    <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+      <view class=" {{currentTab == idx ?'isactive':'nav-item'}}" data-current="{{idx}}" bindtap="switchNav">{{navItem.typeName}}</view>
+    </block>
+  </scroll-view>
+  <!-- 页面内容 -->
+
+  <view class="tab-box">
+
+    <block wx:for="{{typeList}}" wx:key="item" wx:for-item="item" wx:for-index="parentIndex">
+      <view class='horizontal-htop' style='padding:10px 10px 0px 10px;'>
+        <view style='width:70px;' catchtap='toShowImgs' data-item='{{item}}'>
+          <view>
+            <text style='font-size:14px;color:#323232;'>{{dateUtil.diaplayTime(item.createdTime)}}</text>
+          </view>
+          <view style='font-size:12px;color:#5b86fe;'>{{item.typeName}}</view>
+        </view>
+        <block wx:if="{{item.fileUrls.length>0}}">
+          <view class="home_grids">
+
+            <block wx:for="{{item.fileUrls}}" wx:key="item" wx:for-item='bean'>
+              <block wx:if="{{index<4}}">
+                <view wx:if="{{item.fileUrls.length==1}}" class='home_grid_one home_grid_comm'>
+                  <block wx:if="{{utils.isVideo(bean)==true}}">
+                    <block wx:if="{{platform=='android'||platform == 'devtools'}}">
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" mode="aspectFill" class='home_icon_one' data-src="{{bean}}"   catchtap="showVideo" />
+                    </block>
+                    <block wx:else>
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" class="home_icon_one" mode="aspectFill" data-src="{{bean}}"   catchtap="showVideo"></image>
+                    </block>
+                    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_video.png" mode="aspectFill" class='video_icon' data-src="{{bean}}"   catchtap="showVideo"></image>
+                  </block>
+                  <block wx:elif="{{utils.isVideo(bean)==false}}">
+                    <image src="{{bean+utils.resizeImg(250)}}" mode="aspectFill" class="home_icon_one" data-src="{{bean}}" data-parentindex='{{parentIndex}}'   bindtap="previewImage"></image>
+                  </block>
+                </view>
+
+                <view wx:elif="{{item.fileUrls.length==2}}" class='home_grid_two home_grid_comm'>
+                  <block wx:if="{{utils.isVideo(bean)==true}}">
+                    <block wx:if="{{platform=='android'||platform == 'devtools'}}">
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" mode="aspectFill" class='home_icon_two' data-src="{{bean}}"   catchtap="showVideo" />
+                    </block>
+                    <block wx:else>
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" class="home_icon_two" mode="aspectFill" data-src="{{bean}}"   catchtap="showVideo" />
+                    </block>
+                    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_video.png" mode="aspectFill" style='width: 30px;height: 30px;position:absolute;top: 38%;left: 25%;' data-src="{{bean}}"   catchtap="showVideo"></image>
+                  </block>
+                  <block wx:elif="{{utils.isVideo(bean)==false}}">
+                    <image mode="aspectFill" class="home_icon_two" src="{{bean+utils.resizeImg(250)}}" data-src="{{bean}}" data-parentindex='{{parentIndex}}'   bindtap="previewImage"></image>
+                  </block>
+                </view>
+
+                <view wx:else class='home_grid_three home_grid_comm'>
+                  <block wx:if="{{utils.isVideo(bean)==true}}">
+                    <block wx:if="{{platform=='android'||platform == 'devtools'}}">
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" mode="aspectFill" class='home_icon_three' data-src="{{bean}}"   catchtap="showVideo" />
+                    </block>
+                    <block wx:else>
+                      <image src="{{bean}}?x-oss-process=video/snapshot,t_1000,f_jpg,w_120,h_120,m_fast" class="home_icon_three" mode="aspectFill" data-src="{{bean}}"   catchtap="showVideo"></image>
+                    </block>
+                    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_video.png" mode="aspectFill" style='width: 30px;height: 30px;position:absolute;top: 23%;left: 25%;' data-src="{{bean}}"   catchtap="showVideo"></image>
+                  </block>
+                  <block wx:elif="{{utils.isVideo(bean)==false}}">
+                    <image mode="aspectFill" class="home_icon_three" src="{{bean+utils.resizeImg(250)}}" data-src="{{bean}}" data-parentindex='{{parentIndex}}'   bindtap="previewImage"></image>
+                  </block>
+                </view>
+
+              </block>
+            </block>
+          </view>
+        </block>
+
+        <view style='flex:1;height:120px;display: flex;flex-direction: column;' catchtap='toShowImgs' data-item='{{item}}'>
+          <view class='show_item_content'>{{item.description==null?"":item.description}}</view>
+          <view style='flex:1;' />
+          <view class='horizontal-vcenter'>
+            <text class='show_item_sfont'>共{{item.fileUrls.length}}张</text>
+            <view style='flex:1'></view>
+            <text class='show_item_sfont'></text> </view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{typeList.length>0&&loadmore==false}}" class="loadmore">
+      <view class='line leftline' />
+      <text>没有更多数据</text>
+      <view class='line rightline' />
+    </view>
+    <view class="emptyView" wx:if="{{typeList.length==0}}">
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png"></image>
+      <text>没有任何数据</text>
+	  </view>
+  </view>
+</view>

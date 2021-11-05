@@ -1,0 +1,49 @@
+<!--widget/goodsItem/goodsItem.wxml-->
+<wxs src="../../utils/utils.wxs" module="utils" />
+<view class="goodsItem" data-item="{{item}}" catchtap="jumpBusinessActivityDetail">
+  <image src="{{item.illustration+utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+  <view class="{{item.product.typeCode == 'estate' ? 'estateInfo' : ''}}">
+    <text>{{item.title}}</text>
+    <view class="priceDesc priceFont" style="height:28px;margin-top:0px;margin-left:0px;">
+      <text style="font-size:24rpx;">￥</text>
+      <text style="font-size:32rpx;font-weight:bold;flex:1;">{{item.minPriceYuan}}</text>
+    </view>
+    <view class="goodstag">
+      <view wx:if="{{item.product.typeCode=='logistics'&& item.addressType!='merchant'}}">
+        <view class="goodstag_icon goodstag_text_red">
+          <text>邮</text>
+        </view>
+        <text class="goodstag_wl_color">物流商品</text>
+      </view>
+      <view wx:elif="{{item.product.typeCode=='virtual'}}">
+        <view class="goodstag_icon goodstag_text_yellow">
+          <text>店</text>
+        </view>
+        <text class="goodstag_visual_color">店内服务</text>
+      </view>
+      <view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}">
+        <view class="goodstag_icon goodstag_text_yellow">
+          <text>定</text>
+        </view>
+        <text class="goodstag_visual_color">定金商品</text>
+      </view>
+      <view wx:else>
+        <view class="goodstag_icon goodstag_text_blue">
+          <text>自</text>
+        </view>
+        <text class="goodstag_dd_color">到店自提</text>
+      </view>
+      <text
+        class="{{item.typeCodeName == '原价' ? 'goodstag_activity_yj' : 'goodstag_activity'}}">{{item.typeCodeName == "原价" ? "原价商品" : item.typeCodeName}}</text>
+    </view>
+    <view class="goods_item_bottom">
+      <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_fire%402x.png">
+      </image>
+      <text style="line-height:10px;">{{item.total}}</text>
+      <view style="flex:1;"></view>
+      <view class="join_cart" data-item="{{item}}" wx:if="{{addCart}}">
+        <text>加入购物车</text>
+      </view>
+    </view>
+  </view>
+</view>

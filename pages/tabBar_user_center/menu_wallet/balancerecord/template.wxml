@@ -1,0 +1,21 @@
+<wxs module="dateUtil" src="../../../../utils/timeUtil.wxs"></wxs>
+<wxs module="brUtil" src="balancerecord.wxs"></wxs>
+<template name="listItem">
+
+	<view class='horizontal-center item-wrap-row'>
+
+		<image class='left-icon' src='{{brUtil.getIcon(relationType, picture)}}' mode='aspectFill' />
+
+		<view class='mid-content'>
+			<text class='txt_black txt-title alone-line' style='font-weight:bold;max-width:400rpx;'>{{summary}}</text>
+			<text class='txt_light_grey txt-sub' hidden='true'>单号：{{code}}</text>
+			<text class='txt_light_grey txt-sub'>{{dateUtil.dateFormat(tradingTime,'yyyy年MM月dd日')}}</text>
+		</view>
+		<view class='right-content'>
+			<text class='txt-big-notice' wx:if="{{amountYuan>0}}" style='color:red;font-size:30rpx;font-weight:bold;'>+￥{{amountYuan}}</text>
+			<text class='txt-big-notice' wx:elif="{{amountYuan<0}}" style='color:black;font-size:30rpx;font-weight:bold;'>￥{{amountYuan}}</text>
+			<text style='color:#6186f0;font-size:22rpx;'>{{status == 1 || status == 2 ?"等待到账":""}}</text>
+		</view>
+	</view>
+
+</template>

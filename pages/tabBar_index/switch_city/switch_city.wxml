@@ -1,0 +1,26 @@
+<!--pages/tab_index/switch_city1/switch_city.wxml-->
+<!--省-->
+<view class='left_part'>
+    <scroll-view scroll-y class='viewScroll'>
+        <block wx:for ="{{provinceList}}" wx:key="index" wx:item="item">
+            <view class='province_view' data-code="{{item.code}}" style="background:{{chooseProvince==item.code?'#fff':'#f4f4f4'}}" bindtap='chooseProvince'>
+                <text style="color:{{chooseProvince==item.code?'#5b86fe':'#8f8f8f'}}" >{{item.name}}</text>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+<!--省 end-->
+
+
+
+<!--市-->
+<view class='right_part'>
+    <scroll-view scroll-y class='viewScroll'>
+        <block  wx:for ="{{cityList}}" wx:key="index" wx:item="item">
+            <view class='city_view' data-name='{{item.name}}' bindtap='chooseCity'>
+                <text>{{item.name}}</text>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+<!--市end-->

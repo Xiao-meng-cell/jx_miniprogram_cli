@@ -1,0 +1,9 @@
+/* expandPackage/pages/annualReview/annualReview.wxss */
+.vImg {
+  display: flex;
+  flex-direction: column;
+}
+
+image {
+  width: 100vw;
+}

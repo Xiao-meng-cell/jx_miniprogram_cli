@@ -1,0 +1,40 @@
+/* expandPackage/pages/member/goodsCoupon/goodsCoupon.wxss */
+.total{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 222;
+  width: 100%;
+  background: #ffffff;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+}
+.total_img{
+  position: fixed;
+  right: 32rpx;
+  bottom: 16rpx;
+  z-index: 300;
+  width: 36rpx;
+  height: 38rpx;
+  background: #a0a0a0;
+}
+.total_btn{
+  margin-left: 16rpx;
+  color: #FFFFFF;
+  background: #2f95fb;
+  border-radius: 36rpx;
+  padding: 18rpx 76rpx;
+  text-align: center;
+}
+.x_layout{
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.coupon_type{
+  color: #A0A0A0;
+}
+.price_color{
+  color: #2F95FB
+}

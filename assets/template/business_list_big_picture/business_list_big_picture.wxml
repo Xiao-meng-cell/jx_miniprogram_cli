@@ -1,0 +1,45 @@
+<wxs src="../../../utils/utils.wxs" module="utils" />
+
+<!--企业列表 新 start-->
+<template name="business_list_big_picture">
+	<block wx:for="{{business_list_data}}" wx:key="item" wx:index="index">
+		<block wx:for="{{item}}" wx:for-item="item_key" wx:key="item_key" wx:for-index="ide">
+			<view class='business_list_big_picture' data-userid='{{item_key.userId}}' data-tagcode="{{item_key.serviceType[0].tagCode}}" data-merchantcode="{{item_key.code}}" bindtap='navigationBusinessDetails'>
+				<!-- 主图 start -->
+				<image src='{{item_key.bgUrls[0] ? item_key.bgUrls[0] + utils.resizeImgSurvey(80) : ""}}' mode='aspectFill'></image>
+				<!-- 主图 end -->
+				<!-- 信息区域 start -->
+				<view class="desc">
+					<view>{{item_key.name==null?"--":item_key.name}}</view>
+					<view>
+						<text>本地排名 {{item_key.hotRankLocal}}　｜　</text>
+						<text>行业排名 {{item_key.tagRankCountry}}</text>
+						<view style="flex:1;"></view>
+						<view>
+							<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/fire.png"></image>
+							<text> {{item_key.hot}}　</text>
+						</view>
+						<view>
+							<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/location.png"></image>
+							<text> {{item_key.dis}}</text>
+						</view>
+					</view>
+				</view>
+				<!-- 信息区域 end -->
+				<!-- 企业分类标签 start -->
+				<view class="tagName" style="bottom:{{iPhone_X == true? '-90' : '-95'}}rpx;">
+					<view>
+						<text>{{item_key.tagName}}</text>
+					</view>
+				</view>
+				<!-- 企业分类标签 end -->
+				<!-- Top start -->
+				<view class="top" wx:if="{{item_key.isTotalRanking}}">{{item_key.topNum}}</view>
+				<view class="top2" hidden="{{item_key.topNum<11?false:true}}" wx:if="{{item_key.isTotalRanking}}">Top</view>
+				<!-- Top end -->
+			</view>
+			<view style="height:30rpx;background-color: #f4f4f4;"></view>
+		</block>
+	</block>
+</template>
+<!--企业列表 新 end-->

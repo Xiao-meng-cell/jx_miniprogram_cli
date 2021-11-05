@@ -1,0 +1,488 @@
+<!--miniprogram/pages/tabBar_index/cart/confirm_order_cart/confirm_order_cart.wxml-->
+<wxs module="utils" src="../../../../utils/utils.wxs" />
+<!--客户收货地址 start-->
+<view class="viewContent addr_item" catchtap='chooseUserAddress' data-ff="{{hasLogi}}" hidden="{{hasLogi?false:true}}">
+	<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_address@2x.png"
+		mode="aspectFit"></image>
+	<view class=" addr_item_view">
+		<view>
+			<text>{{order_addr.name}}</text>
+			<text>{{order_addr.phone}}</text>
+		</view>
+		<view>
+			<text>{{order_addr?order_addr.addrdetail:"请填写收货地址"}}</text>
+		</view>
+	</view>
+	<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next_big.png"
+		mode="aspectFit"></image>
+</view>
+<!--客户收货地址 end-->
+
+<!--支付方式-->
+<view class="viewContent pay_method">
+	<text>支付方式</text>
+	<view class="addr_item_view pay_note">
+		<image class="pay_icon" src="{{payIcon}}"></image>
+		<text>{{payName}}</text>
+	</view>
+</view>
+<view wx:if="{{changePay}}">
+	<view class="pay_list" wx:for="{{payList}}" wx:for-item="item" wx:key="item" wx:for-index="payIndex">
+		<image src="{{item.icon}}"></image>
+		<text>{{item.name}}</text>
+	</view>
+</view>
+
+<!--订单模块 start-->
+<!--有效订单/可配送订单/配送范围内订单 start-->
+<block wx:for="{{showCartList}}" wx:for-item="list" wx:key="list" wx:for-index="listIndex">
+	<view class="viewContent order_module">
+		<view class="order_module_merchant ">
+			<image src="{{list.merchantHeadimg}}" mode="aspectFill"></image>
+			<text class="aline1">{{list.merchantName}}</text>
+			<image
+				src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next_big.png">
+			</image>
+		</view>
+		<view class="order_module_goods" hidden="{{list.logisticsGoods.length>0?false:true}}">
+			<view class="order_module_goods_title">物流商品</view>
+			<view class="order_module_goods_list" catchtap="switchInventoryList" data-goods="{{list.logisticsGoods}}"
+				data-isshow="1">
+				<block wx:for="{{list.logisticsGoods}}" wx:for-item="logisticsGoods" wx:key="logisticsGoods"
+					wx:for-index="log_index">
+					<image class="order_module_goods_img" src="{{logisticsGoods.displayImg}}"
+						wx:if="{{log_index <= 3 ?true:false}}"></image>
+				</block>
+				<view class="order_module_goods_num" wx:if="{{list.logisticsGoods.length>1?true:false}}">
+					<view>
+						<view class="order_module_totalNum">共{{list.logisticsGoods.length > 0 ?list.logisticsGoods.length:0}}件
+						</view>
+						<image class="three_dots_blue"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"
+							mode="aspectFit"></image>
+					</view>
+				</view>
+				<block wx:if="{{list.logisticsGoods.length==1?true:false}}">
+					<view class="good_item_one">
+						<text class="goodtitle aline1">{{list.logisticsGoods[0].title?list.logisticsGoods[0].title:""}}</text>
+						<view class="goodsku">
+							<text>{{list.logisticsGoods[0].skuText}}</text>
+							<!-- <text>x{{list.logisticsGoods[0].num}}</text> -->
+						</view>
+						<view class="goodprice">
+							<view>
+								<text class="priceFont">￥</text>
+								<text class="priceFont">{{list.logisticsGoods[0].displayUnitPrice}}</text>
+							</view>
+							<!-- <text>运费：{{list.logisticsGoods[0].provinceName?list.logisticsGoods[0].provinceName:""}}{{list.logisticsGoods[0].logPrice!=null || list.logisticsGoods[0].logPrice != undefined?'￥'+ list.logisticsGoods[0].logPrice:'不配送'}}</text> -->
+							<text>x{{list.logisticsGoods[0].num}}</text>
+						</view>
+						<view class="goodsku"
+							wx:if="list.logisticsGoods[0].customerOrderMemo && list.logisticsGoods[0].customerOrderMemo.length > 0">
+							<text wx:for="{{list.logisticsGoods[0].customerOrderMemo}}" wx:for-item="memoItem"
+								wx:key="memoKey">{{memoItem}}</text>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+		<view class="order_module_goods" hidden="{{list.virtualGoods.length>0?false:true}}">
+			<view class="order_module_goods_title">其他商品</view>
+			<view class="order_module_goods_list" catchtap="switchInventoryList" data-goods="{{list.virtualGoods}}"
+				data-isshow="1">
+				<block wx:for="{{list.virtualGoods}}" wx:for-item="virtualGoods" wx:key="virtualGoods" wx:for-index="log_index">
+					<image class="order_module_goods_img" src="{{virtualGoods.displayImg}}"
+						wx:if="{{log_index <= 3 ?true:false}}"></image>
+				</block>
+				<block wx:if="{{list.virtualGoods.length>1?true:false}}">
+					<view style="flex:1;"></view>
+					<view class="order_module_totalNum">共{{list.virtualGoods.length > 0 ?list.virtualGoods.length:0}}件</view>
+					<image class="three_dots_blue"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"
+						mode="aspectFit"></image>
+				</block>
+				<block wx:if="{{list.virtualGoods.length==1?true:false}}">
+					<view class="good_item_one">
+						<text class="goodtitle aline1">{{list.virtualGoods[0].title?list.virtualGoods[0].title:""}}</text>
+						<view class="goodsku">
+							<text>{{list.virtualGoods[0].skuText}}</text>
+							<!-- <text>x{{list.virtualGoods[0].num}}</text> -->
+						</view>
+						<view class="goodprice">
+							<view>
+								<text class="priceFont">￥</text>
+								<text class="priceFont">{{list.virtualGoods[0].displayUnitPrice}}</text>
+							</view>
+							<!-- <text>运费：{{list.virtualGoods[0].provinceName?list.virtualGoods[0].provinceName:""}}{{list.virtualGoods[0].logPrice?' ￥'+ list.virtualGoods[0].logPrice:'不配送'}}</text> -->
+							<text>x{{list.virtualGoods[0].num}}</text>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+		<view class="order_module_goods" hidden="{{list.serviceGoods.length>0?false:true}}">
+			<view class="order_module_goods_title">到店自提</view>
+			<view class="order_module_goods_list" catchtap="switchInventoryList" data-goods="{{list.serviceGoods}}"
+				data-isshow="1">
+				<block wx:for="{{list.serviceGoods}}" wx:for-item="serviceGoods" wx:key="serviceGoods" wx:for-index="ser_index">
+					<image class="order_module_goods_img" src="{{serviceGoods.displayImg}}"
+						wx:if="{{ser_index <= 3 ?true:false}}"></image>
+				</block>
+				<block wx:if="{{list.serviceGoods.length>1?true:false}}">
+					<view style="flex:1;"></view>
+					<view class="order_module_totalNum">共{{list.serviceGoods.length > 0 ?list.serviceGoods.length:0}}件</view>
+					<image class="three_dots_blue"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"
+						mode="aspectFit"></image>
+				</block>
+				<block wx:if="{{list.serviceGoods.length==1?true:false}}">
+					<view class="good_item_one ">
+						<text class="goodtitle aline1">{{list.serviceGoods[0].title?list.serviceGoods[0].title:""}}</text>
+						<view class="goodsku aline1">
+							<text>{{list.serviceGoods[0].skuText}}</text>
+						</view>
+						<view class="goodprice">
+							<view>
+								<text class="priceFont">￥</text>
+								<text class="priceFont">{{list.serviceGoods[0].displayUnitPrice}}</text>
+							</view>
+							<text>x{{list.serviceGoods[0].num}}</text>
+						</view>
+					</view>
+				</block>
+			</view>
+			<view class="order_module_goods_ddzt_item" catchtap="switchInventoryList" data-goods="{{list.serviceGoods}}"
+				data-isshow="1">
+				<text>到店自提地址</text>
+				<view style="flex:1;"></view>
+				<!-- <view>{{list.ddztAddressNum.length?list.ddztAddressNum.length:1}}个到店地址</view> -->
+				<text>查看</text>
+				<image class="addr_item_img"
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+					mode="aspectFit"></image>
+			</view>
+		</view>
+		<view class="order_module_goods" hidden="{{list.depositGoods.length>0?false:true}}">
+			<view class="order_module_goods_title">其他商品</view>
+			<view class="order_module_goods_list" catchtap="switchInventoryList" data-goods="{{list.depositGoods}}"
+				data-isshow="1">
+				<block wx:for="{{list.depositGoods}}" wx:for-item="depositGoods" wx:key="depositGoods" wx:for-index="ser_index">
+					<image class="order_module_goods_img" src="{{depositGoods.displayImg}}"
+						wx:if="{{ser_index <= 3 ?true:false}}"></image>
+				</block>
+				<block wx:if="{{list.depositGoods.length>1?true:false}}">
+					<view style="flex:1;"></view>
+					<view class="order_module_totalNum">共{{list.depositGoods.length > 0 ?list.depositGoods.length:0}}件</view>
+					<image class="three_dots_blue"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"
+						mode="aspectFit"></image>
+				</block>
+				<block wx:if="{{list.depositGoods.length==1?true:false}}">
+					<view class="good_item_one">
+						<text class="goodtitle aline1">{{list.depositGoods[0].title?list.depositGoods[0].title:""}}</text>
+						<view class="goodsku aline1">
+							<text>{{list.depositGoods[0].skuText}}</text>
+						</view>
+						<view class="goodprice">
+							<view>
+								<text class="priceFont">￥</text>
+								<text class="priceFont">{{list.depositGoods[0].displayUnitPrice}}</text>
+							</view>
+							<text>x{{list.depositGoods[0].num}}</text>
+						</view>
+					</view>
+				</block>
+			</view>
+			<!-- <view class="order_module_goods_ddzt_item global_page_indent">
+        <image class="" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_store@3x.png"></image>
+        <view>到店自提地址</view>
+        <view style="flex:1;"></view>
+        <view>*个到店地址</view>
+        <image class=" addr_item_img" src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png" mode="aspectFit"></image>
+      </view> -->
+		</view>
+		<view hidden="{{list.depositGoods.length > 0 ? false : true}}" class="order_module_price">
+			<text>此商品包含违约金，如需退款，将被扣除违约金：</text>
+			<text>￥{{list.damagePrice}}</text>
+		</view>
+		<view hidden="{{list.depositGoods.length>0 ?false:true}}" catchtap="switchNameLay" data-flag="1"
+			data-index="{{listIndex}}">
+			<view class=" order_module_note_name order_module_note">
+				<text>姓名</text>
+				<view style="flex:1;"></view>
+				<text class="aline1"
+					style="{{list.cartName ? '' : 'color:#d8d8d8;'}}">{{list.cartName?list.cartName:'未填写'}}</text>
+			</view>
+			<view class="order_module_note_name order_module_note ">
+				<text>手机号</text>
+				<view style="flex:1;"></view>
+				<text class="aline1"
+					style="{{list.cartPhone ? '' : 'color:#d8d8d8;'}}">{{list.cartPhone?list.cartPhone:'未填写'}}</text>
+			</view>
+		</view>
+		<view class="order_module_note" wx:if="{{!vicpalmMain && appId == 'wx00a71e008067167b'}}">
+			<!--味熊烘焙馆特有-->
+			<text>配送时间</text>
+			<view style="flex:1;"></view>
+			<!-- <text class="aline1 delivery_time" style="color: #ff6f00;">{{startDeliveryTime}}</text> -->
+			<date-time-picker class="aline1 time_picker" value="{{startDeliveryTime}}" bind:change="handleChange">
+				{{startDeliveryTime == "" ? "请选择配送时间" : startDeliveryTime}}</date-time-picker>
+			<image class=" addr_item_img"
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+				mode="aspectFit"></image>
+		</view>
+		<view class="order_module_note" catchtap="switchMemoLay" data-flag="1" data-index="{{listIndex}}">
+			<text>备注</text>
+			<view style="flex:1;"></view>
+			<text class="aline1" style="{{list.memo ? '' : 'color:#d8d8d8;'}}">{{list.memo?list.memo:'可填写你对商品的要求(选填)'}}</text>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+			</image>
+		</view>
+		<view class="order_module_price">
+			<text>商品原价</text>
+			<text>￥{{list.originalPricePart}}</text>
+		</view>
+		<view class="order_module_price" wx:if="{{list.logisticsGoods.length > 0}}">
+			<text>物流运费</text>
+			<text>￥{{list.totallogPrice}}</text>
+		</view>
+		<view class="order_module_price">
+			<text>分享优惠</text>
+			<text>{{list.discountPricePart == 0 ? '暂无任何优惠' : '￥' + list.discountPricePart}}</text>
+		</view>
+		<view class="order_module_price" wx:if="{{enableMember}}">
+			<view>
+				<view class="discount_btn db_inline">￥</view>
+				<text class="db_inline">使用券</text>
+			</view>
+			<block wx:if="{{list.useVipCoupon}}">
+				<view class="useVipCoupon" data-item="{{list}}" catchtap="goToCouponList" wx:if="{{list.vipCouponAmount > 0}}">
+					<text style="color:#FF3B30;">-￥{{utils.priceSwitch(list.vipCouponAmount)}}</text>
+					<image
+						src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+					</image>
+				</view>
+				<view class="priceItem_img3" data-item="{{list}}" catchtap="goToCouponList"
+					wx:if="{{list.vipCouponAmount == 0}}">可使用会员券</view>
+				<text class="fontS-12 fontC-c" wx:if="{{!list.vipCouponAmount}}">暂无商品可用优惠券</text>
+			</block>
+			<text style="color:#808080;" wx:else>该商品不参与优惠券活动</text>
+		</view>
+		<view class="order_module_subtotal">
+			<text>商品小计</text>
+			<text class="priceFont">￥{{list.subtotalPart}}</text>
+		</view>
+	</view>
+</block>
+<!--有效订单/可配送订单/配送范围内订单 end-->
+<!--订单模块 end-->
+
+<!--支付 start-->
+<view class="memberRecharge" style="bottom:{{iPhone_X ? 144 : 96}}rpx;" wx:if="{{enableMember}}">
+	<image
+		src="{{useMemberRecharge ? 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_checkbox_16px%403x.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/Checkbox_16px%403x.png'}}"
+		catchtap="useMemberRecharge" wx:if="{{enableMemberRecharge && usableCredit > 0}}">
+	</image>
+	<image
+		src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/Checkbox_disable%403x.png"
+		wx:else></image>
+	<text>使用会员卡预充值抵扣</text>
+	<view style="flex:1;"></view>
+	<view class="rechargeInfo" catchtap="goToCreditUsage" wx:if="{{enableMemberRecharge && usableCredit > 0}}">
+		<image
+			src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_prepaid%403x.png">
+		</image>
+		<text hidden="{{!useMemberRecharge}}">抵用{{usableCredit}}元</text>
+		<text hidden="{{useMemberRecharge}}">可用预充值抵扣</text>
+		<image
+			src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_forward%403x.png"
+			hidden="{{!useMemberRecharge}}">
+		</image>
+	</view>
+	<text catchtap="goToCreditUsage" wx:elif="{{enableMemberRecharge}}">无可用预充值抵扣</text>
+	<text catchtap="goToCreditUsage" wx:else>无商品可用预充值抵扣</text>
+</view>
+<view class="order_pay" style="padding-bottom:{{iPhone_X ? 60 : 12}}rpx;">
+	<view class="order_pay_text">
+		<text>需支付</text>
+		<text>￥</text>
+		<text>{{totalPrice}}</text>
+		<text wx:if="{{totalDiscountPrice > 0}}">已优惠￥{{totalDiscountPrice}}</text>
+	</view>
+	<view style="flex:1;"></view>
+	<view class="order_pay_money" catchtap="toPayMoney">立即支付</view>
+</view>
+<!--支付 end-->
+
+<!--商品清单展示列表 start-->
+<view class="inventoryList" hidden="{{inventoryList.length>0?false:true}}" catchtap="switchInventoryList"
+	data-isshow="0">
+	<scroll-view class="inventoryList_item" scroll-y="true">
+		<view class="inventoryList_title">
+			<text>商品清单</text>
+			<text>共{{inventoryList.length}}件</text>
+		</view>
+		<block wx:for="{{inventoryList}}" wx:for-item="list" wx:key="list" wx:index="index">
+			<view class="order_module_goods_list  inventoryList_good">
+				<image class="order_module_goods_img" src="{{list.displayImg}}"></image>
+				<view class="good_item_one">
+					<text class="goodtitle aline1">{{list.title?list.title:""}}</text>
+					<view class="goodsku">
+						<text>{{list.skuText}}</text>
+						<!-- <text hidden="{{list.ddztLat && list.ddztLng ?true:false}}">x{{list.num}}</text> -->
+					</view>
+					<view class="goodprice">
+						<view>
+							<text class="priceFont">￥</text>
+							<text class="priceFont">{{list.displayUnitPrice}}</text>
+						</view>
+						<!-- wx:if="{{list.ddztLat && list.ddztLng ?true:false}}" -->
+						<text>x{{list.num}}</text>
+						<!-- <text
+							wx:else>运费：{{list.provinceName?list.provinceName:""}}{{list.logPrice !=null || list.logPrice  != undefined?' ￥'+ list.logPrice:'不配送'}}</text> -->
+					</view>
+					<view class="goodsku" wx:if="list.customerOrderMemo && list.customerOrderMemo.length > 0">
+						<text wx:for="{{list.customerOrderMemo}}" wx:for-item="memoItem" wx:key="memoKey">{{memoItem}}</text>
+					</view>
+				</view>
+			</view>
+			<view class="order_module_goods_ddzt_item" hidden="{{list.ddztLat && list.ddztLng ?false:true}}"
+				data-lng="{{list.ddztLng}}" data-lat="{{list.ddztLat}}" catchtap="mapNavigation"
+				data-address="{{list.ddztAddress}}" data-name="{{list.ddztAddress}}">
+				<text>到店自提地址</text>
+				<view style="flex:1;"></view>
+				<view class="aline1">{{list.ddztAddress}}</view>
+				<image class="addr_item_img"
+					src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+					mode="aspectFit"></image>
+			</view>
+		</block>
+	</scroll-view>
+</view>
+<!--商品清单展示列表 end-->
+
+<!--无法配送订单 start-->
+<view class="unableSend_title" hidden="{{unableLogi?false:true}}">以下商品商家无法配送</view>
+<view hidden="{{unableLogi?false:true}}">
+	<block wx:for="{{unableCartsList}}" wx:for-item="list" wx:key="list" wx:index="listIndex">
+		<view class="order_module global_page_indent" hidden="{{list.unablelogisticsGoods.length>0?false:true}}">
+			<view class="order_module_merchant ">
+				<image src="{{list.merchantHeadimg}}" mode="aspectFit"></image>
+				<view>{{list.merchantName}}</view>
+			</view>
+			<view class="order_module_goods" hidden="{{list.unablelogisticsGoods.length>0?false:true}}">
+				<view class="order_module_goods_title">物流商品</view>
+				<view class="order_module_goods_list" catchtap="switchInventoryList" data-goods="{{list.unablelogisticsGoods}}"
+					data-isshow="1">
+					<block wx:for="{{list.unablelogisticsGoods}}" wx:for-item="logisticsGoods" wx:key="logisticsGoods"
+						wx:for-index="log_index">
+						<image class="order_module_goods_img" src="{{logisticsGoods.displayImg}}"
+							wx:if="{{log_index <= 3 ?true:false}}">
+							<view class="unableSend">
+								<text>无法配送</text>
+							</view>
+						</image>
+					</block>
+					<block wx:if="{{list.logisticsGoods.length>1?true:false}}">
+						<view style="flex:1;"></view>
+						<view class="order_module_totalNum">共{{list.logisticsGoods.length > 0 ?list.logisticsGoods.length:0}}件
+						</view>
+						<image class="three_dots_blue"
+							src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots_blue.png"
+							mode="aspectFit"></image>
+					</block>
+					<block wx:if="{{list.logisticsGoods.length==1?true:false}}">
+						<view class="good_item_one">
+							<text class="goodtitle aline1">{{list.logisticsGoods[0].title?list.logisticsGoods[0].title:""}}</text>
+							<view class="goodsku">
+								<text>{{list.logisticsGoods[0].skuText}}</text>
+								<!-- <text>x{{list.logisticsGoods[0].num}}</text> -->
+							</view>
+							<view class="goodprice">
+								<view>
+									<text class="priceFont">￥</text>
+									<text class="priceFont">{{list.logisticsGoods[0].displayUnitPrice}}</text>
+								</view>
+								<!-- <text>无法配送</text> -->
+								<text>x{{list.logisticsGoods[0].num}}</text>
+							</view>
+						</view>
+					</block>
+
+				</view>
+			</view>
+		</view>
+	</block>
+</view>
+<!--无法配送订单 end-->
+
+<!--订单增高垫 start-->
+<view class="{{iPhone_X ? 'zgd_ipx' : 'zgd'}}"></view>
+<!--订单增高垫 end-->
+
+<!--备注弹出层 start-->
+<view class="memoLay global_page_indent" hidden="{{showMemoLay?false:true}}">
+	<view class="memoLay_title">
+		<view catchtap="switchMemoLay" data-flag="0">取消</view>
+		<view>添加备注</view>
+		<view catchtap="sureMemoUpdate">完成</view>
+	</view>
+	<view class="memoLay_item">
+		<textarea cursor-spacing="10" adjust-position="true" placeholder="可填写你对商品的要求(选填,50字内)"
+			value="{{initialData[memoIndex].memo}}" style="height:200rpx;width:100%;padding:10rpx;box-sizing: border-box;"
+			maxlength="50" bindinput="inputCartMemo"></textarea>
+		<view>{{cartMemoLength}}/50</view>
+	</view>
+</view>
+<!--备注弹出层 end-->
+
+<!--姓名、手机号弹出层 start-->
+<view class="memoLay global_page_indent" hidden="{{showNameLay?false:true}}">
+	<view class="memoLay_title">
+		<view catchtap="switchNameLay" data-flag="0">取消</view>
+		<view></view>
+		<view catchtap="sureNameUpdate">完成</view>
+	</view>
+	<view class="nameLay_item">
+		<view>
+			<text>姓名：</text>
+			<input cursor-spacing="10" adjust-position="true" value="{{cartName}}"
+				placeholder="{{initialData[nameIndex].cartName?initialData[nameIndex].cartName:'可填写联系人姓名'}}" maxlength="20"
+				bindinput="inputCartName"></input>
+		</view>
+		<view>
+			<text>手机号：</text>
+			<input cursor-spacing="10" adjust-position="true" value="{{cartPhone}}"
+				placeholder="{{initialData[nameIndex].cartPhone?initialData[nameIndex].cartPhone:'可填写联系人手机号'}}" maxlength="11"
+				type="number" bindinput="inputCartPhone"></input>
+		</view>
+	</view>
+</view>
+<!--姓名、手机号弹出层 end-->
+
+<!-- 弹窗合集 start -->
+<view class="popupBg" catchtap="popUpHidden" catchtouchmove="doNotMove" hidden="{{popupHidden}}">
+	<!-- 包含无法配送 start -->
+	<view class="unableLogi" catchtap="doNotMove">
+		<view class="unableLogiHead">
+			<text>支付提醒</text>
+		</view>
+		<view class="unableLogiInfo">
+			<text>有{{unableCartsList.length}}个商品无法配送，因所选收货地址不在商家所设定配送区域内。您可以另外选择收货地址</text>
+			<text wx:if="{{orderCartsList.length > 0}}">或忽略不配送商品继续结算</text>
+		</view>
+		<view class="unableLogiBottom">
+			<view catchtap="changeAddr">
+				<text style="color:#a0a0a0;">重选收货地址</text>
+			</view>
+			<view catchtap="continuePay" wx:if="{{orderCartsList.length > 0}}">
+				<text style="color:#2F95FB;">忽略并支付</text>
+			</view>
+		</view>
+	</view>
+	<!-- 包含无法配送 end -->
+</view>
+<!-- 弹窗合集 end -->
+
+<payPassword id="payPassword" amount="{{usableCredit * 100}}" title="购物车支付结算金额" bind:verifyPic="verifyPic">
+</payPassword>

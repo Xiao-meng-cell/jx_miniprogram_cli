@@ -1,0 +1,13 @@
+<!--miniprogram/pages/tabBar_user_center/manager/inputqrcode/inputqrcode.wxml-->
+<view class="main">
+	<view class="item" wx:if="{{operate != 'vas'}}">
+		<text>{{operateName}}优惠券码</text>
+		<input placeholder-class='placeholder' bindinput='getQRCodeInputVal' placeholder="请输入券码" value="{{qrcode}}" />
+	</view>
+
+	<view class="item" wx:if="{{vasSeleced}}">
+		<text>公域流量功能券码</text>
+		<input placeholder-class='placeholder' bindinput='getVasCouponInputVal' placeholder="请输入券码" value="{{vasCoupon}}" />
+	</view>
+	<button bindtap='submitQRCode'>确定</button>
+</view>

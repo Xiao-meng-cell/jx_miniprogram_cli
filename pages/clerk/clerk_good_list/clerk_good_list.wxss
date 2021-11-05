@@ -1,0 +1,165 @@
+/* miniprogram/pages/clerk/clerk_good_list/clerk_good_list.wxss */
+
+Page {
+  background: rgb(244, 244, 244);
+}
+
+.card_message {
+  width: 700rpx;
+  min-height: 230rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid rgb(47, 149, 251);
+  margin: auto;
+  margin-top: 90rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/*内容部分 start*/
+
+.recommendGoods {
+  font-size: 30rpx;
+  color: rgb(47, 149, 251);
+  text-align: left;
+  height: 60rpx;
+  display: flex;
+}
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0rpx 32rpx;
+  background: rgb(244, 244, 244);
+}
+
+#goodsItem:nth-child(2n) {
+  margin-left: 14rpx;
+}
+
+/*内容部分 end*/
+
+.goods_tag {
+  position: fixed;
+  top: 0;
+  width: calc(100vw - 32rpx * 2);
+  height: 90rpx;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  background: rgb(244, 244, 244);
+  padding: 0rpx 32rpx;
+}
+
+.goods_tag>scroll-view {
+  width: calc(100vw - 32rpx * 2 - 40rpx * 2);
+}
+
+
+.goodsTagItem {
+  display: inline-block;
+  font-size: 24rpx;
+  line-height: 40rpx;
+  border-radius: 28rpx;
+  background-color: #fff;
+  color: #202020;
+  padding: 12rpx 24rpx 12rpx 24rpx;
+}
+
+.goodsTagItem_selected {
+  background-color: #2f95fb;
+  color: #fff;
+}
+
+.goodsTagItem:not(:first-child) {
+  margin-left: 24rpx;
+}
+
+.goodsTagItem:last-child {
+  margin-right: 32rpx;
+}
+
+.business_goods_tag {
+  position: absolute;
+  right: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* 商品筛选过滤栏 start  */
+
+.goodsType {
+  position: fixed;
+  top: 90rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 72rpx;
+  background: white;
+  z-index: 1;
+}
+
+.goodsType>view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.goodsType>view>view {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8rpx;
+}
+
+.goodsType_unselected {
+  font-size: 24rpx;
+  color: #808080;
+}
+
+.goodsType_selected {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #202020;
+}
+
+#triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 5rpx solid transparent;
+  border-right: 5rpx solid transparent;
+}
+
+.triangle-up_selected {
+  border-bottom: 10rpx solid #202020;
+}
+
+.triangle-up_unselected {
+  border-bottom: 10rpx solid #d8d8d8;
+}
+
+#triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 5rpx solid transparent;
+  border-right: 5rpx solid transparent;
+}
+
+.triangle-down_selected {
+  border-top: 10rpx solid #202020;
+}
+
+.triangle-down_unselected {
+  border-top: 10rpx solid #d8d8d8;
+}
+
+/* 商品筛选过滤栏 end  */

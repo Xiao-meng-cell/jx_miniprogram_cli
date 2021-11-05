@@ -1,0 +1,152 @@
+<!--pages/invitation/invitation.wxml-->
+<topBar title="邀请函"></topBar>
+
+<!--音乐播放器 start-->
+<image class="music {{audioPlaying?'animation':''}}" style="top:{{capsuleTop + capsuleHeight + 20}}px" data-log="{{audioPlaying}}"
+  src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/bgm2x.png" catchtap="playOrPauseFestivalBgm"></image>
+<!--音乐播放器 end-->
+
+<!--底部向上滑按钮 start-->
+<!-- <image class="bottom-btn" animation="{{animationData}}"
+  src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness-zcrs/assets/zhuan.png'></image> -->
+<!--底部向上滑按钮 end-->
+<view class="page-section page-section-spacing swiper"
+  style="height:calc(100vh - {{capsuleTop}}px - {{capsuleHeight}}px)">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" duration="{{duration}}" vertical="{{true}}"
+    circular="{{true}}" bindchange="swiperChange" wx:if='{{urlImage}}'>
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}" ></image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <view class="data-title y-layout" animation="{{animation3}}">
+        <image class="data-img1" src="{{urlImage + '2021.png'}}"></image>
+        <image class="data-img2" src="{{urlImage + 'invitation.png'}}"></image>
+      </view>
+
+      <view class="big-title y-layout" animation="{{animation3}}">
+        <image class="data-img3" src="{{urlImage + 'txt_sh.png'}}"></image>
+        <image class="data-img4" src="{{urlImage + 'txt_ky.png'}}"></image>
+      </view>
+
+      <view class="information y-layout" animation="{{animation3}}">
+        <view class="copy fontS-12">电话：</view>
+        <image class="data-img5" src="{{urlImage + 'mz.png'}}"></image>
+        <image class="data-img5" src="{{urlImage + 'bj.png'}}"></image>
+        <view class="copy fontS-12" style="margin:40rpx 0 0 0">地址：</view>
+        <image class="data-img6" src="{{urlImage + 'address.png'}}"></image>
+      </view>
+    </swiper-item>
+
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation4}}"></image>
+      <view class="mao mao-box positonA y-layout" animation="{{animation5}}">
+      <image class="data-img7" src="{{urlImage + 'txt_about.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <image class="data-img9" src="{{urlImage + 'aboutUs.png'}}"></image>
+      </view>
+    </swiper-item>
+
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation6}}"></image>
+      <view class="mao mao-box positonA y-layout" animation="{{animation7}}">
+      <image class="data-img7" src="{{urlImage + 'company.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <view class="data-img10" wx:for="{{image_preview}}" wx:for-item="item"  wx:key="key" wx:if="{{index < 3 && image_preview}}">
+        <image src="{{item}}" data-previewindex="{{index}}" catchtap="imagePreview"></image>
+      </view>
+      </view>
+    </swiper-item>
+
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation8}}"></image>
+      <view class="mao mao-box positonA y-layout" animation="{{animation9}}">
+      <image class="data-img7" src="{{urlImage + 'company.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <view class="data-img10" wx:for="{{image_preview}}" wx:for-item="item"  wx:key="key" wx:if="{{index > 2 && index < 6 && image_preview}}">
+        <image src="{{item}}" data-previewindex="{{index}}" catchtap="imagePreview"></image>
+      </view>
+      </view>
+    </swiper-item>
+
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation10}}"></image>
+      <view class="mao mao-box positonA y-layout" animation="{{animation11}}">
+      <image class="data-img7" src="{{urlImage + 'company.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <!-- <view class="data-img10" wx:for="{{image_preview}}" wx:for-item="item"  wx:key="key" wx:if="{{index > 5 && image_preview}}">
+        <image src="{{item}}" data-previewindex="{{index}}" catchtap="imagePreview" class="{{index==7?'bigPic':''}}"></image>
+      </view> -->
+      <image class="data-img10" src="{{urlImage + 'new1.jpg'}}" data-previewindex="{{6}}" catchtap="imagePreview"></image>
+      <image class="bigPic" src="{{urlImage + 'new2.jpg'}}" data-previewindex="{{7}}" catchtap="imagePreview"></image>
+      </view>
+    </swiper-item>
+
+    <!-- <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation12}}"></image>
+      <view class="mao mao-box positonA y-layout" animation="{{animation13}}"> 
+      <image class="data-img7" src="{{urlImage + 'new_show.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <view class="data-img10" wx:for="{{image_preview}}" wx:for-item="item"  wx:key="key" wx:if="{{index>6 && image_preview}}">
+        <image style="width:100%;height:100%" src="{{item}}" data-previewindex="{{index}}" catchtap="imagePreview"></image>
+      </view>
+      </view>
+    </swiper-item> -->
+
+    <swiper-item class="swiper-item">
+      <image class="swiper-image"
+      src="{{urlImage + 'bg1.gif'}}">
+      </image>
+      <image class="swiper-image1" src="{{urlImage + 'glass.png'}}" animation="{{wineGlass}}"></image>
+      <image class="mao positonA" src="{{urlImage + 'maoBg.png'}}" animation="{{animation12}}"></image>
+      <view class="mao positonA y-layout mao-box" animation="{{animation13}}">
+      <image class="data-img7" src="{{urlImage + 'callUp.png'}}"></image>
+      <image class="data-img8" src="{{urlImage + 'line1.png'}}"></image>
+      <view class="y-layout" style="align-items: center;width:100%;">
+      <view class="copy1">
+        <image class="data-img11" src="{{urlImage + 'copy_by.png'}}"></image>
+      <image class="data-img12 positonA" src="{{urlImage + 'comp_icon.png'}}"></image>
+      </view>
+      <image class="data-img13" src="{{urlImage + 'yadress.png'}}"></image>
+      <view class="copy1">
+        <image class="data-img11" src="{{urlImage + 'copy_by.png'}}"></image>
+      <image class="data-img12 positonA" src="{{urlImage + 'phone_icon.png'}}"></image>
+      </view>
+
+      <view class="y-layout mao-box" style="width:100%;">
+      <view class="copy2 x-layout mao-box">
+        <image class="data-img14" src="{{urlImage + 'ymz.png'}}"></image>
+      <image class="data-img15" src="{{urlImage + 'mzp.png'}}"></image>
+      </view>
+      <view class="copy2 x-layout mao-box">
+        <image class="data-img14" src="{{urlImage + 'ybj.png'}}"></image>
+      <image class="data-img15" src="{{urlImage + 'bjp.png'}}"></image>
+      </view>
+      </view>
+      </view>
+      <view class="map-box">
+        <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{markers}}" show-location style="width: 100%; height:100%;" catchtap="goMapDetail" />
+      </view>
+    </view>
+    </swiper-item>
+  </swiper>
+</view>

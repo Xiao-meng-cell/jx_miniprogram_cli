@@ -1,0 +1,90 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<template name="normal">
+  <!-- 运费 start -->
+  <view class="global_page_indent logistics_info" catchtap="goToLogisticsDetail" wx:if="{{showLogisticsTemple}}">
+    <text class="sub_title">运费</text>
+    <view wx:if="{{logisticsStatus != 3}}">
+      <text>{{sourceAddr}}</text>
+      <text>发货至</text>
+      <image
+        src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_position@3x.png"
+        class="logistics_info_img"></image>
+      <text>{{targetAddr == "" ? "定位中..." : targetAddr}}</text>
+      <text class="logistics_info_price" style="margin-left: 10rpx;" hidden="{{logisticsStatus == 1}}">运费:</text>
+      <text class="logistics_info_price" style="margin-left: 10rpx;" wx:if="{{logisticsStatus == 1}}">免运费</text>
+      <text class="logistics_info_price" wx:else>￥{{logisticsPrice}}</text>
+    </view>
+    <text style="color:#a0a0a0;font-weight:bold;" wx:else>无法配送</text>
+    <view style="flex:1;"></view>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge@2x.png"
+      class="logistics_info_img_free" hidden="{{freePostageNum == 0}}"></image>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png"
+      class="logistics_info_img"></image>
+  </view>
+  <view class='spacing_goods' wx:if="{{showLogisticsTemple}}"></view>
+  <!-- 运费 end -->
+
+  <!--商家自提定位 start-->
+  <view class="pickUpView"
+    style="{{freshTips == '' ? 'border-top-left-radius: 24rpx;border-top-right-radius: 24rpx;' : ''}}"
+    wx:if="{{showZTDZ}}">
+    <view class="pickUp_addr fresh_tips" wx:if="{{business_detail.product.typeCode == 'fresh'}}">
+      <image
+        src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_logistics.png">
+      </image>
+      <view>
+        <text style="margin-bottom:14rpx;">现在购买最快{{lastDeliveryStartTime}}至{{lastDeliveryEndTime}}送达</text>
+        <text>{{timeUtil.dateFormat(business_detail.product.lastDeadline, "MM月dd日hh:mm")}}截止后购买将会在{{timeUtil.dateFormat(business_detail.product.nextDeliveryDay, "MM月dd日")}}配送</text>
+      </view>
+    </view>
+    <view class="pickUp_title global_page_indent">
+      <text class="third_title">导航</text>
+      <text hidden="{{business_detail.dis && business_detail.dis !='' ? false : true}}">距离您
+        {{business_detail.dis}}</text>
+    </view>
+    <view class="pickUp_addr" catchtap="mapNavigation">
+      <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/addr%403x.png"
+        class="addr_pick_up_img"></image>
+      <view>
+        <text>{{pickAddr.addr}}</text>
+      </view>
+    </view>
+  </view>
+  <!--间隔 start-->
+  <view class='spacing_goods' wx:if="{{showZTDZ}}"></view>
+  <!--间隔 end-->
+  <!--商家自提定位 end-->
+
+  <!--最新关注 start-->
+  <view class='take_part_in global_page_indent sub_title' wx:if="{{join_user_num > 0}}">
+    <text>最新关注</text>
+    <view class='user_list_temp'>
+      <block wx:for="{{join_user_list}}" wx:key="item" wx:index="index" wx:if="{{index < 6}}">
+        <image src='{{item.headimg}}'></image>
+      </block>
+      <image
+        src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_circle_moreuser@3x.png"
+        wx:if="{{join_user_list.length > 6}}"></image>
+    </view>
+  </view>
+  <!--最新关注 end -->
+
+  <!--间隔 start-->
+  <view class='spacing_goods' wx:if="{{join_user_num > 0}}"></view>
+  <!--间隔 end-->
+
+  <!--活动详情 start-->
+  <view class="active_detail_title global_page_indent">
+    <text class="sub_title">商品详情</text>
+  </view>
+  <text class="active_detail_context global_page_indent"
+    wx:if="{{business_detail.description != null && business_detail.description != ''}}">{{business_detail.description}}</text>
+  <view class='active_detail_img'>
+    <block wx:for="{{business_detail.fileJson.longPicture}}" wx:key="item">
+      <image data-src='{{item}}' data-list="{{business_detail.fileJson.longPicture}}" catchtap='imgYu'
+        src='{{utils.judgeImg(item)}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_750/format,jpg' mode='widthFix'>
+      </image>
+    </block>
+  </view>
+  <!--活动详情 end-->
+</template>

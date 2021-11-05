@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "tabbar": "/widget/tabbar/index",
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

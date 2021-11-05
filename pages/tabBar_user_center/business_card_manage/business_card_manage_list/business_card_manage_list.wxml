@@ -1,0 +1,39 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_manage/business_card_manage_list/business_card_manage_list.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!--名片申请列表 start-->
+<view class='applyList' catchtap='jumpApplyList'>申请管理</view>
+<!--名片申请列表 end-->
+
+<!--名片列表 start-->
+<block wx:for="{{card_list}}" wx:key="item">
+  <block wx:for="{{item}}" wx:for-item="item_key" wx:key="id">
+    <view class='card_list_item' catchtap='jumpCardDetail' data-merchantcode='{{item_key.merchantCode}}' data-id='{{item_key.id}}' data-status="{{item_key.status}}">
+      <view class="card_userhaedImg">
+        <image src='{{item_key.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+        <!-- <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots.png" class='three_dots'></image> -->
+      </view>
+      <view class="card_username">
+        <text>{{item_key.name}}</text>
+        <text>{{item_key.position==null?"":item_key.position}}</text>
+        <text>{{item_key.phone}}</text>
+      </view>
+      <view class='card_space'></view>
+      <view>{{item_key.merchantShortName?item_key.merchantShortName:item_key.merchantName}}</view>
+      <view>{{item_key.merchantAddr}}</view>
+    </view>
+  </block>
+</block>
+<!--名片列表 end-->
+
+<!--没有更多数据 start-->
+<view class="noData" style='display:{{card_list[0].length>0?"none":""}}'>暂无名片</view>
+<!--没有更多数据 end-->
+
+<!--制作名片 start-->
+<view class='make_button_left' catchtap='jumpApplyDetail'>
+  +申请名片
+</view>
+<!-- <view class='make_button_right' catchtap='jumpMineBusinessCard' data-code="{{myMerchantInfo.code}}">
+  +制作店主名片
+</view> -->
+<!--制作名片 end-->

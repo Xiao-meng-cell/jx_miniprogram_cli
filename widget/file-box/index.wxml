@@ -1,0 +1,37 @@
+<!--widget/map/map.wxml-->
+<!-- 资料库内容 end -->
+<view class="file_wrap_mask">
+	<view class="hide_file" catchtap="databankHidden" style=" margin-top:{{top}}px">
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_close@3x.png"></image>
+	</view>
+	<view class="file_msg_box" wx:if="{{!databankMapHidden}}">
+		<view class="file_title">{{fileInfo.title}}</view>
+		<view class="file_box" wx:if="{{fileInfo.suffix == 'txt'}}">
+			<scroll-view scroll-y="true">
+				<text class="databank_text_text">{{databankTextContent}}</text>
+			</scroll-view>
+		</view>
+		<view class="file_box" wx:if="{{fileInfo.type == 'video'}}">
+			<video src="{{fileInfo.url}}" autoplay="true" show-mute-btn="true"></video>
+		</view>
+		<view class="file_box" wx:if="{{fileInfo.type == 'image'}}">
+			<image src="{{fileInfo.url}}" mode="aspectFit"  catchtap="openImage"></image>
+		</view>
+		<view class="file_box audio_box" wx:if="{{fileInfo.type == 'audio'}}" catchtap="playOrPauseDatabankAudio">
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/bgm2x.png" class="bgm_rotation {{databankAudioPlaying?'animation_bgm_rotation':''}}" data-log="{{audioPlaying}}"></image>
+			<view class="note_txt">点击播放</view>
+		</view>
+		<view class="file_box" wx:if="{{fileInfo.suffix == 'of' || fileInfo.suffix == 'doc' || fileInfo.suffix == 'docx' || fileInfo.suffix == 'xls' || fileInfo.suffix == 'xlsx' || fileInfo.suffix == 'ppt' || fileInfo.suffix == 'pptx' || fileInfo.suffix == 'pdf'}}">
+			<view class="document_box" wx:if="{{fileInfo.url}}" catchtap="openDocument">
+				<image src="{{fileInfo.fileTypeIcon}}"></image>
+				<view class="note_txt">点击打开</view>
+			</view>
+		</view>
+	</view>
+	<view class="show_map"  wx:if="{{fileInfo.lat && fileInfo.lat != ''&& fileInfo.lng && fileInfo.lng != '' &&!databankMapHidden}}" catchtap="openMap">
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/fuchuang-map@3x.png" alt=""></image>
+	</view>
+	<view class="map" wx:if="{{databankMapHidden}}">
+		<mMap height="{{500}}" mapData="{{ mapData }}" />
+	</view>
+</view>

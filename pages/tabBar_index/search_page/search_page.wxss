@@ -1,0 +1,105 @@
+/* pages/tab_index/search_page/search_page.wxss */
+
+.first_view_serch {
+  /* background: rgba(245, 245, 239, 0.897); */
+  overflow: hidden;
+  zoom: 1;
+  margin-bottom: 20rpx;
+}
+
+.search_view {
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  background-color: #f4f4f4;
+  width: 75%;
+  height: 60rpx;
+  margin-left: 30rpx;
+  overflow: hidden;
+  zoom: 1;
+  float: left;
+  align-items: center;
+}
+
+.search_view>icon {
+  margin-left: 20rpx;
+  float: left;
+  margin-top: 16rpx;
+}
+
+.search_view_input {
+  padding-left: 10rpx;
+  float: left;
+  height: 100%;
+  width: 80%;
+}
+
+.search_view_text {
+  float: right;
+  display: block;
+  font-size: 30rpx;
+  margin-right: 30rpx;
+  /* color:#a0a0a0; */
+  line-height: 60rpx;
+}
+
+.history_view {
+  margin-bottom: 20rpx;
+}
+
+.label_title {
+  margin-left: 30rpx;
+  font-size: 28rpx;
+}
+
+.history_delete {
+  float: right;
+  margin-right: 30rpx;
+  color: #a0a0a0;
+  font-size: 24rpx;
+  margin-top: 20rpx;
+}
+
+.label_item {
+  width: 20vw;
+  display: inline-block;
+  text-align: center;
+  background-color: #f4f4f4;
+  border-radius: 10rpx;
+  /* margin-right: 20rpx;
+  margin-bottom: 10rpx; */
+  margin: 1vh 1vw 1vh 1vw;
+}
+
+.label_item_text {
+  font-size: 3.5vw;
+}
+
+.label_item_hot {
+  font-size: 30rpx;
+  color: #5b86fe;
+}
+
+.label_block {
+  display: flex;
+  padding: 0 30rpx;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+  margin-top: 10rpx;
+}
+
+.hot_service {
+}
+
+.history_view_scroll {
+  min-height: 300rpx;
+}
+
+.history_view_noscroll{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: flex-start;
+  overflow: hidden;
+}

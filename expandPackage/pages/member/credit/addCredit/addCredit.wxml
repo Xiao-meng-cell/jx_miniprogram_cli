@@ -1,0 +1,133 @@
+<!--expandPackage/pages/member/credit/addCredit.wxml-->
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<view class="bg"></view>
+<view class="pageHead" style="margin-top:{{capsuleTop}}px;height:{{capsuleHeight}}px" wx:if="{{wxVersion >= 0}}">
+  <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/icon_back%403x.png"
+    catchtap="backPreviousPage"></image>
+  <text>预充值</text>
+  <image style="width:40rpx;height:40rpx;margin-left:8rpx;"
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_circle_question%403x.png"
+    catchtap="tips">
+  </image>
+</view>
+
+<!-- 金额信息 start -->
+<view class="moneyInfo" style="margin-top:{{capsuleTop + capsuleHeight + 28}}px;">
+  <view>
+    <view>
+      <text>￥</text>
+      <text>{{utils.priceSwitch(amountTotal, false)}}</text>
+    </view>
+    <text>当前累计充值金额</text>
+  </view>
+  <view></view>
+  <view>
+    <view>
+      <text>￥</text>
+      <text>{{utils.priceSwitch(amountUsable, false)}}</text>
+    </view>
+    <text>当前可用预充值</text>
+  </view>
+</view>
+<!-- 金额信息 end -->
+
+<!-- 充值金额 start -->
+<view class="amount viewContent">
+  <view class="amountList">
+    <block wx:for="{{amountList}}">
+      <view class="amountItem {{selectedAmountIndex == index ? 'amountItem_selected' : 'amountItem_unselected'}}"
+        data-index="{{index}}" catchtap="selectedAmount">
+        <text>{{item.key}}</text>
+      </view>
+    </block>
+  </view>
+  <view
+    class="amountCustomize {{selectedAmountIndex == amountList.length ? 'amountCustomize_selected' : 'amountCustomize_unselected'}}"
+    data-index="{{amountList.length}}" catchtap="selectedAmount">
+    <text style="margin-right:8rpx;">自定义金额</text>
+    <input style="flex:1;" type="number" focus="{{inputFocus}}" catchtap="inputTap" bindinput="bindinput"
+      bindblur="bindblur"></input>
+    <text style="margin-left:8rpx;">元</text>
+  </view>
+</view>
+<!-- 充值金额 end -->
+
+<!-- 优惠券 start -->
+<view class="viewContent coupons" catchtap="usingCoupon">
+  <text>我的券</text>
+  <view class="usingCoupon" wx:if="{{vipDiscount > 0}}">
+    <text>{{couponName}}</text>
+    <text>+￥{{vipDiscount}}</text>
+  </view>
+  <view class="enableCoupon" wx:if="{{enableCoupon && vipDiscount == 0}}">
+    <text class="hasCoupon">可使用会员券</text>
+  </view>
+  <view class="noCoupon" wx:if="{{!enableCoupon}}">
+    <text>不使用优惠</text>
+  </view>
+  <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+  </image>
+</view>
+<!-- 优惠券 end -->
+
+<!-- 支付方式 start -->
+<view class="viewContent payWays">
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/wechat_pay.png"></image>
+  <text>微信支付</text>
+  <view style="flex:1;"></view>
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/selected.png">
+  </image>
+</view>
+<!-- 支付方式 end -->
+
+<!-- 同意充值服务说明 start -->
+<view class="yczxy">
+  <image
+    src="{{agree ? 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_checkbox%403x.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Checkbox_16px%403x.png'}}"
+    catchtap="agree"></image>
+  <text catchtap="checkYczInfo">我了解并同意《充值服务说明》</text>
+</view>
+<!-- 同意充值服务说明 end -->
+
+<!-- 充值 start -->
+<view class="pay" catchtap="toPayMoney">
+  <text>充值</text>
+</view>
+<!-- 充值 end -->
+
+<!-- 弹窗合集 start -->
+<view class="mask" catchtap="maskHidden" hidden="{{maskHidden}}">
+  <!-- 预充值说明 start -->
+  <view class="addCreditInfo" catchtap="stopMouseOperate" hidden="{{popUpName != 'addCreditInfo'}}">
+    <text class="fontS-16">预充值说明</text>
+    <text class="fontS-14" style="margin:32rpx 0rpx;">充值后可用于购买支付该商家的商品，如出现充值后需退款的问题，用户需与商家沟通并进行线下退款。</text>
+    <text class="fontS-14 fontC-d" style="margin:24rpx 0rpx;" catchtap="maskHidden">我知道了</text>
+  </view>
+  <!-- 预充值说明 end -->
+</view>
+<!-- 弹窗合集 end -->
+
+<!-- 充值服务说明 start  -->
+<view class="yczInfo" hidden="{{yczInfoHidden}}">
+  <view class="yczInfo_topBar" style="top:{{capsuleTop}}px;">
+    <!-- 左上角胶囊按钮 start -->
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/back_and_home.png"
+      style="height:{{capsuleHeight}}px" class="retrun_img" mode="heightFix" wx:if="{{wxVersion>=0}}"></image>
+    <view class="retrun_view" style="height:{{capsuleHeight}}px" wx:if="{{wxVersion >= 0}}">
+      <view class="retrun_view_left" catchtap="backPreviousPage"></view>
+      <view class="retrun_view_right" catchtap="backIndexPage"></view>
+    </view>
+    <!-- 左上角胶囊按钮 end -->
+  </view>
+  <view class="yczInfo_titleBar" style="top:{{capsuleTop}}px;height:{{capsuleHeight}}px">
+    <text class="fontS-17">充值服务说明</text>
+  </view>
+  <image class="imgAgreement" style="margin-top:{{capsuleTop + capsuleHeight + 16}}px;"
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/addCredit/agreement.png"
+    mode="widthFix">
+  </image>
+  <view class="pay" catchtap="agreeAgreement">
+    <text>下一步</text>
+  </view>
+</view>
+<!-- 充值服务说明 end -->

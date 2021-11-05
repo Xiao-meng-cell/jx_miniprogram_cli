@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "pageOrientation": "auto",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "noneLine": "/widget/none-line/none-line"
+  }
+}

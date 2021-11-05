@@ -1,0 +1,99 @@
+<!--pages/tabBar_user_center/channel/goodsList/goodsList.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<view class="channelGoods">
+  <!-- 已登录状态 start -->
+  <view wx:if="{{isLogin}}">
+    <view wx:if="{{isCheckIn}}">
+      <!-- 货源分类 start -->
+      <view class="goods_tag" wx:if="{{sourceTagList.length > 1 && channelGoods.length > 0}}">
+        <scroll-view scroll-x="true" scroll-into-view="{{toView}}">
+          <block wx:for="{{sourceTagList}}" wx:key="index">
+            <view id="item{{index}}"
+              class="goodsTagItem {{sourceTagSelectedIndex == index ? 'goodsTagItem_selected' : ''}}"
+              data-item="{{item}}" data-index="{{index}}" catchtap="clickSourceTag">
+              <text>{{item.name}}</text>
+            </view>
+          </block>
+        </scroll-view>
+        <view class="business_goods_tag_masking"></view>
+        <image class="business_goods_tag"
+          src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_goods_tag.png"
+          data-index="1" catchtap="goToGoodsCategory"></image>
+      </view>
+      <!-- 货源分类 end -->
+      <view class="goodsList"
+        style="{{sourceTagList.length == 0 || sourceTagList.length == 1 || channelGoods.length == 0 ? 'margin-top: 0rpx;' : ''}}"
+        wx:if="{{channelGoods.length > 0}}">
+        <block wx:for="{{channelGoods}}" wx:for-item="item_key" wx:key="index_key">
+          <block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+            <view class="goodsItem" data-item="{{item}}" catchtap="goToChannelGoodsDetail">
+              <image src="{{item.fileJson.illustration[0]}}" mode="aspectFill"></image>
+              <view class="{{item.typeCode == 'estate' ? 'estateInfo' : 'normalInfo'}}">
+                <text class="aline2">{{item.name}}</text>
+                <view class="priceDesc priceFont" style="margin-bottom:8rpx;margin-left:0rpx;">
+                  <text>￥</text>
+                  <text>{{item.skus[0].priceYuan}}</text>
+                  <!-- <text wx:if="{{!item.onlyPrice}}">-</text>
+                  <text wx:if="{{!item.onlyPrice}}">{{item.maxPrice}}</text> -->
+                </view>
+                <view class="priceInfo priceFont" wx:if="{{item.desc != ''}}">
+                  <text>{{item.desc}}</text>
+                </view>
+                <view class="goodstag goods_padding_margin" style="margin-top:0rpx;margin-left:0rpx;padding-left:0rpx;">
+                  <view wx:if="{{item.typeCode=='logistics'}}">
+                    <text class="goodstag_text goodstag_text_red">邮</text>
+                    <text class="goodstag_deliver goodstag_wl">物流货源</text>
+                  </view>
+                  <view wx:elif="{{item.typeCode=='virtual'}}">
+                    <text class="goodstag_text goodstag_text_yellow">虚</text>
+                    <text class="goodstag_deliver goodstag_visual">虚拟货源</text>
+                  </view>
+                  <view wx:elif="{{item.typeCode=='deposit' || item.typeCode=='estate'}}">
+                    <text class="goodstag_text goodstag_text_yellow">定</text>
+                    <text class="goodstag_deliver goodstag_visual">定金货源</text>
+                  </view>
+                  <view wx:else>
+                    <text class="goodstag_text goodstag_text_blue">自</text>
+                    <text class="goodstag_deliver goodstag_dd">到店货源</text>
+                  </view>
+                  <view class="{{item.returnAble == 1 ? 'goodstag_returnAble_1' : 'goodstag_returnAble_0'}}">
+                    <text>{{item.returnAble == 1 ? "支持退货" : "无法退换"}}</text>
+                  </view>
+                </view>
+                <view class="goodsItemBottomBar">
+                  <image
+                    src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/surplus.png">
+                  </image>
+                  <text>{{item.totalStock > 999 ? "999+" : item.totalStock}}</text>
+                  <view style="flex:1;"></view>
+                  <text>已代理{{item.agentNum}}人</text>
+                </view>
+              </view>
+            </view>
+          </block>
+        </block>
+        <view class="goodsList_loadAll" hidden="{{!isLoadAll}}">
+          <text>已加载全部</text>
+        </view>
+      </view>
+      <view class="emptyView" wx:else>
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+        </image>
+        <text style="margin-bottom:20rpx;">暂无数据</text>
+        <text style="font-weight:bold;" wx:if="{{isMerchant}}">请移步APP发布货源</text>
+      </view>
+    </view>
+    <view class="loginTip" wx:else>
+      <text>您暂无权查看货源信息！</text>
+      <view catchtap="checkIn">立即入驻</view>
+    </view>
+  </view>
+  <!-- 已登录状态 end -->
+  <!-- 未登录状态 start -->
+  <view class="loginTip" wx:else>
+    <text>您尚未登录，请先登录！</text>
+    <view catchtap="login">登录</view>
+  </view>
+  <!-- 未登录状态 end -->
+</view>

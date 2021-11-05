@@ -1,0 +1,45 @@
+/* estatePackage/detail/project_detail/project_detail.wxss */
+@import "/assets/styles/real_estate.wxss";
+
+page {
+  background: #f6f6f6;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentView:not(:first-child) {
+  margin-top: 24rpx;
+}
+
+.contentView>text {
+  color: #37424D;
+  margin: 0 0 24px 0;
+}
+
+.addrInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: calc(100vw - 32rpx - 72rpx -24rpx - 56rpx);
+}
+
+.addrInfo>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin: 6rpx 8rpx 0 0;
+}
+
+.addrInfo>text {
+  width: calc(100% - 32rpx - 8rpx);
+  line-height: 44rpx;
+  color: #37424D;
+}
+
+.fgx {
+  width: 100%;
+  height: 24rpx;
+  background: #f6f6f6;
+}

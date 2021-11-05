@@ -1,0 +1,193 @@
+<!--miniprogram/pages/business/dynamic_detail/dynamic_detail.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<wxs src="../../../utils/timeUtil.wxs" module="timeUtil" />
+<topBar title="资讯详情"></topBar>
+<view id="main">
+	<!--作者 start-->
+	<view class="authorInfo" catchtap="toBusiness" wx:if="{{business_info}}"
+		style="top:{{capsuleTop==0?68:capsuleTop + 40}}px;">
+		<image src="{{merchant_headingUrl}}"></image>
+		<view>
+			<text>{{business_info.merchantShortName ? business_info.merchantShortName : business_info.name}}</text>
+			<view>
+				<text>{{timeUtil.diaplayTime(initial_data.createdTime)}}</text>
+				<!-- <view class="authorWait">
+				<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/wait%402x.png"></image>
+				<text>审核中</text>
+			</view> -->
+			</view>
+		</view>
+		<view style="flex:1;"></view>
+		<view catchtap="merchantFavorites">
+			<image
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_follow_fill@2x.png"
+				wx:if="{{isFavorites}}"></image>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_follow@2x.png"
+				wx:else></image>
+			<text class="fontS-11">{{isFavorites ? "已收藏" : "收藏"}}</text>
+		</view>
+	</view>
+	<!--作者 end-->
+
+	<!--空白框 start-->
+	<view class="zwf"></view>
+	<!--空白框 end-->
+
+	<!--具体内容  start-->
+	<view class="context" hidden="{{data_error}}">
+		<!-- <view class="global_page_indent description">
+    <text>{{initial_data.description?initial_data.description:""}}</text>
+  </view> -->
+		<block wx:for="{{hotel_california}}" wx:index="index" wx:key="item">
+			<!--文本 start-->
+			<text wx:if="{{item.type=='text'}}" class="global_page_indent textType">{{item.value?item.value:""}}</text>
+			<!--文本 end-->
+			<!--图片 start-->
+			<image wx:elif="{{item.type=='image'}}" data-previewindex="{{item.index}}" data-errorImg="{{index}}"
+				class="imagePreview  global_page_indent" catchtap="imagePreview" mode="widthFix" binderror="imageErrorHandler"
+				src="{{item.errorimg?errorImg:item.value}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_{{windowWidth}}/format,jpg">
+			</image>
+			<!--图片 end-->
+			<!--视频 start-->
+			<view class="iamge_container" wx:elif="{{item.type=='video'}}">
+				<image class="viewVideo" data-video_index="{{item.video_index}}" data-url="{{item.value}}" mode="aspectFill"
+					catchtap="playVideoView" src="{{item.errorimg?errorImg:item.value+'?x-oss-process=video/snapshot,t_1000'}}"
+					binderror="imageErrorHandler" data-errorImg="{{index}}"></image>
+				<image class="web_icon" data-video_index="{{item.video_index}}" mode="aspectFill" data-url="{{item.value}}"
+					catchtap="playVideoView"
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+				</image>
+			</view>
+			<!--视频 end-->
+			<!--链接 start-->
+			<view class="iamge_container" wx:elif="{{item.type=='link'||item.type=='web'}}">
+				<image data-errorImg="{{index}}" class="jumpLink " catchtap="jumpLink" mode="widthFix"
+					src="{{item.errorimg?errorImg:item.image}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_750/format,jpg"
+					data-url="{{item.value}}" data-is3d="{{item.is3D}}" binderror="imageErrorHandler">
+				</image>
+				<image class="web_icon" mode="aspectFill" data-url="{{item.value}}" data-is3d="{{item.is3D}}"
+					catchtap="jumpLink"
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/360%C2%B0%403x.png"
+					wx:if="{{item.is3D}}"></image>
+			</view>
+			<!--链接 end-->
+		</block>
+	</view>
+	<!--具体内容  end-->
+
+	<!--错误信息 start-->
+	<view class="dataError" hidden="{{!data_error}}">
+		<text>该动态可能已被作者删除或者已过期</text>
+	</view>
+	<!--错误信息 end-->
+
+	<!--视频播放组件 start-->
+	<view class="video_widget" hidden="{{!play_video}}">
+		<scroll-view scroll-y bindscroll="scrollVideo" style="height:100%;" scroll-with-animation='{{true}}'
+			scroll-into-view="video_{{current_video_index}}">
+			<block wx:for="{{video_data}}" wx:key="item" wx:index="index">
+				<view id="video_{{index}}" class="iamge_container video_widget_mask "
+					style="height:{{video_height}}px;width:100%;overflow: hidden;padding-bottom: {{current_video_index==index?0:10}}rpx;padding-top:176rpx;padding-left: 0rpx;padding-right: 0rpx;">
+					<image class="viewVideo_widget" wx:if="{{index!=current_video_index}}"
+						style="height:{{video_height}}px;width:{{windowWidth}}px;" data-url="{{item.value}}" mode="aspectFill"
+						src="{{item.errorimg?errorImg:item.value+'?x-oss-process=video/snapshot,t_1000'}}"
+						binderror="imageErrorHandler" data-errorImg="{{index}}" catchtap="clickPlayVideo"
+						data-video_index="{{index}}"></image>
+					<image class="web_icon" mode="aspectFill" data-url="{{item.value}}" catchtap="clickPlayVideo"
+						data-video_index="{{index}}"
+						src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_video.png">
+					</image>
+					<!-- <view class="video_widget_mask video_dynamic_mask" wx:if="{{index!=current_video_index}}" catchtap="clickPlayVideo" data-video_index="{{index}}" >
+        </view> -->
+					<video class="video_dynamic" style="height:{{video_height}}px;top:176rpx" bindended="videoPlayEnd"
+						object-fit="contain" wx:if="{{index==current_video_index&&!video_play_end}}" autoplay="{{true}}"
+						src="{{item.value}}">
+					</video>
+					<view class="video_end" wx:if="{{index==current_video_index&&video_play_end}}">
+						<view class="video_end_item replay" catchtap="clickPlayVideo" data-video_index="{{index}}">
+							<image class="video_end_cover_image"
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/to_replay.png">
+							</image>
+							<view class="video_end_text">再看一次</view>
+						</view>
+						<view class="video_end_item share">
+							<button open-type="share" class="video_end_share"></button>
+							<image class="video_end_cover_image"
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/wfriend_white.png">
+							</image>
+							<view class="video_end_text">分享给好友</view>
+						</view>
+					</view>
+				</view>
+			</block>
+			<view style="height:{{windowHeight-video_height}}px;background: rgba(255, 255, 255, 1);" bindtap="cancelPlay"
+				class="video_widget_mask"></view>
+		</scroll-view>
+	</view>
+	<!--视频播放组件 end-->
+
+	<!-- 商品列表 start  -->
+	<view class="goodsView" wx:if="{{business_activity_list.length > 0}}">
+		<text>商品</text>
+		<!-- 商品列表 start -->
+		<view class="goodsList">
+			<block wx:for="{{business_activity_list}}" wx:key="index">
+				<view class="goodsItem" catchtap="jumpBusinessActivityDetail" data-code="{{item.code}}"
+					data-activitytype="{{item.typeCode}}">
+					<image src="{{item.pic + utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+					<view>
+						<text class="aline2">{{item.title}}</text>
+						<view class="priceDesc priceFont" style="height:28px;margin-top:0px;margin-left:0px;">
+							<text style="font-size:24rpx;">￥</text>
+							<text style="font-size:32rpx;font-weight:bold;flex:1;">{{item.minPriceYuan}}</text>
+						</view>
+						<view class="goodstag">
+							<view wx:if="{{item.product.typeCode=='logistics'&& item.addressType!='merchant'}}">
+								<view class="goodstag_icon goodstag_text_red">
+									<text>邮</text>
+								</view>
+								<text class="goodstag_wl_color">物流商品</text>
+							</view>
+							<view wx:elif="{{item.product.typeCode=='virtual'}}">
+								<view class="goodstag_icon goodstag_text_yellow">
+									<text>店</text>
+								</view>
+								<text class="goodstag_visual_color">店内服务</text>
+							</view>
+							<view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}">
+								<view class="goodstag_icon goodstag_text_yellow">
+									<text>定</text>
+								</view>
+								<text class="goodstag_visual_color">定金商品</text>
+							</view>
+							<view wx:else>
+								<view class="goodstag_icon goodstag_text_blue">
+									<text>自</text>
+								</view>
+								<text class="goodstag_dd_color">到店自提</text>
+							</view>
+							<text
+								class="{{item.typeCodeName == '原价' ? 'goodstag_activity_yj' : 'goodstag_activity'}}">{{item.typeCodeName
+								== "原价" ? "原价商品" : item.typeCodeName}}</text>
+						</view>
+						<view class="goods_item_bottom">
+							<image
+								src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_fire%402x.png">
+							</image>
+							<text style="line-height:10px;">{{item.total}}</text>
+							<view style="flex:1;"></view>
+							<!-- <view class="join_cart" data-item="{{item}}" catchtap="clickAddCart">
+							<text>加入购物车</text>
+						</view> -->
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+		<!-- 商品列表 end -->
+	</view>
+	<!-- 商品列表 end  -->
+</view>
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

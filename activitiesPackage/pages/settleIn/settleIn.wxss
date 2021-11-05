@@ -1,0 +1,77 @@
+/* activitiesPackage/page/settleIn/settleIn.wxss */
+image {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.settle_in_page {
+  background: #6115dd;
+}
+
+.main_box_list {
+  padding: 0 40rpx 60rpx 40rpx;
+  background: url('http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/main_bg.png') top center no-repeat;
+  background-size: 100% auto;
+}
+
+.activity_box {
+  margin: 0 0 40rpx 0;
+  padding: 30rpx 0 0 0;
+  background: url('http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/tab_bg.png') top center no-repeat;
+  background-size: 100% 72rpx;
+}
+
+.activity_content {
+  position: relative;
+  padding: 52rpx 40rpx 28rpx 40rpx;
+  background: url('http://weclubbing.oss-cn-shenzhen.aliyuncs.com/activities/settleIn/content_bg.png') top center no-repeat;
+  background-size: 90% 100%;
+}
+
+.activity_logo {
+  position: absolute;
+  width: 220rpx;
+  left: 14rpx;
+  top: -30rpx;
+  z-index: 3;
+}
+
+.activity_title {
+  margin: 0 0 20rpx 0;
+}
+
+.activity_title1 {
+  margin: 60rpx 0 20rpx 0;
+}
+
+.activity_title image {
+  height: 56rpx;
+}
+
+.activity_list {
+  margin: 0 20rpx 20rpx 20rpx;
+}
+
+.note_text {
+  padding: 0 20rpx;
+  font-size: 22rpx;
+  color: #fff;
+}
+
+.note_box {
+  padding: 40rpx;
+  border-radius: 40rpx;
+  background: #fff;
+}
+
+.content_list {
+  font-size: 26rpx;
+  line-height: 40rpx;
+  padding: 20rpx 0;
+  border-bottom: 2rpx dashed #a0a0a0;
+}
+
+.content_list:last-child {
+  border: none;
+}

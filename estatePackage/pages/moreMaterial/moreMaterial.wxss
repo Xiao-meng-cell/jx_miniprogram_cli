@@ -1,0 +1,212 @@
+/* estatePackage/pages/moreMaterial/moreMaterial.wxss */
+
+/* 资料库 start  */
+.databank {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #EEEEEE;
+  z-index: 100;
+}
+
+.file_list {
+  width: calc(100% - 40rpx);
+  height: 100%;
+  padding: 0 20rpx;
+  z-index: 101;
+}
+
+.file_list>scroll-view{
+  height: calc(100% - 80rpx);
+  padding-bottom: 80rpx;
+}
+
+.databankList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.databankItem {
+  position: relative;
+  width: 29.4%;
+  padding: 0 12rpx 12rpx 12rpx;
+  box-sizing: border-box;
+  margin: 20rpx 0 0 3%;
+  color: #2c3e50;
+  border-radius: 16rpx;
+  background: #fff;
+}
+
+.databankItem>image {
+  display: block;
+  width: 96rpx;
+  height: 96rpx;
+  margin: 48rpx auto 32rpx auto;
+}
+
+.databankItem>text {
+  font-size: .8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /*超出3行部分显示省略号，去掉该属性 显示全部*/
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.databankItem>view>image {
+  width: 24rpx;
+  height: 28rpx;
+  margin: 0 auto;
+}
+
+.databankItem>view>text{
+  margin: 0 20rpx 0 0;
+  font-size: 20rpx;
+  color: #a0a0a0;
+}
+
+.databank_text_text {
+  width: 100%;
+}
+
+.databank_video {
+  position: absolute;
+  right: 16rpx;
+  z-index: 3;
+}
+
+.databank_video>cover-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48rpx;
+  height: 48rpx;
+  z-index: 98;
+}
+
+.show_map{
+  position: absolute;
+  width: 80rpx;
+  height: 80rpx;
+  left: 20rpx;
+  bottom: 20rpx;
+  z-index: 99;
+}
+
+.databank_audio {
+  position: absolute;
+  right: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10rpx;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16rpx;
+}
+
+.databank_audio>image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.databank_audio>text {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.databank_map {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 503;
+}
+
+.map_box{
+  position: fixed;
+  width: 96%;
+  height: 75%;
+  left: 2%;
+  bottom: 0;
+  border-radius: 16rpx 16rpx 0 0;
+  background: #fff;
+  z-index: 504;
+}
+
+.databank_map>view>image {
+  width: 44rpx;
+  height: 44rpx;
+  margin: 0 10rpx 20rpx 0;
+}
+
+.map_box map {
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx 16rpx 0 0;
+}
+
+.databank_map_memo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 60rpx;
+  right: 20rpx;
+}
+
+.databank_map_memo_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 160rpx;
+  height: 48rpx;
+  border-radius: 4rpx;
+  box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.16);
+  margin-bottom: 20rpx;
+  font-size: .8rem;
+}
+
+.dmmItemColor {
+  background-color: #fff;
+  color: rgb(55, 66, 77);
+}
+
+.dmmItemColor_selected {
+  background-color: rgb(47, 149, 251);
+  color: #fff;
+}
+
+.dmmItem_font_color {
+  color: rgb(55, 66, 77);
+}
+
+.databank_map_memo_item_icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+
+.databank_map_memo>cover-view {
+  display: flex;
+  flex-direction: row;
+}
+
+.bgm_rotation {
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 100;
+}
+
+.row{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}

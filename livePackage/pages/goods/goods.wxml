@@ -1,0 +1,21 @@
+<!--miniprogram/pages/live/goods/goods.wxml-->
+<!-- 商品 start-->
+<view class="goods">
+	<block wx:for="{{business_activity_list}}" wx:key="item" wx:index="index">
+		<block wx:for="{{item}}" wx:for-item="item_key" wx:key="item_key" wx:for-index="ide">
+			<view class="goods_item" data-code="{{item_key.code}}" data-activitytype="{{item_key.typeCode}}" catchtap="goToDetail">
+				<image src="{{item_key.illustration}}" mode="aspectFill"></image>
+				<view>
+					<text class="aline2">{{item_key.title}}</text>
+					<view>
+						<text>￥{{item_key.minPriceDisplay}}</text>
+						<text>{{item_key.total}}人已购</text>
+						<view style="flex:1;"></view>
+						<image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/goodslist_send.png" data-goods="{{item_key}}" catchtap="sendGoods"></image>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+</view>
+<!-- 商品 end-->

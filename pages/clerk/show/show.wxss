@@ -1,0 +1,1017 @@
+/* miniprogram/pages/clerk/show/show.wxss */
+@import "../template/default/default.wxss";
+@import "../template/business/business.wxss";
+@import "../template/newsCard/newsCard.wxss";
+@import "../template/video/video.wxss";
+@import "../template/festival/festival.wxss";
+
+/**联系电话操作*/
+.phone_pup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, .75);
+  z-index: 9999;
+}
+
+.phone_pup_box {
+  position: fixed;
+  width: 90%;
+  left: 5%;
+  bottom: 100rpx;
+  text-align: center;
+  background: #fff;
+  z-index: 10000;
+  border-radius: 24rpx;
+}
+
+.phone_pup_box cover-view {
+  padding: 28rpx 0;
+}
+
+.save_phone {
+  border-top: 4rpx solid #efefef;
+  border-bottom: 8rpx solid #efefef;
+}
+
+.cancle_btn {
+  color: #999;
+}
+
+/**----------*/
+
+button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 2;
+}
+
+.card_head {
+  width: 100%;
+}
+
+/*名片 start*/
+
+.card_floating_window {
+  background-color: white;
+  width: 690rpx;
+  height: 580rpx;
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0px 0rpx 10rpx 2rpx rgba(0, 0, 0, 0.161);
+  margin-top: 2rpx;
+}
+
+.card_floating_window>image:nth-child(1) {
+  background-color: #eee;
+  width: 690rpx;
+  height: 400rpx;
+  position: relative;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  overflow: hidden;
+}
+
+.card_info {
+  width: 690rpx;
+  height: 90rpx;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.card_info_img {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 10rpx;
+}
+
+.card_phone {
+  width: 38rpx;
+  height: 38rpx;
+  margin: 38rpx;
+}
+
+.card_name {
+  display: flex;
+  flex-direction: column;
+  width: 316rpx;
+  flex: 1;
+  position: relative;
+}
+
+.card_name>view:nth-child(1) {
+  margin-bottom: 20rpx;
+  margin-top: 14rpx;
+  display: flex;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(1) {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: rgb(50, 50, 50);
+  margin-right: 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(2) {
+  /* max-width: calc(316rpx * 0.6); */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.card_name>view:nth-child(1)>text:nth-child(2),
+.card_name>view:nth-child(2) {
+  font-size: 24rpx;
+  color: rgb(160, 160, 160);
+}
+
+.card_name::after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  top: 0rpx;
+  background: rgb(222, 222, 222);
+  height: 90%;
+  right: 0rpx;
+  margin: auto;
+  width: 2rpx;
+  border-radius: 10rpx;
+}
+
+.contactBusiness {
+  width: 38rpx;
+  height: 38rpx;
+  margin: 38rpx 30rpx 38rpx 60rpx;
+}
+
+/*名片 end*/
+
+/*收起以下名片信息 start*/
+
+.card_detail_button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 20rpx;
+  padding-top: 30rpx;
+  color: #a0a0a0;
+  padding-bottom: 20rpx;
+}
+
+.setShow_more_card_img {
+  width: 22rpx;
+  height: 22rpx;
+  transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  /* Internet Explorer */
+  -moz-transform: rotate(270deg);
+  /* Firefox */
+  -webkit-transform: rotate(270deg);
+  /* Safari 和 Chrome */
+  -o-transform: rotate(270deg);
+  /* Opera */
+  margin-left: 36rpx;
+}
+
+.mirrorRotateVertical {
+  /* 垂直镜像翻转 */
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  /* Internet Explorer */
+  -moz-transform: rotate(90deg);
+  /* Firefox */
+  -webkit-transform: rotate(90deg);
+  /* Safari 和 Chrome */
+  -o-transform: rotate(90deg);
+  /* Opera */
+}
+
+/*收起以下名片信息 end*/
+
+/*名片详细信息 start*/
+
+.clerk_detail {
+  width: 690rpx;
+  height: 394rpx;
+  border: 2rpx solid rgb(244, 244, 244);
+  margin: auto;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.bottom_border_item {
+  font-size: 34rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  position: relative;
+}
+
+.leaving_message {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2rpx solid #eee;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+}
+
+.bottom_border_item::first-child {
+  margin-top: 20rpx;
+}
+
+.bottom_border_item:last-child {
+  border: none;
+}
+
+.leaving_message>text:nth-child(1) {
+  font-size: 24rpx;
+  color: rgb(128, 128, 128);
+}
+
+.leaving_message>input:nth-child(2),
+.leaving_message>view:nth-child(2) {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  float: right;
+  width: 364rpx;
+  margin-left: 40rpx;
+  flex: 1;
+}
+
+.clerk_detail_buttom {
+  width: 68rpx;
+  height: 36rpx;
+  border: 2rpx solid rgb(47, 149, 251);
+  font-size: 20rpx;
+  margin-left: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(47, 149, 251);
+}
+
+.a_line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*名片详细信息 end*/
+
+/*浏览人数 start*/
+
+.seen {
+  display: flex;
+  color: #2f95fb;
+  font-size: 24rpx;
+  justify-content: space-around;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.seen_headimg>image {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 12rpx;
+  margin-left: 10rpx;
+}
+
+.seen_headimg>image:nth-child(1) {
+  margin-left: 0rpx;
+}
+
+.seen_text {
+  color: rgb(160, 160, 160);
+  font-size: 20rpx;
+}
+
+/*浏览人数 end*/
+
+/*操作按钮 start*/
+
+.blue_button {
+  width: 330rpx;
+  height: 70rpx;
+  background: #2f95fb;
+  font-size: 32rpx;
+  color: #ffffff;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.blue_button_pebble {
+  width: 330rpx;
+  height: 70rpx;
+  font-size: 32rpx;
+  background: rgba(47, 149, 251, 0.15);
+  box-sizing: border-box;
+  color: rgb(47, 149, 251);
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.sharecard {
+  position: relative;
+}
+
+.sharecard>button {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  position: absolute;
+  z-index: 2;
+}
+
+.clerk_operation {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+/*操作按钮 end*/
+
+/*tab 私人定制 企业简介 推荐商品 start*/
+
+/*内容部分 start*/
+.lookMoreGoods {
+  width: 100%;
+  height: 60rpx;
+  color: rgb(47, 149, 251);
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.recommendGoods {
+  font-size: 30rpx;
+  color: rgb(47, 149, 251);
+  /* text-align: left; */
+  height: 60rpx;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  padding: 30rpx 30rpx 0rpx 30rpx;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  background: rgb(244, 244, 244);
+}
+
+.goodsItem {
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+  width: calc((100vw - 30rpx * 2 - 30rpx) / 2);
+  min-height: 10vh;
+  background-color: #fff;
+  border-radius: 18rpx;
+}
+
+.goodsItem_odd {
+  margin-left: 30rpx;
+}
+
+.goodsItem>image {
+  width: calc((100vw - 30rpx * 2 - 30rpx) / 2);
+  height: calc((100vw - 30rpx * 2 - 30rpx) / 2);
+  border-top-left-radius: 18rpx;
+  border-top-right-radius: 18rpx;
+  background-color: #a0a0a0;
+}
+
+.goodsItem>view {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10rpx;
+}
+
+.goodsItem>view>text:first-child {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: rgb(50, 50, 50);
+  height: 76rpx;
+}
+
+.goodstag_deliver {
+  border-top-right-radius: 8rpx;
+  border-bottom-right-radius: 8rpx;
+  box-sizing: content-box;
+  padding-right: 8rpx;
+  padding-left: 4rpx;
+}
+
+.goodstag_dd {
+  color: #2f95fb;
+  border: 2rpx solid rgb(47, 149, 251);
+}
+
+.goodstag_wl {
+  color: #ff6f00;
+  border: 2rpx solid rgb(255, 111, 0);
+}
+
+.goodstag_visual {
+  color: #FFB74D;
+  border: 2rpx solid rgb(255, 183, 77);
+}
+
+.goodstag>view {
+  margin-left: 8rpx;
+  height: 100%;
+}
+
+.goodstag_text {
+  color: white;
+  display: inline-block;
+  padding: 1rpx 4rpx 1rpx 4rpx;
+  /* border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx; */
+  border-radius: 80rpx;
+}
+
+.goodstag_text_blue {
+  background: #2f95fb;
+}
+
+.goodstag_text_red {
+  background: #ff6f00;
+}
+
+.goodstag_text_yellow {
+  background: #FFB74D;
+}
+
+.goods_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rpx;
+}
+
+.goods_bottom>view {
+  display: flex;
+  align-items: center;
+}
+
+.goods_bottom>view>text {
+  font-size: 20rpx;
+  color: rgb(160, 160, 160);
+  margin-left: 10rpx;
+}
+
+.goods_bottom>view>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.inbonus {
+  font-size: 28rpx;
+  color: rgb(255, 0, 17);
+}
+
+.inreward_share_button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.goods_item_bottom>image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
+
+/*内容部分 end*/
+
+/*tab 私人定制 企业简介 推荐商品 end*/
+
+/*企业名片留言*/
+
+.card_message {
+  width: 700rpx;
+  min-height: 230rpx;
+  border-radius: 20rpx;
+  border: 1px solid rgb(47, 149, 251);
+  margin: auto;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.card_message_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 6rpx 0;
+}
+
+.card_message_title>view>image:nth-child(1) {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.card_message_title>view:nth-child(1) {
+  font-size: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(91, 134, 254);
+}
+
+.card_message_title>text:nth-child(2),
+.card_choose_template>text:nth-child(1),
+.card_message_title>view:nth-child(2)>text {
+  float: right;
+  font-size: 28rpx;
+  color: #a0a0a0;
+  padding: 10rpx;
+}
+
+.card_message_title>view:nth-child(2)>text:nth-child(1) {
+  margin-left: 30rpx;
+}
+
+.card_message_text {
+  font-size: 30rpx;
+  color: #a0a0a0;
+  height: 100rpx;
+  width: 95%;
+  z-index: 15;
+  zoom: 1;
+  position: absolute;
+}
+
+.card_details {
+  position: relative;
+  overflow-y: auto;
+}
+
+.business_hot_tagcode_rank {
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+.business_hot_tagcode_rank>text {
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 30rpx;
+  color: #a0a0a0;
+  font-size: 20rpx;
+  display: inline-block;
+}
+
+/*企业名片留言*/
+
+/*企业过期 start*/
+
+.merchant_err {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: white;
+  text-align: center;
+  font-size: 34rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+}
+
+.toIndex {
+  border-radius: 60rpx;
+  border: 2rpx solid #bdc0c1;
+  color: #bdc0c1;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  margin-top: 30rpx;
+}
+
+/*企业过期 end*/
+
+/***浮窗 start***/
+
+.homepage_button {
+  height: 45px;
+  width: 50px;
+  z-index: 1000;
+  position: fixed;
+  bottom: 100px;
+  right: 0rpx;
+  /* border-radius: 50rpx; */
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border: 2rpx solid rgba(218, 218, 218, 0.8);
+  background-color: rgba(240, 240, 240, 0.8);
+  box-shadow: 0px 0rpx 20px 8rpx rgba(114, 114, 114, 0.1);
+}
+
+.homepage_button_bg {
+  height: 70rpx;
+  width: 70rpx;
+  border-radius: 50rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+}
+
+.view_default_hover {
+  background-color: #ececec;
+  opacity: 0.7;
+}
+
+/***浮窗 end****/
+
+/*私人定制编辑框 start*/
+
+.card_message_edit {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  top: 0;
+}
+
+.card_message_edit_item {
+  background: white;
+  width: 100%;
+  height: 90%;
+  border-top-left-radius: 32rpx;
+  border-top-right-radius: 32rpx;
+  position: fixed;
+  bottom: 0;
+}
+
+.card_message_edit_close {
+  height: 64rpx;
+  line-height: 64rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card_message_edit_close>image {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 30rpx;
+  margin-top: 10rpx;
+}
+
+.card_message_edit_close>view {
+  font-size: 32rpx;
+  color: rgb(91, 134, 254);
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+/*私人定制编辑框 end*/
+
+/*交换名片 start*/
+
+.collection_windows {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.card_list {
+  position: absolute;
+  width: calc(100vw - 72rpx * 2);
+  height: 70vh;
+  background-color: #fff;
+  border-radius: 24rpx;
+  margin-left: 72rpx;
+  margin-right: 72rpx;
+  margin-top: 15vh;
+  z-index: 1001;
+}
+
+.card_list>view:nth-child(1) {
+  margin-top: 16px;
+}
+
+.scvCards {
+  margin-top: 24rpx;
+  margin-bottom: 120rpx;
+  display: flex;
+  width: 100%;
+  height: calc(100% - 24rpx - 120rpx);
+}
+
+/**卡片列表 start **/
+
+.card_item {
+  width: calc(100vw - 72rpx * 2 - 40rpx * 2 - 32rpx * 2);
+  position: relative;
+  border-radius: 24rpx;
+  margin-bottom: 24rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  padding: 32rpx;
+}
+
+.card_item_selected {
+  border: 2rpx solid #2f95fb;
+}
+
+.card_item_unselected {
+  border: 2rpx solid #eeeeee;
+}
+
+.card_item_left {
+  width: 112rpx;
+  height: 112rpx;
+  background: #e5e5e5;
+  border-radius: 16rpx;
+  display: block;
+  margin-right: 32rpx;
+}
+
+.card_item_right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card_item_right>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  color: #37424D;
+}
+
+.card_item_right>view:nth-child(1)>text:nth-child(1) {
+  max-width: calc(100% - 160rpx - 32rpx);
+  font-size: 28rpx;
+  line-height: 28rpx;
+  margin-right: 32rpx;
+}
+
+.card_item_right>view:nth-child(1)>text:nth-child(2) {
+  width: 140rpx;
+  font-size: 22rpx;
+  line-height: 22rpx;
+}
+
+.card_item_right>view:nth-child(2) {
+  font-size: 22rpx;
+  margin-top: 12rpx;
+  color: #A0A0A0;
+}
+
+.card_item_right>view:nth-child(3) {
+  font-size: 22rpx;
+  margin-top: 12rpx;
+  color: #A0A0A0;
+}
+
+/**卡片列表 end**/
+
+.temp_flag {
+  position: absolute;
+  top: 0rpx;
+  right: 32rpx;
+  display: flex;
+  flex-direction: row;
+  background: #2F95FB;
+  border-bottom-left-radius: 16rpx;
+  border-bottom-right-radius: 16rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+.temp_flag>text {
+  font-size: 22rpx;
+  color: #fff;
+}
+
+.add_card_item {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0rpx 0rpx 0rpx 0rpx rgba(0, 0, 0, 0);
+  border: 4rpx #eee dashed;
+  border-radius: 10rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSubmit {
+  display: flex;
+  position: fixed;
+  bottom: 15vh;
+  left: 88rpx;
+  width: calc(100% - 72rpx * 2 - 16rpx * 2);
+  background: #fff;
+  color: #2F95FB;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  line-height: 44rpx;
+  font-weight: bold;
+  border-top: 2rpx solid #eeeeee;
+  padding-top: 24rpx;
+  padding-bottom: 24rpx;
+  z-index: 1002;
+}
+
+.imgCloseCardList {
+  position: absolute;
+  right: 32rpx;
+  width: 56rpx;
+  height: 56rpx;
+}
+
+/*交换名片 end*/
+
+/* 切页栏 start */
+
+.withAnimate {
+  transition: all 200ms ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
+
+/* 切页栏 end */
+
+/*返回 start*/
+
+.retrun_img {
+  width: 36rpx;
+  height: 36rpx;
+  position: fixed;
+  z-index: 5000;
+  left: 20rpx;
+  margin-top: 20rpx;
+}
+
+.retrun_text {
+  position: fixed;
+  z-index: 5050;
+  left: 100rpx;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #fff;
+}
+
+.retrun_view {
+  position: fixed;
+  z-index: 500;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.retrun_view1 {
+  background-color: #FFF !important;
+  height: 280rpx;
+}
+
+.retrun_view_left {
+  width: 80rpx;
+  height: 62rpx;
+}
+
+.retrun_view_right {
+  width: 80rpx;
+  height: 62rpx;
+}
+
+.textColer {
+  color: #37424D !important;
+}
+
+/*返回 end*/
+.inviteBg {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  justify-content: flex-end;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.inviteBg>view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25vh;
+  background-color: #fff;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+
+.inviteBg>view>button>view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.inviteBg_button {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 2
+}
+
+.inviteBg>view>button>view>image {
+  width: 15vw;
+  height: 15vw;
+}
+
+.inviteBg>view>button>view>text {
+  font-size: 3.6vw;
+  margin-top: 1.5vh;
+}
+
+/* 邀请合伙人 end  */
+
+/* 返回顶部 */
+.back-top {
+  position: fixed;
+  bottom: 355rpx;
+  right: 20rpx;
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  z-index: 999;
+  background: white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6rpx 24rpx rgb(15, 23, 72, 0.15);
+}
+
+.back-top image {
+  width: 100%;
+  height: 100%;
+}

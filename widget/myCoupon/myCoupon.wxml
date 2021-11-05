@@ -1,0 +1,71 @@
+<!--widget/myCoupon/myCoupon.wxml-->
+<view class="remind"
+  wx:if="{{((eventCode=='' && !invalid && couponList.length >0 ) || (eventCode && couponList.length >0)) && topTips}}">
+  优惠顺序为优先满减券后再折扣券最后现金券</view>
+<view class="coupon_page" style="{{couponList.length <3? 'height:100vh' :'height:100%'}}">
+  <block wx:if="{{couponList !='' && couponList && couponList.length > 0}}">
+    <view class="{{item.showText ? 'coupon_box y_layout ' : 'coupon_box1 y_layout ' }}" wx:for="{{couponList}}"
+      wx:for-item="item" wx:key="index" wx:if="{{couponList && couponList.length >0}}">
+      <view class="recommend fontS-11" wx:if="{{item.recommendUse=='1'}}">推荐</view>
+      <view class="x_layout top_box" style="{{invalid?'background:#D8D8D8':'background:#ffffff'}}">
+        <view>
+          <view class="fontS-16 fontW-700 coupon_text {{invalid? 'invalid_color':'valid_color'}}">{{item.couponName}}
+          </view>
+          <view class="fontS-10 {{invalid? 'invalid_color':'valid_color'}}">{{item.sTime}}-{{item.eTime}}
+          </view>
+        </view>
+        <view style="margin-left: auto;text-align: right;white-space: nowrap;">
+          <view class="{{invalid? 'invalid_color':'price_color'}}" wx:if="{{item.typeCode !='discount_coupon'}}">
+            <view class="db_inline fontS-11" style="margin-top: 20rpx">￥</view>
+            <view class="db_inline" style="font-size: 56rpx" wx:if="{{item.typeCode =='cash_coupon'}}">
+              {{item.cashAmountYuan}}</view>
+            <view class="db_inline" style="font-size: 56rpx"
+              wx:if="{{item.typeCode =='full_reduction_coupon' || item.typeCode =='pre_charge_coupon'}}">
+              {{item.rebatePriceYuan}}</view>
+          </view>
+          <view class="{{invalid? 'invalid_color':'price_color'}}" wx:if="{{item.typeCode =='discount_coupon'}}">
+            <view class="db_inline" style="font-size: 56rpx">{{item.discountYuan}}</view>
+            <view class="db_inline fontS-11" style="margin-top: 20rpx">折</view>
+          </view>
+          <view class="fontS-10 {{invalid? 'invalid_color':'coupon_type'}}">{{item.typeCodeName}}</view>
+        </view>
+      </view>
+      <!-- <view class="white_line x_layout"> -->
+      <view class="RightRound"></view>
+      <view class="centerRound"></view>
+      <view class="LeftRound"></view>
+      <!-- </view> -->
+
+      <view class="bottom_box x_layout">
+        <view class="x_layout" data-index="{{index}}" data-type="money" catchtap="showMasseges">
+          <text class="fontS-11 {{invalid? 'color2':'color1'}}">使用规则</text>
+          <image class="bottom_btn"
+            src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_down%403x.png">
+          </image>
+        </view>
+        <view class="used_btn {{invalid?'used_btn1':''}}" data-item="{{item}}" catchtap="goShopDetail"
+          wx:if="{{!checked}}">去使用</view>
+        <image class="{{item.checkedIn ?'selected': 'no_selected'}}"
+          src="{{item.checkedIn ? 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/icon_checkbox_16px%403x.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/Checkbox_16px%403x.png'}}"
+          data-index="{{index}}" data-item="{{item}}" catchtap="selectedClick" wx:if="{{checked}}"></image>
+      </view>
+      <view class="rule_box" hidden="{{!item.showText}}">
+        <view wx:for="{{item.useRules}}" wx:for-item="rules" wx:key="index">
+          <text class="text">{{index + 1}}、{{rules}}</text>
+        </view>
+      </view>
+      <image class="invalid"
+        src="{{invalid == '1' ? 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/coupon/tag_used.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/coupon/tag_failed.png'}}"
+        wx:if="{{invalid}}"></image>
+    </view>
+    <view class="loadAll fontS-11" hidden="{{!loadAll}}">
+      <text>没有更多券了~</text>
+    </view>
+  </block>
+  <view class="emptyView" wx:else>
+    <image
+      src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+    </image>
+    <text>你还没有获得任何券</text>
+  </view>
+</view>

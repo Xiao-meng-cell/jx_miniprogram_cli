@@ -1,0 +1,2 @@
+<!--pages/clerk/dynamic /dynamic_card.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />

@@ -1,0 +1,256 @@
+/* miniprogram/pages/tabBar_index/confirm_order/confirm_order.wxss */
+
+/**收获地址**/
+
+.receiving_address {
+  height: 200rpx;
+  display: flex;
+  align-items: center;
+  flex: none;
+  justify-content: space-between;
+}
+
+.receiving_address>image:nth-child(1) {
+  width: 38rpx;
+  height: 38rpx;
+}
+
+.receiving_address>view:nth-child(2){
+  width: 550rpx;
+}
+
+.receiving_address>view:nth-child(2)>text:nth-child(2) {
+  font-size: 24rpx;
+}
+
+.receiving_address>view:nth-child(2)>view:nth-child(1) {
+  font-size: 24rpx;
+  
+}
+
+.receiving_address>image:nth-child(3) {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+/**收货地址**/
+
+/*商品描述*/
+.goods_describe{
+  padding-top: 30rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.goods_describe>image:nth-child(1){
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
+  background-color: #a0a0a0;
+}
+
+.goods_price {
+  margin-left: 30rpx;
+  width:80%;
+
+}
+
+.goods_price>view:nth-child(1) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  font-size: 34rpx;
+}
+
+.goods_price>view:nth-child(2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 30rpx;
+}
+
+.goods_price>view:nth-child(3)>text:nth-child(1) {
+  color: #fb5c56;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.goods_price>view:nth-child(3)>text:nth-child(2) {
+  color: #a0a0a0;
+  font-size: 22rpx;
+  margin-left: 20rpx;
+  text-decoration: line-through;
+}
+
+.goods_price>view:nth-child(3)>text:nth-child(3) {
+  font-size: 22rpx;
+  color: #fb5c56;
+  border: 1rpx solid #fb5c56;
+  border-radius: 10rpx;
+  padding-top: 6rpx;
+  padding-bottom: 6rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  line-height: 24rpx;
+  margin-left: 20rpx;
+}
+
+/*商品描述*/
+
+/*购买数量，留言*/
+.bottom_border_item{
+  font-size: 34rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  position: relative;
+}
+.bottom_border_item::after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  left: 30rpx;
+  background: #eeeeee;
+  height: 1px; 
+  margin: auto;
+  width: 100%;
+  border-radius: 10rpx;
+} 
+.buy_num{
+  margin-top: 20rpx;
+}
+
+.buy_num>view:nth-child(2){
+  float: right;
+}
+
+.buy_num>view:nth-child(2)>image{
+  width: 32rpx;
+  height: 32rpx; 
+}
+
+.buy_num>view:nth-child(2)>image:nth-child(1){
+  margin-right: 30rpx; 
+}
+
+.buy_num>view:nth-child(2)>image:nth-child(3){
+  margin-left: 30rpx; 
+}
+
+.coupon{
+
+}
+
+.coupon>view:nth-child(2){
+  float: right;
+}
+
+.coupon>view:nth-child(2)>text{
+  font-size: 30rpx;
+}
+
+.coupon>view:nth-child(2)>image{
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.coupon>view:nth-child(2)>text:nth-child(2){
+  color: #fb5c56;
+  font-size: 34rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.coupon>view:nth-child(2)>text:nth-child(2){
+  color: #fb5c56;
+  font-size: 34rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.leaving_message{
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+}
+
+.leaving_message>text:nth-child(1){
+  
+}
+
+.leaving_message>input:nth-child(2){
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  float: right;
+  width: 75%;
+  margin-left: 30rpx;
+}
+
+/*购买数量，留言*/
+
+/*合计*/
+.user_operation {
+  display: flex;
+  position: fixed;
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 100%;
+  bottom: 0rpx;
+  background-color: white;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  z-index: 1000；
+}
+
+.user_operation>view:nth-child(1){
+  width: 70%;
+  position: relative;
+  font-size: 30rpx;
+} 
+
+.user_operation>view:nth-child(1)>text:nth-child(2) {
+  margin-right: 30rpx;
+  color: #fb5c56;
+   position: relative;
+}
+
+.user_operation>view:nth-child(1)>text:nth-child(2):after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  top:0rpx;
+  background: #eeeeee;
+  height: 70%; 
+  right: -8px;
+  margin: auto;
+  width: 2px;
+  border-radius: 10rpx;
+}
+
+.user_operation>view:nth-child(1)>text:nth-child(3) {
+  font-size: 28rpx;
+  color: #a0a0a0;
+}
+
+.user_operation>view:nth-child(2){
+  width: 30%;
+  text-align: center;
+  background-color: #fb5c56;
+  color: white;
+  font-size: 30rpx;
+  position: relative;
+  z-index: 100;
+} 
+
+ 
+/*合计*/
+
+.iPhone_X{
+  height: 130rpx;
+}
+
+.placeholder_mesaage{
+}

@@ -1,0 +1,23 @@
+/** 获取显示图标 */
+function getIcon(type, imgs) {
+  //判断是否为客户订单
+  if (type == 'relation_type_customer_order') {
+    return imgs.split('["')[1].split('"')[0]
+  } else if (type == 'relation_type_gift') {
+    return 'https://www.vicpalm.com' + imgs
+  } else {
+    return imgs
+  }
+}
+
+/** 截取银行卡号 */
+function cutbankCard(bankCard) {
+  if (bankCard) {
+    return bankCard.substring(bankCard.length - 4, bankCard.length)
+  }
+}
+
+module.exports = {
+  getIcon: getIcon,
+  cutbankCard: cutbankCard,
+}

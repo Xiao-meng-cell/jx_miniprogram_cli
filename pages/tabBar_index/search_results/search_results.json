@@ -1,0 +1,7 @@
+{
+  "usingComponents": { 
+    "search-column": "/widget/search-column/search-column",
+    "open-network": "/widget/open-network/open-network"
+   },
+  "enablePullDownRefresh": true
+}

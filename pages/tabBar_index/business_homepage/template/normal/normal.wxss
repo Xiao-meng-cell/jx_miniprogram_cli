@@ -1,0 +1,300 @@
+/* 商品 关于企业 start  */
+.g-doc {
+  height: 100%;
+}
+
+.tab_business_info {
+  box-sizing: border-box;
+  background: #fff;
+  margin-top: 10rpx;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.unselected_tag_menu {
+  display: inline-block;
+  font-size: 28rpx;
+}
+
+.selected_tag_menu {
+  position: relative;
+  display: inline-block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2f95fb;
+}
+
+.screening_fixed {
+  position: fixed;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  z-index: 1000;
+  left: 0;
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+.tab_business_info>view,
+.screening_fixed>view {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.tab_business_info>view:not(:first-child),
+.screening_fixed>view:not(:first-child) {
+  margin-left: 40rpx;
+}
+
+.tab_business_info>view>text {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: block;
+}
+
+.selected_tag_menu ::after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 60rpx;
+  height: 6rpx;
+  left: 50%;
+  bottom: -10rpx;
+  margin: 0 0 0 -30rpx;
+  background: #2f95fb;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  bottom: -8rpx;
+  background: #2f95fb;
+  width: 25rpx;
+  right: 0;
+  left: 0;
+  margin: auto;
+  height: 8rpx;
+  border-radius: 20rpx;
+}
+
+.news_title {
+  margin-top: 32rpx;
+  color: #37424D;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+}
+
+/* 商品 关于企业 end  */
+
+/* 遮罩层 start  */
+.gradual {
+  margin-left: -32rpx;
+  margin-right: -32rpx;
+  width: 100vw;
+  height: 96rpx;
+
+}
+
+.gradualBgColor {
+  background: linear-gradient(to bottom, #ffffff, #F6F6F6);
+}
+
+/* 遮罩层 end  */
+
+/* 商品列表 start */
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin: 20rpx 0 0 0;
+  padding: 0 32rpx;
+}
+
+#goodsItem {
+  width: 48%;
+}
+
+/* #goodsItem:nth-child(2n) {
+  margin-left: 7px;
+} */
+
+/* 商品列表 end */
+
+/* 企业简介 start  */
+
+#business_info {
+  margin: 20rpx 32rpx 0 32rpx;
+}
+
+.business_info {
+  font-size: 24rpx;
+}
+
+.business_info>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  margin-top: 24rpx;
+}
+
+.business_info>view:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.business_info>view:nth-child(2)>text {
+  color: #2f95fb;
+  font-size: 24rpx;
+}
+
+/* 企业简介 end  */
+
+
+/* 成为合伙人 start  */
+.joinMe {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 24rpx;
+  padding-left: 20rpx;
+  padding-right: 26rpx;
+  width: 100%;
+  height: 72rpx;
+  background: #e4f2ff;
+  border-radius: 16rpx;
+  color: #2f95fb;
+  font-size: 24rpx;
+  box-sizing: border-box;
+}
+
+.joinMe>image:nth-of-type(1) {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.joinMe>image:nth-of-type(2) {
+  width: 15rpx;
+  height: 27rpx;
+}
+
+/* 成为合伙人 end  */
+
+
+/* 品牌货源入口 start  */
+
+.channelGoods {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  padding: 24rpx;
+  margin-top: 24rpx;
+  border-radius: 16rpx;
+}
+
+.channelGoods>view:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  font-size: 22rpx;
+  color: #37424D;
+}
+
+.channelGoods>view:nth-child(1)>image {
+  width: 172rpx;
+  height: 32rpx;
+  margin-bottom: 10rpx;
+}
+
+.channelGoods>text:nth-child(3) {
+  font-size: 22rpx;
+  color: #A0A0A0;
+}
+
+/* 品牌货源入口 end  */
+
+.estateInfo {
+  background-image: url(https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/estateBG.png);
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+
+.page-section-spacing {
+  padding: 0;
+  background-color: #f6f6f6;
+  position: relative;
+}
+
+/* .page-section-spacing::after{
+  position: absolute;
+  content: '';
+  display: block;
+  z-index: 33;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  opacity: 0.4;
+  background: linear-gradient(#fff, #fff);
+} */
+.swiper {
+  flex: 1;
+}
+
+.swiper ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.scroll_container {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  padding-top: 10rpx;
+  height: 100%;
+  top: 0px;
+  bottom: 0px;
+}
+
+.show_top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgb(255, 255, 255);
+}
+
+.switch1_btn {
+  padding: 10rpx 40rpx;
+  color: #5b86fe;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 30rpx auto;
+  width: 40%;
+  text-align: center;
+}
+
+.swiper-item {
+  /* overflow: scroll; */
+}
+.dynamic-screening-content {
+  margin: 0 32rpx;
+}
+.dynamic-screening-fixed-mask-top {
+  position: fixed;
+  width: 100%;
+  background: #FFF;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+}
+

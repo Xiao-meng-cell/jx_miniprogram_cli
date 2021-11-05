@@ -1,0 +1,32 @@
+<!--pages/tabBar_user_center/menu_wallet/cashOutHickory/detail/cashOutHickoryDetail.wxml-->
+<wxs module="dateUtil" src="../../../../../utils/timeUtil.wxs"></wxs>
+<wxs module="brUtil" src="../../balancerecord/balancerecord.wxs"></wxs>
+<!-- 详情信息 start -->
+<view class="head">
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_bank.png"></image>
+  <text class="fontS-14">{{data.memo == "掌创人生个人提现" ? "钱包提现" : data.memo}}</text>
+  <text class="fontS-20" style="margin-top:16rpx;">￥{{data.totalAmountYuan}}</text>
+</view>
+<view class="bottom">
+  <view class="textRow">
+    <text class="fontS-14 fontC-c">提现银行</text>
+    <text class="fontS-12">{{data.bank}}</text>
+  </view>
+  <view class="textRow">
+    <text class="fontS-14 fontC-c">当前状态</text>
+    <text class="fontS-12">{{data.result}}</text>
+  </view>
+  <view class="textRow">
+    <text class="fontS-14 fontC-c">交易类型</text>
+    <text class="fontS-12">{{data.memo}}</text>
+  </view>
+  <view class="textRow">
+    <text class="fontS-14 fontC-c">提现日期</text>
+    <text class="fontS-12">{{dateUtil.dateFormat(data.createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+  </view>
+  <view class="textRow">
+    <text class="fontS-14 fontC-c">交易单号</text>
+    <text class="fontS-12">{{data.code}}</text>
+  </view>
+</view>
+<!-- 详情明细 end -->

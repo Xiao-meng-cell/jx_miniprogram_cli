@@ -1,0 +1,96 @@
+<wxs src="../../../../../utils/utils.wxs" module="utils" />
+<!--个人名片 start-->
+<view id='viewCardItem' class='card_list_item'>
+  <view class="card_userhaedImg">
+    <image src='{{card_headimg+utils.resizeImg(250)}}' mode='aspectFill' data-src='{{card_headimg}}' catchtap="imgYu"></image>
+  </view>
+  <view class="card_username">
+    <text>{{card_name}}</text>
+    <text>{{card_position==null?"":card_position}}</text>
+    <text>{{card_phone}}</text>
+  </view>
+  <view class='line'></view>
+  <view hidden='{{read}}'>{{card_merchantName?card_merchantName:merchantShortName}}</view>
+  <view hidden='{{read}}'>{{card_merchantAddr}}</view>
+  <view hidden='{{!read}}' class='temporaryMerchant'>{{companyShort?companyShort:card_company}}</view>
+</view>
+<!--个人名片 end-->
+
+<!--完善资料框 start-->
+<view hidden='{{read}}'>
+  <view class='bottom_border_item global_page_indent  uploadImg' style='margin-bottom:4vh;'>
+    <view>名片头像</view>
+    <image class='ser_uploadimg' data-src='{{card_headimg}}' catchtap="{{card_headimg?'imgYu':'uploadImgVideo'}}" mode="aspectFill" src='{{card_headimg?card_headimg:"https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/add_img.png"}}'>
+      <cover-image style='display:{{card_headimg?"":"none"}}' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/upload_close.png" class='ser_uploadClose' catchtap='deleteFile'></cover-image>
+    </image>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>姓名</text>
+    <input placeholder='请输入名字' bindinput='inputCardName' value='{{card_name}}'></input>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>公司/单位</text>
+    <input placeholder='请输入公司/单位名字' bindinput='inputCardMerchantName' value='{{card_merchantName}}'></input>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>部门/职位</text>
+    <input placeholder='请输入部门/职位' bindinput='inputCardPosition' value='{{card_position}}'></input>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>手机号</text>
+    <input placeholder='请输入手机号' bindinput='inputCardPhone' value='{{card_phone}}' maxlength="11" type='number'></input>
+  </view>
+  <!-- <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>邮箱</text>
+    <input placeholder='请输入邮箱（选填）' bindinput='inputCardEmail' value='{{card_email}}'></input>
+  </view> -->
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>QQ</text>
+    <input placeholder='请输入QQ号（选填）' bindinput='inputCardQQ' value='{{card_qq}}'></input>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='display:none;'>
+    <text>微信</text>
+    <input placeholder='请输入微信号（选填）' bindinput='inputCardWX' value='{{card_wx}}'></input>
+  </view>
+  <view class='bottom_border_item global_page_indent leaving_message' style='border-bottom:0px solid #eee;display:none;'>
+    <text>地址</text>
+    <input placeholder='请选择' catchtap='mapNavigation' value='{{card_merchantAddr}}' disabled='true'></input>
+  </view>
+  <view class='global_page_indent' style='display:none;'>
+    <textarea placeholder='详细地址' value='{{card_merchantAddr}}' bindinput='inputCardMerchantAddr'></textarea>
+  </view>
+  <view class='global_page_indent' style='height:3vh;'>
+  </view>
+</view>
+
+<!--完善资料框 end-->
+
+<!--制作名片 start-->
+<view style='background-color: #FFFFFF;width:100%;height:8vh;' hidden='{{read}}'>
+  <view class='make_button' catchtap='submitApply'>
+    保存
+  </view>
+</view>
+<!--制作名片 end-->
+
+
+
+<!--制作名片 start-->
+<view style='background-color: #FFFFFF;width:100%;height:8vh;' hidden='{{!read}}'>
+  <view class='make_button' catchtap='deleteCard'>
+    删除
+  </view>
+</view>
+<!--制作名片 end-->
+
+<!--入驻提示 start-->
+<view id='tips_bg' catchtouchmove='stopMove' bindtap='closeTip' wx:if='{{tipsDisplay}}'>
+  <image id='imgTips' src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/weclubbing/images/tips.png' mode='aspectFit' catchtap='temp'></image>
+  <block>
+    <image id='imgCard' src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/weclubbing/images/button_white.png' mode='aspectFit' catchtap='applyCard'></image>
+  </block>
+  <block>
+    <image id='imgEnter' src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/weclubbing/images/button.png' mode='aspectFit' catchtap='enterBusiness'></image>
+  </block>
+</view>
+<!--入驻提示 end-->

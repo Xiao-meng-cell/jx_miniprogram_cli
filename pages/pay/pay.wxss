@@ -1,0 +1,26 @@
+/* pages/pay/pay.wxss */
+
+.oeder_code{
+  padding: 40rpx;
+}
+.oeder_code text{
+  display: inline-block;
+  vertical-align: middle;
+}
+.oeder_code input{
+  display: inline-block;
+  vertical-align: middle;
+  padding: 20rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 8rpx;
+}
+
+.pay_btn{
+  width: 280rpx;
+  margin: 0 auto;
+  padding: 20rpx 0;
+  color: #fff;
+  text-align: center;
+  background: #2f95fb;
+  border-radius: 8rpx;
+}

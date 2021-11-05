@@ -1,0 +1,129 @@
+<!--widget/clerkItem/clerkItem.wxml-->
+<wxs src="../../utils/utils.wxs" module="utils" />
+<view class='card_list_item {{item.clerkBgClass}}' catchtap='jumpCardDetail' data-merchantcode='{{item.merchantCode}}'
+  data-id='{{item.id}}' data-status="{{item.status}}" hidden='{{item.isMineMerchant}}'
+  style='display:{{item.merchantCode == "temporary"?"none":""}}'>
+  <view>
+    <view class="card_userhaedImg">
+      <image src='{{item.merchantHeadimg + utils.resizeImg(250)}}' mode='aspectFill'></image>
+      <!-- <view class="card_userhaedImgFlag">
+        <view class='rotate'>
+          <text>{{item.styleType == "festival" ? "贺卡" : item.styleType == "video" ? "视频" : "商务" }}</text>
+        </view>
+      </view> -->
+    </view>
+    <view class="card_username">
+      <view>
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/icon_label_zhikong.png"
+          mode="widthFix" wx:if="{{item.merchantType == 'mainStore' || item.merchantType == 'branchStore'}}"></image>
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_label_flagship%403x.png"
+          mode="widthFix" wx:elif="{{item.ultimate == 1}}"></image>
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_label_brand%403x.png"
+          mode="widthFix" wx:elif="{{item.channel == 1}}"></image>
+        <text
+          class="{{item.ultimate == 1 || item.channel == 1 ? 'iconText' : 'noIconText'}}">{{item.merchantName?item.merchantName:item.merchantShortName}}</text>
+      </view>
+      <text>{{item.name}}{{item.role == 1 ? "·事业合伙人" : item.role == 0 ? "·共享合伙人" : ""}}</text>
+      <view>
+        <text
+          class="{{item.memberCount > 0 ? 'userNameWidth' : 'userNameWidth2'}}">{{item.position == null ? "" : item.position}}</text>
+        <view
+          class="memberCount {{item.ultimate == 1 ? 'memberCountUltimate' : item.channel == 1 ? 'memberCountChannel' : 'memberCountDefault'}}">
+          <image
+            src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/qxhhr.png"
+            wx:if="{{item.ultimate == 1}}">
+          </image>
+          <image
+            src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/icon_flag_yellow%403x.png"
+            wx:elif="{{item.channel == 1}}">
+          </image>
+          <image
+            src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/icon_flag_blue%403x.png"
+            wx:else>
+          </image>
+          <text>{{item.role == 1 || item.role == 2 ? "我的团队": "企业同事"}}</text>
+          <text>{{item.memberCount}}人</text>
+        </view>
+        <view style="flex:1;"></view>
+        <!-- <image class="qrCode"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_qr_gray3%403x.png"
+          data-id="{{item.id}}" catchtap="shareCardCode"
+          wx:if="{{item.status != 2 && (item.ultimate == 1 || item.merchantType == 'mainStore' || item.merchantType == 'branchStore')}}">
+        </image>
+        <image class="qrCode"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_qr_gray2%403x.png"
+          data-id="{{item.id}}" catchtap="shareCardCode" wx:elif="{{item.status != 2 && item.channel == 1}}"></image>
+        <image class="qrCode"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_qr_gray%403x.png"
+          data-id="{{item.id}}" catchtap="shareCardCode" wx:else></image> -->
+      </view>
+      <text class="status2" wx:if="{{item.status == 2}}">审核中</text>
+    </view>
+  </view>
+  <view class='members_otp'>
+    <!-- 企业同事 -->
+    <view data-item="{{item}}" catchtap='lookMineTeam' wx:if="{{item.role != 2 && !isBoss}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_colleagues1%403x.png"
+        wx:if="{{item.ultimate == 1 || item.merchantType == 'mainStore' || item.merchantType == 'branchStore'}}">
+      </image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_colleagues2%403x.png"
+        wx:elif="{{item.channel == 1}}"></image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_colleagues3%403x.png"
+        wx:else></image>
+      <text>企业同事</text>
+    </view>
+    <!-- 旗下员工 -->
+    <view catchtap='lookMembers' data-merchantstatus="{{item.merchantStatus}}" data-id="{{item.id}}"
+      wx:if="{{isBoss}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_employees1%403x.png"
+        wx:if="{{item.ultimate == 1 || item.merchantType == 'mainStore' || item.merchantType == 'branchStore'}}">
+      </image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_employees2%403x.png"
+        wx:elif="{{item.channel == 1}}"></image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_employees3%403x.png"
+        wx:else></image>
+      <text>旗下员工</text>
+    </view>
+    <!-- 申请列表 -->
+    <view catchtap='toApplyList' wx:if="{{item.role == 2}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/clerk_apply1.png"
+        wx:if="{{item.ultimate == 1}}"></image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/clerk_apply2.png"
+        wx:elif="{{item.channel == 1}}"></image>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/clerk_apply3.png"
+        wx:else></image>
+      <text>申请列表</text>
+    </view>
+  </view>
+  <view class="point" data-merchantcode='{{item.mainMerchantCode}}' catchtap="jumpWebView"
+    wx:if="{{item.merchantType == 'mainStore' || item.merchantType == 'branchStore'}}">
+    <view>
+      <text>{{item.merchantType == 'mainStore' ? '总店' : '分店'}}</text>
+      <text> | 旗舰智控</text>
+    </view>
+    <view>
+      <text>公司经营点:{{item.branchCount}}</text>
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkList/icon_forward%403x.png">
+      </image>
+    </view>
+  </view>
+  <view class="itemMask" catchtap="catchMouseOperate" wx:if="{{!item.clerkEnabel}}">
+    <text>名片已失效</text>
+    <view data-item="{{item}}" catchtap="delMineClerk">
+      <text>删除</text>
+    </view>
+  </view>
+</view>

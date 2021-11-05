@@ -1,0 +1,245 @@
+/**物流 start**/
+
+.logistics_info {
+  display: flex;
+  flex-direction: row;
+  height: 90rpx;
+  align-items: center;
+  font-size: 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+.logistics_info>text:nth-child(1) {
+  line-height: 28rpx;
+  margin-right: 40rpx;
+}
+
+.logistics_info>view:nth-child(2) {
+  font-size: 24rpx;
+  color: #808080;
+}
+
+.logistics_info_img_free {
+  width: 96rpx;
+  height: 32rpx;
+}
+
+.logistics_info_img {
+  width: 24rpx;
+  height: 24rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.logistics_info_price {
+  color: rgb(47, 149, 251);
+}
+
+.priceItem_logistics_free {
+  font-size: 24rpx;
+  color: #FF2D55;
+  margin-top: 16rpx;
+}
+
+.priceItem_logistics_free>image {
+  margin-right: 16rpx;
+}
+
+/**物流 end**/
+
+/*商家自提点 start*/
+
+.pickUpView {
+  padding-bottom: 34rpx;
+  background-color: #fff;
+  border-bottom-left-radius: 24rpx;
+  border-bottom-right-radius: 24rpx;
+}
+
+.pickUp_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 24rpx;
+}
+
+.pickUp_title>text:nth-child(2) {
+  font-size: 24rpx;
+  color: rgb(160, 160, 160);
+}
+
+.pickUp_addr {
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  padding: 32rpx 22rpx 32rpx 32rpx;
+  background-color: #fafafa;
+  border-radius: 24rpx;
+}
+
+.addr_pick_up_img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 40rpx;
+}
+
+.addr_pick_up_img_next {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.pickUp_addr>view {
+  flex: 1;
+  font-size: 24rpx;
+  color: #808080;
+}
+
+.pickUp_addr>image:nth-of-type(2) {
+  width: 20rpx;
+  height: 20rpx;
+  margin-left: 20rpx;
+}
+
+.fresh_tips {
+  margin-bottom: 26rpx;
+}
+
+.fresh_tips>image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 32rpx;
+}
+
+.fresh_tips>view {
+  display: flex;
+  flex-direction: column;
+  color: #37424d;
+  font-size: 24rpx;
+}
+
+/*商家自提点 end*/
+
+/**参与用户部分 start**/
+
+.take_part_in {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 24rpx;
+  padding-top: 28rpx;
+  padding-bottom: 28rpx;
+}
+
+.take_part_in>view:nth-child(3) {
+  float: right;
+  line-height: 80rpx;
+  height: 80rpx;
+  font-size: 24rpx;
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+}
+
+.take_part_in>view:nth-child(3)>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.user_buy_list>view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #a0a0a0;
+  height: 80rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.user_buy_list>view:last-child,
+.user_buy_list>view:first-child {
+  border-bottom: none;
+}
+
+.user_buy_list>view>view:nth-child(1) {
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  line-height: 30rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user_buy_list>view>view:nth-child(1)>image,
+.user_buy_list>image,
+.user_list_temp>image {
+  width: 39rpx;
+  height: 39rpx;
+  background-color: #a0a0a0;
+  border-radius: 30rpx;
+  flex: none;
+  border: #fff 1rpx solid;
+}
+
+.user_list_temp>image:not(:last-child) {
+  margin-right: -8rpx;
+}
+
+.user_list_temp {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 236rpx;
+  overflow: hidden;
+  background: #fff;
+  border-bottom-left-radius: 24rpx;
+  border-bottom-right-radius: 24rpx;
+}
+
+
+.user_buy_list>view>text:nth-child(2) {
+  font-size: 24rpx;
+}
+
+.user_buy_list>view>text:nth-child(3) {
+  font-size: 24rpx;
+}
+
+/**参与用户部分 end**/
+
+/**活动详情部分 start**/
+
+.active_detail_title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 80rpx;
+  background: #fff;
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+}
+
+.active_detail_context {
+  display: block;
+  font-size: 28rpx;
+  color: #37424d;
+  background: #fff;
+  padding-bottom: 20rpx;
+}
+
+.active_detail_img {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.active_detail_img>image {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  background-color: #eee;
+  margin-top: -4rpx;
+}
+
+/**活动详情部分 end**/

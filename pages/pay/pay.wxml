@@ -1,0 +1,8 @@
+<!--pages/pay/pay.wxml-->
+<!-- <view>
+	<view class="oeder_code">
+		<text>预付单号：</text>
+		<input value="{{orderCode}}" placeholder="请输入预付单号"></input>
+	</view>
+  <view class="pay_btn" catchtap="getWeChatRecharge">立即支付</view>
+</view> -->

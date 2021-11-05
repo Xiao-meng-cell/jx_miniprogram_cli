@@ -1,0 +1,128 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_manage/business_card_favorites/business_card_favorites.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+
+<topBar title="我的收藏"></topBar>
+<!--企业 start-->
+<view class="viewCompany" hidden='{{current_index != 0 }}'>
+	<view class="viewCompanyFilter">
+		<view class='{{enterpriseListOrderBy == "name" ? "viewCompanyFilterItem_selected" : "viewCompanyFilterItem"}}'
+			data-order='name' catchtap='enterpriseListOrderChange'>
+			<text>名称排序</text>
+			<view>
+				<view id="triangle-up"
+					class="{{enterpriseListOrderBy  == 'name' && nameSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}">
+				</view>
+				<view id="triangle-down"
+					class="{{enterpriseListOrderBy  == 'name' && !nameSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}">
+				</view>
+			</view>
+		</view>
+		<view class='{{enterpriseListOrderBy == "time" ? "viewCompanyFilterItem_selected" : "viewCompanyFilterItem"}}'
+			data-order='time' catchtap='enterpriseListOrderChange'>
+			<text>收藏时间</text>
+			<view>
+				<view id="triangle-up"
+					class="{{enterpriseListOrderBy  == 'time' && timeSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}">
+				</view>
+				<view id="triangle-down"
+					class="{{enterpriseListOrderBy  == 'time' && !timeSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}">
+				</view>
+			</view>
+		</view>
+	</view>
+	<scroll-view class='merchant_collection'>
+		<!--左侧部分 start-->
+		<view class='left_menu {{iphone_x ? "left_menu_bottom_iphonex" : "left_menu_bottom"}}'
+			style="top:{{capsuleTop == 0 ? 68 : capsuleTop + 40}}px;" wx:if='{{enterprise_list.length > 0}}'>
+			<scroll-view scroll-y="true" class='tagCode_scroll_x'>
+				<block wx:for="{{enterprise_tagCodes}}" wx:key="item" wx:index="index">
+					<view
+						class='tagCode_item {{index == selected_enterpriseTagIndex ? "tagCode_item_choose" : "tagCode_item_unchoose"}}'
+						data-code="{{item.code}}" data-index='{{index}}' catchtap='changeTagCode_index'>
+						<text>{{item.name}}</text>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
+		<!--左侧部分 end-->
+		<!--右侧部分 start-->
+		<view class='card_list' wx:if='{{enterprise_list.length > 0}}'>
+			<block wx:for="{{enterprise_list}}" wx:key="item" wx:index="index">
+				<view class='enterprise_item' catchtap='jumpToBusiness' data-code="{{item.merchantCode}}"
+					data-id="{{item.clerkId}}">
+					<image class='card_item_left' src='{{item.clerk.headimg}}' mode='aspectFill'></image>
+					<view class='card_item_right'>
+						<view>
+							<text class='aline1'>{{item.clerk.name}}</text>
+							<text>{{item.clerk.phone}}</text>
+						</view>
+						<text class='aline1'>{{item.merchant.tagName}}</text>
+						<text class='aline1'>{{item.merchant.name}}</text>
+					</view>
+				</view>
+			</block>
+			<view style='margin-bottom:{{iphone_x ? 88 : 50}}px;'></view>
+		</view>
+		<!--右侧部分 end-->
+		<view class="emptyView" wx:elif="{{enterprise_list.length==0}}">
+			<image
+				src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_collect%403x.png">
+			</image>
+			<text>没有任何数据</text>
+		</view>
+	</scroll-view>
+</view>
+<!--企业 end-->
+
+<!--场合scroll-view  start-->
+<scroll-view class=' situation_joined' hidden='{{current_index != 1}}'>
+	<view class='left' wx:if='{{scene_list.length > 0}}'>
+		<block wx:for="{{scene_list}}" wx:key="item">
+			<view class=' scene_item' data-situation="{{item.situation}}" bindtap='toSceneDetail'>
+				<image src='{{item.situation.headimg}}' style='width:200rpx;height:200rpx;' mode='aspectFill'></image>
+				<view>
+					<view>
+						<text class='groupName'>{{item.situation.groupName}}</text>
+					</view>
+					<view style='display:flex;flex-direction:row;'>
+						<view class='role'>
+							<text
+								style='color:#a0a0a0;padding:2px;font-size:13px;'>{{item.situation.userId == userId ? "我创建的" : "我加入的"}}</text>
+						</view>
+						<view style='flex:1;'></view>
+						<view class='time'>
+							<text>{{item.displayTime}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view class="emptyView" wx:elif="{{scene_list.length==0}}">
+		<image
+			src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_collect%403x.png">
+		</image>
+		<text>没有任何数据</text>
+	</view>
+</scroll-view>
+<!--场合scroll-view  end-->
+
+<!--tarbar start-->
+<view id='tabBottom' class="tab_bar {{iphone_x ? 'tab_bar_height_iphonex' : 'tab_bar_height'}}">
+	<view bindtap='showBusiness'>
+		<image
+			src="{{current_index==0?'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/card_favorites/merchant.png':'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/card_favorites/merchant_def.png'}}">
+		</image>
+		<view>企业</view>
+	</view>
+	<view bindtap='showScene'>
+		<image
+			src="{{current_index==1?'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/card_favorites/situation.png':'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/card_favorites/situation_def.png'}}">
+		</image>
+		<view>场合</view>
+	</view>
+</view>
+<!--tarbar end-->
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

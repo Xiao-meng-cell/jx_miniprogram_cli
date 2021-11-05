@@ -1,0 +1,49 @@
+<!--estatePackage/pages/moreMaterial/moreMaterial.wxml-->
+<!-- <view class='first_view_serch'>
+	<view class='search_view'>
+		<icon size='15' type='search'></icon>
+		<input class='search_view_input' focus='true' placeholder='搜索' placeholder-class='' confirm-type='search' bindconfirm='jumpSearchResults' bindinput="changeSearchText"></input>
+	</view>
+	<view class='search_view_text' bindtap='jumpSearchResults'>
+		<text>搜索</text>
+	</view>
+</view> -->
+<view class='tabs'>
+	<view wx:for="{{materialTabs}}" class="tabsItem  {{tabActive==item.id?'active':''}}" catchtap="tabClick" data-id="{{item.id}}" wx:key="id">
+		{{item.name}}
+	</view>
+</view>
+ 
+	<!-- 资料库内容 start -->
+	<view class="databank" wx:if="{{databank.length>0}}" >
+		<view class="file_list" catchtap="stopMouseOperate">
+	 
+			<scroll-view scroll-y="true" scroll-top='{{databankTopNum}}' bindscrolltolower="loadMoreDatabank">
+				<view class="databankList">
+					<block wx:for="{{databank}}" wx:for-item="item_key" wx:key="index_key">
+						<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+							<view class="databankItem"  data-file="{{item}}" catchtap="openFile">
+								<image src="{{item.fileTypeIcon}}"></image>
+								<text class="aline2">{{item.title}}</text>
+								<view class="row">
+
+									<text>{{item.displayTime}}</text>
+									<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/ziliaoku-position%403x.png" data-lat="{{item.lat}}" data-lng="{{item.lng}}" catchtap="openMap" wx:if="{{item.lat && item.lat != ''&& item.lng && item.lng != ''}}"></image>
+								</view>
+							</view>
+
+						</block>
+					</block>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
+	<!-- 资料库内容 end -->
+
+
+<view class="dataNull" wx:else>
+	<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/detailed_null.png"></image>
+	<view style="color:#999">空空如也</view>
+</view>
+
+  <fileBox fileInfo="{{fileInfo}}" wx:if="{{showFileBox}}" bindhidden="closeFile"/>

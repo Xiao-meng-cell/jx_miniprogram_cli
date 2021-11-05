@@ -1,0 +1,168 @@
+/* pages/tabBar_user_center/menu_wallet/menu_wallet.wxss */
+
+Page {
+  background: #f6f6f6;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  margin-bottom: 16rpx;
+}
+
+.wallet_bg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 32rpx 32rpx 0px 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  border-radius: 24rpx;
+  background: -webkit-linear-gradient(180deg, #2fb5fb, #348cff);
+  background: -o-linear-gradient(180deg, #2fb5fb, #348cff);
+  background: -moz-linear-gradient(180deg, #2fb5fb, #348cff);
+  background: linear-gradient(180deg, #2fb5fb, #348cff);
+  box-shadow: 0px 10rpx 20rpx 0px rgba(164, 164, 164, 0.16);
+}
+
+.wallet_bg>view:nth-of-type(1) {
+  display: flex;
+  flex-direction: row;
+  padding: 16rpx 32rpx;
+  width: calc(100% - 32rpx * 2);
+  justify-content: space-between;
+  border-bottom: 2rpx solid #ffffff;
+}
+
+.wallet_bg>view:nth-of-type(1)>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.wallet_bg>view:nth-of-type(1) text {
+  color: #ffffff;
+  font-size: 24rpx;
+}
+
+.wallet_bg>view:nth-of-type(1) image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
+
+.wallet_bg>text {
+  margin-top: 24rpx;
+  margin-bottom: 16rpx;
+  font-size: 96rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.charge {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32rpx;
+  padding: 18rpx 96rpx;
+  background: linear-gradient(180deg, #ffffff, #eff7ff);
+  border-radius: 40rpx;
+  box-shadow: 0px 6rpx 12rpx 0px rgba(56, 95, 172, 0.16);
+}
+
+.charge>text {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #2f95fb;
+}
+
+.fgx {
+  display: flex;
+  width: 100%;
+  height: 16rpx;
+  background: #f6f6f6;
+}
+
+.wallet_menu {
+  margin-top: 64rpx;
+  margin-bottom: 32rpx;
+}
+
+.wallet_menu_split {
+  height: 96rpx;
+  width: 2rpx;
+  background: #EEEEEE;
+}
+
+.split-row {
+  flex: 1;
+}
+
+.split-row>text:nth-of-type(1) {
+  background: #f4f6f9;
+  border-radius: 24rpx;
+  padding: 4rpx 28rpx;
+  font-size: 28rpx;
+  color: #37424d;
+  margin-bottom: 16rpx;
+}
+
+.dshje {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.dshje>text:nth-of-type(1) {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2f95fb;
+  line-height: 32rpx;
+}
+
+.dshje>text:nth-of-type(2) {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #2f95fb;
+  line-height: 48rpx;
+}
+
+.cardNum {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #37424D;
+  line-height: 48rpx;
+}
+
+
+.cash_out_hickory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+  margin-left: 32rpx;
+  padding-right: 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  height: 96rpx;
+}
+
+.cash_out_hickory>image:nth-of-type(1) {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+}
+
+.cash_out_hickory>text {
+  font-size: 32rpx;
+  color: #37424d;
+}
+
+.cash_out_hickory>image:nth-of-type(2) {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.cash_out_hickory:not(:last-child) {
+  border-bottom: 2rpx solid #eeeeee;
+}

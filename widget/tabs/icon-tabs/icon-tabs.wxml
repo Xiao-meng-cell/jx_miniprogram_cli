@@ -1,0 +1,17 @@
+
+
+<scroll-view scroll-x="true" class="scroll"  scroll-into-view="{{intoView}}" scroll-with-animation bindscroll="scroll">
+	<block wx:for="{{tabs}}" wx:for-item="item"  wx:key="*this" id="{{tabIdTag+item.id}}" >
+		<view class="item" bindtap='onTabClick'  data-item='{{item}}'  style="margin-right: {{margin}}rpx" >
+			<view class="col">
+				<view class="row">
+					<image style="height: {{iconHeight}}rpx;width: {{iconWidth}}rpx; margin-right: {{iconMargin}}rpx" src="{{iconBaseUrl+item.activeIcon}}" wx:if="{{item.id == currentIndex&&item.activeIcon&&item.activeIcon!=''&&showIcon}}"></image>
+					<image style="height: {{iconHeight}}rpx;width: {{iconWidth}}rpx;  margin-right: {{iconMargin}}rpx;" src="{{iconBaseUrl+item.icon}}" wx:if="{{item.id != currentIndex&&item.icon&&item.icon!=''&&showIcon}}"></image>
+					<view style="color:{{item.id == currentIndex? activeColor:defaultColor}};font-size:{{item.id == currentIndex&&activeFontSize? activeFontSize:fontSize}}rpx;font-weight:{{item.id == currentIndex&&bold? 'bold':'normal'}};" >{{item.title}}</view>
+				</view>
+				<view class="line" style="background:{{item.id == currentIndex? activeColor:'none'}};  margin-top:{{lineMargin}}rpx;height: {{lineHeight}}rpx;width: {{lineWidth}}rpx; " />
+			</view>
+		</view>
+	</block>
+	<view class="ip_tab_comtainer_padd"></view>
+</scroll-view>

@@ -1,0 +1,10 @@
+/* pages/tab_index/search_results/search_results.wxss */
+@import "../../../assets/template/business_list_big_picture//business_list_big_picture.wxss";
+
+.nothing {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 300rpx;
+}

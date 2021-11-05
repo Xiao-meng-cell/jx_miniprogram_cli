@@ -1,0 +1,119 @@
+/* expandPackage/pages/hotPartnerList/hotpartnerList.wxss */
+.hotPatner{
+  background-color:#F6F6F6 ;
+  padding: 0 32rpx 40rpx 32rpx;
+  /* height: 100vh; */
+}
+/* 商品列表 start */
+
+.goodsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  box-sizing: border-box;
+  margin-top: -72rpx;
+}
+
+.goodsItem {
+  box-sizing: border-box;
+  width: calc((100vw - 32rpx * 2 - 14rpx) / 2);
+  margin-bottom: 16rpx;
+  background-color: #fff;
+  border-radius: 24rpx;
+}
+
+.goodsItem:nth-child(2n) {
+  margin: 0 0 0 14rpx;
+}
+
+.goodsItem>image {
+  width: calc((100vw - 32rpx * 2 - 14rpx) / 2);
+  height: calc((100vw - 32rpx * 2 - 14rpx) / 2);
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+  background-color: #a0a0a0;
+}
+
+.goodsItem>view {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8rpx 16rpx 16rpx;
+}
+
+.goodsItem>view>text:nth-of-type(1) {
+  height: 84rpx;
+  line-height: 44rpx;
+  color: #37424D;
+}
+
+.goodsItem>view>view:nth-of-type(4) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.goodsItem>view>view:nth-of-type(4)>image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
+
+.goodsItem>view>view:nth-of-type(4)>text {
+  color: #a0a0a0;
+  font-size: 20rpx;
+  line-height: 20rpx;
+}
+
+/* 标签 start  */
+.goodstag>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.goodstag_icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 60rpx;
+}
+
+.goodstag_icon>text {
+  line-height: 20rpx;
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.goodstag>view:nth-child(1)>text:nth-child(2) {
+  font-size: 20rpx;
+  padding: 0 8rpx 0 16rpx;
+  border-top-right-radius:14rpx;
+  border-bottom-right-radius: 14rpx;
+  margin: 0 0 0 -12rpx;
+
+}
+
+.goodstag>text:nth-child(2) {
+  font-size: 20rpx;
+  padding: 0 8rpx;
+  margin: 0 0 0 8rpx;
+  border-radius: 14rpx;
+}
+
+.goodstag_activity {
+  color: rgba(255, 111, 0, 1);
+  background: rgba(255, 111, 0, 0.05);
+}
+
+.goodstag_activity_yj {
+  color: rgba(128, 128, 128, 1);
+  background: rgba(128, 128, 128, 0.05);
+}
+
+/* 标签 end  */
+
+/* 商品列表 end */

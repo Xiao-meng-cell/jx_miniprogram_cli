@@ -1,0 +1,30 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_manage/business_card_searchResult/business_card_searchResult.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!--搜索栏 start-->
+<search-column id="searchBar" keyword="{{keyword}}" bind:executeSearch="clearDataStatus"
+  bind:keywordChangeInput="keywordChangeInput"></search-column>
+<!--搜索栏 end-->
+
+<!--名片list start-->
+<view hidden='{{type=="clerk"?false:true}}'>
+  <block wx:for="{{card_list_merchant}}" wx:key="item">
+    <block wx:for="{{item}}" wx:for-item="item_key" wx:key="id">
+      <clerkItem id="clerkItem" data="{{item_key}}"></clerkItem>
+    </block>
+  </block>
+  <view class="loadAll" hidden="{{!loadAll}}">
+    <text>已全部加载</text>
+  </view>
+</view>
+<!--名片list end-->
+
+<!-- 联想自动补全 start -->
+<view class="autoComplete" hidden="{{autoCompleteHidden}}">
+  <block wx:for="{{searchResult}}">
+    <view class="resultItem" data-item="{{item}}" catchtap="clickResultItem">
+      <text>{{item.name}}</text>
+      <text>{{item.type}}</text>
+    </view>
+  </block>
+</view>
+<!-- 联想自动补全 end -->

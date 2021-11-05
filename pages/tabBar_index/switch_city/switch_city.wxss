@@ -1,0 +1,62 @@
+/* pages/tab_index/switch_city1/switch_city.wxss */
+page{
+  height: 100%;
+}
+
+/*左侧省份*/
+.left_part{
+  width: 30%;
+  height: 100%;
+  overflow: hidden;
+  zoom: 1;
+  float: left;
+}
+
+.viewScroll{
+  height: 100%;
+}
+
+.province_view{
+  background: #f4f4f4;
+  height:100rpx;
+  align-items:center;
+  display:flex;
+  padding:10rpx 0;
+
+}
+
+.province_view>text{
+  display: block;
+  margin: auto;
+  font-size: 30rpx;
+  color:#858585;
+}
+/*左侧省份end*/
+
+/*右边城市*/
+.right_part{
+  float: left;
+  width: 60%;
+  height: 100%;
+  overflow: hidden;
+  margin-left: 40rpx;
+}
+
+.city_view{
+  width: 200rpx;
+  font-size: 28rpx;
+  float:left;
+  border:2rpx solid #dbdbdb;
+  border-radius:15rpx;
+  display:flex;
+  justify-content:center;
+  margin: 10rpx ;
+  padding:20rpx 0;
+
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}

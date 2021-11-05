@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "homepage_button": "/widget/homepage-button/homepage-button"
+  }
+}

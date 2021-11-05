@@ -1,0 +1,61 @@
+<!--pages/tabBar_index/logistics_info_detail/logistics_info_detail.wxml-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+<!-- 发货地 start -->
+<view class="cotent_area  source" style="border-bottom: #eee 1px solid;font-weight:bold;">
+	<text>发货地：{{province}}{{city}}</text>
+	<text wx:if="{{area != ''}}">{{area}}</text>
+</view>
+<!-- 发货地 end -->
+<!-- 物流区域 start -->
+<view class="cotent_area  source" style="color:#2f95fb;">
+	<text>包邮配送区域：</text>
+	<text wx:if="{{freeShippAreaList.length == 0}}">无</text>
+</view>
+<view class="cotent_area provinceName" wx:if="{{freeShippAreaList.length > 0}}">
+	<block wx:for="{{freeShippAreaList}}" wx:key="id">
+		<text>{{item.provinceName? item.provinceName : item.name}}</text>
+		<text wx:if="{{index != freeShippAreaList.length - 1}}">、</text>
+	</block>
+</view>
+<!-- 物流区域 end -->
+<view class="space"></view>
+<!-- 付费区域 start -->
+<view class="cotent_area  source" style="color:#808080;">
+	<text>买家付邮费区域：</text>
+	<text wx:if="{{payAreaList.length == 0}}">无</text>
+	<view style="flex:1;" wx:if="{{payAreaList.length > 0}}"></view>
+	<text style="font-size:24rpx;" wx:if="{{payAreaList.length > 0}}">按{{unit}}计算</text>
+</view>
+<view class="cotent_area" wx:if="{{payAreaList.length > 0}}">
+	<block wx:for="{{payAreaList}}" wx:key="id">
+		<view class="payAreaListItem">
+			<view>
+				<text class="provinceName">{{item.provinceName}}</text>
+				<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/badge@2x.png"
+					class="logistics_free_img" hidden="{{item.freePostageNum == 0 || item.freePostageNum == ''}}"></image>
+			</view>
+			<text class="provinceName">商品在{{chargeType == 1 ? item.proBasicNum / 1000 : item.proBasicNum}}{{chargeType == 1 ?
+				"公斤" : unit}}内{{item.basicPrice/100}}元</text>
+			<text class="provinceName">每增加{{chargeType == 1 ? item.increaseNum/ 1000 : item.increaseNum}}{{chargeType == 1 ?
+				"公斤" : unit}}，增加运费{{item.increasePrice/100}}元</text>
+			<text style="margin-bottom: 0rpx;color:#FF2D55;"
+				hidden="{{item.freePostageNum == 0 || item.freePostageNum == ''}}">单次满{{chargeType == 1 ? item.freePostageNum /
+				1000 + "公斤" : item.freePostageNum + unit}}，变为包邮</text>
+			<view class="fgx" wx:if="{{index != payAreaList.length - 1}}"></view>
+		</view>
+	</block>
+</view>
+<!-- 付费区域 end -->
+<view class="space"></view>
+<!-- 不配送区域 start -->
+<view class="cotent_area  source" style="color:#fe2130;">
+	<text>不配送区域：</text>
+	<text wx:if="{{notlogisticAreaList.length == 0}}">无</text>
+</view>
+<view class="cotent_area provinceName" wx:if="{{notlogisticAreaList.length > 0}}">
+	<block wx:for="{{notlogisticAreaList}}" wx:key="id">
+		<text>{{item.provinceName}}</text>
+		<text wx:if="{{index != notlogisticAreaList.length - 1}}">、</text>
+	</block>
+</view>
+<!-- 不配送区域 end -->

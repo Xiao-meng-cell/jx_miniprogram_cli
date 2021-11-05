@@ -1,0 +1,36 @@
+<!--pages/tabBar_user_center/business_card_manage/business_card_record/business_card_record.wxml-->
+<!--个人scroll-view  start-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+
+<topBar title="我的浏览"></topBar>
+<scroll-view class='card_collection' wx:if="{{card_list.length > 0}}">
+  <block wx:for="{{card_list}}" wx:key="item">
+    <block wx:for="{{item}}" wx:for-item="item_key" wx:key="id">
+      <view class='card_item' catchtap='jumpToBusiness' data-code="{{item_key.merchantCode}}"
+        data-id="{{item_key.clerkId}}">
+        <image class='card_item_left' src='{{item_key.clerk.headimg+utils.resizeImg(250)}}' mode='aspectFill'></image>
+        <view class='card_item_right'>
+          <view>
+            <text class='aline1'>{{item_key.clerk.name}}</text>
+            <text class='aline1'>{{item_key.clerk.phone}}</text>
+          </view>
+          <text class='aline1'>{{item_key.clerk.position}}</text>
+          <text class='aline1'>{{item_key.clerk.merchantName}}</text>
+        </view>
+        <view class='temp_flag' wx:if='{{item_key.follow}}'>
+          <text>已收藏</text>
+        </view>
+      </view>
+    </block>
+  </block>
+</scroll-view>
+<view class="emptyView" wx:elif="{{card_list.length <= 0}}">
+  <image
+    src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+  </image>
+  <text>暂无浏览记录</text>
+</view>
+<!--个人scroll-view  start-->
+
+  <!--网络状态监听-->
+	<noneLine wx:if="{{!networkType}}"></noneLine>

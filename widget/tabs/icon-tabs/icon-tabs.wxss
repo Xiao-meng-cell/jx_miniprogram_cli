@@ -1,0 +1,23 @@
+/* widget/tabs/icon-tabs/icon-tabs.wxss */
+
+
+.row{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+.col{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+ 
+ .scroll {
+  width: 100%;
+  padding: 20rpx 0 0;
+  white-space: nowrap;
+}
+
+.item {
+  display: inline-block;
+}

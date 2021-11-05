@@ -1,0 +1,36 @@
+/* pages/tabBar_user_center/menu_wallet/record_details/record_details.wxss */
+@import '/assets/styles/com_order_details.wxss';
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+.head text:nth-child(1) {
+  font-size: 3.2vw;
+  color: #a0a0a0;
+}
+
+.head text:nth-child(2) {
+  font-size: 4vw;
+  color: #a0a0a0;
+}
+
+.head text:nth-child(3) {
+  font-size: 10vw;
+  font-weight: bold;
+}
+
+.tipMessage {
+  font-size: 3.2vw;
+  color: #fb5c56;
+}
+
+.vertical-left view:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

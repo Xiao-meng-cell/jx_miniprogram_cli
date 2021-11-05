@@ -1,0 +1,17 @@
+<!--expandPackage/pages/member/records/detail.wxml-->
+<view class="main">
+  <image src="{{data.iconUrl}}">
+  </image>
+  <text class="title">{{data.remarks != "" ? data.remarks : data.historySourceName}}</text>
+  <text class="num">{{data.valueDisplay}}</text>
+  <view class="desc">
+    <view>
+      <text>变动时间</text>
+      <text>{{data.createdTime}}</text>
+    </view>
+    <view wx:if="{{data.couponCode}}">
+      <text>使用券</text>
+      <text>{{data.couponName}}</text>
+    </view>
+  </view>
+</view>

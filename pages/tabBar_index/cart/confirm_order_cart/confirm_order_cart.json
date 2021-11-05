@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "date-time-picker": "/widget/picker/picker",
+    "payPassword": "/widget/payPassword/payPassword"
+  },
+  "navigationBarTitleText": "订单支付"
+}

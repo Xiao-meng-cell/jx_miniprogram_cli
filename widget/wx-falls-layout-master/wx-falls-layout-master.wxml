@@ -1,0 +1,52 @@
+<!--widget/wx-falls-layout-master/wx-falls-layout-master.wxml-->
+<wxs src="../../utils/utils.wxs" module="utils" />
+<!-- <scroll-view scroll-y="true" scroll-top='{{topNum}}' bindscrolltolower="loadMore" data-formTabBar='{{formTabBar}}' style="height:{{formTabBar?(scrollH-80):scrollH}}px;background-color: #f6f7f8;"> -->
+<view class="goodsList" wx:if="{{business_activity_list[0].length > 0}}">
+	<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+			<view class="goodsItem" data-clerk_code="{{clerk_code}}" catchtap="jumpBusinessActivityDetail" data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+				<image src="{{item.illustration+utils.resizeImgSurvey(60)}}" mode="aspectFill"></image>
+				<view>
+					<text class="aline2 goods_padding_margin">{{item.title}}</text>
+					<view class="priceDesc priceFont">
+						<text>￥</text>
+						<text>{{item.minPrice}}</text>
+					</view>
+					<view class="goodstag goods_padding_margin">
+						<view wx:if="{{item.product.typeCode=='logistics'&&item.addressType!='merchant'}}">
+							<text class="goodstag_text goodstag_text_red">邮</text>
+							<text class="goodstag_deliver goodstag_wl">物流商品</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='virtual'}}">
+							<text class="goodstag_text goodstag_text_yellow">店</text>
+							<text class="goodstag_deliver goodstag_visual">店内服务</text>
+						</view>
+						<view wx:elif="{{item.product.typeCode=='deposit'}}">
+							<text class="goodstag_text goodstag_text_yellow">定</text>
+							<text class="goodstag_deliver goodstag_visual">定金商品</text>
+						</view>
+						<view wx:else>
+							<text class="goodstag_text goodstag_text_blue">自</text>
+							<text class="goodstag_deliver goodstag_dd">到店自提</text>
+						</view>
+						<view>
+							<text>{{item.typeCodeName}}</text>
+						</view>
+					</view>
+					<view class="goods_padding_margin goods_item_bottom">
+						<text>{{item.total}}</text>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/attend_num%403x.png"></image>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+	<view class="noMore" hidden="{{!loadAll}}">
+		<text>没有更多数据了</text>
+	</view>
+</view>
+<!-- </scroll-view> -->
+<view class="emptyView" wx:else>
+	<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png"></image>
+	<text>暂无商品</text>
+</view>

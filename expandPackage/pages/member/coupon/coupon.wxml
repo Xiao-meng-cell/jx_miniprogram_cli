@@ -1,0 +1,78 @@
+<!--expandPackage/pages/member/coupon/coupon.wxml-->
+<view>
+  <view class="swiper-tab" wx:if="{{!onlyUsable}}">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">可用券</view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">已使用</view>
+    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">失效券</view>
+  </view>
+  <view class="{{onlyUsable ? '' : 'tab_box'}}" wx:if="{{currentTab==0}}">
+    <myCoupon id="myCoupon1" checked="{{displayCheckbox}}" storeCode="{{merchantCode}}" bind:myevent="onMyEvent"
+      onshelfCode="{{onshelfCode}}" productCode="{{productCode}}" eventCode="{{eventCode}}" propertie="{{propertie}}"
+      quantity="{{quantity}}" selectCouponCodes="{{couponCodes}}" selectCouponIds="{{couponIds}}" recharge="{{recharge}}" topTips="{{topTips}}"
+      pageFrom="{{pageFrom}}">
+    </myCoupon>
+    <view class="total x_layout fontS-12" wx:if="{{displayCheckbox}}">
+      <view class="x_layout" style="padding:12rpx 0 12rpx 32rpx">
+        <view style="color: #999999">{{type == "credit" ? "赠送" : "可减"}}</view>
+        <text class="price_color" decode="{{true}}">&nbsp;¥</text>
+        <view class="price_color fontS-18 fontW-500">{{vipDiscount}}</view>
+      </view>
+      <view class="x_layout" style="padding:12rpx 32rpx 12rpx 0">
+        <view class="coupon_type">已选{{sum}}张券</view>
+        <view class="total_btn" catchtap="goShopDetail">确定</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="{{onlyUsable ? '' : 'tab_box'}}" wx:if="{{currentTab == 1}}">
+    <view class="operateBar" wx:if="{{enableDelFun}}">
+      <view class="delAll" catchtap="showDelete">
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/coupon/icon_delete%403x.png">
+        </image>
+        <text>全部删除</text>
+      </view>
+    </view>
+    <myCoupon id="myCoupon2" invalid="{{invalid}}" checked="{{displayCheckbox}}" storeCode="{{merchantCode}}"
+      bind:couponNum="couponNum"></myCoupon>
+    <view class="total x_layout" wx:if="{{displayCheckbox}}">
+      <image class="total_img" src="" catchtap="showDelete"></image>
+    </view>
+    <view class="mask" catchtap="showDelete" wx:if="{{delete}}"></view>
+    <view class="delete_box y_layout valid_color fontS-14" wx:if="{{delete}}">
+      <view class="fontS-16">全部删除</view>
+      <view>是否将已使用的券全部删除？</view>
+      <view class="line"></view>
+      <view class="x_layout">
+        <view catchtap="showDelete">取消</view>
+        <view catchtap="getDeleteAll">确认删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="{{onlyUsable ? '' : 'tab_box'}}" wx:if="{{currentTab==2}}">
+    <view class="operateBar" wx:if="{{enableDelFun}}">
+      <view class="delAll" catchtap="showDelete">
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/coupon/icon_delete%403x.png">
+        </image>
+        <text>全部删除</text>
+      </view>
+    </view>
+    <myCoupon id="myCoupon3" invalid="{{invalid}}" checked="{{displayCheckbox}}" storeCode="{{merchantCode}}"
+      bind:couponNum="couponNum"></myCoupon>
+    <view class="total x_layout" wx:if="{{displayCheckbox}}">
+      <image class="total_img" src="" catchtap="showDelete"></image>
+    </view>
+    <view class="mask" catchtap="showDelete" wx:if="{{delete}}"></view>
+    <view class="delete_box y_layout valid_color fontS-14" wx:if="{{delete}}">
+      <view class="fontS-16">全部删除</view>
+      <view>是否将已失效的券全部删除？</view>
+      <view class="line"></view>
+      <view class="x_layout">
+        <view catchtap="showDelete">取消</view>
+        <view catchtap="getDeleteAll">确认删除</view>
+      </view>
+    </view>
+  </view>
+</view>

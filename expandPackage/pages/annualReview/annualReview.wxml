@@ -1,0 +1,7 @@
+<!--expandPackage/pages/annualReview/annualReview.wxml-->
+<view class="vImg">
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/longPic/1.png" mode="widthFix"></image>
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/longPic/2.png" mode="widthFix"></image>
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/longPic/3.png" mode="widthFix"></image>
+  <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/longPic/4.png" mode="widthFix"></image>
+</view>

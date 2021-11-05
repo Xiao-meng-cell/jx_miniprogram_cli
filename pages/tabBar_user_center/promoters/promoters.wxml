@@ -1,0 +1,16 @@
+<!--miniprogram/pages/tabBar_user_center/promoters/promoters.wxml-->
+<view class="input_item global_page_indent">
+  <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/entity_inputname.png"></image>
+  <view>我的姓名</view>
+  <input placeholder="请填写姓名"></input>
+</view>
+<view class="input_item global_page_indent">
+  <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/entity_inputname.png"></image>
+  <view>推荐人工号</view>
+  <input disabled="true" value="{{recommender}}"></input>
+</view>
+<view class="agreement global_page_indent" catchtap="jumpWebView" data-url="https://oss.vicpalm.com/static/weclubbing/protocol-zcrs/sj_agreement.html" data-title="推广员说明">
+  <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/explain.png"></image>
+  <view>申请前请详细阅读推广员说明</view>
+</view>
+<view class="apply global_page_indent" hover-class='btn_white_hover' catchtap="submit">提交申请</view>

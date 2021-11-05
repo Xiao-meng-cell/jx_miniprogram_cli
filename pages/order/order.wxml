@@ -1,0 +1,877 @@
+<!--pages/order/order.wxml-->
+<wxs module="utils" src="../../utils/utils.wxs" />
+<wxs module="timeUtil" src="../../utils/timeUtil.wxs" />
+<topBar title="我的订单"></topBar>
+<view class="top_nav" style="top:{{capsuleTop==0?68:capsuleTop + 40}}px;">
+	<view class="tab-bar" wx:if="{{tab_config.fixed}}">
+		<view wx:for="{{tab_config.tabs}}" wx:key="unique" data-index="{{index}}" bindtap="handlerTabTap"
+			class="tab {{selectedTabIndex==index?'tab-active':''}} " style="width: {{tab_config.item_width}}px;">
+			<text>{{item.name}}</text>
+		</view>
+		<view style="width: 16px; left:{{tab_config.underline.offset + (tab_config.item_width - 16) / 2}}px;"
+			class="under-line withAnimate"></view>
+	</view>
+	<scroll-view class="tab-bar" scroll-x="true" bindscroll="onScroll" style="width: 100%;"
+		scroll-left="{{tab_config.tab_left}}" wx:else>
+		<view wx:for="{{tab_config.tabs}}" wx:key="unique" data-index="{{index}}"
+			class="tab {{selectedTabIndex==index?'tab-active':''}} " style="width: {{tab_config.item_width}}px;"
+			bindtap="handlerTabTap">
+			<text>{{item}}</text>
+		</view>
+		<view style="width: {{tab_config.item_width}}px; left: {{tab_config.underline.offset}}px;"
+			class="under-line withAnimate"></view>
+	</scroll-view>
+	<view class="filterTime">
+		<text style="margin-right:8px;">交易时间</text>
+		<picker mode="date" value="{{dateST}}" start="2008-01-01" end="{{filterTimeLastDate}}" data-type="st"
+			bindcancel="bindcancel" bindchange="bindDateChange">
+			<view class="pickerTime">
+				<text style="color:{{dateST == '' ? '#A0A0A0;' : '#37424D'}};">{{dateST == "" ? "请选择时间范围起始" : dateST}}</text>
+			</view>
+		</picker>
+		<text style="margin-left:8px;margin-right:8px;">-</text>
+		<picker mode="date" value="{{dateET}}" start="2008-01-01" end="{{filterTimeLastDate}}" data-type="et"
+			bindcancel="bindcancel" bindchange="bindDateChange">
+			<view class="pickerTime">
+				<text style="color:{{dateET == '' ? '#A0A0A0;' : '#37424D'}};">{{dateET == "" ? "请选择时间范围结束" : dateET}}</text>
+			</view>
+		</picker>
+	</view>
+</view>
+<!-- tab panel -->
+<view class="page-section swiper-wrap">
+	<view style="display:flex;width:100%;height:150rpx;"></view>
+	<swiper indicator-dots="{{swipe_config.indicator_dots}}" autoplay="{{swipe_config.autoplay}}"
+		interval="{{swipe_config.interval}}" duration="{{swipe_config.duration}}" current="{{selectedTabIndex}}"
+		bindchange="swiperChange">
+		<!-- 待付款 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style='flex:1;' />
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class='item_order_status_tips'>{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user')}}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual' || goodsItem.typeCode == 'estate'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{item.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+									<view class="end_time"
+										wx:if="{{goodsItem.dueTime != null && goodsItem.dueTime != '' && goodsItem.productTypeCode == 'deposit'}}">
+										<view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/end@2x.png">
+											</image>
+											<text>商品将在{{timeUtil.dateFormat(goodsItem.dueTime, "yyyy年MM月dd日 hh:mm:ss")}}结束</text>
+										</view>
+									</view>
+									<!-- 核销地址 到店专属 start -->
+									<view class="writeOff" wx:if="{{goodsItem.typeCode == 'fresh' || goodsItem.typeCode == 'service'}}">
+										<view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_address@2x.png">
+											</image>
+											<text>核销地址</text>
+										</view>
+										<view>
+											<text class="aline1">{{goodsItem.address == null?"":goodsItem.address}}</text>
+											<view style="flex:1;"></view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+											</image>
+										</view>
+									</view>
+									<!-- 核销地址 到店专属 end -->
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<view style='flex:1;' />
+									<!-- 1待付款2已付款3订单完成4订单取消 -->
+									<!-- 待付款=订单付款，取消订单-->
+									<view class="order_bottom_view_btn order_bottom_view_btn_pay" data-bean='{{item}}'
+										data-index='{{index}}' catchtap='toPay'>
+										<text>立即支付</text>
+									</view>
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}'
+										data-index='{{index}}' catchtap='toCancleOrder'>
+										<text>取消订单</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 0 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 待核销 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter' style='margin-bottom:10px;'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style='flex:1;' />
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class="item_order_status_tips">{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user') }}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual'|| goodsItem.typeCode == 'estate'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{item.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+									<!-- 生鲜配送时间 start -->
+									<view class="freshDeliveryTime"
+										hidden="{{!goodsItem.startDeliveryTimeDT || !goodsItem.endDeliveryTimeDT || goodsItem.typeCode != 'fresh'}}">
+										<image
+											src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_logistics.png">
+										</image>
+										<text>预计于{{goodsItem.startDeliveryTimeDT}}至{{goodsItem.endDeliveryTimeDT}}送达指定地点</text>
+									</view>
+									<!-- 生鲜配送时间 end -->
+									<!-- 核销地址 到店专属 start -->
+									<view class="writeOff"
+										wx:if="{{goodsItem.typeCode == 'fresh' || goodsItem.typeCode == 'service' || (goodsItem.typeCode == 'logistics' && item.addressType == 'merchant')}}">
+										<view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_address@2x.png">
+											</image>
+											<text>核销地址</text>
+										</view>
+										<view>
+											<text class="aline1">{{item.address == null?"":item.address}}</text>
+											<view style="flex:1;"></view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+											</image>
+										</view>
+									</view>
+									<!-- 核销地址 到店专属 end -->
+									<view class="end_time"
+										wx:if="{{goodsItem.dueTime != null && goodsItem.dueTime != '' && goodsItem.productTypeCode == 'deposit'}}">
+										<view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/end@2x.png">
+											</image>
+											<text>商品将在{{timeUtil.dateFormat(goodsItem.dueTime, "yyyy年MM月dd日 hh:mm:ss")}}结束</text>
+										</view>
+									</view>
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<text class='item_order_destotal'
+										wx:if="{{(item.items[0].typeCode == 'deposit' || item.items[0].typeCode == 'estate') && item.damagePrice > 0}}">退款将被扣除违约金¥{{item.damagePrice/100}}</text>
+									<text class='item_order_destotal'
+										wx:if="{{(item.items[0].typeCode == 'deposit' || item.items[0].typeCode == 'estate') && item.returnAble == 0}}">该定金商品不可退款</text>
+									<view style='flex:1;' />
+									<!-- 1待付款2已付款3订单完成4订单取消 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<!-- 物流商品 start -->
+									<block wx:if="{{item.items[0].typeCode == 'logistics'}}">
+										<block wx:if="{{item.status==2||item.status==3}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toUserQCode'
+												wx:if="{{item.status==2&&item.addressType=='merchant'}}">
+												<text>出示券码</text>
+											</view>
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toReceivingGoods'
+												wx:if="{{requestParams.haveVariables!=null}}">
+												<text>确认收货</text>
+											</view>
+										</block>
+									</block>
+									<!-- 物流商品 end -->
+									<!-- 到店商品 start -->
+									<block wx:elif="{{item.items[0].typeCode == 'service'}}">
+										<!-- 已付款 start -->
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toUserQCode'
+												wx:if="{{item.status==2&&item.addressType=='merchant'}}">
+												<text>出示券码</text>
+											</view>
+										</block>
+										<!-- 已付款 end -->
+									</block>
+									<!-- 到店商品 end -->
+									<!-- 生鲜商品 start -->
+									<block wx:elif="{{item.items[0].typeCode == 'fresh'}}">
+										<!-- 已付款 start -->
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap="openLocation">
+												<text>查看自提点</text>
+											</view>
+										</block>
+										<!-- 已付款 end -->
+									</block>
+									<!-- 生鲜商品 end -->
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="call"
+										catchtap="clickOrderBottomBtn">
+										<text>联系卖家</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 1 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 待发货 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter item_order_contain_row' style='margin-bottom:10px;'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style="flex:1;"></view>
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class='item_order_status_tips'>{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user')}}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual' || goodsItem.typeCode == 'estate'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{goodsItem.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<text class='item_order_timeouttips'>
+										<!--00 : 15 : 36 后过期--></text>
+									<view style='flex:1;' />
+									<!-- 1待付款2已付款3订单完成4订单取消 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<!-- 物流商品 start -->
+									<block wx:if="{{item.items[0].typeCode=='logistics'}}">
+										<block wx:if="{{item.status==2||item.status==3}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toUserQCode'
+												wx:if="{{item.status==2&&item.addressType=='merchant'}}">
+												<text>出示券码</text>
+											</view>
+											<button wx:if="{{requestParams.haveVariables!=null}}" class="btn_opt_contain btn_blue_border"
+												catchtap='toReceivingGoods' data-bean='{{item}}' data-index='{{index}}'>确认收货</button>
+										</block>
+									</block>
+									<!-- 物流商品 end -->
+									<!-- 到店商品 start -->
+									<block wx:elif="{{item.items[0].typeCode=='service'}}">
+										<!-- 已付款 start -->
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_use" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toUserQCode'>
+												<text>出示券码</text>
+											</view>
+										</block>
+										<!-- 已付款 end -->
+									</block>
+									<!-- 到店商品 end -->
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="call"
+										catchtap="clickOrderBottomBtn">
+										<text>联系卖家</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 2 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 待收货 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter' style='margin-bottom:10px;'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style='flex:1;' />
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class='item_order_status_tips'>{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user')}}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual' || goodsItem.typeCode == 'estate'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{goodsItem.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+									<!-- 生鲜配送时间 start -->
+									<view class="freshDeliveryTime"
+										hidden="{{!goodsItem.startDeliveryTimeDT || !goodsItem.endDeliveryTimeDT}}">
+										<image
+											src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/order_logistics.png">
+										</image>
+										<text>预计于{{goodsItem.startDeliveryTimeDT}}至{{goodsItem.endDeliveryTimeDT}}送达指定地点</text>
+									</view>
+									<!-- 生鲜配送时间 end -->
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<text class='item_order_timeouttips'>
+										<!--00 : 15 : 36 后过期--></text>
+									<view style='flex:1;' />
+									<!-- 1待付款 2已付款 3订单完成 4订单取消 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<!-- 物流商品 start -->
+									<block wx:if="{{item.items[0].typeCode == 'logistics'}}">
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_pay" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toReceivingGoods'>
+												<text>确认收货</text>
+											</view>
+										</block>
+									</block>
+									<block wx:elif="{{item.items[0].typeCode == 'fresh'}}">
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_pay" data-bean='{{item}}'
+												data-index='{{index}}' catchtap="openLocation">
+												<text>查看自提点</text>
+											</view>
+										</block>
+									</block>
+									<block wx:elif="{{item.items[0].typeCode == 'virtual'}}">
+										<block wx:if="{{item.status==2}}">
+											<view class="order_bottom_view_btn order_bottom_view_btn_pay" data-bean='{{item}}'
+												data-index='{{index}}' catchtap='toReceivingGoods' hidden="{{!item.trackingNumberExist}}">
+												<text>确认收货</text>
+											</view>
+										</block>
+									</block>
+									<!-- 物流商品 end -->
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="call"
+										catchtap="clickOrderBottomBtn">
+										<text>联系卖家</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 3 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 退后售后 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter' style='margin-bottom:10px;'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style='flex:1;' />
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class='item_order_status_tips'>{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user')}}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'estate' || goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{goodsItem.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<view style='flex:1;' />
+									<!-- 1待付款2已付款3订单完成4订单取消 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="call"
+										catchtap="clickOrderBottomBtn">
+										<text>联系卖家</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 4 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 已完成 -->
+		<swiper-item>
+			<view class="emptyView" wx:if="{{orderListData.length==0}}">
+				<image
+					src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+				</image>
+				<text>订单列表空空如也</text>
+			</view>
+			<block wx:else>
+				<scroll-view style="height: calc(100vh - 150rpx - {{capsuleTop == 0 ? 68 : capsuleTop + 40}}px);" scroll-y
+					bindscrolltolower="onReachBottom">
+					<block wx:for='{{orderListData}}' wx:for-item="order" wx:key="item">
+						<block wx:for='{{order}}' wx:key="ol">
+							<navigator hover-class='background-color: #efeff4;' class='item_order_contain'
+								url="/pages/order/detail/order_details?orderId={{item.code}}">
+								<!-- 商家名 行start -->
+								<view class='horizontal-vcenter' style='margin-bottom:10px;'>
+									<!-- 图标 商家名称 start -->
+									<image class='item_order_blogo' mode="aspectFill" src="{{item.onshelfStore.bgUrls[0]}}" />
+									<text class='item_order_bname alone-line'>{{item.onshelfStore.name}}</text>
+									<!-- 图标 商家名称 end -->
+									<view style='flex:1;' />
+									<!-- 状态标识 start -->
+									<!-- 1待付款，2已付款，3订单完成，4订单取消，5已挂起 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<text class='item_order_status_tips'>{{item.customerTaskStatus}}</text>
+									<!-- 状态标识 end -->
+								</view>
+								<!-- 商家名 行end -->
+								<!-- 订单包含商品列表 start -->
+								<block wx:for="{{item.items}}" wx:for-item="goodsItem">
+									<!-- 商品描述 行start -->
+									<view class='horizontal-vcenter goods_item'>
+										<image class='item_order_pimg' mode="aspectFill"
+											src="{{utils.turnArrJson(goodsItem.eventFileUrls[0]).illustration[0]}}" />
+										<view class="item_order_info">
+											<view>
+												<text class='item_order_gname aline1'>{{goodsItem.productName}}</text>
+												<view style='flex:1;' />
+												<view class="item_order_info_priceNum">
+													<view>
+														<text>￥</text>
+														<text class='item_order_price'>{{goodsItem.price/100}}</text>
+													</view>
+													<text style='font-size:20rpx;color:#808080;'>x{{goodsItem.num}}</text>
+												</view>
+											</view>
+											<view>
+												<text class="aline1">{{goodsItem.skuName ? goodsItem.skuName : ""}}</text>
+											</view>
+											<view class="item_order_goodsTag">
+												<view class="item_order_goodsTag_item wlsp"
+													wx:if="{{(goodsItem.typeCode == 'logistics' && item.addressType == 'user') || (goodsItem.typeCode == 'baking' && item.addressType == 'user')}}">
+													<text>物流商品</text>
+												</view>
+												<view class="item_order_goodsTag_item xnsp"
+													wx:elif="{{goodsItem.typeCode == 'estate' || goodsItem.typeCode == 'deposit' || goodsItem.typeCode == 'virtual'}}">
+													<text>{{goodsItem.typeCode == 'virtual' ? '店内服务' : '定金商品'}}</text>
+												</view>
+												<view class="item_order_goodsTag_item ddzt" wx:else>
+													<text>到店自提</text>
+												</view>
+											</view>
+											<view class="item_order_destotal delivery_time" wx:if="{{goodsItem.typeCode == 'baking'}}">
+												配送时间：{{goodsItem.startDeliveryTime}}</view>
+										</view>
+									</view>
+									<!-- 商品描述 行end -->
+									<!-- 核销地址 到店专属 start -->
+									<view class="writeOff"
+										wx:if="{{goodsItem.typeCode == 'fresh' || goodsItem.typeCode == 'service' || (goodsItem.typeCode == 'logistics' && item.addressType == 'merchant')}}">
+										<view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_address@2x.png">
+											</image>
+											<text>核销地址</text>
+										</view>
+										<view>
+											<text wx:if="{{goodsItem.typeCode == 'logistics' && item.addressType == 'merchant'}}"
+												class="aline1">{{item.address == null?"":item.address}}</text>
+											<text wx:else
+												class="aline1">{{item.onshelfStore && item.onshelfStore.onshelfStoreAddr == null?"":item.onshelfStore.onshelfStoreAddr}}</text>
+											<view style="flex:1;"></view>
+											<image
+												src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+											</image>
+										</view>
+									</view>
+									<!-- 核销地址 到店专属 end -->
+								</block>
+								<!-- 订单包含商品列表 end -->
+								<!-- 商品数量 总价 start -->
+								<view class='horizontal-vcenter item_order_total'>
+									<text>共{{item.count}}件</text>
+									<text>运费：{{item.carriage == 0 ? '包邮' : '￥' + item.carriage / 100}}</text>
+									<text>总价:</text>
+									<text>￥</text>
+									<text>{{item.totalPrice / 100}}</text>
+								</view>
+								<!-- 商品数量 总价 end -->
+								<!-- 底部操作 行start -->
+								<view class='horizontal-vcenter'>
+									<view class="order_bottom_view_status" wx:if="{{item.status == 3}}">
+										<!-- <text>已完成</text> -->
+									</view>
+									<view class="order_bottom_view_status" wx:if="{{item.status == 4}}">
+										<!-- <text>已取消</text> -->
+									</view>
+									<view style='flex:1;' />
+									<!-- 1待付款2已付款3订单完成4订单取消 -->
+									<!-- 待付款=订单付款，修改地址，取消订单；已付款=填写物流信息，订单完成 -->
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="buy"
+										catchtap="clickOrderBottomBtn" wx:if="{{item.status == 4}}">
+										<text>重新购买</text>
+									</view>
+									<view class="order_bottom_view_btn order_bottom_view_btn_cancel" data-bean='{{item}}' data-type="call"
+										catchtap="clickOrderBottomBtn">
+										<text>联系卖家</text>
+									</view>
+								</view>
+								<!-- 底部操作 行end -->
+							</navigator>
+						</block>
+					</block>
+					<view wx:if="{{selectedTabIndex == 5 && loadAll}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+	</swiper>
+</view>
+<!-- tab panel end -->
+<!--企业导航，企业号码 start-->
+<view class='showMenu' hidden='{{show_business_phone}}'>
+	<block wx:for="{{business_phone}}" wx:key="item">
+		<view class='showMenu_item' data-phone="{{item}}" catchtap="contactBusiness">
+			<text>{{item}}</text>
+		</view>
+	</block>
+	<view catchtap='showBusinessPhoneList' class='showMenu_item'>
+		<text>取消</text>
+	</view>
+	<view class='wx-mask' catchtouchmove="stopMouseOperate" catchtap='showBusinessPhoneList'></view>
+</view>
+<!--企业导航，企业号码 end-->
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

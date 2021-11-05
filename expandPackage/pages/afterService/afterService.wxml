@@ -1,0 +1,184 @@
+<!--expandPackage/pages/afterService/afterService.wxml-->
+<wxs module="dateUtil" src="../../../utils/timeUtil.wxs"></wxs>
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
+<view class="head">
+  <!-- 店铺信息 start -->
+  <view class="storeInfo">
+    <image src="{{storeImg}}" mode="aspectFill"></image>
+    <text>{{storeName}}</text>
+  </view>
+  <!-- 店铺信息 end -->
+  <!-- 产品信息 start -->
+  <view class="goodsInfo">
+    <image src="{{productFileUrls !='' ? utils.turnArrJson(productFileUrls).illustration[0]: ''}}" mode="aspectFill">
+    </image>
+    <view>
+      <text class="aline2 goodsName">{{productName}}</text>
+      <text class="aline1 goodsSkus">{{productDescription}}</text>
+      <text class="goodsCreateDT">创建日期：{{dateUtil.dateFormat(createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+    </view>
+  </view>
+  <!-- 产品信息 end -->
+  <!-- 售后类型 start -->
+  <view class="step1" hidden="{{pageStatus != 'step1'}}">
+    <text>售后类型</text>
+    <view class="item" data-type="refund_order" bindtap="goToStep2">
+      <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/refund.png">
+      </image>
+      <text>仅退款，不寄回商品</text>
+      <view style="flex:1;"></view>
+      <text>申请仅退款</text>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+      </image>
+    </view>
+    <!-- 定金商品和虚拟商品只能发起 仅退款 -->
+    <view class="item" data-type="return_order" bindtap="goToStep2"  wx:if="{{currentTypeCode != 'virtual'&&currentTypeCode != 'deposit'&&currentTypeCode != 'estate'}}">
+      <image
+        src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/goods_rejected.png">
+      </image>
+      <text>退货退款</text>
+      <view style="flex:1;"></view>
+      <text>寄回商品退款</text>
+      <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+      </image>
+    </view>
+  </view>
+  <!-- 售后类型 end -->
+</view>
+<!-- 内容主题 start -->
+<view class="main" hidden="{{pageStatus == 'step1'}}">
+  <!-- 信息填写 start -->
+  <view wx:if="{{pageStatus == 'step2'}}">
+    <view class="enter_item_alone" bindtap="changeCause">
+      <text>选择理由</text>
+      <view>
+        <text style="{{cause == '请选择' ? 'color:#A0A0A0;' : ''}}">{{cause}}</text>
+        <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png">
+        </image>
+      </view>
+    </view>
+    <view class="enter_item_alone">
+      <text>实付金额</text>
+      <text>￥{{utils.priceSwitch(totalPriceYuan)}}</text>
+    </view>
+    <view class="enter_item_alone">
+      <text>退款金额</text>
+      <text>￥{{utils.priceSwitch(actualPrice)}}</text>
+    </view>
+    <view class="enter_item_multi">
+      <text>{{serverType == "refund_order" ? "仅退款" : "退货退款"}}说明</text>
+      <textarea placeholder="请填写说明（选填）" placeholder-class="placeholder" bindinput="asDescInputHandler"></textarea>
+    </view>
+    <view class="enter_item_multi">
+      <view>
+        <text>上传凭证</text>
+        <text style="color:#bbbbbb;">（选填）</text>
+      </view>
+      <view class="picture_list">
+        <view wx:for="{{evidenceList}}" class="picture_item" wx:key="{{index}}">
+          <image src="{{item.fileType == 'image' ? item.path : item.thumbTempFilePath}}" mode="aspectFill"
+            wx:if="{{item.upload_percent < 100}}"></image>
+          <block wx:if="{{item.upload_percent == 100}}">
+            <image src="{{item.path_server}}" mode="aspectFill" data-path="{{item.path_server}}" data-type="evidence"
+              bindtap="previewImg" wx:if="{{item.fileType == 'image'}}"></image>
+            <view class="itemVid" data-item="{{item}}" catchtap="videoPlay" wx:else>
+              <image src="{{item.path_server}}?x-oss-process=video/snapshot,t_1000" mode="aspectFill"></image>
+              <image
+                src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_circle_playvideo%403x.png">
+              </image>
+            </view>
+          </block>
+          <view class="upload_progress" wx:if="{{item.upload_percent < 100}}">{{item.upload_percent}}%</view>
+          <image class="del"
+            src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/bank_close.png"
+            data-index="{{index}}" bindtap='deleteEvidenceImg'></image>
+        </view>
+        <view class='picture_item' wx:if='{{evidenceImages.length < 6}}'>
+          <view class="add-image" bindtap='uploadEvidencePic'>
+            <image
+              src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_image%402x.png">
+            </image>
+            <text>图片/视频</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 提交按钮 start -->
+    <view class='btnSubmit' catchtap="submit">
+      <text style='margin-top:0;color:#FFF;'>提交</text>
+    </view>
+    <!-- 提交按钮 end -->
+  </view>
+  <!-- 信息填写 end -->
+  <!-- 上传物流凭证 start -->
+  <view wx:elif="{{pageStatus == 'step3'}}" class="step3">
+    <text class="step3_desc_text">退款理由：{{data.afterSale.title}}</text>
+    <text class="step3_desc_text">退款金额：￥{{totalPriceYuan}}</text>
+    <text class="step3_desc_text">申请日期：{{dateUtil.dateFormat(data.afterSale.createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+    <text class="step3_desc_text">订单编号：{{code}}</text>
+    <view style="height:8vh;"></view>
+    <text style="font-size:4.7vw;font-weight:bold;">物流单号</text>
+    <view style="height:2vh;"></view>
+    <view style="display:flex;flex-direction:row;">
+      <input placeholder="请填写寄回物流单号" placeholder-style="color:#A0A0A0;" value="{{freightCode}}"
+        bindinput="freightCodeInputHandler"></input>
+      <view class="scan" catchtap="scan">
+        <image src="/assets/images/scan.png"></image>
+      </view>
+    </view>
+    <view style="height:6vh;"></view>
+    <text style="font-size:4.7vw;font-weight:bold;">上传照片</text>
+    <view class="picture_list">
+      <view wx:for="{{freightList}}" class="picture_item" wx:key="{{index}}">
+        <image wx:if="{{item.upload_percent < 100}}" src="{{item.path}}" mode="aspectFill"></image>
+        <image wx:if="{{item.upload_percent == 100}}" src="{{item.path_server}}" mode="aspectFill"
+          data-path="{{item.path_server}}" data-type="freight" bindtap="previewImg"></image>
+        <view class="upload_progress" wx:if="{{item.upload_percent < 100}}" data-index="{{index}}">
+          {{item.upload_percent}}%</view>
+        <text class='del' style="font-size:5vw;" data-index="{{index}}" bindtap='deleteFreightImg'>×</text>
+      </view>
+
+      <view class='picture_item' wx:if='{{freightImages.length < 3}}'>
+        <view class="add-image vertical-hcenter" bindtap='uploadFreightPic'>
+          <text class="add-text" style="font-size:10vw;">+</text>
+        </view>
+      </view>
+    </view>
+    <!-- 提交按钮 start -->
+    <view style='width:100%;height:7vh;background-color:#FFFFFF;' catchtap="submitLogisticsInfo">
+      <view class='btnSubmit'>
+        <text style='margin-top:0;color:#FFF;'>完成上传</text>
+      </view>
+    </view>
+    <!-- 提交按钮 end -->
+  </view>
+  <!-- 上传物流凭证 end -->
+  <!-- 联系平台 start -->
+  <view wx:elif="{{pageStatus == 'step4'}}">
+    <view class="enter_item_alone">
+      <text style="font-size:4vw;">订单号码</text>
+      <text style="font-size:3.8vw;">{{code}}</text>
+    </view>
+    <view class="enter_item_alone">
+      <text style="font-size:4vw;">申请日期</text>
+      <text style="font-size:3.8vw;">{{dateUtil.dateFormat(data.afterSale.createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+    </view>
+    <view class="enter_item_multi">
+      <text style="font-size:4vw;margin-bottom:2vh;">投诉说明</text>
+      <textarea placeholder="请填写说明（必填）" placeholder-class="placeholder" bindinput="asDescInputHandler"></textarea>
+    </view>
+    <!-- 提交按钮 start -->
+    <view style='width:100%;height:7vh;background-color:#FFFFFF;' catchtap="submitAppeal">
+      <view class='btnSubmit'>
+        <text style='margin-top:0;color:#FFF;'>提交</text>
+      </view>
+    </view>
+    <!-- 提交按钮 end -->
+  </view>
+  <!-- 联系平台 end -->
+</view>
+<!-- 内容主题 end -->
+
+<view class="viewPlayer" catchtap="controlVidPlayer" hidden="{{!vidPlaying}}">
+  <video id="videoPlayer" src="{{videoUrl}}" catchtap="mouseStopOperate"></video>
+</view>

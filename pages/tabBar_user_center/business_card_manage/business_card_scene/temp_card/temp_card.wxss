@@ -1,0 +1,62 @@
+/* pages/tabBar_user_center/business_card_manage/business_card_scene/temp_card/temp_card.wxss */
+@import "../../../../../pages/tabBar_index/business_homepage/business_homepage.wxss";
+@import "../../../../../pages/tabBar_user_center/business_card_manage/business_card_apply/business_card_apply.wxss";
+@import "../business_card_scene.wxss";
+
+textarea {
+  width: 100%;
+  height: 20vh;
+  border: 2rpx solid #eee;
+  padding-top: 10rpx;
+  padding-left: 10rpx;
+}
+
+.make_button {
+  position: fixed;
+  left: 0rpx;
+  right: 0rpx;
+  bottom: 0rpx;
+  width: 100vw;
+  height: 8vh;
+  line-height: 8vh;
+  text-align: center;
+  background-color: #5b86fe;
+  color: white;
+  margin-bottom: 0rpx;
+  z-index: 50;
+  border-radius: 0px;
+}
+
+#tips_bg {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+#imgTips {
+  width: 2000rpx;
+  height: 900rpx;
+}
+
+#imgCard {
+  position: fixed;
+  left: 50rpx;
+  bottom: 12vh;
+  width: 300rpx;
+  height: 200rpx;
+}
+
+#imgEnter {
+  position: fixed;
+  right: 50rpx;
+  bottom: 12vh;
+  width: 300rpx;
+  height: 200rpx;
+}

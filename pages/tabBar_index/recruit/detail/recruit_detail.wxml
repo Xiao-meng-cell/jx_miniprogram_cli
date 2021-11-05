@@ -1,0 +1,61 @@
+<!--miniprogram/pages/tabBar_index/recruit/detail/recruit_detail.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!-- 内容主体 start -->
+<view class="main">
+	<block wx:for="{{recruit_info.imgList}}" wx:key="{{id}}">
+		<image style="width:696rpx;" data-src='{{item}}' data-list="{{recruit_info.imgList}}" mode="widthFix" src='{{utils.judgeImg(item)}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_750/format,jpg' catchtap='imgYu'></image>
+	</block>
+	<text>{{recruit_info.description}}</text>
+	<view style="height:{{iphone_x ? 170 : 120}}rpx"></view>
+</view>
+<!-- 内容主体 end -->
+<!-- 底部操作栏 start -->
+<view class="dot">
+	<view catchtap="showGoodsList">
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/recruit_goods.png" hidden="{{!goodList_hidden}}"></image>
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/recruit_goods_selected.png" hidden="{{goodList_hidden}}"></image>
+		<text style="color:{{!goodList_hidden? '#2f95fb' : ''}};">产品列表</text>
+	</view>
+	<view></view>
+	<view catchtap="showShare">
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/recruit_share.png"></image>
+		<text>分享</text>
+	</view>
+	<view catchtap="join">
+		<text>立即成为事业合伙人</text>
+	</view>
+</view>
+<!-- 底部操作栏 end -->
+<!-- 产品列表 start -->
+<view class="goodsListBG" hidden="{{goodList_hidden}}" catchtap="showGoodsList">
+	<view class="viewGoodsList" catchtap="catchMouseOperate">
+		<scroll-view scroll-x style="width:100%;white-space:nowrap;">
+			<view class="goodsList" catchtap="catchMouseOperate">
+				<block wx:for="{{goods_list}}" wx:key="id">
+					<view class="goodsItem">
+						<image src="{{utils.turnArrJson(item.fileJson).illustration[0]}}?x-oss-process=image/auto-orient,0/resize,m_lfit,w_750/format,jpg" mode="aspectFill"></image>
+						<text class="aline1">{{item.title}}</text>
+						<text class="aline2">{{item.description ? item.description : ""}}</text>
+						<text class="aline1">渠道价格￥{{item.minPrice}}起</text>
+					</view>
+				</block>
+			</view>
+		</scroll-view>
+	</view>
+</view>
+<!-- 产品列表 end -->
+
+<!-- 分享 start -->
+<view class="goodsListBG" hidden="{{share_hidden}}" catchtap="showShare">
+	<view class="share" catchtap="catchMouseOperate">
+
+		<text>分享到</text>
+		<view>
+			<button class="inreward_share_button" open-type="share"></button>
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/weclubbing/images/weixin.png"></image>
+			<text>微信</text>
+		</view>
+		<text catchtap="showShare">确定</text>
+	</view>
+</view>
+<!-- 分享 end -->

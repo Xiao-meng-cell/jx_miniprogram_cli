@@ -1,0 +1,357 @@
+<!--miniprogram/pages/tabBar_user_center/business_card_detail/business_card_detail.wxml-->
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<!--个人名片 start-->
+<!-- <view class='card_floating_window' >
+  <image mode='aspectFill' src='{{business_info.bgUrls[0]}}'></image>
+  <view class='userImg'>
+    <image src="{{card_headimg + utils.resizeImg(250)}}" data-src='{{card_headimg}}' catchtap="imgYu" mode='aspectFill'></image>
+  </view>
+  <view class='card_username'>
+    <text>{{card_name}}</text>
+    <text>{{card_position==null?"":card_position}}</text>
+    <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_phone@2x.png" data-phone="{{card_phone}}" catchtap="contactBusiness"></image>
+    <text>{{card_phone}}</text>
+  </view>
+  <view>{{card_shortName?card_shortName:business_info.name}}</view>
+</view> -->
+<!--个人名片 end-->
+
+<!-- 名片 start-->
+<view class="card_floating_window" catchtouchmove="doNotMove">
+	<image mode='aspectFill' src='{{business_info.bgUrls[0]}}'></image>
+	<view class="card_info global_page_indent">
+		<image class="card_info_img" wx:if="{{card_headimg}}" src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}" data-src='{{card_headimg}}' data-list='{{[card_headimg]}}' catchtap="imgYu" mode='aspectFill'></image>
+		<view id="viewNamePosition" class="card_name global_page_indent">
+			<view>
+				<text id="txtName" style="width:{{nameWidth}}px,">{{card_name}}</text>
+				<text id="txtPosition" style="width:{{positionWidth}}px,">{{card_position==null?"":card_position}}</text>
+			</view>
+			<view>{{business_info.name==null||business_info.name==""?"":business_info.name}}</view>
+		</view>
+		<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_phone@3x.png" data-phone="{{card_phone}}" catchtap="contactBusiness" class="contactBusiness"></image>
+	</view>
+</view>
+<!--名片 end-->
+
+<!--名片详细信息框 start-->
+<view class="card_detail_button" style="margin-top:0rpx;" catchtap='changeCardInfoDisplay'>{{hideen_all_info ? "查看全部名片信息 ∨":"收起全部名片信息 ∧"}}</view>
+<view class="clerk_detail_info global_page_indent" style='display:{{hideen_all_info?"none":""}};'>
+	<scroll-view scroll-y="true">
+		<view class='bottom_border_item  leaving_message'>
+			<text>公司</text>
+			<view class='a_line' catchlongtap='setCopyText' data-text="{{business_info.name}}">{{business_info.name==null||business_info.name==""?"--":business_info.name}}</view>
+			<view class="clerk_detail_buttom" catchtap='setCopyText' data-text="{{business_info.name}}">
+				<text>复制</text>
+			</view>
+		</view>
+		<view class='bottom_border_item  leaving_message'>
+			<text>电话</text>
+			<view class='a_line' catchlongtap='setCopyText' data-text="{{card_phone}}">{{card_phone==null||card_phone==""?"--":card_phone}}</view>
+			<view class="clerk_detail_buttom" catchtap='save_phone'>
+				<text>保存</text>
+			</view>
+			<view class="clerk_detail_buttom" data-phone="{{card_phone}}" catchtap="contactBusiness">
+				<text>呼叫</text>
+			</view>
+		</view>
+		<view class='bottom_border_item  leaving_message'>
+			<text>地址</text>
+			<view class='a_line' catchtap='mapNavigation' style='color:#5b86fe'>{{business_info.addr}}</view>
+			<view class="clerk_detail_buttom" catchtap='mapNavigation'>
+				<text>导航</text>
+			</view>
+		</view>
+		<view class='bottom_border_item  leaving_message'>
+			<text>微信</text>
+			<view class='a_line' catchlongtap='setCopyText' data-text="{{card_wx}}">{{card_wx==null?"--":card_wx}}</view>
+			<view class="clerk_detail_buttom" data-text="{{card_wx}}" catchtap='setCopyText'>
+				<text>复制</text>
+			</view>
+		</view>
+		<view class='bottom_border_item  leaving_message' wx:if="{{card_userId==current_userId}}">
+			<text>名片二维码</text>
+			<view style="flex:1;"></view>
+			<view class="clerk_detail_buttom" data-id="{{workerId}}" catchtap='shareCardCode'>
+				<text>查看</text>
+			</view>
+		</view>
+		<view class="clerk_detail_info_intro">
+			<text>简介</text>
+			<view class="aline2">
+				<text>{{business_info.intro == null ? "" : business_info.intro}}</text>
+			</view>
+		</view>
+	</scroll-view>
+</view>
+<!--名片详细信息框 end-->
+
+<!--完善资料框 start-->
+<view class="clerk_edit" style='display:{{show_update_card?"":"none"}}'>
+	<view class='bottom_border_item global_page_indent'>
+		<text>姓名</text>
+		<input placeholder='请输入名字' bindinput='inputCardName' catchtouchmove="doNotMove" value='{{card_name}}' disabled='{{read}}'></input>
+	</view>
+	<view class='bottom_border_item global_page_indent'>
+		<text>部门/职位</text>
+		<input placeholder='请输入部门/职位' bindinput='inputCardPosition' catchtouchmove="doNotMove" value='{{card_position}}' disabled='{{read}}'></input>
+	</view>
+	<view class='bottom_border_item global_page_indent'>
+		<text>手机号</text>
+		<input placeholder='请输入手机号' bindinput='inputCardPhone' catchtouchmove="doNotMove" value='{{card_phone}}' maxlength="11" disabled='{{read}}'></input>
+	</view>
+	<!-- <view class='bottom_border_item global_page_indent' hidden="true">
+		<text>邮箱</text>
+		<input placeholder='请输入邮箱' bindinput='inputCardEmail' catchtouchmove="doNotMove" value='{{card_email}}' disabled='{{read}}'></input>
+	</view> -->
+	<view class='bottom_border_item global_page_indent' hidden="true">
+		<text>QQ</text>
+		<input placeholder='请输入QQ号' bindinput='inputCardQQ' catchtouchmove="doNotMove" value='{{card_qq}}' disabled='{{read}}'></input>
+	</view>
+	<view class='bottom_border_item global_page_indent'>
+		<text>微信</text>
+		<input placeholder='请输入微信号' bindinput='inputCardWX' catchtouchmove="doNotMove" value='{{card_wx}}' disabled='{{read}}'></input>
+	</view>
+	<view class='bottom_border_item global_page_indent  uploadImg' hidden='{{read}}' style='height:200rpx;'>
+		<text>名片头像</text>
+		<image class='ser_uploadimg' style="margin-left: 40rpx;" data-src='{{card_headimg}}' catchtap="{{card_headimg?'imgYu':'uploadImgVideo'}}" mode="aspectFill" src='{{card_headimg?card_headimg:"https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/add_img.png"}}'>
+			<cover-image style='display:{{card_headimg?"":"none"}}' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/upload_close.png" class='ser_uploadClose' catchtap='deleteFile'></cover-image>
+		</image>
+	</view>
+</view>
+<!--完善资料框 end-->
+
+<!--谁看过我start-->
+<view class="seen global_page_indent" style="margin-bottom: 5rpx;">
+	<text>浏览：{{hot}}</text>
+	<text></text>
+	<text>转发：{{shares}}</text>
+</view>
+<view class='seen global_page_indent' style="justify-content: flex-start;margin-top: 0rpx;" wx:if="{{seen_list.length>0}}">
+	<view class='seen_headimg'>
+		<block wx:for="{{seen_list}}" wx:key="item">
+			<image src='{{item.headimg}}' style="margin-right:20rpx;"></image>
+		</block>
+	</view>
+</view>
+<!--谁看过我end-->
+
+
+<!--留言框 start-->
+<view class='card_message' hidden='{{!hidden_template_item}}'>
+	<view class='card_message_title'>
+		<view>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x.png"></image>私人定制
+		</view>
+		<text catchtap='addCardTemplate' hidden='{{!hidden_send_message || read}}'>存入模板</text>
+	</view>
+	<view class='card_message_text' catchtap="showTextareaEdit">{{card_message==null||card_message==''?'请输入您的专属留言':card_message}}</view>
+	<!-- <textarea class='card_message_text' bindinput="inputCardMessage" placeholder='请输入您的专属留言' value='{{card_message}}'></textarea> -->
+</view>
+<view class='card_choose_template global_page_indent'>
+	<text catchtap='showTemplateList' hidden='{{!hidden_send_message || read}}'>模板选择 ></text>
+</view>
+<!--留言框 end-->
+
+<!--是否关联个人 start-->
+<view class='setPhone global_page_indent'>
+	<text>关联个人联系方式</text>
+	<switch checked bindchange="setPhoneCover" />
+</view>
+<!--是否关联个人 end-->
+<!--是否显示谁看过我 start-->
+<view class='setPhone global_page_indent'>
+	<text>显示谁看过我</text>
+	<switch bindchange="showVisitorRecord" />
+</view>
+<!--是否显示谁看过我 end-->
+
+<!--各种操作按钮 start-->
+<view class='button_view global_page_indent'>
+	<view class='button_otp' style="display:{{show_update_card||!hidden_send_message?'none':''}};" hidden="{{((read && (role == 2 || role == 3)))||(!read)}}">
+		<button open-type="share"></button>
+		<view class='save_phone'>分享名片</view>
+	</view>
+	<view class='button_otp send_message' hidden='{{hidden_send_message}}'>
+		<button open-type="share"></button>
+		<view>名片已生成，去发送给好友吧</view>
+	</view>
+	<view class='button_otp send_message send_message_cancel' hidden='{{hidden_send_message}}'>
+		<view class='send_message_cancel' catchtap='sendMessageCancel'>取消</view>
+	</view>
+	<view class='button_otp' hidden='{{read}}' style="display:{{business_userid==lander.id?(show_update_card||!hidden_send_message?'none':''):'none'}};">
+		<button catchtap='updateCardShow'></button>
+		<view class='save_phone'>完善名片</view>
+	</view>
+	<view class='button_otp' hidden='{{read}}' style="display:{{show_update_card?'':'none'}};">
+		<button catchtap='updateCardShow'></button>
+		<view class='share_card'>取消</view>
+	</view>
+	<view class='button_otp' hidden='{{read}}' style="display:{{show_update_card?'':'none'}};">
+		<button catchtap='saveCardMessage'></button>
+		<view class='save_phone'>保存</view>
+	</view>
+	<view class='button_otp' style="" hidden='{{!(read && (role == 2 || role == 3))}}'>
+		<view class='levelUp' wx:if="{{card_role == 0 && card_userId != current_userId}}" data-role="1" catchtap="levelUpDown">晋升事业合伙人</view>
+		<view class='levelDown' wx:if="{{card_role == 1 && card_userId != current_userId}}" data-role="0" catchtap="levelUpDown">撤销事业合伙人</view>
+		<view class='save_phone' wx:if="{{card_userId == current_userId || card_role == 2 || card_role == 3}}" catchtap='showAddMessage'>分享名片</view>
+	</view>
+	<view class='button_otp' hidden='{{!read||!hidden_send_message}}' style="display:{{read?'':'none'}};">
+		<button catchtap='deleteCard'></button>
+		<view class='share_card'>删除</view>
+	</view>
+	<view class='button_otp' wx:if="{{!read && card_userId == current_userId}}">
+		<button catchtap='deleteCard'></button>
+		<view class='share_card'>删除</view>
+	</view>
+</view>
+<!--各种操作按钮 end-->
+
+
+<!--模板列表 start-->
+<view hidden='{{hidden_template_item||!hidden_add_card_template}}' class='template_list'>
+	<view>
+		<text catchtap='showTemplateList' class='global_page_indent'>关闭</text>
+		<text catchtap='showAddCardTemplate' class='global_page_indent'>新增</text>
+	</view>
+	<scroll-view scroll-y="true" style="height:95%;">
+		<block wx:for="{{card_template_list}}" wx:key="item" wx:index="index">
+			<view class='card_message' data-index="{{index}}">
+				<view class='card_message_title'>
+					<view>
+						<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x.png"></image>名片留言
+					</view>
+					<view>
+						<text catchtap='deleteCardTemplate' data-index="{{index}}" style='display:{{update_item_index==index?"none":""}};'>删除</text>
+						<text catchtap='openUpdateItem' data-index="{{index}}" style='display:{{update_item_index==index?"none":""}};'>编辑</text>
+						<text catchtap='cancelUpdateItem' data-index="{{index}}" style='display:{{update_item_index==index?"":"none"}};'>取消</text>
+						<text catchtap='updateCardTemplate' style='display:{{update_item_index==index?"":"none"}};'>保存</text>
+					</view>
+
+				</view>
+				<textarea class='card_message_text' bindinput="inputCardMessage" placeholder='请输入名片留言' bindtap='{{item.disabled?"chooseOneTemplate":""}}' data-index="{{index}}" disabled='{{item.disabled}}' value='{{item.content}}' wx:if='{{!item.disabled}}' auto-focus="true"></textarea>
+				<view class='card_message_text' catchtap='{{item.disabled?"chooseOneTemplate":""}}' data-index="{{index}}" hidden='{{!item.disabled}}'>{{item.content}}</view>
+			</view>
+		</block>
+	</scroll-view>
+
+
+	<view class='noList' style='display:{{card_template_list.length>0?"none":""}};'>暂无模板</view>
+</view>
+<!--模板列表 end-->
+
+<!-- 新增模板 start-->
+<view class='card_message add_card_message' hidden='{{hidden_add_card_template}}'>
+	<view class='card_message_title'>
+		<view>
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x.png"></image>名片留言
+		</view>
+		<view>
+			<text catchtap='addCardTemplate'>保存</text>
+		</view>
+
+	</view>
+	<textarea class='card_message_text' bindinput="inputCardMessage" placeholder='请输入名片留言'></textarea>
+</view>
+<view class='food_chain_mask ' style='z-index:11' hidden='{{hidden_add_card_template}}' catchtap='showAddCardTemplate'></view>
+<!-- 新增模板 end-->
+
+
+
+
+<!--分享名片发送按钮 start-->
+<!-- <view class='send_message add_card_message' hidden='{{hidden_send_message}}'>
+<button open-type="share"></button>
+  名片已生成，去发送给好友吧
+</view>
+<view class='food_chain_mask ' style='z-index:11' hidden='{{hidden_send_message}}' catchtap='showAddCardTemplate'></view> -->
+<!--分享名片发送按钮 end-->
+
+
+<!--企业已过期 start-->
+<!-- <view class="merchant_err" wx:if="{{merchant_err}}"> -->
+<view class="merchant_err" style="top:0;" catchtap="" catchtouchmove="doNotMove" wx:if="{{merchant_err}}">
+	<text>该企业{{business_info.status == 0?"已注销":(business_info.status == 3?"已过期":"不存在")}}，名片不可用</text>
+	<view class="toIndex" catchtap="toIndex">去首页</view>
+	<view wx:if="{{business_info.status == 0?true:false}}" class="toIndex" catchtap='deleteCard'>删除名片</view>
+</view>
+<!--企业已过期 end-->
+
+<!--私人定制输入框 start-->
+<view class="card_message_edit" catchtouchmove="doNotMove" hidden="{{!showTextareaEdit}}">
+	<view class="card_message_edit_item">
+		<view class="card_message_edit_close global_page_indent">
+			<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/white_close.png" catchtap="hideTextareaEdit"></image>
+			<view catchtap="addMessage">保存</view>
+		</view>
+		<view class='card_message' style='margin-top: 10rpx;'>
+			<view class='card_message_title'>
+				<view>
+					<image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x_blue.png"></image>私人定制
+				</view>
+			</view>
+			<textarea wx:if="{{showTextareaEdit}}" style="position: relative;color: #000000;height: 230rpx;" class='card_message_text' bindinput="inputCardMessage" placeholder='请输入您的专属留言' value='{{card_message}}' cursor-spacing="10" adjust-position="true" bindconfirm="hideTextareaEdit" auto-focus="true"></textarea>
+		</view>
+	</view>
+</view>
+<!--私人定制输入框 end-->
+
+
+
+<!--内部商品列表 start-->
+<view class="global_page_indent recommendGoods" wx:if="{{goodsList.length > 0}}">
+	<text>推荐商品</text>
+	<text  catchtap="jumpClerkGoodList">更多></text>
+</view>
+<view class="goodsList" wx:if="{{goodsList.length > 0}}" style="padding-top:20rpx;">
+	<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index">
+		<view class="goodsItem" data-clerk_code="{{clerk_code}}" catchtap="goToDetail" bindtap="goToDetail" data-code="{{item.code}}" data-activitytype="{{item.typeCode}}">
+			<image src="{{item.illustration}}" mode="aspectFill"></image>
+			<view style="padding-right: 0px;padding-left: 0px;">
+				<text class="aline2 goods_padding_margin">{{item.title}}</text>
+				<view class="priceDesc">
+					<text style="font-size:28rpx;font-weight:bold;">￥</text>
+					<text style="font-size:32rpx;font-weight:bold;flex:1;">{{item.onshelf.onshelfSkus[0].priceYuan}}</text>
+					<text class="deliver_type deliver_type_red" wx:if="{{item.productTypeCode=='logistics'&&item.addressType!='merchant'}}">物流</text>
+					<text class="deliver_type " wx:elif="{{item.productTypeCode=='virtual'}}">虚拟</text>
+					<text class="deliver_type " wx:elif="{{item.productTypeCode=='deposit'}}">定金</text>
+					<text class="deliver_type " wx:else>到店</text>
+				</view>
+				<!-- <view class="inbonus aline1 goods_padding_margin" wx:if="{{(card_role==0)||(card_role==1 && parentUserId)||(card_role==2 && parentUserId)?true:false}}">销售提成:{{item.inRewardEventProduct[0].bonus}}元</view>
+        <view class="inbonus aline1 goods_padding_margin" wx:elif="{{card_role==1&& !parentUserId?true:false}}">销售提成:{{item.inRewardEventProduct[0].managerBonus+"+"+item.inRewardEventProduct[0].bonus}}元</view>
+        <view class="inbonus aline1 goods_padding_margin" wx:elif="{{card_role==2&& !parentUserId?true:false}}">销售提成:{{item.inRewardEventProduct[0].managerBonus+"+"+item.inRewardEventProduct[0].bonus}}元</view> -->
+				<!-- <view class="inbonus aline1 goods_padding_margin" wx:elif="{{card_role==1||card_role==2?true:false}}">销售提成:{{item.inRewardEventProduct[0].managerBonus}}元</view> -->
+				<!-- <view class="inbonus aline1 goods_padding_margin"  >共享合伙人提成:{{item.bonus}}元</view>
+        <view class="inbonus aline1 goods_padding_margin"  >经理提成:{{item.managerBonus}}元</view> -->
+				<view class="goodstag goods_padding_margin" hidden="true">
+					<view hidden="true">
+						<text class="goodstag_text goodstag_text_blue">自</text>
+						<text class="goodstag_deliver">上门自提</text>
+					</view>
+					<view hidden="true">
+						<text class="goodstag_text goodstag_text_red">商</text>
+						<text class="goodstag_deliver">商家直销</text>
+					</view>
+					<!-- <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index_tag">
+            <view>
+              <text>{{tag}}</text>
+            </view>
+          </block> -->
+				</view>
+
+				<view class="goods_bottom goods_padding_margin">
+					<view>
+						<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/attend_num%403x.png"></image>
+						<text>{{item.total}}</text>
+					</view>
+					<!-- <view style="position: relative;" catchtap="doNotMove">
+          <button class="inreward_share_button" open-type="share"></button>
+            <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/share_form_clerk%403x.png"></image>
+            <text>分享</text>
+          </view> -->
+				</view>
+			</view>
+		</view>
+	</block>
+	<view class='lookMoreGoods' wx:if="{{goodsList.length >= 20}}"><text catchtap="jumpClerkGoodList">点我查看更多商品</text></view>
+</view>
+<!--内部商品列表 end-->

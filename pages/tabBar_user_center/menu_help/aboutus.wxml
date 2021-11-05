@@ -1,0 +1,9 @@
+<!--pages/tabBar_user_center/menu_help/aboutus.wxml-->
+<view class='content_block'>
+<image class="o_logo_200" src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/logo.png'></image>
+<view class='title global_page_indent'>掌创人生企业版是互联网+生活服务平台，秉承“生活可以更简单”的企业使命，致力改善和提高消费者的生活品质</view>
+<view class='context'>版本号：{{edition}}</view>
+<view class='context'>客服电话：400-003-2229</view>
+<view class='context'>微信公众号：vpalmtech</view>
+<view class="copyright">Copyright © 2018.广西掌胜科技有限公司 .All rights reserved.</view>
+</view>

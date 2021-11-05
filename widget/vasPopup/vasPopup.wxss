@@ -1,0 +1,102 @@
+/* expandPackage/widget/vasPopup/vasPopup.wxss */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 100;
+}
+
+.main {
+  position: relative;
+  left: 0;
+  top: calc(100vh - 800rpx);
+  padding: 24rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 32rpx * 2);
+  height: calc(800rpx - 24rpx * 2);
+  background: #ffffff;
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+}
+
+.main>view:nth-of-type(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #37424D;
+}
+
+.main>view:nth-of-type(1)>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.main>view:nth-of-type(2) {
+  display: flex;
+  flex-direction: row;
+  margin: 36rpx 0px;
+  padding: 24rpx;
+  background: #F7F7F7;
+  border-radius: 24rpx;
+  color: #37424D;
+  background-image: url(https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/VAS/publicFlowPopup.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.subContent {
+  display: flex;
+  flex-direction: column;
+  border-top: 2rpx solid #eeeeee;
+  padding-top: 24rpx;
+}
+
+.subContentTitle {
+  font-weight: 700;
+  color: #37424D;
+}
+
+.subContentDesc {
+  font-size: 24rpx;
+  color: #808080;
+  margin-top: 8rpx;
+}
+
+.funcList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40rpx;
+}
+
+.funcItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.funcItem:not(:last-child) {
+  margin-bottom: 72rpx;
+}
+
+.funcItem>image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 16rpx;
+}
+
+.funcItem>text {
+  width: calc(100% - 24rpx - 16rpx);
+  font-size: 24rpx;
+  color: #37424D;
+}
+
+scroll-view {
+  display: flex;
+  flex-direction: column;
+  height: 540rpx;
+}

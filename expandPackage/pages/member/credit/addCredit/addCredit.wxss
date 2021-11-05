@@ -1,0 +1,400 @@
+/* expandPackage/pages/member/credit/addCredit.wxss */
+page {
+  background: #f6f6f6;
+}
+
+.pageHead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.pageHead>image:nth-of-type(1) {
+  position: absolute;
+  left: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.pageHead>text {
+  font-size: 32rpx;
+  line-height: 32rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 400rpx;
+  background: linear-gradient(215deg, #7bc4fb 50%, #2f95fb 80%);
+  border-bottom-left-radius: 8%;
+  border-bottom-right-radius: 8%;
+  z-index: 1;
+}
+
+.viewContent {
+  margin: 0 0 32rpx 32rpx;
+  padding: 32rpx;
+  width: calc(100vw - 32rpx * 4);
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+/* 金额信息 start */
+.moneyInfo {
+  display: flex;
+  flex-direction: row;
+  margin-left: 32rpx;
+  width: calc(100vw - 32rpx * 2);
+  height: 112rpx;
+}
+
+.moneyInfo>view:nth-of-type(1),
+.moneyInfo>view:nth-of-type(3) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc((100% - 2rpx) / 2);
+  color: #fff;
+  z-index: 2;
+}
+
+.moneyInfo>view:nth-of-type(2) {
+  display: flex;
+  width: 2rpx;
+  height: 100%;
+  opacity: 0.45;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00), #ffffff 53%, rgba(255, 255, 255, 0.00));
+}
+
+.moneyInfo>view>view {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.moneyInfo>view>view>text:nth-of-type(1) {
+  font-weight: 700;
+  line-height: 28rpx;
+}
+
+.moneyInfo>view>view>text:nth-of-type(2) {
+  font-size: 36rpx;
+  font-weight: bold;
+  line-height: 36rpx;
+}
+
+.moneyInfo>view>text {
+  margin-top: 12rpx;
+}
+
+/* 金额信息 end */
+
+/* 充值金额 start */
+.amount {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 48rpx;
+  z-index: 2;
+}
+
+.amountList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.amountItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 34rpx 0px;
+  width: calc((100% - 16rpx * 2 - 2rpx * 6) / 3);
+  border-radius: 18rpx;
+  margin-bottom: 16rpx;
+}
+
+.amountItem_unselected {
+  border: 2rpx solid #d8d8d8;
+  color: #37424D;
+}
+
+.amountItem_selected {
+  background: rgba(47, 149, 251, 0.15);
+  border: 2rpx solid #2F95FB;
+  color: #2F95FB;
+}
+
+.amountItem:not(:nth-child(3n)) {
+  margin-right: 16rpx;
+}
+
+.amountItem>text {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.amountCustomize {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 34rpx 16rpx;
+  width: calc(100% - 16rpx * 2);
+  border-radius: 18rpx;
+}
+
+.amountCustomize_unselected {
+  border: 2rpx solid #d8d8d8;
+}
+
+.amountCustomize_selected {
+  background: rgba(47, 149, 251, 0.15);
+  border: 2rpx solid #2F95FB;
+}
+
+.amountCustomize>text {
+  color: #37424d;
+}
+
+.amountCustomize>input {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2f95fb;
+  text-align: right;
+}
+
+/* 充值金额 end */
+
+/* 优惠券 start */
+.coupons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.coupons>text {
+  color: #37424d;
+  margin-right: 8rpx;
+}
+
+.coupons>image {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 8rpx;
+}
+
+.usingCoupon {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.usingCoupon>text:nth-of-type(1) {
+  color: #a0a0a0;
+}
+
+.usingCoupon>text:nth-of-type(2) {
+  color: #2f95fb;
+}
+
+.noCoupon {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 24rpx;
+  color: #a0a0a0;
+}
+
+.enableCoupon {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.hasCoupon {
+  width: 176rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  color: #502205;
+  background: linear-gradient(90deg, #f5deb5, #edc483);
+  border-radius: 18rpx;
+  text-align: center;
+}
+
+/* 优惠券 end */
+
+
+/* 支付方式 start */
+.payWays {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.payWays>image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.payWays>text {
+  font-size: 32rpx;
+  color: #37424d;
+  margin: 0px 16rpx;
+}
+
+/* 支付方式 end */
+
+/* 预充值协议 start */
+.yczxy {
+  position: fixed;
+  bottom: calc(32rpx * 2 + 88rpx);
+  left: 32rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 32rpx * 2);
+}
+
+.yczxy>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.yczxy>text {
+  font-size: 24rpx;
+  color: #2F95FB;
+}
+
+/* 预充值协议 end */
+
+/* 充值 start */
+.pay {
+  position: fixed;
+  bottom: 32rpx;
+  left: 32rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 32rpx * 2);
+  height: 88rpx;
+  font-size: 32rpx;
+  color: #fff;
+  background: #2f95fb;
+  border-radius: 44rpx;
+}
+
+/* 充值 end */
+
+/* 弹窗合集 start */
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.60);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 弹窗合集 start */
+.addCreditInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100vw - 96rpx * 2 - 40rpx * 2);
+  margin: 0rpx 96rpx;
+  padding: 40rpx 40rpx 0rpx 40rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  color: #37424D;
+}
+
+/* 弹窗合集 end */
+
+/* 弹窗合集 end */
+
+/* 充值服务说明 start */
+.yczInfo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 1000;
+}
+
+.yczInfo_topBar {
+  position: fixed;
+  left: 16rpx;
+  display: flex;
+  flex-direction: row;
+  z-index: 100;
+}
+
+.yczInfo_titleBar {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 10;
+}
+
+.imgAgreement {
+  width: 100vw;
+}
+
+/* 充值服务说明 end */
+
+/*返回 start*/
+
+.retrun_img {
+  width: 81px;
+  height: 32px;
+}
+
+.retrun_view {
+  position: absolute;
+  width: 81px;
+  height: 32px;
+  z-index: 1112;
+  display: flex;
+}
+
+.retrun_view_left {
+  width: 40px;
+  height: 32px;
+}
+
+.retrun_view_right {
+  width: 40px;
+  height: 32px;
+}
+
+/*返回 end*/

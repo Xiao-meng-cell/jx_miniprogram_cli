@@ -1,0 +1,79 @@
+<!--expandPackage/pages/member/records/records.wxml-->
+<wxs module="utils" src="../../../../../utils/utils.wxs" />
+<view class="main">
+  <!-- 提示 start -->
+  <view class="tips" wx:if="{{tips != ''}}">
+    <image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/member/notice.png">
+    </image>
+    <text>{{tips}}</text>
+  </view>
+  <!-- 提示 end -->
+  <!-- 记录列表 start -->
+  <view class="monthList">
+    <view class="header">
+      <view>
+        <view>
+          <picker mode="date" fields="month" start="2021-01-01" end="{{nowDate}}" bindchange="changeDate"
+            bindcancel="cancel" catchtap="clickDate">
+            <view class="selectedDate">
+              <text>{{dateDisplay}}</text>
+            </view>
+          </picker>
+          <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/arrow_down_active.png"></image>
+        </view>
+        <view catchtap="displayFilterType">
+          <text>{{filterTypes[typeIndex].keyName}}</text>
+          <image src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/travel/icon/arrow_down_active.png"></image>
+        </view>
+      </view>
+      <text
+        wx:if="{{type == 'ycz' && dataList.length > 0}}">累计充值￥{{utils.priceSwitch(dataList[0].recharge)}}　支出￥{{utils.priceSwitch(dataList[0].expend)}}</text>
+    </view>
+    <block wx:for="{{dataList}}">
+      <view class="header" wx:if="{{index != 0}}">
+        <view>
+          <view>
+            <text style="color:#808080;">{{item.keyName}}</text>
+          </view>
+          <text
+            wx:if="{{type == 'ycz'}}">累计充值￥{{utils.priceSwitch(item.recharge)}}　支出￥{{utils.priceSwitch(item.expend)}}</text>
+        </view>
+      </view>
+      <!-- 记录内容 start -->
+      <view class="item" wx:for="{{item.value}}" wx:for-item="recordItem" data-item="{{recordItem}}"
+        catchtap="goToDetail">
+        <image src="{{recordItem.iconUrl}}">
+        </image>
+        <view>
+          <text>{{recordItem.remarks != "" ? recordItem.remarks : recordItem.historySourceName}}</text>
+          <text>{{recordItem.createdTime}}</text>
+        </view>
+        <text>{{recordItem.valueDisplay}}</text>
+      </view>
+      <!-- 记录内容 end -->
+    </block>
+    <view class="loadAll" hidden="{{loadAll && dataList.length > 0 ? false : true}}">
+      <text style="color: #a0a0a0;">已加载全部</text>
+    </view>
+    <view class="emptyView" hidden="{{dataList.length > 0}}">
+      <image
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png">
+      </image>
+      <text>没有任何数据</text>
+    </view>
+  </view>
+  <!-- 记录列表 end -->
+</view>
+<!-- 筛选类型 start -->
+<view class="filterType {{tips != '' ? 'filterType_tips' : 'filterType_notips'}}" catchtap="displayFilterType"
+  hidden="{{!displayFilterType}}">
+  <view catchtap="catchMoseOperate">
+    <block wx:for="{{filterTypes}}">
+      <view class="typeItem {{typeIndex == index ? 'typeItem_selected' : 'typeItem_unselected'}}" data-index="{{index}}"
+        catchtap="changeType">
+        <text>{{item.keyName}}</text>
+      </view>
+    </block>
+  </view>
+</view>
+<!-- 筛选类型 end -->

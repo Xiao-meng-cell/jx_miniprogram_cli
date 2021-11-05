@@ -1,0 +1,89 @@
+<!--miniprogram/pages/clerk/clerk_good_list/clerk_good_list.wxml-->
+<!--tab 私人定制 企业简介 推荐商品 start-->
+<wxs src="../../../utils/utils.wxs" module="utils" />
+
+<!--私人定制 start-->
+<!-- <view class='card_message' style='display:{{card_message?"":"none"}};'>
+	<view class='card_message_title'>
+		<view>
+			<image
+				src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/label_message@3x_blue.png">
+			</image>私人定制
+		</view>
+	</view>
+	<text catchlongtap="setCopyText" class='card_message_text_font'
+		data-text="{{card_message==null||card_message==''?'':card_message}}"
+		catchtap="showTextareaEdit">{{card_message==null||card_message==''?'暂无信息':card_message}}</text>
+</view> -->
+<!--私人定制 end-->
+
+<!--间隔 start-->
+<!-- <view class='spacing'></view> -->
+<!--间隔 end-->
+
+<!--内部商品列表 start-->
+<!-- 商品分类 start -->
+<view class="goods_tag" hidden="{{goodsTagList.length > 1 ? false : true}}">
+	<scroll-view scroll-x="true">
+		<block wx:for="{{goodsTagList}}" wx:key="index">
+			<view class="goodsTagItem {{goodsTagSelectedIndex == index ? 'goodsTagItem_selected' : ''}}" data-item="{{item}}"
+				data-index="{{index}}" catchtap="clickGoodsTag">
+				<text>{{item.name}}</text>
+			</view>
+		</block>
+	</scroll-view>
+	<image class="business_goods_tag"
+		src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/business_goods_tag.png"
+		data-index="0" catchtap="goToGoodsCategory"></image>
+	<view class="business_goods_tag_masking "></view>
+</view>
+<!-- 商品分类 end -->
+<!-- 商品分类栏 start -->
+<view class="goodsType" wx:if="{{!goodsTypeHidden}}">
+	<view data-index="1" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex == 1 ? 'goodsType_selected' : 'goodsType_unselected'}}">推荐排序</text>
+	</view>
+	<view data-index="2" catchtap="changeGoodsSort">
+		<text
+			class="{{goodsTypeSelectedIndex == 2 ? 'goodsType_selected' : 'goodsType_unselected'}}">{{activityTypeText}}</text>
+		<view id="triangle-down"
+			class="{{goodsTypeSelectedIndex == 2? 'triangle-down_selected' : 'triangle-down_unselected'}}"></view>
+	</view>
+	<view data-index="3" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex  == 3? 'goodsType_selected' : 'goodsType_unselected'}}">价格</text>
+		<view>
+			<view id="triangle-up"
+				class="{{goodsTypeSelectedIndex  == 3 && priceSortAsc ? 'triangle-up_selected' : 'triangle-up_unselected'}}">
+			</view>
+			<view id="triangle-down" style="margin-top:4rpx;"
+				class="{{goodsTypeSelectedIndex  == 3 && !priceSortAsc ? 'triangle-down_selected' : 'triangle-down_unselected'}}">
+			</view>
+		</view>
+	</view>
+	<view data-index="4" catchtap="changeGoodsSort">
+		<text class="{{goodsTypeSelectedIndex == 4 ? 'goodsType_selected' : 'goodsType_unselected'}}">销量</text>
+	</view>
+</view>
+<!-- 商品分类栏 end -->
+<view class="goodsList"
+	style="padding-top:20rpx;{{goodsTagList.length > 1 && !card_message ? 'margin-top: 90rpx;' : ''}}"
+	wx:if="{{business_activity_list[0].length > 0}}">
+	<block wx:for="{{business_activity_list}}" wx:for-item="item_key" wx:key="index_key">
+		<block wx:for="{{item_key}}" wx:for-item="item" wx:key="index">
+			<goodsItem id="goodsItem" data="{{item}}" clerkCode="{{clerk_code}}" scene="{{'clerk' + merchant_code}}" sceneDT="{{workerId}}"></goodsItem>
+		</block>
+	</block>
+</view>
+<view class="emptyView" wx:else>
+	<image
+		src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_%20interchangeable%403x.png">
+	</image>
+	<text>没有任何数据</text>
+</view>
+<!--内部商品列表 end-->
+
+<!--tab 私人定制 企业简介 推荐商品 end-->
+
+<!-- 购物车 start -->
+<cart_button id="cart_button"></cart_button>
+<!-- 购物车 end -->

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "付款成功",
+  "usingComponents": {
+    "mp_msg": "/widget/msg/msg"
+  },
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,262 @@
+/* miniprogram/pages/order/detail/order_details.wxss */
+@import '/assets/styles/com_order_details.wxss';
+
+.virtual_goods {
+  display: flex;
+  flex-direction: column;
+  margin: 30rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.virtual_goods>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.customMessageTips {
+  margin: 20rpx;
+  font-size: 28rpx;
+}
+
+.bottom_row {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 32rpx;
+  margin-top: 16rpx;
+}
+
+.oneCopy {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 110rpx;
+  height: 30rpx;
+  font-size: 24rpx;
+  border: 2rpx solid #a0a0a0;
+  color: #a0a0a0;
+  border-radius: 6rpx;
+}
+
+.copyAll {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32rpx;
+  padding-top: 20rpx;
+  border-top: #EEEEEE 2rpx solid;
+  font-size: 28rpx;
+  color: #2F95FB;
+}
+
+.copyAll>image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+}
+
+
+.showMenu {
+  position: fixed;
+  bottom: 0rpx;
+  z-index: 6005;
+  width: 100%;
+}
+
+.showMenu_item {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28rpx;
+  padding-right: 28rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  text-align: center;
+  text-decoration: none;
+  line-height: 3;
+  border-radius: 0rpx;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000;
+  background-color: #f8f8f8;
+  border-bottom: 2rpx solid rgba(68, 68, 68, 0.3);
+}
+
+.showMenu_item:last-child {
+  border-bottom: none;
+}
+
+.end_time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  color: #37424D;
+  font-size: 22rpx;
+  margin-top: 32rpx;
+}
+
+.end_time>view>image {
+  width: 96rpx;
+  height: 28rpx;
+}
+
+/* 退款信息 start  */
+
+.afterSales {
+  display: flex;
+  flex-direction: column;
+}
+
+.afterSales>view:nth-of-type(1) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 32rpx;
+  border-bottom: #EEEEEE 2rpx solid;
+}
+
+.afterSales>view:nth-of-type(1)>image {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 16rpx;
+}
+
+.afterSales>view:nth-of-type(1)>text:nth-of-type(1) {
+  line-height: 28rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.afterSales>view:nth-of-type(1)>text:nth-of-type(2) {
+  line-height: 28rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #5ABDFF;
+}
+
+.afterSalesItem {
+  display: flex;
+  flex-direction: row;
+  color: #37424D;
+  font-size: 28rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.afterSalesItemImages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 22rpx;
+}
+
+.afterSalesItemImages>image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 16rpx;
+  margin-bottom: 24rpx;
+  border-radius: 8rpx;
+}
+
+.afterServiceAddr {
+  display: flex;
+  flex-direction: column;
+}
+
+.afterServiceAddr>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.afterServiceAddr_flag {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 16rpx;
+}
+
+.afterServiceAddr>view>view {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 64rpx);
+}
+
+.afterServiceAddr>view>view>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.afterServiceAddr_name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 12rpx;
+}
+
+.afterServiceAddr_phone {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.afterServiceAddr_tag {
+  padding: 4rpx 8rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  background: #f6f6f6;
+  border-radius: 24rpx;
+}
+
+.afterServiceAddr_addr {
+  font-size: 24rpx;
+  margin-top: 16rpx;
+}
+
+.afterServiceLogistics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: #EEEEEE 2rpx solid;
+  margin-top: 16rpx;
+  padding-top: 24rpx;
+}
+
+.afterServiceLogistics>image:nth-of-type(1) {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 16rpx;
+}
+
+.afterServiceLogistics>text {
+  width: calc(100% - 60rpx - 48rpx);
+  font-size: 12px;
+}
+
+.afterServiceLogistics>image:nth-of-type(2) {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 16rpx;
+}
+
+/* 退款信息 start  */
+
+.priceItem_logistics_free {
+  font-size: 24rpx;
+  color: #FF2D55;
+  margin-top: 16rpx;
+}
+
+.priceItem_logistics_free>image {
+  margin-right: 16rpx;
+}
+
+.logistics_info_img_free {
+  width: 96rpx;
+  height: 32rpx;
+}

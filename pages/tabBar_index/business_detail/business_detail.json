@@ -1,0 +1,11 @@
+{
+  "onReachBottomDistance": 380,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "mMap": "/widget/mapTab/map",
+    "date-time-picker": "/widget/picker/picker",
+    "payPassword": "/widget/payPassword/payPassword",
+    "noneLine": "/widget/none-line/none-line",
+    "topBar": "/widget/top-bar/top-bar"
+  }
+}

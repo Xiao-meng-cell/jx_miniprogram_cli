@@ -1,0 +1,332 @@
+<wxs src="../../../../utils/utils.wxs" module="utils" />
+<template name="video">
+  <view>
+    <video id="clerkTemplateVideo" src="{{clerk.videoUrl}}" autoplay="{{autoplay}}" loop="{{loop}}"
+      controls="{{controls}}" muted="{{muted}}" play-btn-position="{{playBtnPosition}}" show-center-play-btn="true"
+      bindplay="ctvVideoPlay" bindpause="ctvVideoPause" catchtouchmove="doNotMove"
+      wx:if="{{clerk.videoUrl && clerkTemplateType=='video'}}"></video>
+
+    <view class="top_bg" wx:if="{{mediaInfoPhotos.length>0 && clerkTemplateType=='placard'}}">
+      <image class="maskCard"
+        src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/mask.png"></image>
+      <view class="top_img">
+        <image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/BG-gray%403x.png">
+        </image>
+      </view>
+      <view class="top_box">
+        <view class="top">
+          <image src="{{clerk.headimg}}" />
+          <view class="name_box">
+            <view class="fontS-20">{{clerk.name}}</view>
+            <view class="fontS-12">{{clerk.position}}</view>
+          </view>
+          <view class="busin_home_box" catchtap="handlerPageTap">
+            <view class="db_inline">
+              <image class="busin_home_img"
+                src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/icon_enterprise%403x.png" />
+            </view>
+            <view class="db_inline fontW-500 fontS-12">进入企业</view>
+          </view>
+        </view>
+      </view>
+      <view class="placard" wx:if="{{mediaInfoPhotos.length>0 && clerkTemplateType=='placard'}}">
+        <view wx:for="{{mediaInfoPhotos}}" wx:key="item">
+          <image src="{{item}}" mode="widthFix" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 浏览数 start -->
+    <cover-view class="visitorRecord" style="top:{{capsuleTop + capsuleHeight + 8}}px;" hidden="{{forward_status}}">
+      <cover-view>
+        <block wx:for="{{seen_list}}" wx:key="item" wx:if="{{index<4}}">
+          <cover-image class="visitorRecord_image" src='{{item.headimg + utils.resizeImg(50)}}' mode='aspectFill'>
+          </cover-image>
+        </block>
+        <cover-view class="visitorRecordMore" wx:if="{{seen_list.length > 4}}">
+          ...
+        </cover-view>
+      </cover-view>
+      <cover-view class="visitorRecordCount">已有{{seen_list.length}}人浏览</cover-view>
+    </cover-view>
+    <!-- 浏览数 end -->
+    <!-- 表面浮层 start -->
+    <cover-view class="operate" catchtap="doNotMove" catchtouchmove="doNotMove"
+      wx:if="{{floatDiv && hidden_card_list && !showTextareaEdit}}">
+      <!-- 产品列表 start -->
+      <cover-view class="goodsListEntry" catchtap="showGoodsTip">
+        <cover-image
+          src="{{clerkTemplateType == 'video' ? 'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_goods.png' :'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/goods_red.png'}}">
+        </cover-image>
+      </cover-view>
+      <cover-view class="goodsListEntryText" catchtap="showGoodsTip" wx:if="{{clerkTemplateType == 'video'}}">
+        <cover-view style="margin-top:10rpx;">商品</cover-view>
+        <cover-view style="margin-top:8rpx;width:65rpx;text-align: center;">{{goodsList.length ? goodsList.length : 0}}
+        </cover-view>
+      </cover-view>
+      <!-- 产品列表 end -->
+      <!-- 私人订制 start -->
+      <cover-view class="btn" catchtap='showTextareaEdit' wx:if="{{clerkTemplateType == 'video'}}">
+        <cover-image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_message.png">
+        </cover-image>
+      </cover-view>
+      <!-- 私人订制 end -->
+      <!-- 收藏 start -->
+      <!-- <cover-view class="btn" catchtap='{{isFollow?"cancelFollow":"addFollow"}}'> -->
+      <cover-view class="btn" catchtap='addFollow' wx:if="{{clerkTemplateType == 'video'}}">
+        <cover-image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_fav.png"
+          wx:if="{{isFollow}}"></cover-image>
+        <cover-image
+          src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_unfav.png"
+          wx:else></cover-image>
+      </cover-view>
+      <!-- 收藏 end -->
+      <!-- 名片 start -->
+      <cover-view class="{{clerkTemplateType == 'video' ? 'btn' :'btn1'}}" catchtap="showProfile">
+        <cover-image
+          src="{{clerkTemplateType == 'video'?'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_clerk.png' :'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/icon_business%20card%403x.png'}}">
+        </cover-image>
+      </cover-view>
+      <!-- 名片 end -->
+      <!-- 电话 start -->
+      <cover-view class="{{clerkTemplateType == 'video' ? 'btn' :'btn1'}}" data-phone="{{card_phone}}"
+        catchtap='save_phone'>
+        <cover-image
+          src="{{clerkTemplateType == 'video'? 'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_phone.png' : 'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/icon_phone%403x.png'}}">
+        </cover-image>
+      </cover-view>
+      <!-- 电话 end -->
+      <!-- 分享 start -->
+      <cover-view class="{{clerkTemplateType == 'video' ? 'btn' :'btn1'}}" catchtap="doNotMove">
+        <button open-type='share' data-useshots='true' wx:if="{{showContact}}">
+        <cover-image
+          src="{{clerkTemplateType == 'video'?'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_share.png' :'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/icon_share%403x.png'}}">
+        </cover-image>
+        </button>
+        <cover-view class="view-btn" wx:if="{{!showContact}}" catchtap="contactBusiness">
+          <cover-image
+          src="{{clerkTemplateType == 'video'?'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_share.png' :'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/icon_share%403x.png'}}">
+        </cover-image>
+        </cover-view>
+      </cover-view>
+      <!-- 分享 end -->
+      <!-- 直播 start -->
+      <cover-view class="{{clerkTemplateType == 'video' ? 'btn' :'btn1'}}" catchtap="jumpLive"
+        wx:if="{{clerk.live == 1}}">
+        <cover-image
+          src="{{clerkTemplateType == 'video'? 'http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_clerk_live.png' :'https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/posterCard/icon_video%403x.png'}}">
+        </cover-image>
+      </cover-view>
+      <!-- 直播 end -->
+      <cover-view class="btn" catchtap="jumpBusiness" wx:if="{{clerkTemplateType=='video'}}">
+        <cover-image
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_store_fill%403x.png">
+        </cover-image>
+      </cover-view>
+    </cover-view>
+    <!-- 表面浮层 end -->
+    <!-- 专供分享转发截图使用 start -->
+    <cover-view class="profile_forward {{isIOS?'profile_forward_ios':''}}" hidden="{{!forward_status}}">
+      <cover-view class="profile_info">
+        <cover-image class="profile_info_skin"
+          src="https://oss.vicpalm.com/static/miniProgramBusiness/temp/clerksin02%402x.png"
+          wx:if="{{!clerk.clerkskinUrl||clerk.clerkskinUrl==''}}"></cover-image>
+        <cover-image class="profile_info_skin" src="{{clerk.clerkskinUrl}}" wx:else></cover-image>
+        <cover-view class="profile_info_content" style="white-space:auto">
+          <cover-view class="profile_info_content_headimg_name">
+            <cover-image class="clerkInfo_headimg_business"
+              src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}" mode="aspectFill"></cover-image>
+            <cover-view class="profile_info_content_headimg_name_2" style="border: unset;">
+              <cover-view>{{card_name}}</cover-view>
+              <cover-view>{{card_position==null?"":card_position}}</cover-view>
+              <cover-view>
+                {{business_info.name==null||business_info.name==""?business_info.shortName:business_info.name}}
+              </cover-view>
+            </cover-view>
+          </cover-view>
+          <cover-view class="profile_info_content_tel_wx_email">
+            <cover-view data-phone="{{card_phone}}" catchtap="contactBusiness">
+              电话：{{!showContact?"---":(card_phone==null||card_phone==""?"--":card_phone)}}</cover-view>
+            <cover-view style="margin-top:24rpx;" data-text="{{card_wx}}" catchtap='setCopyText'>
+              微信：{{!showContact?"---":(card_wx==null?"---":card_wx)}}</cover-view>
+            <cover-view style="margin-top:24rpx;" catchtap='mapNavigation'>
+              地址：{{business_info.addr?utils.stringCut(business_info.addr,16):"---"}}</cover-view>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <!-- 专供分享转发截图使用 end -->
+    <!-- 简介内容 start -->
+    <cover-view class="profile_mask" hidden="{{!profile}}" catchtap='showProfile'></cover-view>
+    <cover-view class="profile" catchtap="doNotMove" hidden="{{!profile}}" style="white-space: auto">
+      <cover-view class="profile_info">
+        <cover-image class="profile_info_skin"
+          src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/clerkDetail/card_bg.png"
+          wx:if="{{clerk.clerkskinUrl == '' || !clerk.clerkskinUrl}}"></cover-image>
+        <cover-image class="profile_info_skin" src="{{clerk.clerkskinUrl}}" wx:else></cover-image>
+        <cover-view class="profile_info_content">
+          <cover-view class="profile_info_content_headimg_name">
+            <cover-image class="clerkInfo_headimg_business"
+              src="{{card_headimg?card_headimg + utils.resizeImg(250):''}}" mode="aspectFill"></cover-image>
+            <cover-view class="profile_info_content_headimg_name_2 ">
+              <cover-view class="profile_info_content_headimg_box_text ">{{card_name}}</cover-view>
+              <cover-view class="profile_info_content_headimg_box_text1 ">{{card_position==null?"":card_position}}
+              </cover-view>
+              <cover-view>
+                {{business_info.name==null||business_info.name==""?utils.stringCut(business_info.shortName,12):utils.stringCut(business_info.name,12)}}
+              </cover-view>
+            </cover-view>
+            <cover-image style="width:36rpx;height:36rpx;margin-left: auto;margin-top: 38rpx;"
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/clerk_phone_white@3x.png"
+              data-phone="{{card_phone}}" catchtap="contactBusiness"></cover-image>
+          </cover-view>
+          <cover-view class="profile_info_content_tel_wx_email ">
+            <cover-view data-phone="{{card_phone}}" catchtap="contactBusiness">
+              电话：{{!showContact?"---":(card_phone==null||card_phone==""?"--":card_phone)}}</cover-view>
+            <cover-view style="margin-top:24rpx;" data-text="{{card_wx}}" catchtap='setCopyText'>
+              微信：{{!showContact?"---": (card_wx==null?"--":card_wx)}}</cover-view>
+            <cover-view style="margin-top:24rpx;" catchtap='mapNavigation'>
+              地址：{{business_info.addr?utils.stringCut(business_info.addr,16):"--"}}</cover-view>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+      <cover-view class="profile_operate">
+        <!-- <cover-view class="profile_operate_btn1" catchtap='{{isFollow?"cancelFollow":"addFollow"}}'> -->
+        <cover-view class="profile_operate_btn1" catchtap='addFollow' wx:if="{{landerUserId != userId}}">
+          <cover-view>{{isFollow?"已收藏":"收藏"}}</cover-view>
+        </cover-view>
+        <button open-type='share' data-useshots='true' wx:if="{{showContact}}">
+        <cover-view class="profile_operate_btn2">
+          <cover-view>分享名片</cover-view>
+        </cover-view>
+        </button>
+        <cover-view class="profile_operate_btn1" style="background-color:#2f95fb" wx:if="{{!showContact}}" catchtap="contactBusiness">
+          <cover-view>分享名片</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <!-- 简介内容 end -->
+
+    <!-- 产品提示 start -->
+    <cover-view class="goodsTip"
+      wx:if="{{goodsList.length > 0 && ctvGoodsTip && hidden_card_list && !showTextareaEdit && productListMask && !profile}}"
+      data-clerk_code="{{clerk_code}}" catchtap="showProductList" data-code="{{goodsList[0].code}}"
+      data-activitytype="{{goodsList[0].typeCode}}">
+      <cover-view class="goodsTipContent">
+        <cover-image class="goodsTipContentImg" src="{{goodsList[0].illustration+utils.resizeImgSurvey(60)}}">
+        </cover-image>
+        <cover-view class="goodsTipContentInfo">
+          <cover-view class="goodsTipContentGoodsName">{{goodsList[0].shortName}}</cover-view>
+          <cover-view class="goodsTipContentGoodsPS">
+            <cover-view class="priceFont" style="font-size:24rpx;">￥</cover-view>
+            <cover-view class="priceFont goodsTipContentGoodsPrice">{{goodsList[0].minPriceYuan}}</cover-view>
+            <cover-view class="goodsTipContentGoodsSellout">{{goodsList[0].total}}人已购</cover-view>
+          </cover-view>
+          <cover-view class="goodsTipContentGoodsPS" style="margin-top:0rpx;justify-content: space-between;">
+            <cover-view wx:if="{{item.product.typeCode == 'logistics'&&item.addressType!='merchant'}}"
+              class="goodsTipContentGoodsType goodsTypeWl">物流</cover-view>
+            <cover-view wx:elif="{{item.product.typeCode=='virtual'}}" class="goodsTipContentGoodsType  goodsTypeDd">
+              虚拟</cover-view>
+            <cover-view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}"
+              class="goodsTipContentGoodsType  goodsTypeDd">定金</cover-view>
+            <cover-view wx:else class="goodsTipContentGoodsType  goodsTypeDd">到店</cover-view>
+            <cover-image
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_cart.png">
+            </cover-image>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <!-- <cover-image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_down.png"
+      class="goodsTip2"
+      wx:if="{{goodsList.length > 0 && ctvGoodsTip && hidden_card_list && !showTextareaEdit && productListMask}}">
+    </cover-image> -->
+    <!-- 产品提示 end -->
+
+    <!-- 私人订制 start -->
+    <cover-view class="custom_message {{ctvGoodsTip ? '' : 'custom_message_no_goodsTips'}}"
+      wx:if="{{card_message != null && card_message != '' && !showTextareaEdit && productListMask && showMessage && clerkTemplateType == 'video'}}">
+      {{utils.stringCut(card_message,50)}}</cover-view>
+    <view class="custom_message {{ctvGoodsTip ? '' : 'custom_message_no_goodsTips'}}"
+      wx:if="{{card_message != null && card_message != '' && !showTextareaEdit && productListMask && showMessage && clerkTemplateType == 'placard'}}">
+      <text>{{utils.stringCut(card_message,50)}}</text>
+    </view>
+    <!-- 私人订制 end -->
+
+    <!--产品列表层 start-->
+    <cover-view class="productListMask" hidden="{{productListMask}}" catchtap="showProductList">
+      <cover-view class="productListMask_text">全部商品 {{goodsList.length}}</cover-view>
+      <cover-view class="productListMask_view" catchtap="doNotMove">
+        <cover-view class="list_title">
+          <cover-view catchtap="handlerPageTap">
+            <cover-view class="list_title_name alone1">
+              {{business_info.name==null||business_info.name==""?utils.stringCut(business_info.shortName,14):utils.stringCut(business_info.name,14)}}
+            </cover-view>
+          </cover-view>
+          <cover-view class="list_title_btn" style="margin-left:24rpx;margin-right:48rpx;" catchtap="jumpBusiness">
+            <cover-image
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/enter_business.png">
+            </cover-image>
+            <cover-view>店铺</cover-view>
+          </cover-view>
+          <cover-view class="list_title_btn" catchtap="jumpClerkGoodList">
+            <cover-image
+              src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/more_goods.png">
+            </cover-image>
+            <cover-view>更多</cover-view>
+          </cover-view>
+        </cover-view>
+        <cover-view class="productList">
+          <block wx:for="{{goodsList}}" wx:key="item" wx:index="index">
+            <cover-view class="goodsTipContent list_goodsTipContent " style="margin-top:{{index==0?'0':'30'}}rpx;"
+              data-clerk_code="{{clerk_code}}" catchtap="goToDetail" data-code="{{item.code}}"
+              data-activitytype="{{item.typeCode}}">
+              <cover-image class="goodsTipContentImg list_goodsTipContentImg"
+                src="{{item.illustration+utils.resizeImgSurvey(60)}}"></cover-image>
+              <cover-view id="goodsTipContentInfo" class="goodsTipContentInfo list_goodsTipContentInfo">
+                <cover-view class=" list_goodsTipContentGoodsName">{{item.shortName}}</cover-view>
+                <cover-view>
+                  <cover-view class="goodsTipContentGoodsPS">
+                    <cover-view class="priceFont">￥</cover-view>
+                    <cover-view class="priceFont list_goodsTipContentGoodsPrice">{{item.minPriceYuan}}</cover-view>
+                    <cover-view class="goodsTipContentGoodsSellout list_goodsTipContentGoodsSellout">{{item.total}}人已购
+                    </cover-view>
+                  </cover-view>
+                  <cover-view class="goodsTipContentGoodsPS" style="margin-top:0rpx;justify-content: space-between;">
+                    <cover-view wx:if="{{item.productTypeCode == 'logistics'&&item.addressType!='merchant'}}"
+                      class="goodsTipContentGoodsType goodsTypeWl">物流</cover-view>
+                    <cover-view wx:elif="{{item.product.typeCode=='virtual'}}"
+                      class="goodsTipContentGoodsType  goodsTypeDd">虚拟</cover-view>
+                    <cover-view wx:elif="{{item.product.typeCode=='deposit' || item.product.typeCode=='estate'}}"
+                      class="goodsTipContentGoodsType  goodsTypeDd">定金</cover-view>
+                    <cover-view wx:else class="goodsTipContentGoodsType  goodsTypeDd">到店</cover-view>
+                    <cover-image
+                      src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/ctv_cart.png">
+                    </cover-image>
+                  </cover-view>
+                </cover-view>
+              </cover-view>
+            </cover-view>
+          </block>
+          <cover-view class='lookMoreGoods ' wx:if="{{goodsList.length >= 20}}"
+            style="width:250rpx;height:60rpx;line-height:60rpx;" catchtap="jumpClerkGoodList">点击查看更多商品</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <!--产品列表层 end-->
+
+    <!-- 交换名片 start  -->
+    <cover-view class="exchangeVideo" catchtap="displayCardList"
+      wx:if="{{landerUserId != userId && cardListCount > 0 && clerkTemplateType == 'video'}}">
+      <cover-view>交换名片 ></cover-view>
+    </cover-view>
+    <view class="exchangeVideo" catchtap="displayCardList"
+      wx:if="{{landerUserId != userId && cardListCount > 0 && clerkTemplateType == 'placard'}}">
+      <text>交换名片 ></text>
+    </view>
+    <!-- 交换名片 end  -->
+  </view>
+</template>

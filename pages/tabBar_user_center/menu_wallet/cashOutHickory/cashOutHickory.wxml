@@ -1,0 +1,44 @@
+<!--pages/tabBar_user_center/menu_wallet/cashOutHickory/cashOutHickory.wxml-->
+<wxs module="dateUtil" src="../../../../utils/timeUtil.wxs"></wxs>
+<wxs module="brUtil" src="../balancerecord/balancerecord.wxs"></wxs>
+<!-- 顶部日期栏 -->
+<view class='dateBar'>
+	<text>{{data1_display}} - {{date2_display}}</text>
+	<image src='https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/date.png'
+		style='width:40rpx;height:40rpx;' bindtap='displayPickerGroup'></image>
+</view>
+<view class="picker_group" hidden='{{pickerGroupHidden}}'>
+	<picker mode="date" value="{{date1}}" end="{{date2}}" bindchange="bindDateChange1">
+		<view class="picker">
+			{{date1 ? date1 : '起始日期'}}
+		</view>
+	</picker>
+	至
+	<picker mode="date" value="{{date2}}" start="{{date1}}" end="{{nowDate}}" bindchange="bindDateChange2">
+		<view class="picker">
+			{{date2 ? date2 : '结束日期'}}
+		</view>
+	</picker>
+</view>
+<!-- 内容主体 -->
+<view class='main' wx:if='{{hickory_list.count > 0}}'>
+	<block wx:for="{{hickory_list.list}}" wx:for-item="item" wx:key="index">
+		<view class='hickoryItem' data-item='{{item}}' bindtap='hickoryDetail'>
+			<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/icon_bank.png"></image>
+			<view>
+				<text class="fontS-14">{{item.bank}}</text>
+				<text class="fontS-12 fontC-c">{{dateUtil.dateFormat(item.createdTime,'yyyy年MM月dd日 hh:mm:ss')}}</text>
+			</view>
+			<text>￥{{item.totalAmountYuan}}</text>
+		</view>
+	</block>
+</view>
+<view class="emptyView" wx:else>
+	<image
+		src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+	</image>
+	<text>没有任何数据</text>
+</view>
+
+<!--网络状态监听-->
+<noneLine wx:if="{{!networkType}}"></noneLine>

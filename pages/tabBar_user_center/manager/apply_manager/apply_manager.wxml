@@ -1,0 +1,148 @@
+<!--miniprogram/pages/tabBar_user_center/manager/apply_manager/apply_manager.wxml-->
+<!-- <view>
+  <block wx:for="{{list}}" wx:key="list">
+    <view class='horizontal-vcenter' style='padding:10px;'>
+      <view style='flex:1;'>
+        <view>
+          <text class='txt_black txt-title'>{{item.name}}</text>
+          <text style="margin-left:10px;" class='txt-mid-content txt_light_grey'>{{item.createdTime}}</text>
+        </view>
+        <view>
+          <text class='txt_grey txt-content'>留言：</text>
+          <text class='txt_light_grey txt-sub'>{{item.message}}</text>
+        </view>
+      </view>
+      <button class='com_btn_opt_contain com_btn_blue_border'>通过申请</button>
+
+      <button class='com_btn_opt_contain com_btn_grey_border'>删除申请</button>
+    </view>
+    <view class='view_divider_line'></view>
+  </block>
+</view> -->
+<view class='order_contain'>
+	<view style='width:100%;background:#f2f2f2;'>
+		<view class='header_tab'>
+			<block wx:for="{{stateList}}" wx:key="stateList">
+				<view class="{{selectedIndex == index?'tab_item_selected':'tab_item_default'}}" bindtap='turnPage' data-index="{{index}}" hover-class='tab_item_hover'>{{item}}</view>
+			</block>
+		</view>
+	</view>
+
+	<swiper current='{{selectedIndex}}' bindchange='swiperChange' style='flex:1;'>
+		<!-- 我审核的 start -->
+		<swiper-item style="height:100%;width:100%;display: flex; justify-content: center; align-content: center;">
+			<view wx:if="{{tabOnes == undefined||tabOnes==null}}" class='empty_view'>
+				<image style="width:100rpx;height:100rpx;margin:0 auto;" src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/loading.gif'></image>
+				<text style='color:gray;font-size:32rpx;margin-top:16rpx; margin:0 auto;'>数据加载中...</text>
+			</view>
+			<view class="emptyView" wx:elif="{{tabOnes.length==0}}">
+				<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png"></image>
+				<text>{{tabOnesEmpty}}</text>
+			</view>
+			<block wx:else>
+				<scroll-view class="scroll_container" scroll-y="true" style="position:fixed;width:100%;left:0;padding-top:10rpx;height:100%;top:{{loadMoreHeight == 0? refreshHeight:-loadMoreHeight}}px;bottom:{{loadMoreHeight}}px;" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="upper" bindtouchstart="start" bindtouchend="end">
+
+
+					<!-- <block wx:for='{{tabOnes}}' wx:key="item">
+                <view bindtouchmove="move">
+                  <template is="order_list_item" data="{{item,index:index,requestParams:requestParams,appUser:appUser,isNeed:false,currentIndex:1}}" />
+                </view>
+          </block> -->
+
+					<block wx:for="{{tabOnes}}" wx:key="item">
+						<view class='horizontal-vcenter' style='padding:10px;' bindtouchmove="move">
+							<view class='card_list_item' catchtap='jumpCardDetail' data-merchantcode='{{item.merchantCode}}' data-id='{{item.id}}' data-status="{{item.status}}">
+								<view class="card_userhaedImg">
+									<image src='{{item.headimg}}' mode='aspectFill'></image>
+									<!-- <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots.png" class='three_dots'></image> -->
+								</view>
+								<view class="card_username">
+									<text>{{item.name}}</text>
+									<text>{{item.position==null?"":item.position}}</text>
+									<text>{{item.phone==null?"":item.phone}}</text>
+								</view>
+								<view style='margin-left:30rpx;margin-right:20rpx;'>{{item.merchantName}}</view>
+								<view>{{item.merchantAddr}}</view>
+								<view class='view_divider_line'></view>
+								<view class='horizontal-vcenter' style='padding-top:15px;padding-bottom:15px;'>
+									<view style='flex:1;'></view>
+									<button class='com_btn_opt_contain com_btn_blue_border' data-id='{{item.id}}' data-status='{{1}}' bindtap='handlerApply' data-merchantcode='{{item.merchantCode}}'>同意申请</button>
+									<button class='com_btn_opt_contain com_btn_grey_border' data-id='{{item.id}}' data-status='{{0}}' bindtap='handlerApply' data-merchantcode='{{item.merchantCode}}'>拒绝申请</button>
+								</view>
+
+							</view>
+
+
+
+							<!-- <view style='flex:1;'>
+                <view>
+                  <text class='txt_black txt-title'>{{item.company}}</text>
+                  <text style="margin-left:10px;" class='txt-mid-content txt_light_grey'>{{item.merchantCode}}</text>
+                </view>
+                <view>
+                  <text class='txt_light_grey txt-sub'>{{item.addr}}</text>
+                </view>
+              </view>
+              <button class='com_btn_opt_contain com_btn_blue_border' data-id='{{item.id}}' data-status='{{1}}' bindtap='handlerApply'>同意申请</button>
+              <button class='com_btn_opt_contain com_btn_grey_border' data-id='{{item.id}}' data-status='{{0}}' bindtap='handlerApply'>拒绝申请</button> -->
+						</view>
+						<view class='view_divider_line'></view>
+					</block>
+
+
+					<view wx:if="{{tabOnesLoadEnable==false&&selectedIndex==0}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 我审核的 end -->
+		<!-- 我申请的 start -->
+		<swiper-item style="height:100%;width:100%;display: flex; justify-content: center; align-content: center;">
+			<view wx:if="{{tabTwos == undefined||tabTwos==null}}" class='empty_view'>
+				<image style="width:100rpx;height:100rpx;margin:0 auto;" src='https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramShare/assets/loading.gif'></image>
+				<text style='color:gray;font-size:32rpx;margin-top:16rpx; margin:0 auto;'>数据加载中...</text>
+			</view>
+			<view class="emptyView" wx:elif="{{tabTwos.length==0}}">
+				<image src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png"></image>
+				<text>{{tabTwosEmpty}}</text>
+			</view>
+			<block wx:else>
+				<scroll-view class="scroll_container" scroll-y="true" style="position:fixed;width:100%;left:0;padding-top:10rpx;height:100%;top:{{loadMoreHeight == 0? refreshHeight:-loadMoreHeight}}px;bottom:{{loadMoreHeight}}px;" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="upper" bindtouchstart="start" bindtouchend="end">
+					<!-- <block wx:for='{{tabTwos}}' wx:key="item">
+            <view bindtouchmove="move">
+              <template is="order_list_item" data="{{item,index:index,requestParams:requestParams,appUser:appUser,isNeed:false,currentIndex:2}}" />
+            </view>
+          </block> -->
+					<block wx:for="{{tabTwos}}" wx:key="item">
+						<view class='horizontal-vcenter' style='padding:10px;' bindtouchmove="move">
+							<view class='card_list_item' catchtap='jumpCardDetail' data-merchantcode='{{item.merchantCode}}' data-id='{{item.id}}' data-status="{{item.status}}">
+								<view class="card_userhaedImg">
+									<image src='{{item.headimg}}' mode='aspectFill'></image>
+									<!-- <image src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/three_dots.png" class='three_dots'></image> -->
+									<text style="font-size:30rpx;color:#fb5c56;" wx:if="{{item.status == 2}}">待审核</text>
+								</view>
+								<view class="card_username">
+									<text style="max-width:40vw;">{{item.name}}</text>
+									<text>{{item.position==null?"":item.position}}</text>
+									<text>{{item.phone==null?"":item.phone}}</text>
+								</view>
+								<view style='margin-left:30rpx;margin-right:20rpx;'>{{item.merchantName==null?"":item.merchantName}}</view>
+								<view>{{item.merchantAddr==null?"":item.merchantAddr}}</view>
+							</view>
+						</view>
+						<!-- <view class='view_divider_line'></view> -->
+					</block>
+					<view wx:if="{{tabTwosLoadEnable==false&&selectedIndex==1}}" class="loadmore">
+						<view class='line leftline' />
+						<text>没有更多数据</text>
+						<view class='line rightline' />
+					</view>
+				</scroll-view>
+			</block>
+		</swiper-item>
+		<!-- 我审核的 end -->
+	</swiper>
+</view>

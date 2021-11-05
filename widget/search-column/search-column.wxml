@@ -1,0 +1,21 @@
+<!--widget/search-column/search-column.wxml-->
+<!--搜索框 start-->
+<view class='search_column'>
+  <image class="search_icon"
+    src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_search%402x.png">
+  </image>
+  <input placeholder='请输入要搜索的内容' value='{{input_value}}' focus="{{focus}}" confirm-type='search'
+    bindinput="changeInputValue" bindconfirm="passOnKeyword"></input>
+  <image class="del_icon"
+    src="https://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/bank_close.png"
+    hidden="{{input_value == ''}}" catchtap="clearKeyword"></image>
+  <text catchtap='passOnKeyword'>搜索</text>
+</view>
+<!--搜索框 end-->
+<!--推荐类似搜索关键词 starat-->
+<!-- <view class='search_key_list'>
+  <block>
+    <view>kindle touch</view>
+  </block>
+</view> -->
+<!--推荐类似搜索关键词 starat-->

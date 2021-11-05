@@ -1,0 +1,33 @@
+<!--estatePackage/pages/news/news.wxml-->
+<!-- 最新资讯 start -->
+<view class="main">
+	<news id="business_news" merchantCode="{{merchantCode}}" scene="{{scene}}" sceneDT="{{sceneDT}}"
+		clerkCode="{{clerk_code}}" wx:if="{{!newsType ||newsType ==''}}" />
+	<news id="business_news" merchantCode="{{merchantCode}}" scene="{{scene}}" sceneDT="{{sceneDT}}"
+		clerkCode="{{clerk_code}}" clerkMark="1" includePlatform="false" bind:listEmpty="listEmpty"
+		wx:if="{{newsType && newsType!=1}}" type="{{newsType}}">
+	</news>
+	<view wx:if="{{newsType==1}}">
+		<view class="item_box">
+			<block wx:for="{{houseList}}" wx:key="id" wx:if="{{!listEmpty}}">
+				<view class="item_btn" data-item="{{item}}" catchtap="goToHouseLayout">
+					<view>
+						<image src="{{item.image}}"></image>
+						<view style="padding:20rpx">
+							<text class="aline1">{{item.unitStructure}}{{item.buildingArea}}㎡</text>
+							<text>{{item.displayPrice}}</text>
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+		<view class="loadText fontS-12" wx:if="{{loadAll}}">已加载全部</view>
+		<view class="emptyView" wx:if="{{listEmpty}}">
+			<image
+				src="https://weclubbing.oss-cn-shenzhen.aliyuncs.com/static/miniProgramBusiness/assets/Default%20page_news%403x.png">
+			</image>
+			<text>暂无户型</text>
+		</view>
+	</view>
+
+</view>

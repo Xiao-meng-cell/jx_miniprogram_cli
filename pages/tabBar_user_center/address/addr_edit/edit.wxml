@@ -1,0 +1,66 @@
+<!--miniprogram/pages/tabBar_user_center/address/addr_edit/edit.wxml-->
+<topBar title="{{isEdit ? '编辑地址' : '新增地址'}}"></topBar>
+<view class='contain'>
+	<!-- 编辑模式 -->
+	<view style='background:#fff;'>
+		<view class='horizontal-vcenter global_page_indent' style='padding-top:10px;padding-bottom:10px;'>
+			<text class='txt_black txt-title'>收件人：</text>
+			<input placeholder-class='input_add_left' style='flex:1;margin-left:8px;' maxlength="10" placeholder="请输入收件人" value="{{name}}" bindinput='getNameInputVal' />
+		</view>
+		<view class='view_divider_line' />
+		<view class='horizontal-vcenter global_page_indent' style='padding-top:10px;padding-bottom:10px;'>
+			<text class='txt_black txt-title'>手机号：</text>
+			<input placeholder-class='input_add_left' style='flex:1;margin-left:8px;' maxlength="11" type="number" bindinput='getPhoneInputVal' placeholder="请输入手机号" value="{{phone}}" />
+		</view>
+		<view class='view_divider_line' />
+		<view class='horizontal-vcenter global_page_indent' style='padding-top:10px;padding-bottom:10px;' hover-class='btn_hover' catchtap='open'>
+			<text class='txt_black txt-title'>省市区：</text>
+			<text style='flex:1;margin-left:8px;text-align:right;color:#a0a0a0;font-size: 34rpx;'  bindfocus="open">{{choose_result[0].name?(choose_result[0].name+"-"+choose_result[1].name+"-"+choose_result[2].name):"请选择地址"}}</text>
+			<image style='width:20rpx;height:20rpx;margin-left:10rpx;' src="http://izsyue.oss-cn-shenzhen.aliyuncs.com/assets/applets/enterpriseEdition/images/icon_next.png" />
+		</view>
+		<view class='view_divider_line' />
+		<view class='horizontal-htop global_page_indent' style='padding-top:10px;padding-bottom:10px;'>
+			<text class='txt_black txt-title'>详细地址：</text>
+			<textarea class="input_contain" placeholder-class='input_add_left' bindinput='getAddrInputVal' placeholder='请输入详细地址' value="{{address}}"></textarea>
+		</view>
+	</view>
+	<view style='margin-top:30px;background:#fff;'>
+		<view class='horizontal-vcenter' style='padding:10px;'>
+			<text class='txt_black txt-title' style='flex:1;'>设为默认地址：</text>
+			<switch checked='{{isDefaultAddr}}' type='switch' color='#5b86fe' bindchange="switchDefault" />
+		</view>
+
+		<view class='view_divider_line' hidden="{{!isEdit}}" />
+		<view class='horizontal-vcenter' style='padding:10px;' bindtap='delById' data-id='{{id}}' hover-class='btn_hover' hidden="{{!isEdit}}">
+			<text class='txt-title' style='color:#fb5c56;'>删除收货地址</text>
+		</view>
+	</view>
+
+
+
+	<!--发布动态 start-->
+	<button class="default_publish_btn" catchtap="{{isEdit?'submitAddressByEdit':'submitAddressBySave'}}">{{isEdit?'保存修改':'确定添加'}}</button>
+	<!--发布动态 end-->
+
+</view>
+
+
+
+
+<view wx:if="{{condition}}" class="citypicker">
+	<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{addrIndex}}" bindchange="bindChange" class="citybody">
+		<view class="cityheader">
+			<view bindtap="open" class="city-cancel">取消</view>
+			<view bindtap="open" class="city-true">确定</view>
+		</view>
+		<picker-view-column>
+			<view wx:for="{{provincesList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}</view>
+		</picker-view-column>
+		<picker-view-column>
+			<view wx:for="{{choos_citiesList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}</view>
+		</picker-view-column>
+		<picker-view-column>
+			<view wx:for="{{choos_countyList}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item.name}}</view>
+		</picker-view-column>
+	</picker-view>
+</view>

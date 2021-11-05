@@ -1,0 +1,219 @@
+@import "/assets/styles/real_estate.wxss";
+
+.projectDetailInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 112rpx;
+  background-color: #f6f6f6;
+}
+
+.projectDetailInfo>view {
+  width: 96rpx;
+  border-top: #D8D8D8 2rpx solid;
+}
+
+.projectDetailInfo>text {
+  font-size: 32rpx;
+  color: #37424D;
+  margin-left: 16rpx;
+  margin-right: 16rpx;
+}
+
+/* 项目介绍 start */
+.projectDesc {
+  display: flex;
+  flex-direction: column;
+  padding: 48rpx 32rpx 48rpx 32rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+.projectDesc>view:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.projectDescName {
+  font-size: 36rpx;
+  color: #37424D;
+  margin-right: 8rpx;
+}
+
+.projectDescPrice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 16rpx;
+}
+
+.projectDescPriceType {
+  font-size: 24rpx;
+  color: #fff;
+  background: #2F95FB;
+  padding: 2rpx 8rpx 2rpx 8rpx;
+  border-radius: 16rpx;
+  margin-right: 16rpx;
+}
+
+.projectDescPrice>view:nth-of-type(2) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.projectDescPrice>view:nth-of-type(2)>text:nth-of-type(1) {
+  font-size: 36rpx;
+  line-height: 36rpx;
+  color: #FF3B30;
+}
+
+.projectDescPrice>view:nth-of-type(2)>text:nth-of-type(2) {
+  font-size: 20rpx;
+  line-height: 20rpx;
+}
+
+.projectDescAddr {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 24rpx;
+}
+
+.projectDescAddr>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+  margin-top: 8rpx;
+}
+
+.projectDescAddr>text {
+  font-size: 28rpx;
+  line-height: 44rpx;
+  color: #37424D;
+}
+
+/* 项目介绍 end */
+
+/* 户型 start */
+.houseLayout {
+  padding-top: 48rpx;
+  /* padding-bottom: 24px; */
+  background: #fff;
+  border-radius: 16rpx;
+  margin-top: 24rpx;
+}
+
+/* 户型 end */
+
+/* 联系人 start  */
+.manager {
+  position: fixed;
+  bottom: 520rpx;
+  right: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+}
+
+.manager>image {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 48rpx;
+}
+
+.manager>view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: -16rpx;
+  background: #2F95FB;
+  border-radius: 24rpx;
+  padding: 8rpx;
+  font-size: 22rpx;
+  color: #fff;
+}
+
+.manager>view>image {
+  width: 22rpx;
+  height: 22rpx;
+  margin-right: 4rpx;
+}
+
+/* 联系人 end  */
+
+/* 最新资讯 start  */
+.news {
+  display: flex;
+  flex-direction: row;
+  padding: 12rpx 32rpx 12rpx 32rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-top: 24rpx;
+}
+
+.news>image {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 16rpx;
+}
+
+.news>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.news>view:nth-child(2)>text:nth-child(1) {
+  font-size: 28rpx;
+  color: #2F95FB;
+}
+
+.news>view:nth-child(2)>text:nth-child(2) {
+  font-size: 24rpx;
+  color: #A0A0A0;
+}
+
+/* 最新资讯 end  */
+
+
+.projectAddr {
+  display: flex;
+  flex-direction: column;
+}
+
+.projectAddr>view:nth-of-type(1) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #37424D;
+  margin-bottom: 10rpx;
+}
+
+.projectAddr>view:nth-of-type(1)>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.projectAddr>view:nth-of-type(2) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.projectAddr>view:nth-of-type(2)>text {
+  width: calc(100% - 64rpx);
+  font-size: 24rpx;
+  color: #37424D;
+}
+
+.projectAddr>view:nth-of-type(2)>image {
+  width: 28rpx;
+  height: 28rpx;
+}

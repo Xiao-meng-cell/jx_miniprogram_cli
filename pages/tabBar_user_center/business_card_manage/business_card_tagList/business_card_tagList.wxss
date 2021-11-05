@@ -1,0 +1,146 @@
+/* miniprogram/pages/tabBar_user_center/business_card_manage/business_card_tagList/business_card_tagList.wxss */
+@import "/pages/tabBar_user_center/business_card_manage/business_card_scene/scene_detail/scene_detail.wxss";
+
+.search_bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 7vh;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.search_bar>input {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 32rpx;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  width: calc(100vw - 32rpx * 2 - 60rpx * 3);
+  height: 5vh;
+  border: #f0f0f0 2rpx solid;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}
+
+.search_bar>text {
+  font-size: 28rpx;
+  margin-right: 32rpx;
+}
+
+.searchResult {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16rpx;
+  width: 100%;
+  background-color: #fff;
+  z-index: 500;
+}
+
+.searchResult>view {
+  display: flex;
+  flex-direction: row;
+  width: calc(100vw - 32rpx * 2);
+  box-shadow: 6rpx 4rpx 10rpx 3rpx rgba(0, 0, 0, 0.161);
+  border-radius: 10rpx;
+  margin: 0px 32rpx 40rpx 32rpx;
+  position: relative;
+}
+
+.card_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.card_item_info {
+  display: flex;
+  flex-direction: row;
+}
+
+.card_item_bar {
+  display: flex;
+  flex-direction: row;
+  height: 60rpx;
+  justify-content: center;
+  align-items: center;
+  border-top: 2rpx #eee solid;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.card_item_bar>view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  color: #2f95fb;
+}
+
+.card_item_bar>view>image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+}
+
+.temp_flag {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 90rpx solid #a0a0a0;
+  border-right: 90rpx solid transparent;
+  top: 0;
+}
+
+.temp_flag text {
+  position: absolute;
+  top: -37rpx;
+  left: 32rpx;
+  width: 90rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.rotate {
+  transform: rotate(-45deg);
+}
+
+.temp_flag1 {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 90rpx solid #a0a0a0;
+  border-right: 90rpx solid transparent;
+  top: 0;
+  left: 2rpx;
+}
+
+.temp_flag1 text {
+  position: absolute;
+  top: -37rpx;
+  left: 32rpx;
+  width: 90rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.role1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.role1>image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.role1>text {
+  font-size: 26rpx;
+  color: #2f95fb;
+  margin-left: 5rpx;
+}
